@@ -1,8 +1,8 @@
 ## Useful Links
 
-AP World: https://github.com/colin969/Call-of-Duty-BO3-Zombies-Archipelago
-BO3 Mod:
-BO3 APClient DLL:  
+- AP World: https://github.com/colin969/Call-of-Duty-BO3-Zombies-Archipelago
+- BO3 Mod: https://github.com/colin969/bo3_archipelago
+- BO3 APClient DLL: https://github.com/colin969/Archi-T7Overcharged
 
 ## Development Setup
 
