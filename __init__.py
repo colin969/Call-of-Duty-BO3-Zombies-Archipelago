@@ -1,22 +1,30 @@
 import string
 
-from BaseClasses import MultiWorld, Region, Item, ItemClassification
+from BaseClasses import MultiWorld, Region, Item, ItemClassification, Tutorial
 
-from worlds.AutoWorld import World
+from worlds.AutoWorld import World, WebWorld
 
 from . import Regions, Locations, Items, Options
+from .Options import BO3ZombiesOptions, bo3_option_groups
 from .Names import ItemName, LocationName, RegionName
 
 from .Logic import CODBO3Logic
+
+class BO3ZombiesWeb(WebWorld):
+    theme = "ocean"
+    option_groups = bo3_option_groups
 
 class BO3ZombiesWorld(World):
     """
     TODO: Game Description
     """
     game: str = "Black Ops 3 - Zombies"
+    web = BO3ZombiesWeb()
 
-    options_dataclass = Options.BO3ZombiesOptions
-    options = Options.BO3ZombiesOptions
+    options_dataclass = BO3ZombiesOptions
+    options = BO3ZombiesOptions
+
+    required_client_version = (0, 6, 5)
 
     topology_present = True
     # Game's SteamID
@@ -30,16 +38,14 @@ class BO3ZombiesWorld(World):
     enabled_location_names = []
     victory_items = []
     # Options
-    the_giant_enabled = False
-    victory_round = 1
 
     def generate_early(self) -> None:
+        for location in Locations.early_locations:
+            self.enabled_location_names.append(location.name)
         # read player settings to world instance
-        self.the_giant_enabled = self.options.the_giant_enabled
-        self.victory_round = self.options.victory_round
-        if self.the_giant_enabled:
+        if self.options.the_giant_enabled:
             #This only works if round are first, eventually replace this with a list of JUST round locations
-            for i in range(0, self.victory_round):
+            for i in range(0, self.options.victory_round):
                 self.enabled_location_names.append(Locations.TheGiant_Locations[i].name)
 
     def create_regions(self):
@@ -49,6 +55,7 @@ class BO3ZombiesWorld(World):
             LocationName.TheGiant_Round1,
             LocationName.TheGiant_Round2,
             LocationName.TheGiant_Round3,
+            LocationName.RepairWindows_5,
         ]
         # Default Balancing, Make sure you get to every region
         # TODO: Randomize this a bit/weight it
@@ -62,27 +69,26 @@ class BO3ZombiesWorld(World):
             LocationName.TheGiant_Round7,
             LocationName.TheGiant_Round8,
             LocationName.TheGiant_Round9,
+            LocationName.TheGiant_Round10,
         ]
         the_giant_power_room_locations = [
-            LocationName.TheGiant_Round10,
             LocationName.TheGiant_Round11,
             LocationName.TheGiant_Round12,
             LocationName.TheGiant_Round13,
+            LocationName.TheGiant_Round14,
         ]
         the_giant_teleporter1_locations = [
-
         ]
         the_giant_teleporter2_locations = [
-            LocationName.TheGiant_Round14,
             LocationName.TheGiant_Round15,
             LocationName.TheGiant_Round16,
             LocationName.TheGiant_Round17,
             LocationName.TheGiant_Round18,
             LocationName.TheGiant_Round19,
             LocationName.TheGiant_Round20,
+            LocationName.TheGiant_Round21,
         ]
         the_giant_teleporter3_locations = [
-            LocationName.TheGiant_Round21,
             LocationName.TheGiant_Round22,
             LocationName.TheGiant_Round23,
             LocationName.TheGiant_Round24,
@@ -104,7 +110,6 @@ class BO3ZombiesWorld(World):
         the_giant_teleporter1_region = self.create_region(self.multiworld,self.player,self.enabled_location_names,RegionName.TheGiant_Teleporter1,the_giant_teleporter1_locations)
         the_giant_teleporter2_region = self.create_region(self.multiworld,self.player,self.enabled_location_names,RegionName.TheGiant_Teleporter2,the_giant_teleporter2_locations)
         the_giant_teleporter3_region = self.create_region(self.multiworld,self.player,self.enabled_location_names,RegionName.TheGiant_Teleporter3,the_giant_teleporter3_locations)
-
 
         self.multiworld.regions.extend([
             menu_region,
@@ -161,22 +166,23 @@ class BO3ZombiesWorld(World):
 
         enabled_items = Items.base_items
 
-        if self.the_giant_enabled:
+        if self.options.the_giant_enabled:
             enabled_items += Items.The_Giant_Items
+            enabled_items += Items.The_Giant_Blockers_Doors
+
+        enabled_items += Items.Weapon_Items
         enabled_items_dict = {item_data.name: item_data for item_data in enabled_items}
 
-        victory_round = self.victory_round.value
-
-        if self.the_giant_enabled:
+        if self.options.the_giant_enabled:
             self.victory_items.append(ItemName.TheGiant_Victory)
-            victory_location = self.get_round_location_string("The Giant", victory_round)
+            victory_location = self.get_round_location_string("The Giant", self.options.victory_round)
             self.multiworld.get_location(victory_location, self.player).place_locked_item(
                 self.create_item(ItemName.TheGiant_Victory))
 
         filler_count = len(self.enabled_location_names)
         exclude = [item for item in self.multiworld.precollected_items[self.player]]
 
-        filler_count -= len(exclude)
+        # filler_count -= len(exclude)
 
         for item in map(self.create_item, enabled_items_dict):
             if (Items.all_items_dict[item.name] not in self.victory_items) and (item not in exclude):
@@ -199,15 +205,19 @@ class BO3ZombiesWorld(World):
         self.multiworld.completion_condition[self.player] = lambda state: state.has_all(self.victory_items, self.player)
 
     def fill_slot_data(self) -> dict:
+        options = self.options
+        
         slot_data = {
             'seed': "".join(
                 self.multiworld.per_slot_randoms[self.player].choice(string.ascii_letters) for _ in range(16)),
             'base_id': str(self.base_id),
-            "slot": self.multiworld.player_name[self.player]
+            "slot": self.multiworld.player_name[self.player],
+            "the_giant_enabled": bool(options.the_giant_enabled),
+            "special_rounds_enabled": bool(options.special_rounds_enabled),
+            "victory_round": int(options.victory_round),
+            "blocker_doors_enabled": bool(options.blocker_doors_enabled),
         }
-        for option_name in Options.bo3_zombies_options:
-            option = getattr(self.multiworld, option_name)[self.player]
-            slot_data[option_name] = option.value
+
         return slot_data
 
     @staticmethod

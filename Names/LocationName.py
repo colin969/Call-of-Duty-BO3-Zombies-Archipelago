@@ -98,3 +98,5 @@ TheGiant_Round96                 ="(The Giant) Round 96"
 TheGiant_Round97                 ="(The Giant) Round 97"
 TheGiant_Round98                 ="(The Giant) Round 98"
 TheGiant_Round99                 ="(The Giant) Round 99"
+
+RepairWindows_5 = "Repair Windows 5 Times"

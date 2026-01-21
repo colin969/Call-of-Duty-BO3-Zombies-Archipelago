@@ -3,7 +3,6 @@ from enum import IntEnum
 from BaseClasses import Location
 from .Names import LocationName
 
-
 class BO3ZombiesLocationCategory(IntEnum):
     ROUND = 0
     MISC = 10
@@ -13,7 +12,6 @@ class LocationData(typing.NamedTuple):
     name: str
     category: BO3ZombiesLocationCategory
     code: int
-
 
 class BO3ZombiesLocation(Location):
     game: str = "Black Ops 3 - Zombies"
@@ -55,7 +53,11 @@ TheGiant_Locations = [LocationData(row[0], row[1], row[2]) for row in [
     (LocationName.TheGiant_Round27, BO3ZombiesLocationCategory.ROUND, 27),
     (LocationName.TheGiant_Round28, BO3ZombiesLocationCategory.ROUND, 28),
     (LocationName.TheGiant_Round29, BO3ZombiesLocationCategory.ROUND, 29),
-    (LocationName.TheGiant_Round30, BO3ZombiesLocationCategory.ROUND, 30)
+    (LocationName.TheGiant_Round30, BO3ZombiesLocationCategory.ROUND, 30),
 ]]
 
-all_locations = TheGiant_Locations
+early_locations =  [LocationData(row[0], row[1], row[2]) for row in [
+    (LocationName.RepairWindows_5, BO3ZombiesLocationCategory.MISC, 9001),
+]]
+
+all_locations = TheGiant_Locations + early_locations
