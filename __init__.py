@@ -169,8 +169,8 @@ class BO3ZombiesWorld(World):
         if self.options.the_giant_enabled:
             enabled_items += Items.The_Giant_Items
             enabled_items += Items.The_Giant_Blockers_Doors
+            enabled_items += Items.The_Giant_Weapons
 
-        enabled_items += Items.Weapon_Items
         enabled_items_dict = {item_data.name: item_data for item_data in enabled_items}
 
         if self.options.the_giant_enabled:
@@ -209,7 +209,7 @@ class BO3ZombiesWorld(World):
         
         slot_data = {
             'seed': "".join(
-                self.multiworld.per_slot_randoms[self.player].choice(string.ascii_letters) for _ in range(16)),
+                self.random.choice(string.ascii_letters) for _ in range(16)),
             'base_id': str(self.base_id),
             "slot": self.multiworld.player_name[self.player],
             "the_giant_enabled": bool(options.the_giant_enabled),

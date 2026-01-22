@@ -43,23 +43,25 @@ The_Giant_Items = [ItemData(row[0], row[1]) for row in [
     (ItemName.TheGiant_MuleKick, BO3ZombiesItemCategory.MACHINE),
 ]]
 
-Weapon_Items = [ItemData(row[0], row[1]) for row in [
-    (ItemName.Weapon_ICR,BO3ZombiesItemCategory.WEAPONS),
-    (ItemName.Weapon_HVK,BO3ZombiesItemCategory.WEAPONS),
-    (ItemName.Weapon_ManoWar,BO3ZombiesItemCategory.WEAPONS),
+The_Giant_Weapons = [ItemData(row[0], row[1]) for row in[
+    # Teleporter A
     (ItemName.Weapon_M8A7,BO3ZombiesItemCategory.WEAPONS),
-    (ItemName.Weapon_Sheiva,BO3ZombiesItemCategory.WEAPONS),
+    # Teleporter B
+    (ItemName.Weapon_HVK,BO3ZombiesItemCategory.WEAPONS),
+    # Teleporter C
     (ItemName.Weapon_KN44,BO3ZombiesItemCategory.WEAPONS),
-    (ItemName.Weapon_FFAR,BO3ZombiesItemCategory.WEAPONS),
-    (ItemName.Weapon_Garand,BO3ZombiesItemCategory.WEAPONS),
-    (ItemName.Weapon_Peacekeeper,BO3ZombiesItemCategory.WEAPONS),
-    (ItemName.Weapon_AN94,BO3ZombiesItemCategory.WEAPONS),
-    (ItemName.Weapon_Galil,BO3ZombiesItemCategory.WEAPONS),
-    (ItemName.Weapon_M14,BO3ZombiesItemCategory.WEAPONS),
-    (ItemName.Weapon_M16,BO3ZombiesItemCategory.WEAPONS),
-    (ItemName.Weapon_Basilisk,BO3ZombiesItemCategory.WEAPONS),
-    (ItemName.Weapon_XR2,BO3ZombiesItemCategory.WEAPONS),
-    (ItemName.Weapon_STG44,BO3ZombiesItemCategory.WEAPONS)
+    (ItemName.Weapon_BowieKnife,BO3ZombiesItemCategory.WEAPONS),
+    # Starting Area
+    (ItemName.Weapon_Sheiva,BO3ZombiesItemCategory.WEAPONS),
+    (ItemName.Weapon_RK5,BO3ZombiesItemCategory.WEAPONS),
+    # Courtyard
+    (ItemName.Weapon_VMP,BO3ZombiesItemCategory.WEAPONS),
+    # Garage
+    (ItemName.Weapon_VMP,BO3ZombiesItemCategory.WEAPONS),
+    (ItemName.Weapon_KRM,BO3ZombiesItemCategory.WEAPONS),
+    # Animal Testing
+    (ItemName.Weapon_Kuda,BO3ZombiesItemCategory.WEAPONS),
+    (ItemName.Weapon_LCAR,BO3ZombiesItemCategory.WEAPONS)
 ]]
 
 # Point Drop Items
@@ -79,6 +81,6 @@ Misc_Items = [ItemData(row[0], row[1]) for row in [
 
 base_items = Points_Items
 
-all_items = Points_Items + Victory_Items + Misc_Items + The_Giant_Blockers_Doors + The_Giant_Items + Weapon_Items
+all_items = Points_Items + Victory_Items + Misc_Items + The_Giant_Blockers_Doors + The_Giant_Items + The_Giant_Weapons
 
 all_items_dict = {item_data.name: item_data for item_data in all_items}
