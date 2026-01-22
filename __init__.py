@@ -136,13 +136,13 @@ class BO3ZombiesWorld(World):
 
     def create_item(self, name: str) -> Item:
         useful_categories = {
+            Items.BO3ZombiesItemCategory.WALLBUY,
+            Items.BO3ZombiesItemCategory.MACHINE,
         }
 
         # TODO: do a getProgressiveItems list instead
         progression_categories = {
-            Items.BO3ZombiesItemCategory.WEAPONS,
             Items.BO3ZombiesItemCategory.BLOCKER,
-            Items.BO3ZombiesItemCategory.MACHINE,
             Items.BO3ZombiesItemCategory.POWER,
             Items.BO3ZombiesItemCategory.EASTER_EGG,
             Items.BO3ZombiesItemCategory.VICTORY
@@ -166,10 +166,23 @@ class BO3ZombiesWorld(World):
 
         enabled_items = Items.base_items
 
+        # Add wallbuy to pool
+        if self.options.map_specific_wallbuys:
+            # Add map specific wallbuys for each
+            if self.options.the_giant_enabled:
+                enabled_items += Items.The_Giant_Wallbuys_Specific
+        else:
+            # Only add one instance per wallbuy
+            seen = {}
+            if self.options.the_giant_enabled:
+                for wallbuy in Items.The_Giant_Wallbuys:
+                    if not seen[wallbuy[0]]:
+                        enabled_items.append(wallbuy)
+                        seen[wallbuy[0]] = True
+
         if self.options.the_giant_enabled:
             enabled_items += Items.The_Giant_Items
             enabled_items += Items.The_Giant_Blockers_Doors
-            enabled_items += Items.The_Giant_Weapons
 
         enabled_items_dict = {item_data.name: item_data for item_data in enabled_items}
 

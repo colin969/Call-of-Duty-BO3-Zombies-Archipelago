@@ -19,6 +19,11 @@ class BlockerDoorsEnabled(Toggle):
     display_name = "Enable Door Blockers"
     default = True
 
+class MapSpecificWallbuysEnabled(Toggle):
+    """Enables map specific wallbuy items"""
+    display_name = "Map specific wallbuys"
+    default = False
+
 class VictoryRound(Range):
     """Round to award Map Victory."""
     display_name = "Victory Round"
@@ -33,12 +38,14 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     special_rounds_enabled: SpecialRoundsEnabled
     victory_round: VictoryRound
     blocker_doors_enabled: BlockerDoorsEnabled
+    map_specific_wallbuys: MapSpecificWallbuysEnabled
 
 bo3_option_groups = [
     OptionGroup("General Options", [
         TheGiantEnabled,
         SpecialRoundsEnabled,
         VictoryRound,
-        BlockerDoorsEnabled
+        BlockerDoorsEnabled,
+        MapSpecificWallbuysEnabled
     ])
 ]
