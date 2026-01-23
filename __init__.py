@@ -1,4 +1,6 @@
 import string
+import math
+import random
 
 from BaseClasses import MultiWorld, Region, Item, ItemClassification, Tutorial
 
@@ -158,6 +160,10 @@ class BO3ZombiesWorld(World):
 
         return Items.BO3ZombiesItem(name, item_classification, data, self.player)
 
+    def create_filler_gift(self) -> Item:
+        gift = random.choice(Items.Gift_Items)
+        return self.create_item(gift[0])
+
     def create_filler(self) -> Item:
         # TODO make a proper filler item
         return self.create_item(ItemName.Points50)
@@ -173,12 +179,12 @@ class BO3ZombiesWorld(World):
                 enabled_items += Items.The_Giant_Wallbuys_Specific
         else:
             # Only add one instance per wallbuy
-            seen = {}
+            seen = set()
             if self.options.the_giant_enabled:
                 for wallbuy in Items.The_Giant_Wallbuys:
-                    if not seen[wallbuy[0]]:
+                    if wallbuy[0] not in seen:
                         enabled_items.append(wallbuy)
-                        seen[wallbuy[0]] = True
+                        seen.add(wallbuy[0])
 
         if self.options.the_giant_enabled:
             enabled_items += Items.The_Giant_Items
@@ -195,6 +201,7 @@ class BO3ZombiesWorld(World):
         filler_count = len(self.enabled_location_names)
         exclude = [item for item in self.multiworld.precollected_items[self.player]]
 
+        # Unsure?
         # filler_count -= len(exclude)
 
         for item in map(self.create_item, enabled_items_dict):
@@ -202,7 +209,12 @@ class BO3ZombiesWorld(World):
                 self.multiworld.itempool.append(item)
                 filler_count -= 1
 
+        gift_filler_weight = self.options.gift_weight / 100
+        gift_filler_count = math.floor(filler_count * gift_filler_weight)
+        filler_count -= gift_filler_count
+
         # Creates filler in remaining slots
+        self.multiworld.itempool.extend([self.create_filler_gift() for _ in range(gift_filler_count)])
         self.multiworld.itempool.extend([self.create_filler() for _ in range(filler_count)])
 
     def generate_basic(self) -> None:
@@ -226,6 +238,7 @@ class BO3ZombiesWorld(World):
             'base_id': str(self.base_id),
             "slot": self.multiworld.player_name[self.player],
             "the_giant_enabled": bool(options.the_giant_enabled),
+            "gift_weight": int(options.gift_weight),
             "special_rounds_enabled": bool(options.special_rounds_enabled),
             "victory_round": int(options.victory_round),
             "blocker_doors_enabled": bool(options.blocker_doors_enabled),

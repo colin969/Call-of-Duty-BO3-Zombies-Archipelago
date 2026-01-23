@@ -70,6 +70,14 @@ Weapon_M1911 = "Wallbuy - M1911"
 Weapon_Marshal16 = "Wallbuy - Marhsal 16"
 Weapon_MauserC96 = "Wallbuy - Mauser C96"
 
+Gift_Carpenter_Powerup =  "Gift - Carpenter Powerup"
+Gift_Double_Points_Powerup =  "Gift - Double Points Powerup"
+Gift_InstaKill_Powerup =  "Gift - InstaKill Powerup"
+Gift_Fire_Sale_Powerup =  "Gift - Fire Sale Powerup"
+Gift_Max_Ammo_Powerup =  "Gift - Max Ammo Powerup"
+Gift_Nuke_Powerup =  "Gift - Nuke Powerup"
+Gift_Free_Perk_Powerup =  "Gift - Free Perk Powerup"
+
 # Melee
 
 Weapon_BowieKnife = "Wallbuy - Bowie Knife"

@@ -15,6 +15,7 @@ class BO3ZombiesItemCategory(IntEnum):
     MACHINE = 9
     MISC = 10
     VICTORY = 11
+    GIFT = 12
 
 
 class ItemData(typing.NamedTuple):
@@ -86,8 +87,18 @@ Misc_Items = [ItemData(row[0], row[1]) for row in [
     (ItemName.Points50, BO3ZombiesItemCategory.MISC)
 ]]
 
+Gift_Items = [ItemData(row[0], row[1]) for row in [
+    (ItemName.Gift_Carpenter_Powerup, BO3ZombiesItemCategory.GIFT),
+    (ItemName.Gift_Double_Points_Powerup, BO3ZombiesItemCategory.GIFT),
+    (ItemName.Gift_InstaKill_Powerup, BO3ZombiesItemCategory.GIFT),
+    (ItemName.Gift_Fire_Sale_Powerup, BO3ZombiesItemCategory.GIFT),
+    (ItemName.Gift_Max_Ammo_Powerup, BO3ZombiesItemCategory.GIFT),
+    (ItemName.Gift_Nuke_Powerup, BO3ZombiesItemCategory.GIFT),
+    (ItemName.Gift_Free_Perk_Powerup, BO3ZombiesItemCategory.GIFT),
+]]
+
 base_items = Points_Items
 
-all_items = Points_Items + Victory_Items + Misc_Items + The_Giant_Blockers_Doors + The_Giant_Items + The_Giant_Wallbuys + The_Giant_Wallbuys_Specific
+all_items = Points_Items + Victory_Items + Misc_Items + The_Giant_Blockers_Doors + The_Giant_Items + The_Giant_Wallbuys + The_Giant_Wallbuys_Specific + Gift_Items
 
 all_items_dict = {item_data.name: item_data for item_data in all_items}
