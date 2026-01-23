@@ -11,6 +11,7 @@ BaseMapIds = {
 class BO3ZombiesLocationCategory(IntEnum):
     ROUND = 0
     MISC = 10
+    CRAFTABLE_PART = 20
 
 class LocationData(typing.NamedTuple):
     name: str
@@ -51,8 +52,14 @@ def get_map_victory_location(map_string, victory_round):
 TheGiant_Round_Locations = gen_map_round_locations(Maps.The_Giant_Map_String, 100)
 Castle_Round_Locations = gen_map_round_locations(Maps.Castle_Map_String, 100)
 
+Castle_Craftable_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.CRAFTABLE_PART, row[1]) for row in [
+    (LocationName.Castle_Craftable_ShieldPartDolly, 2200),
+    (LocationName.Castle_Craftable_ShieldPartDoor, 2201),
+    (LocationName.Castle_Craftable_ShieldPartClamp, 2202)
+]]
+
 early_locations =  [LocationData(row[0], row[1], row[2]) for row in [
     (LocationName.RepairWindows_5, BO3ZombiesLocationCategory.MISC, 9001),
 ]]
 
-all_locations = TheGiant_Round_Locations + Castle_Round_Locations + early_locations
+all_locations = TheGiant_Round_Locations + Castle_Round_Locations + Castle_Craftable_Locations + early_locations

@@ -49,6 +49,7 @@ class BO3ZombiesWorld(World):
             for i in range(0, self.options.victory_round):
                 self.enabled_location_names.append(Locations.TheGiant_Round_Locations[i].name)
         if self.options.map_castle_enabled:
+            self.enabled_location_names.extend([row.name for row in Locations.Castle_Craftable_Locations])
             for i in range(0, self.options.victory_round):
                 self.enabled_location_names.append(Locations.Castle_Round_Locations[i].name)
 
@@ -105,10 +106,13 @@ class BO3ZombiesWorld(World):
         
         if self.options.map_castle_enabled:
             # TODO: Add blockers
+            all_locations = []
+            all_locations.extend([loc.name for loc in Locations.Castle_Round_Locations[0:map_rounds]])
+            all_locations.extend([loc.name for loc in Locations.Castle_Craftable_Locations])
             self.multiworld.regions.append(
                 self.create_region(self.multiworld, self.player, self.enabled_location_names,
                     RegionName.Castle_Gondola,
-                    [loc[0] for loc in Locations.Castle_Round_Locations[0:map_rounds]]
+                    all_locations
                 )
             )
         
