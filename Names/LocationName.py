@@ -9,5 +9,6 @@ Castle_Craftable_RagnarokDG4PartGuards = Maps.Castle_Map_String + " Ragnarok DG-
 Castle_Craftable_RagnarokDG4PartHandle = Maps.Castle_Map_String + " Ragnarok DG-4 Part Pickup - Handle"
 
 Castle_Quest_FeedDragonheads = Maps.Castle_Map_String + " Feed the Dragonheads"
+Castle_Quest_TurnOnLandingPads = Maps.Castle_Map_String + " Turn on all Landing Pads"
 
 RepairWindows_5 = "Repair Windows 5 Times"

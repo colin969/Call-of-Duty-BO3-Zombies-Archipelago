@@ -64,6 +64,7 @@ Castle_Craftable_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.CR
 
 Castle_Quest_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.Castle_Quest_FeedDragonheads, 2300),
+    (LocationName.Castle_Quest_TurnOnLandingPads, 2301),
 ]]
 
 early_locations =  [LocationData(row[0], row[1], row[2]) for row in [
