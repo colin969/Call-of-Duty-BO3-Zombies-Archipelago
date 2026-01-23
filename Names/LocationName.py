@@ -8,5 +8,6 @@ Castle_Craftable_RagnarokDG4PartBody = Maps.Castle_Map_String + " Ragnarok DG-4 
 Castle_Craftable_RagnarokDG4PartGuards = Maps.Castle_Map_String + " Ragnarok DG-4 Part Pickup - Guards"
 Castle_Craftable_RagnarokDG4PartHandle = Maps.Castle_Map_String + " Ragnarok DG-4 Part Pickup - Handle"
 
+Castle_Quest_FeedDragonheads = Maps.Castle_Map_String + " Feed the Dragonheads"
 
 RepairWindows_5 = "Repair Windows 5 Times"

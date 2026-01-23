@@ -12,6 +12,7 @@ class BO3ZombiesLocationCategory(IntEnum):
     ROUND = 0
     MISC = 10
     CRAFTABLE_PART = 20
+    QUEST = 30
 
 class LocationData(typing.NamedTuple):
     name: str
@@ -61,8 +62,12 @@ Castle_Craftable_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.CR
     (LocationName.Castle_Craftable_RagnarokDG4PartHandle, 2212),
 ]]
 
+Castle_Quest_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Castle_Quest_FeedDragonheads, 2300),
+]]
+
 early_locations =  [LocationData(row[0], row[1], row[2]) for row in [
     (LocationName.RepairWindows_5, BO3ZombiesLocationCategory.MISC, 9001),
 ]]
 
-all_locations = TheGiant_Round_Locations + Castle_Round_Locations + Castle_Craftable_Locations + early_locations
+all_locations = TheGiant_Round_Locations + Castle_Round_Locations + Castle_Quest_Locations + Castle_Craftable_Locations + early_locations
