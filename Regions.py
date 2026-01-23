@@ -11,6 +11,7 @@ def connect_regions(world: MultiWorld, player: int):
 
     # connecting Menu to enabled starting locations
     connect(world, player, names, "Menu", RegionName.TheGiant_Courtyard)
+    connect(world, player, names, "Menu", RegionName.Castle_Gondola)
 
     # The Giant 
 
@@ -35,11 +36,9 @@ def connect_regions(world: MultiWorld, player: int):
     
     connect(world,player,names,RegionName.TheGiant_PowerRoom,RegionName.TheGiant_Teleporter3,
             lambda state: state.bo3_the_giant_teleporter3_unlocked(player))
-    
 
     connect(world,player,names,RegionName.TheGiant_PowerRoom,RegionName.TheGiant_Courtyard,
-            lambda state: state.bo3_the_giant_power_room_unlocked(player))
-            
+            lambda state: state.bo3_the_giant_power_room_unlocked(player))       
 
 # shamelessly stolen from the sa2b (and hk2)
 def connect(world: MultiWorld, player: int, used_names: typing.Dict[str, int], source: str, target: str,

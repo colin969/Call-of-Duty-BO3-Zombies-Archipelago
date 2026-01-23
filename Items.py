@@ -1,10 +1,10 @@
 import typing
 from enum import IntEnum
 from BaseClasses import Item
-from .Names import ItemName
+from .Names import ItemName, Maps
 
-def gen_map_wallbuy_set(mapString, wallbuys):
-    map_specific_set = [ItemData(mapString + " " + wallbuy[0], wallbuy[1]) for wallbuy in wallbuys]
+def gen_map_specific_list(mapString, items):
+    map_specific_set = [ItemData(mapString + " " + item[0], item[1]) for item in items]
     return map_specific_set
 
 class BO3ZombiesItemCategory(IntEnum):
@@ -29,7 +29,6 @@ class BO3ZombiesItem(Item):
     def get_name_to_id(base_id) -> dict:
         return {item_data.name: id for id, item_data in enumerate(all_items, base_id)}
     
-The_Giant_Map_String = "(The Giant)"
 
 The_Giant_Blockers_Doors = [ItemData(row[0], row[1]) for row in [  
     (ItemName.TheGiant_AnimalTesting,BO3ZombiesItemCategory.BLOCKER),
@@ -41,36 +40,80 @@ The_Giant_Blockers_Doors = [ItemData(row[0], row[1]) for row in [
 ]]
 
 # The Giant Items
-The_Giant_Items = [ItemData(row[0], row[1]) for row in [
-    (ItemName.TheGiant_Juggernog, BO3ZombiesItemCategory.MACHINE),
-    (ItemName.TheGiant_QuickRevive, BO3ZombiesItemCategory.MACHINE),
-    (ItemName.TheGiant_DoubleTap, BO3ZombiesItemCategory.MACHINE),
-    (ItemName.TheGiant_SpeedCola,BO3ZombiesItemCategory.MACHINE),
-    (ItemName.TheGiant_MuleKick, BO3ZombiesItemCategory.MACHINE),
+
+The_Giant_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
+    ItemName.Machine_Juggernog,
+    ItemName.Machine_QuickRevive,
+    ItemName.Machine_DoubleTap,
+    ItemName.Machine_SpeedCola,
+    ItemName.Machine_MuleKick,
 ]]
 
-The_Giant_Wallbuys = [ItemData(row[0], row[1]) for row in[
+The_Giant_Wallbuys = [ItemData(row, BO3ZombiesItemCategory.WALLBUY) for row in[
     # Teleporter A
-    (ItemName.Weapon_M8A7,BO3ZombiesItemCategory.WALLBUY),
+    ItemName.Weapon_M8A7,
     # Teleporter B
-    (ItemName.Weapon_HVK,BO3ZombiesItemCategory.WALLBUY),
+    ItemName.Weapon_HVK,
     # Teleporter C
-    (ItemName.Weapon_KN44,BO3ZombiesItemCategory.WALLBUY),
-    (ItemName.Weapon_BowieKnife,BO3ZombiesItemCategory.WALLBUY),
+    ItemName.Weapon_KN44,
+    ItemName.Weapon_BowieKnife,
     # Starting Area
-    (ItemName.Weapon_Sheiva,BO3ZombiesItemCategory.WALLBUY),
-    (ItemName.Weapon_RK5,BO3ZombiesItemCategory.WALLBUY),
-    # Courtyard
-    (ItemName.Weapon_VMP,BO3ZombiesItemCategory.WALLBUY),
+    ItemName.Weapon_Sheiva,
+    ItemName.Weapon_RK5,
     # Garage
-    (ItemName.Weapon_VMP,BO3ZombiesItemCategory.WALLBUY),
-    (ItemName.Weapon_KRM,BO3ZombiesItemCategory.WALLBUY),
+    ItemName.Weapon_VMP,
+    ItemName.Weapon_KRM,
     # Animal Testing
-    (ItemName.Weapon_Kuda,BO3ZombiesItemCategory.WALLBUY),
-    (ItemName.Weapon_LCAR,BO3ZombiesItemCategory.WALLBUY)
+    ItemName.Weapon_Kuda,
+    ItemName.Weapon_LCAR,
 ]]
 
-The_Giant_Wallbuys_Specific = gen_map_wallbuy_set(The_Giant_Map_String, The_Giant_Wallbuys)
+# Castle Items
+
+Castle_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
+    ItemName.Machine_Juggernog,
+    ItemName.Machine_QuickRevive,
+    ItemName.Machine_DoubleTap,
+    ItemName.Machine_SpeedCola,
+    ItemName.Machine_StaminUp,
+    ItemName.Machine_MuleKick,
+]]
+
+Castle_Wallbuys = [ItemData(row, BO3ZombiesItemCategory.WALLBUY) for row in [
+    # Gondola
+    ItemName.Weapon_RK5,
+    ItemName.Weapon_Sheiva,
+    # Gate House (Upper)
+    ItemName.Weapon_LCAR,
+    # Lower Courtyard and Trophy Room
+    ItemName.Weapon_KRM,
+    # Mission Control
+    ItemName.Weapon_M8A7,
+    # Inside Castle?
+    ItemName.Weapon_HVK,
+    # Upper Courtyard?
+    ItemName.Weapon_Kuda,
+    # Rocket Platform
+    ItemName.Weapon_VMP,
+    # Supply Room
+    ItemName.Weapon_Vesper,
+    # Living Quarters and Juggernog Room
+    ItemName.Weapon_KN44,
+    # Undercroft
+    ItemName.Weapon_BRM,
+    # Armory
+    ItemName.Weapon_BowieKnife
+]]
+
+# Map Specific Gen
+
+The_Giant_Wallbuys_Specific = gen_map_specific_list(Maps.The_Giant_Map_String, The_Giant_Wallbuys)
+The_Giant_Machines_Specific = gen_map_specific_list(Maps.The_Giant_Map_String, The_Giant_Machines)
+
+Castle_Wallbuys_Specific = gen_map_specific_list(Maps.Castle_Map_String, Castle_Wallbuys)
+Castle_Machines_Specific = gen_map_specific_list(Maps.Castle_Map_String, Castle_Machines)
+
+
 
 # Point Drop Items
 Points_Items = [ItemData(row[0], row[1]) for row in [
@@ -79,7 +122,8 @@ Points_Items = [ItemData(row[0], row[1]) for row in [
 
 # Victory
 Victory_Items = [ItemData(row[0], row[1]) for row in [
-    (ItemName.TheGiant_Victory, BO3ZombiesItemCategory.VICTORY)
+    (Maps.The_Giant_Map_String + " Victory", BO3ZombiesItemCategory.VICTORY),
+    (Maps.Castle_Map_String + " Victory", BO3ZombiesItemCategory.VICTORY)
 ]]
 
 # Misc/Filler Items
@@ -99,6 +143,16 @@ Gift_Items = [ItemData(row[0], row[1]) for row in [
 
 base_items = Points_Items
 
-all_items = Points_Items + Victory_Items + Misc_Items + The_Giant_Blockers_Doors + The_Giant_Items + The_Giant_Wallbuys + The_Giant_Wallbuys_Specific + Gift_Items
+all_items = (
+    Points_Items + Victory_Items + Gift_Items + Misc_Items
+    # The Giant
+    + The_Giant_Blockers_Doors + The_Giant_Machines + The_Giant_Wallbuys
+    # Castle
+    + Castle_Machines + Castle_Wallbuys
+    # Machine Specifics
+    + The_Giant_Machines_Specific + Castle_Machines_Specific
+    # Wallbuy Specifics
+    + The_Giant_Wallbuys_Specific + Castle_Wallbuys_Specific
+)
 
 all_items_dict = {item_data.name: item_data for item_data in all_items}

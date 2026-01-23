@@ -1,11 +1,6 @@
-# TheGiant
-TheGiant_QuickRevive                ="(The Giant) Quick Revive"
-TheGiant_Juggernog                  ="(The Giant) Juggernog"
-TheGiant_DoubleTap                  ="(The Giant) Double Tap"
-TheGiant_SpeedCola                  ="(The Giant) Speed Cola"
-TheGiant_MuleKick                   ="(The Giant) Mule Kick"
-TheGiant_RandomMachine              ="(The Giant) Random Machine"
+from . import Maps
 
+# TheGiant
 TheGiant_AnimalTesting              ="(The Giant) Animal Testing"
 TheGiant_Garage                     ="(The Giant) Garage"
 TheGiant_PowerRoom                  ="(The Giant) Power Room"
@@ -13,8 +8,25 @@ TheGiant_Teleporter1                ="(The Giant) Teleporter 1"
 TheGiant_Teleporter2                ="(The Giant) Teleporter 2"
 TheGiant_Teleporter3                ="(The Giant) Teleporter 3"
 
+# Machines
+
+Machine_Juggernog = "Juggernog"
+Machine_QuickRevive = "Quick Revive"
+Machine_SpeedCola = "Speed Cola"
+Machine_DoubleTap = "Double Tap"
+Machine_StaminUp = "Stamin-up"
+Machine_PhdFlopper = "PhD Flopper"
+Machine_DeadShot = "Dead Shot"
+Machine_MuleKick = "Mule Kick"
+Machine_ElectricCherry = "Electric Cherry"
+Machine_Tombstone = "Tombstone"
+Machine_WhosWho = "Who's Who"
+Machine_VultureAid = "Vulture Aid"
+Machine_WidowsWine = "Widow's Wine"
+
 # Weapons
 # Assault Rifles
+
 Weapon_ICR = "Wallbuy - ICR-1"
 Weapon_HVK = "Wallbuy - HVK-30"
 Weapon_ManoWar = "Wallbuy - Man-o-War"
@@ -32,7 +44,18 @@ Weapon_Basilisk = "Wallbuy - LV8 Basilisk"
 Weapon_XR2 = "Wallbuy - XR-2"
 Weapon_STG44 = "Wallbuy - STG-44"
 
+# Light Machine Guns
+
+Weapon_Dingo = "Wallbuy - Dingo"
+Weapon_Dredge = "Wallbuy - 48 Dredge"
+Weapon_BRM = "Wallbuy - BRM"
+Weapon_Gorgon = "Wallbuy - Gorgon"
+Weapon_R70Ajax = "Wallbuy - R70 Ajax"
+Weapon_RPK = "Wallbuy - RPK"
+Weapon_MG08 = "Wallbuy - MG08"
+
 # Sub Machine Guns
+
 Weapon_Pharo = "Wallbuy - Pharo"
 Weapon_Weevil = "Wallbuy - Weevil"
 Weapon_Vesper = "Wallbuy - Vesper"
@@ -81,9 +104,6 @@ Gift_Free_Perk_Powerup =  "Gift - Free Perk Powerup"
 # Melee
 
 Weapon_BowieKnife = "Wallbuy - Bowie Knife"
-
-# Map Victory
-TheGiant_Victory                    ="(The Giant) Victory"
 
 # Misc
 Points50                            ="50 Points"

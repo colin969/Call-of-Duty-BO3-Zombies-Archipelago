@@ -8,7 +8,7 @@ from worlds.AutoWorld import World, WebWorld
 
 from . import Regions, Locations, Items, Options
 from .Options import BO3ZombiesOptions, bo3_option_groups
-from .Names import ItemName, LocationName, RegionName
+from .Names import ItemName, LocationName, RegionName, Maps
 
 from .Logic import CODBO3Logic
 
@@ -44,86 +44,74 @@ class BO3ZombiesWorld(World):
     def generate_early(self) -> None:
         for location in Locations.early_locations:
             self.enabled_location_names.append(location.name)
-        # read player settings to world instance
-        if self.options.the_giant_enabled:
-            #This only works if round are first, eventually replace this with a list of JUST round locations
+
+        if self.options.map_the_giant_enabled:
             for i in range(0, self.options.victory_round):
-                self.enabled_location_names.append(Locations.TheGiant_Locations[i].name)
+                self.enabled_location_names.append(Locations.TheGiant_Round_Locations[i].name)
+        if self.options.map_castle_enabled:
+            for i in range(0, self.options.victory_round):
+                self.enabled_location_names.append(Locations.Castle_Round_Locations[i].name)
 
     def create_regions(self):
-        menu_region = self.create_region(self.multiworld, self.player, self.enabled_location_names, 'Menu', None)
-
-        the_giant_courtyard_locations = [
-            LocationName.TheGiant_Round1,
-            LocationName.TheGiant_Round2,
-            LocationName.TheGiant_Round3,
-            LocationName.RepairWindows_5,
+        universal_locations = [
+            LocationName.RepairWindows_5
         ]
+        print(self.enabled_location_names)
+        menu_region = self.create_region(self.multiworld, self.player, self.enabled_location_names, 'Menu', universal_locations)
+        
+        self.multiworld.regions.append(menu_region)
+        
         # Default Balancing, Make sure you get to every region
         # TODO: Randomize this a bit/weight it
 
-        the_giant_animal_testing_locations = [
-            LocationName.TheGiant_Round4,
-            LocationName.TheGiant_Round5,
-            LocationName.TheGiant_Round6,
-        ]
-        the_giant_garage_locations = [
-            LocationName.TheGiant_Round7,
-            LocationName.TheGiant_Round8,
-            LocationName.TheGiant_Round9,
-            LocationName.TheGiant_Round10,
-        ]
-        the_giant_power_room_locations = [
-            LocationName.TheGiant_Round11,
-            LocationName.TheGiant_Round12,
-            LocationName.TheGiant_Round13,
-            LocationName.TheGiant_Round14,
-        ]
-        the_giant_teleporter1_locations = [
-        ]
-        the_giant_teleporter2_locations = [
-            LocationName.TheGiant_Round15,
-            LocationName.TheGiant_Round16,
-            LocationName.TheGiant_Round17,
-            LocationName.TheGiant_Round18,
-            LocationName.TheGiant_Round19,
-            LocationName.TheGiant_Round20,
-            LocationName.TheGiant_Round21,
-        ]
-        the_giant_teleporter3_locations = [
-            LocationName.TheGiant_Round22,
-            LocationName.TheGiant_Round23,
-            LocationName.TheGiant_Round24,
-            LocationName.TheGiant_Round25,
-            LocationName.TheGiant_Round26,
-            LocationName.TheGiant_Round27,
-            LocationName.TheGiant_Round28,
-            LocationName.TheGiant_Round29,
-            LocationName.TheGiant_Round30
-        ]
+        map_rounds = self.options.victory_round
 
-        the_giant_courtyard_region = self.create_region(self.multiworld, self.player, self.enabled_location_names,
-                                                        RegionName.TheGiant_Courtyard,
-                                                        the_giant_courtyard_locations)
+        print("Assigning regions")
+
+        if self.options.map_the_giant_enabled:
+            rounds_assigned = 0
+            # Courtyard
+
+            region_distributions = [
+                (RegionName.TheGiant_Courtyard, 3),
+                (RegionName.TheGiant_AnimalTesting, 3),
+                (RegionName.TheGiant_Garage, 4),
+                (RegionName.TheGiant_PowerRoom, 4),
+                (RegionName.TheGiant_Teleporter1, 0),
+                (RegionName.TheGiant_Teleporter2, 7),
+                (RegionName.TheGiant_Teleporter3, 999)
+            ]
+            
+            # Add round locations until each region is full, or we run out of locations to allocate
+            for region_name, desired_count in region_distributions:
+                assigned_rounds = max(desired_count, (map_rounds - rounds_assigned))
+                print("Assigned " + str(assigned_rounds) + " to Region " + region_name)
+                
+                if assigned_rounds > 0:
+                    self.multiworld.regions.append(
+                        self.create_region(self.multiworld, self.player, self.enabled_location_names,
+                            region_name,
+                            [loc[0] for loc in Locations.TheGiant_Round_Locations[rounds_assigned:rounds_assigned + assigned_rounds]]
+                        )
+                    )
+                    rounds_assigned += assigned_rounds
+                else:
+                    self.multiworld.regions.append(
+                        self.create_region(self.multiworld, self.player, self.enabled_location_names,
+                            region_name,
+                            []
+                        )
+                    )
         
-        the_giant_animal_testing_region = self.create_region(self.multiworld,self.player,self.enabled_location_names,RegionName.TheGiant_AnimalTesting,the_giant_animal_testing_locations)
-        the_giant_garage_region = self.create_region(self.multiworld,self.player,self.enabled_location_names,RegionName.TheGiant_Garage,the_giant_garage_locations)
-        the_giant_power_room_region = self.create_region(self.multiworld,self.player,self.enabled_location_names,RegionName.TheGiant_PowerRoom,the_giant_power_room_locations)
-        the_giant_teleporter1_region = self.create_region(self.multiworld,self.player,self.enabled_location_names,RegionName.TheGiant_Teleporter1,the_giant_teleporter1_locations)
-        the_giant_teleporter2_region = self.create_region(self.multiworld,self.player,self.enabled_location_names,RegionName.TheGiant_Teleporter2,the_giant_teleporter2_locations)
-        the_giant_teleporter3_region = self.create_region(self.multiworld,self.player,self.enabled_location_names,RegionName.TheGiant_Teleporter3,the_giant_teleporter3_locations)
-
-        self.multiworld.regions.extend([
-            menu_region,
-
-            the_giant_courtyard_region,
-            the_giant_animal_testing_region,
-            the_giant_garage_region,
-            the_giant_power_room_region,
-            the_giant_teleporter1_region,
-            the_giant_teleporter2_region,
-            the_giant_teleporter3_region,
-        ])
+        if self.options.map_castle_enabled:
+            # TODO: Add blockers
+            self.multiworld.regions.append(
+                self.create_region(self.multiworld, self.player, self.enabled_location_names,
+                    RegionName.Castle_Gondola,
+                    [loc[0] for loc in Locations.Castle_Round_Locations[0:map_rounds]]
+                )
+            )
+        
         Regions.connect_regions(self.multiworld, self.player)
 
     def create_region(self, world: MultiWorld, player: int, active_location_names: list, name: str, locations=None):
@@ -172,37 +160,82 @@ class BO3ZombiesWorld(World):
 
         enabled_items = Items.base_items
 
-        # Add wallbuy to pool
+        # Add machines to pool
+        if self.options.map_specific_machines:
+            # Add map specific machines for each
+            if self.options.map_the_giant_enabled:
+                enabled_items += Items.The_Giant_Machines_Specific
+            if self.options.map_castle_enabled:
+                enabled_items += Items.Castle_Machines_Specific
+        else:
+            # Only add one instance per machine
+            seen = set()
+            if self.options.map_the_giant_enabled:
+                for machine in Items.The_Giant_Machines:
+                    if machine[0] not in seen:
+                        enabled_items.append(machine)
+                        seen.add(machine[0])
+            if self.options.map_castle_enabled:
+                for machine in Items.Castle_Machines:
+                    if machine[0] not in seen:
+                        enabled_items.append(machine)
+                        seen.add(machine[0])
+
+        # Add wallbuys to pool
         if self.options.map_specific_wallbuys:
             # Add map specific wallbuys for each
-            if self.options.the_giant_enabled:
+            if self.options.map_the_giant_enabled:
                 enabled_items += Items.The_Giant_Wallbuys_Specific
+            if self.options.map_castle_enabled:
+                enabled_items += Items.Castle_Wallbuys_Specific
         else:
             # Only add one instance per wallbuy
             seen = set()
-            if self.options.the_giant_enabled:
+            if self.options.map_the_giant_enabled:
                 for wallbuy in Items.The_Giant_Wallbuys:
                     if wallbuy[0] not in seen:
                         enabled_items.append(wallbuy)
                         seen.add(wallbuy[0])
+            if self.options.map_castle_enabled:
+                for wallbuy in Items.Castle_Wallbuys:
+                    if wallbuy[0] not in seen:
+                        enabled_items.append(wallbuy)
+                        seen.add(wallbuy[0])
 
-        if self.options.the_giant_enabled:
-            enabled_items += Items.The_Giant_Items
+
+        if self.options.map_the_giant_enabled:
             enabled_items += Items.The_Giant_Blockers_Doors
 
         enabled_items_dict = {item_data.name: item_data for item_data in enabled_items}
 
-        if self.options.the_giant_enabled:
-            self.victory_items.append(ItemName.TheGiant_Victory)
-            victory_location = self.get_round_location_string("The Giant", self.options.victory_round)
+        map_list = []
+        if self.options.map_the_giant_enabled:
+            map_list.append(Maps.The_Giant_Map_String)
+        if self.options.map_castle_enabled:
+            map_list.append(Maps.Castle_Map_String)
+
+        if self.options.victory_round_choice == 0:
+            # Random victory round item
+            victory_map = random.choice(map_list)
+            self.victory_items.append(victory_map + " Victory")
+            victory_location = Locations.get_map_victory_location(victory_map, self.options.victory_round)
             self.multiworld.get_location(victory_location, self.player).place_locked_item(
-                self.create_item(ItemName.TheGiant_Victory))
+                self.create_item(victory_map + " Victory")
+            )
+        else:
+            for m in map_list:
+                # Victory round item on every map
+                self.victory_items.append(m + " Victory")
+                victory_location = Locations.get_map_victory_location(m, self.options.victory_round)
+                self.multiworld.get_location(victory_location, self.player).place_locked_item(
+                    self.create_item(m + " Victory")
+                )
 
         filler_count = len(self.enabled_location_names)
         exclude = [item for item in self.multiworld.precollected_items[self.player]]
 
-        # Unsure?
-        # filler_count -= len(exclude)
+        filler_count -= len(exclude)
+        filler_count -= len(self.victory_items)
 
         for item in map(self.create_item, enabled_items_dict):
             if (Items.all_items_dict[item.name] not in self.victory_items) and (item not in exclude):
@@ -237,10 +270,11 @@ class BO3ZombiesWorld(World):
                 self.random.choice(string.ascii_letters) for _ in range(16)),
             'base_id': str(self.base_id),
             "slot": self.multiworld.player_name[self.player],
-            "the_giant_enabled": bool(options.the_giant_enabled),
-            "gift_weight": int(options.gift_weight),
+            "map_the_giant_enabled": bool(options.map_the_giant_enabled),
+            "map_castle_enabled": bool(options.map_castle_enabled),
+            "map_specific_machines": bool(options.map_specific_machines),
+            "map_specific_wallbuys": bool(options.map_specific_wallbuys),
             "special_rounds_enabled": bool(options.special_rounds_enabled),
-            "victory_round": int(options.victory_round),
             "blocker_doors_enabled": bool(options.blocker_doors_enabled),
         }
 
@@ -248,7 +282,6 @@ class BO3ZombiesWorld(World):
 
     @staticmethod
     def get_round_location_string(map_name: str, victory_round: int):
-        # TODO Make this nicer/more extendable
         if map_name == "The Giant":
             return Locations.TheGiant_Locations[victory_round - 1].name
         return ""
