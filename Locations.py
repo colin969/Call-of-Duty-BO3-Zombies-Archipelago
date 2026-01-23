@@ -55,7 +55,10 @@ Castle_Round_Locations = gen_map_round_locations(Maps.Castle_Map_String, 100)
 Castle_Craftable_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.CRAFTABLE_PART, row[1]) for row in [
     (LocationName.Castle_Craftable_ShieldPartDolly, 2200),
     (LocationName.Castle_Craftable_ShieldPartDoor, 2201),
-    (LocationName.Castle_Craftable_ShieldPartClamp, 2202)
+    (LocationName.Castle_Craftable_ShieldPartClamp, 2202),
+    (LocationName.Castle_Craftable_RagnarokDG4PartBody, 2210),
+    (LocationName.Castle_Craftable_RagnarokDG4PartGuards, 2211),
+    (LocationName.Castle_Craftable_RagnarokDG4PartHandle, 2212),
 ]]
 
 early_locations =  [LocationData(row[0], row[1], row[2]) for row in [
