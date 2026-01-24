@@ -63,12 +63,28 @@ Castle_Craftable_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.CR
 ]]
 
 Castle_Quest_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
-    (LocationName.Castle_Quest_FeedDragonheads, 2300),
-    (LocationName.Castle_Quest_TurnOnLandingPads, 2301),
+    (LocationName.Castle_Quest_AllSpareChange, 2300),
+    (LocationName.Castle_Quest_FeedDragonheads, 2301),
+    (LocationName.Castle_Quest_TurnOnLandingPads, 2302),
+]]
+
+Castle_Quest_Music_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Castle_Quest_Music_DeadAgain, 2400),
+    (LocationName.Castle_Quest_Music_Requiem, 2401),
+]]
+
+Castle_Quest_ElementalBow_Storm_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Castle_Quest_ElementalBow_Storm_TakeArrow, 2500),
+    (LocationName.Castle_Quest_ElementalBow_Storm_LightBeacons, 2501),
+    (LocationName.Castle_Quest_ElementalBow_Storm_Wallrun, 2502),
+    (LocationName.Castle_Quest_ElementalBow_Storm_Batteries, 2503),
+    (LocationName.Castle_Quest_ElementalBow_Storm_ChargeBeacons, 2504),
+    (LocationName.Castle_Quest_ElementalBow_Storm_RepairArrow, 2505),
+    (LocationName.Castle_Quest_ElementalBow_Storm_ForgeBow, 2506),
 ]]
 
 early_locations =  [LocationData(row[0], row[1], row[2]) for row in [
     (LocationName.RepairWindows_5, BO3ZombiesLocationCategory.MISC, 9001),
 ]]
 
-all_locations = TheGiant_Round_Locations + Castle_Round_Locations + Castle_Quest_Locations + Castle_Craftable_Locations + early_locations
+all_locations = TheGiant_Round_Locations + Castle_Round_Locations + Castle_Quest_Locations + Castle_Quest_Music_Locations + Castle_Craftable_Locations + Castle_Quest_ElementalBow_Storm_Locations + early_locations
