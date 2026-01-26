@@ -140,6 +140,7 @@ class BO3ZombiesWorld(World):
 
     def create_items(self) -> None:
         enabled_items = Items.base_items
+        enabled_items += [Items.PapItem]
 
         # Add shield parts to pool
         if self.options.randomized_shield_parts:
