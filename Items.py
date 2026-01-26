@@ -16,6 +16,8 @@ class BO3ZombiesItemCategory(IntEnum):
     MISC = 10
     VICTORY = 11
     GIFT = 12
+    TRAP = 13
+    PROGRESSIVE = 14
 
 
 class ItemData(typing.NamedTuple):
@@ -28,16 +30,6 @@ class BO3ZombiesItem(Item):
     @staticmethod
     def get_name_to_id(base_id) -> dict:
         return {item_data.name: id for id, item_data in enumerate(all_items, base_id)}
-    
-
-The_Giant_Blockers_Doors = [ItemData(row[0], row[1]) for row in [  
-    (ItemName.TheGiant_AnimalTesting,BO3ZombiesItemCategory.BLOCKER),
-    (ItemName.TheGiant_Garage,BO3ZombiesItemCategory.BLOCKER),
-    (ItemName.TheGiant_PowerRoom,BO3ZombiesItemCategory.BLOCKER),
-    (ItemName.TheGiant_Teleporter1,BO3ZombiesItemCategory.BLOCKER),
-    (ItemName.TheGiant_Teleporter2,BO3ZombiesItemCategory.BLOCKER),
-    (ItemName.TheGiant_Teleporter3,BO3ZombiesItemCategory.BLOCKER),
-]]
 
 # The Giant Items
 
@@ -113,40 +105,64 @@ The_Giant_Machines_Specific = gen_map_specific_list(Maps.The_Giant_Map_String, T
 Castle_Wallbuys_Specific = gen_map_specific_list(Maps.Castle_Map_String, Castle_Wallbuys)
 Castle_Machines_Specific = gen_map_specific_list(Maps.Castle_Map_String, Castle_Machines)
 
+# Progressives
 
+Progressive_PerkLimitIncrease = ItemData(ItemName.Progressive_PerkLimitIncrease, BO3ZombiesItemCategory.PROGRESSIVE)
+Progressive_Items = [
+    Progressive_PerkLimitIncrease
+]
+
+# Craftables
+
+ShieldParts = [ItemData(row, BO3ZombiesItemCategory.PROGRESSIVE) for row in[
+    ItemName.ShieldPart_Door,
+    ItemName.ShieldPart_Dolly,
+    ItemName.ShieldPart_Clamp,
+]]
 
 # Point Drop Items
+
 Points_Items = [ItemData(row[0], row[1]) for row in [
     (ItemName.Points500, BO3ZombiesItemCategory.MISC)
 ]]
 
 # Victory
+
 Victory_Items = [ItemData(row[0], row[1]) for row in [
     (Maps.The_Giant_Map_String + " Victory", BO3ZombiesItemCategory.VICTORY),
     (Maps.Castle_Map_String + " Victory", BO3ZombiesItemCategory.VICTORY)
 ]]
 
 # Misc/Filler Items
+
 Misc_Items = [ItemData(row[0], row[1]) for row in [
     (ItemName.Points50, BO3ZombiesItemCategory.MISC)
 ]]
 
-Gift_Items = [ItemData(row[0], row[1]) for row in [
-    (ItemName.Gift_Carpenter_Powerup, BO3ZombiesItemCategory.GIFT),
-    (ItemName.Gift_Double_Points_Powerup, BO3ZombiesItemCategory.GIFT),
-    (ItemName.Gift_InstaKill_Powerup, BO3ZombiesItemCategory.GIFT),
-    (ItemName.Gift_Fire_Sale_Powerup, BO3ZombiesItemCategory.GIFT),
-    (ItemName.Gift_Max_Ammo_Powerup, BO3ZombiesItemCategory.GIFT),
-    (ItemName.Gift_Nuke_Powerup, BO3ZombiesItemCategory.GIFT),
-    (ItemName.Gift_Free_Perk_Powerup, BO3ZombiesItemCategory.GIFT),
+# Gifts
+
+Gift_Items = [ItemData(row, BO3ZombiesItemCategory.GIFT) for row in [
+    ItemName.Gift_Carpenter_Powerup,
+    ItemName.Gift_Double_Points_Powerup,
+    ItemName.Gift_InstaKill_Powerup,
+    ItemName.Gift_Fire_Sale_Powerup,
+    ItemName.Gift_Max_Ammo_Powerup,
+    ItemName.Gift_Nuke_Powerup,
+    ItemName.Gift_Free_Perk_Powerup,
+]]
+
+# Traps
+
+Trap_Items = [ItemData(row, BO3ZombiesItemCategory.TRAP) for row in [
+    ItemName.Trap_ThirdPersonMode,
 ]]
 
 base_items = Points_Items
 
 all_items = (
-    Points_Items + Victory_Items + Gift_Items + Misc_Items
+    Progressive_Items + ShieldParts + Points_Items + Victory_Items + Gift_Items + Trap_Items + Misc_Items
     # The Giant
-    + The_Giant_Blockers_Doors + The_Giant_Machines + The_Giant_Wallbuys
+    + The_Giant_Machines + The_Giant_Wallbuys
     # Castle
     + Castle_Machines + Castle_Wallbuys
     # Machine Specifics

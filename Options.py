@@ -19,10 +19,24 @@ class SpecialRoundsEnabled(Toggle):
     display_name = "Special Rounds Enabled"
     default = True
 
-class BlockerDoorsEnabled(Toggle):
-    """Enables doors as blockers"""
-    display_name = "Enable Door Blockers"
+class RandomizeShieldParts(Toggle):
+    """Shuffles your shield parts into the item pool"""
+    display_name = "Randomize Shield Parts"
     default = True
+
+class PerkLimitDefaultModifier(Range):
+    """Modifier for initial perk limit, e.g If a map has a perk limit of 4, then -1 modifier will make it 3"""
+    display_name = "Perk Limit Default Modifier"
+    default = -1
+    range_start = -4
+    range_end = 4
+
+class ProgressivePerkLimitIncrease(Range):
+    """How many increases to the perk limit to add to the item pool"""
+    display_name = "Progressive Perk Limit Increase"
+    default = 2
+    range_start = 0
+    range_end = 6
 
 class MapSpecificWallbuysEnabled(Toggle):
     """Enables map specific wallbuy items"""
@@ -74,7 +88,9 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     special_rounds_enabled: SpecialRoundsEnabled
     victory_round: VictoryRound
     victory_round_choice: VictoryRoundChoice
-    blocker_doors_enabled: BlockerDoorsEnabled
+    perk_limit_default_modifier: PerkLimitDefaultModifier
+    progressive_perk_limit_increase: ProgressivePerkLimitIncrease
+    randomized_shield_parts: RandomizeShieldParts
     map_specific_wallbuys: MapSpecificWallbuysEnabled
     map_specific_machines: MapSpecificMachinesEnabled
     gift_weight: GiftWeight
@@ -83,8 +99,13 @@ bo3_option_groups = [
     OptionGroup("General Options", [
         VictoryRound,
         VictoryRoundChoice,
+        RandomizeShieldParts,
         MapSpecificWallbuysEnabled,
         MapSpecificMachinesEnabled,
+    ]),
+    OptionGroup("Progressive Settings", [
+        PerkLimitDefaultModifier,
+        ProgressivePerkLimitIncrease,
     ]),
     OptionGroup("Map Settings", [
         MapTheGiantEnabled,
@@ -95,6 +116,5 @@ bo3_option_groups = [
     ]),
     OptionGroup("WIP", [
         SpecialRoundsEnabled,
-        BlockerDoorsEnabled,
     ])
 ]

@@ -1,13 +1,5 @@
 from . import Maps
 
-# TheGiant
-TheGiant_AnimalTesting              ="(The Giant) Animal Testing"
-TheGiant_Garage                     ="(The Giant) Garage"
-TheGiant_PowerRoom                  ="(The Giant) Power Room"
-TheGiant_Teleporter1                ="(The Giant) Teleporter 1"
-TheGiant_Teleporter2                ="(The Giant) Teleporter 2"
-TheGiant_Teleporter3                ="(The Giant) Teleporter 3"
-
 # Machines
 
 Machine_Juggernog = "Juggernog"
@@ -25,6 +17,7 @@ Machine_VultureAid = "Vulture Aid"
 Machine_WidowsWine = "Widow's Wine"
 
 # Weapons
+
 # Assault Rifles
 
 Weapon_ICR = "Wallbuy - ICR-1"
@@ -93,6 +86,16 @@ Weapon_M1911 = "Wallbuy - M1911"
 Weapon_Marshal16 = "Wallbuy - Marhsal 16"
 Weapon_MauserC96 = "Wallbuy - Mauser C96"
 
+# Melee
+
+Weapon_BowieKnife = "Wallbuy - Bowie Knife"
+
+# Traps
+
+Trap_ThirdPersonMode = "Trap - Third Person Mode"
+
+# Gifts
+
 Gift_Carpenter_Powerup =  "Gift - Carpenter Powerup"
 Gift_Double_Points_Powerup =  "Gift - Double Points Powerup"
 Gift_InstaKill_Powerup =  "Gift - InstaKill Powerup"
@@ -101,9 +104,14 @@ Gift_Max_Ammo_Powerup =  "Gift - Max Ammo Powerup"
 Gift_Nuke_Powerup =  "Gift - Nuke Powerup"
 Gift_Free_Perk_Powerup =  "Gift - Free Perk Powerup"
 
-# Melee
+# Progressives
 
-Weapon_BowieKnife = "Wallbuy - Bowie Knife"
+Progressive_PerkLimitIncrease = "Progressive - Perk Limit Increase"
+
+# Shield Parts
+ShieldPart_Door = "Shield Part - Door"
+ShieldPart_Dolly = "Shield Part - Dolly"
+ShieldPart_Clamp = "Shield Part - Clamp"
 
 # Misc
 Points50                            ="50 Points"

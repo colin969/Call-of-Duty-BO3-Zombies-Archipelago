@@ -10,8 +10,6 @@ from . import Regions, Locations, Items, Options
 from .Options import BO3ZombiesOptions, bo3_option_groups
 from .Names import ItemName, LocationName, RegionName, Maps
 
-from .Logic import CODBO3Logic
-
 class BO3ZombiesWeb(WebWorld):
     theme = "ocean"
     option_groups = bo3_option_groups
@@ -48,6 +46,7 @@ class BO3ZombiesWorld(World):
         if self.options.map_the_giant_enabled:
             for i in range(0, self.options.victory_round):
                 self.enabled_location_names.append(Locations.TheGiant_Round_Locations[i].name)
+
         if self.options.map_castle_enabled:
             self.enabled_location_names.extend([row.name for row in Locations.Castle_Craftable_Locations])
             self.enabled_location_names.extend([row.name for row in Locations.Castle_Quest_Locations])
@@ -70,45 +69,17 @@ class BO3ZombiesWorld(World):
 
         map_rounds = self.options.victory_round
 
-        print("Assigning regions")
-
         if self.options.map_the_giant_enabled:
-            rounds_assigned = 0
-            # Courtyard
-
-            region_distributions = [
-                (RegionName.TheGiant_Courtyard, 3),
-                (RegionName.TheGiant_AnimalTesting, 3),
-                (RegionName.TheGiant_Garage, 4),
-                (RegionName.TheGiant_PowerRoom, 4),
-                (RegionName.TheGiant_Teleporter1, 0),
-                (RegionName.TheGiant_Teleporter2, 7),
-                (RegionName.TheGiant_Teleporter3, 999)
-            ]
-            
-            # Add round locations until each region is full, or we run out of locations to allocate
-            for region_name, desired_count in region_distributions:
-                assigned_rounds = max(desired_count, (map_rounds - rounds_assigned))
-                print("Assigned " + str(assigned_rounds) + " to Region " + region_name)
-                
-                if assigned_rounds > 0:
-                    self.multiworld.regions.append(
-                        self.create_region(self.multiworld, self.player, self.enabled_location_names,
-                            region_name,
-                            [loc[0] for loc in Locations.TheGiant_Round_Locations[rounds_assigned:rounds_assigned + assigned_rounds]]
-                        )
-                    )
-                    rounds_assigned += assigned_rounds
-                else:
-                    self.multiworld.regions.append(
-                        self.create_region(self.multiworld, self.player, self.enabled_location_names,
-                            region_name,
-                            []
-                        )
-                    )
+            all_locations = []
+            all_locations.extend([loc.name for loc in Locations.TheGiant_Round_Locations[0:map_rounds]])
+            self.multiworld.regions.append(
+                self.create_region(self.multiworld, self.player, self.enabled_location_names,
+                    RegionName.TheGiant_Courtyard,
+                    all_locations
+                )
+            )
         
         if self.options.map_castle_enabled:
-            # TODO: Add blockers
             all_locations = []
             all_locations.extend([loc.name for loc in Locations.Castle_Round_Locations[0:map_rounds]])
             all_locations.extend([loc.name for loc in Locations.Castle_Craftable_Locations])
@@ -138,6 +109,7 @@ class BO3ZombiesWorld(World):
         useful_categories = {
             Items.BO3ZombiesItemCategory.WALLBUY,
             Items.BO3ZombiesItemCategory.MACHINE,
+            Items.BO3ZombiesItemCategory.PROGRESSIVE,
         }
 
         # TODO: do a getProgressiveItems list instead
@@ -167,8 +139,16 @@ class BO3ZombiesWorld(World):
         return self.create_item(ItemName.Points50)
 
     def create_items(self) -> None:
-
         enabled_items = Items.base_items
+
+        # Add shield parts to pool
+        if self.options.randomized_shield_parts:
+            enabled_items += Items.ShieldParts
+
+        # Add progressives to pool
+        if self.options.progressive_perk_limit_increase > 0:
+            for i in range(self.options.progressive_perk_limit_increase):
+                enabled_items += [Items.Progressive_PerkLimitIncrease]
 
         # Add machines to pool
         if self.options.map_specific_machines:
@@ -212,9 +192,6 @@ class BO3ZombiesWorld(World):
                         enabled_items.append(wallbuy)
                         seen.add(wallbuy[0])
 
-
-        if self.options.map_the_giant_enabled:
-            enabled_items += Items.The_Giant_Blockers_Doors
 
         enabled_items_dict = {item_data.name: item_data for item_data in enabled_items}
 
@@ -285,7 +262,8 @@ class BO3ZombiesWorld(World):
             "map_specific_machines": bool(options.map_specific_machines),
             "map_specific_wallbuys": bool(options.map_specific_wallbuys),
             "special_rounds_enabled": bool(options.special_rounds_enabled),
-            "blocker_doors_enabled": bool(options.blocker_doors_enabled),
+            "perk_limit_default_modifier": int(options.perk_limit_default_modifier),
+            "randomized_shield_parts": bool(options.randomized_shield_parts),
         }
 
         return slot_data
