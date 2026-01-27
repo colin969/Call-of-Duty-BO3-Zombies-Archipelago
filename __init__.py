@@ -52,6 +52,7 @@ class BO3ZombiesWorld(World):
             self.enabled_location_names.extend([row.name for row in Locations.Castle_Quest_Locations])
             self.enabled_location_names.extend([row.name for row in Locations.Castle_Quest_Music_Locations])
             self.enabled_location_names.extend([row.name for row in Locations.Castle_Quest_ElementalBow_Storm_Locations])
+            self.enabled_location_names.extend([row.name for row in Locations.Castle_Quest_ElementalBow_Wolf_Locations])
             for i in range(0, self.options.victory_round):
                 self.enabled_location_names.append(Locations.Castle_Round_Locations[i].name)
 
@@ -86,6 +87,7 @@ class BO3ZombiesWorld(World):
             all_locations.extend([loc.name for loc in Locations.Castle_Quest_Locations])
             all_locations.extend([loc.name for loc in Locations.Castle_Quest_Music_Locations])
             all_locations.extend([loc.name for loc in Locations.Castle_Quest_ElementalBow_Storm_Locations])
+            all_locations.extend([loc.name for loc in Locations.Castle_Quest_ElementalBow_Wolf_Locations])
             self.multiworld.regions.append(
                 self.create_region(self.multiworld, self.player, self.enabled_location_names,
                     RegionName.Castle_Gondola,

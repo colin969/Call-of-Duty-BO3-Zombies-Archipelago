@@ -83,8 +83,21 @@ Castle_Quest_ElementalBow_Storm_Locations = [LocationData(row[0], BO3ZombiesLoca
     (LocationName.Castle_Quest_ElementalBow_Storm_ForgeBow, 2506),
 ]]
 
+Castle_Quest_ElementalBow_Wolf_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Castle_Quest_ElementalBow_Wolf_Paintings, 2510),
+    (LocationName.Castle_Quest_ElementalBow_Wolf_TakeArrow, 2511),
+    (LocationName.Castle_Quest_ElementalBow_Wolf_CollectSkull, 2512),
+    (LocationName.Castle_Quest_ElementalBow_Wolf_Escort, 2513),
+    (LocationName.Castle_Quest_ElementalBow_Wolf_RepairArrow, 2514),
+    (LocationName.Castle_Quest_ElementalBow_Wolf_ForgeBow, 2515),
+]]
+
 early_locations =  [LocationData(row[0], row[1], row[2]) for row in [
     (LocationName.RepairWindows_5, BO3ZombiesLocationCategory.MISC, 9001),
 ]]
 
-all_locations = TheGiant_Round_Locations + Castle_Round_Locations + Castle_Quest_Locations + Castle_Quest_Music_Locations + Castle_Craftable_Locations + Castle_Quest_ElementalBow_Storm_Locations + early_locations
+all_locations = (
+    TheGiant_Round_Locations 
+    + Castle_Round_Locations + Castle_Quest_Locations + Castle_Quest_Music_Locations + Castle_Craftable_Locations 
+    + Castle_Quest_ElementalBow_Storm_Locations + Castle_Quest_ElementalBow_Wolf_Locations
+    + early_locations)

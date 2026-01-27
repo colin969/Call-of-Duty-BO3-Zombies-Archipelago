@@ -23,4 +23,11 @@ Castle_Quest_ElementalBow_Storm_ChargeBeacons = Maps.Castle_Map_String + " Storm
 Castle_Quest_ElementalBow_Storm_RepairArrow = Maps.Castle_Map_String + " Storm Bow - Repair the Arrow"
 Castle_Quest_ElementalBow_Storm_ForgeBow = Maps.Castle_Map_String + " Storm Bow - Forge the Bow"
 
+Castle_Quest_ElementalBow_Wolf_Paintings = Maps.Castle_Map_String + " Wolf Howl - Painting Puzzle"
+Castle_Quest_ElementalBow_Wolf_TakeArrow = Maps.Castle_Map_String + " Wolf Howl - Take Broken Arrow"
+Castle_Quest_ElementalBow_Wolf_CollectSkull = Maps.Castle_Map_String + " Wolf Howl - Collect the Skull"
+Castle_Quest_ElementalBow_Wolf_Escort = Maps.Castle_Map_String + " Wolf Howl - Follow the Wolf"
+Castle_Quest_ElementalBow_Wolf_RepairArrow = Maps.Castle_Map_String + " Wolf Howl - Repair the Arrow"
+Castle_Quest_ElementalBow_Wolf_ForgeBow = Maps.Castle_Map_String + " Wolf Howl - Forge the Bow"
+
 RepairWindows_5 = "Repair Windows 5 Times"
