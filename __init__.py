@@ -92,7 +92,8 @@ class BO3ZombiesWorld(World):
                     all_locations
                 )
             )
-
+        else:
+            self.multiworld.regions.append(self.create_region(self.multiworld, self.player, [], RegionName.Shadows_Alleyway, []))
 
         if self.options.map_the_giant_enabled:
             all_locations = []
@@ -103,6 +104,8 @@ class BO3ZombiesWorld(World):
                     all_locations
                 )
             )
+        else:
+            self.multiworld.regions.append(self.create_region(self.multiworld, self.player, [], RegionName.TheGiant_Courtyard, []))
         
         if self.options.map_castle_enabled:
             all_locations = []
@@ -118,6 +121,8 @@ class BO3ZombiesWorld(World):
                     all_locations
                 )
             )
+        else:
+            self.multiworld.regions.append(self.create_region(self.multiworld, self.player, [], RegionName.Castle_Gondola, []))
         
         Regions.connect_regions(self.multiworld, self.player)
 

@@ -10,7 +10,7 @@ def connect_regions(world: MultiWorld, player: int):
     names: typing.Dict[str, int] = {}
 
     # connecting Menu to enabled starting locations
-   # connect(world, player, names, "Menu", RegionName.TheGiant_Courtyard)
+    connect(world, player, names, "Menu", RegionName.TheGiant_Courtyard)
     connect(world, player, names, "Menu", RegionName.Castle_Gondola)
     connect(world, player, names, "Menu", RegionName.Shadows_Alleyway)
 
