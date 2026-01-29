@@ -115,6 +115,18 @@ ShieldPart_Door = "Shield Part - Door"
 ShieldPart_Dolly = "Shield Part - Dolly"
 ShieldPart_Clamp = "Shield Part - Clamp"
 
+Castle_Craftable_GravitySpikes_Body = "Ragnarok DG-4 Part - Body"
+Castle_Craftable_GravitySpikes_Guards = "Ragnarok DG-4 Part - Guards"
+Castle_Craftable_GravitySpikes_Handle = "Ragnarok DG-4 Part - Handle"
+
+Shadows_Craftable_ApothiconServant_Heart = "Apothicon Servant Part - Margwa Heart"
+Shadows_Craftable_ApothiconServant_Skeleton = "Apothicon Servant Part - Margwa Tentacle"
+Shadows_Craftable_ApothiconServant_Xenomatter = "Apothicon Servant Part - Xenomatter"
+
+Shadows_Craftable_CivilProtector_Fuse01 = "Civil Protector Part - Fuse 1"
+Shadows_Craftable_CivilProtector_Fuse02 = "Civil Protector Part - Fuse 2"
+Shadows_Craftable_CivilProtector_Fuse03 = "Civil Protector Part - Fuse 3"
+
 # Misc
 Points50                            ="50 Points"
 Points500                           ="500 Points"

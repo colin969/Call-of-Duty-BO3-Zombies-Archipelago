@@ -60,6 +60,9 @@ The_Giant_Wallbuys = [ItemData(row, BO3ZombiesItemCategory.WALLBUY) for row in[
     ItemName.Weapon_LCAR,
 ]]
 
+The_Giant_Wallbuys_Specific = gen_map_specific_list(Maps.The_Giant_Map_String, The_Giant_Wallbuys)
+The_Giant_Machines_Specific = gen_map_specific_list(Maps.The_Giant_Map_String, The_Giant_Machines)
+
 # Castle Items
 
 Castle_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
@@ -97,13 +100,54 @@ Castle_Wallbuys = [ItemData(row, BO3ZombiesItemCategory.WALLBUY) for row in [
     ItemName.Weapon_BowieKnife
 ]]
 
-# Map Specific Gen
-
-The_Giant_Wallbuys_Specific = gen_map_specific_list(Maps.The_Giant_Map_String, The_Giant_Wallbuys)
-The_Giant_Machines_Specific = gen_map_specific_list(Maps.The_Giant_Map_String, The_Giant_Machines)
-
 Castle_Wallbuys_Specific = gen_map_specific_list(Maps.Castle_Map_String, Castle_Wallbuys)
 Castle_Machines_Specific = gen_map_specific_list(Maps.Castle_Map_String, Castle_Machines)
+
+Castle_Craftables = [ItemData(row, BO3ZombiesItemCategory.MISC) for row in[
+    ItemName.Castle_Craftable_GravitySpikes_Body,
+    ItemName.Castle_Craftable_GravitySpikes_Guards,
+    ItemName.Castle_Craftable_GravitySpikes_Handle
+]]
+
+# Shadows of Evil
+
+Shadows_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
+    ItemName.Machine_Juggernog,
+    ItemName.Machine_QuickRevive,
+    ItemName.Machine_DoubleTap,
+    ItemName.Machine_SpeedCola,
+    ItemName.Machine_StaminUp,
+    ItemName.Machine_MuleKick,
+    ItemName.Machine_WidowsWine,
+]]
+
+Shadows_Machines_Specific = gen_map_specific_list(Maps.Shadows_Map_String, Shadows_Machines)
+
+Shadows_Wallbuys = [ItemData(row, BO3ZombiesItemCategory.WALLBUY) for row in[
+    ItemName.Weapon_RK5,
+    ItemName.Weapon_Sheiva,
+    ItemName.Weapon_LCAR,
+    ItemName.Weapon_KRM,
+    ItemName.Weapon_HVK,
+    ItemName.Weapon_M8A7,
+    ItemName.Weapon_Kuda,
+    ItemName.Weapon_VMP,
+    ItemName.Weapon_Vesper,
+    ItemName.Weapon_KN44,
+    ItemName.Weapon_Bootlegger,
+    ItemName.Weapon_BowieKnife,
+]]
+
+Shadows_Wallbuys_Specific = gen_map_specific_list(Maps.Shadows_Map_String, Shadows_Wallbuys)
+
+Shadows_Craftables = [ItemData(row, BO3ZombiesItemCategory.MISC) for row in[
+    ItemName.Shadows_Craftable_ApothiconServant_Heart,
+    ItemName.Shadows_Craftable_ApothiconServant_Skeleton,
+    ItemName.Shadows_Craftable_ApothiconServant_Xenomatter,
+    ItemName.Shadows_Craftable_CivilProtector_Fuse01,
+    ItemName.Shadows_Craftable_CivilProtector_Fuse02,
+    ItemName.Shadows_Craftable_CivilProtector_Fuse03,
+]]
 
 # Progressives
 
@@ -129,6 +173,7 @@ Points_Items = [ItemData(row[0], row[1]) for row in [
 # Victory
 
 Victory_Items = [ItemData(row[0], row[1]) for row in [
+    (Maps.Shadows_Map_String + " Victory", BO3ZombiesItemCategory.VICTORY),
     (Maps.The_Giant_Map_String + " Victory", BO3ZombiesItemCategory.VICTORY),
     (Maps.Castle_Map_String + " Victory", BO3ZombiesItemCategory.VICTORY)
 ]]
@@ -165,13 +210,16 @@ all_items = (
     Progressive_Items + ShieldParts + Points_Items + Victory_Items + Gift_Items + Trap_Items + Misc_Items
     + [PapItem]
     # The Giant
-    + The_Giant_Machines + The_Giant_Wallbuys
+    + The_Giant_Machines + The_Giant_Machines_Specific
+    + The_Giant_Wallbuys + The_Giant_Wallbuys_Specific
     # Castle
-    + Castle_Machines + Castle_Wallbuys
-    # Machine Specifics
-    + The_Giant_Machines_Specific + Castle_Machines_Specific
-    # Wallbuy Specifics
-    + The_Giant_Wallbuys_Specific + Castle_Wallbuys_Specific
+    + Castle_Machines + Castle_Machines_Specific
+    + Castle_Wallbuys + Castle_Wallbuys_Specific
+    + Castle_Craftables
+    # Shadows of Evil
+    + Shadows_Machines + Shadows_Machines_Specific
+    + Shadows_Wallbuys + Shadows_Wallbuys_Specific
+    + Shadows_Craftables
 )
 
 all_items_dict = {item_data.name: item_data for item_data in all_items}

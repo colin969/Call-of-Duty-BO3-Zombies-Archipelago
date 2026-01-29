@@ -43,6 +43,15 @@ class BO3ZombiesWorld(World):
         for location in Locations.early_locations:
             self.enabled_location_names.append(location.name)
 
+        if self.options.map_shadows_enabled:
+            self.enabled_location_names.extend([row.name for row in Locations.Shadows_Craftable_Locations])
+            self.enabled_location_names.extend([row.name for row in Locations.Shadows_Quest_Locations])
+            self.enabled_location_names.extend([row.name for row in Locations.Shadows_Quest_MainQuest_Locations])
+            self.enabled_location_names.extend([row.name for row in Locations.Shadows_Quest_ApothiconSword_Locations])
+            self.enabled_location_names.extend([row.name for row in Locations.Shadows_Quest_MainEE_Locations])
+            for i in range(0, self.options.victory_round):
+                self.enabled_location_names.append(Locations.Shadows_Round_Locations[i].name)
+
         if self.options.map_the_giant_enabled:
             for i in range(0, self.options.victory_round):
                 self.enabled_location_names.append(Locations.TheGiant_Round_Locations[i].name)
@@ -60,7 +69,6 @@ class BO3ZombiesWorld(World):
         universal_locations = [
             LocationName.RepairWindows_5
         ]
-        print(self.enabled_location_names)
         menu_region = self.create_region(self.multiworld, self.player, self.enabled_location_names, 'Menu', universal_locations)
         
         self.multiworld.regions.append(menu_region)
@@ -69,6 +77,22 @@ class BO3ZombiesWorld(World):
         # TODO: Randomize this a bit/weight it
 
         map_rounds = self.options.victory_round
+
+        if self.options.map_shadows_enabled:
+            all_locations = []
+            all_locations.extend([loc.name for loc in Locations.Shadows_Round_Locations[0:map_rounds]])
+            all_locations.extend([loc.name for loc in Locations.Shadows_Craftable_Locations])
+            all_locations.extend([loc.name for loc in Locations.Shadows_Quest_Locations])
+            all_locations.extend([loc.name for loc in Locations.Shadows_Quest_MainQuest_Locations])
+            all_locations.extend([loc.name for loc in Locations.Shadows_Quest_ApothiconSword_Locations])
+            all_locations.extend([loc.name for loc in Locations.Shadows_Quest_MainEE_Locations])
+            self.multiworld.regions.append(
+                self.create_region(self.multiworld, self.player, self.enabled_location_names,
+                    RegionName.Shadows_Alleyway,
+                    all_locations
+                )
+            )
+
 
         if self.options.map_the_giant_enabled:
             all_locations = []
@@ -156,6 +180,8 @@ class BO3ZombiesWorld(World):
         # Add machines to pool
         if self.options.map_specific_machines:
             # Add map specific machines for each
+            if self.options.map_shadows_enabled:
+                enabled_items += Items.Shadows_Machines_Specific
             if self.options.map_the_giant_enabled:
                 enabled_items += Items.The_Giant_Machines_Specific
             if self.options.map_castle_enabled:
@@ -163,20 +189,18 @@ class BO3ZombiesWorld(World):
         else:
             # Only add one instance per machine
             seen = set()
+            if self.options.map_shadows_enabled:
+                add_universal_items(enabled_items, seen, Items.Shadows_Machines)
             if self.options.map_the_giant_enabled:
-                for machine in Items.The_Giant_Machines:
-                    if machine[0] not in seen:
-                        enabled_items.append(machine)
-                        seen.add(machine[0])
+                add_universal_items(enabled_items, seen, Items.The_Giant_Machines)
             if self.options.map_castle_enabled:
-                for machine in Items.Castle_Machines:
-                    if machine[0] not in seen:
-                        enabled_items.append(machine)
-                        seen.add(machine[0])
+                add_universal_items(enabled_items, seen, Items.Castle_Machines)
 
         # Add wallbuys to pool
         if self.options.map_specific_wallbuys:
             # Add map specific wallbuys for each
+            if self.options.map_shadows_enabled:
+                enabled_items += Items.Shadows_Wallbuys_Specific
             if self.options.map_the_giant_enabled:
                 enabled_items += Items.The_Giant_Wallbuys_Specific
             if self.options.map_castle_enabled:
@@ -184,21 +208,20 @@ class BO3ZombiesWorld(World):
         else:
             # Only add one instance per wallbuy
             seen = set()
+            if self.options.map_shadows_enabled:
+                add_universal_items(enabled_items, seen, Items.Shadows_Wallbuys)
             if self.options.map_the_giant_enabled:
-                for wallbuy in Items.The_Giant_Wallbuys:
-                    if wallbuy[0] not in seen:
-                        enabled_items.append(wallbuy)
-                        seen.add(wallbuy[0])
+                add_universal_items(enabled_items, seen, Items.The_Giant_Wallbuys)
             if self.options.map_castle_enabled:
-                for wallbuy in Items.Castle_Wallbuys:
-                    if wallbuy[0] not in seen:
-                        enabled_items.append(wallbuy)
-                        seen.add(wallbuy[0])
+                add_universal_items(enabled_items, seen, Items.Castle_Wallbuys)
+
 
 
         enabled_items_dict = {item_data.name: item_data for item_data in enabled_items}
 
         map_list = []
+        if self.options.map_shadows_enabled:
+            map_list.append(Maps.Shadows_Map_String)
         if self.options.map_the_giant_enabled:
             map_list.append(Maps.The_Giant_Map_String)
         if self.options.map_castle_enabled:
@@ -276,3 +299,9 @@ class BO3ZombiesWorld(World):
         if map_name == "The Giant":
             return Locations.TheGiant_Locations[victory_round - 1].name
         return ""
+
+def add_universal_items(enabled_items, seen, items):
+    for item in items:
+        if item[0] not in seen:
+            enabled_items.append(item)
+            seen.add(item[0])

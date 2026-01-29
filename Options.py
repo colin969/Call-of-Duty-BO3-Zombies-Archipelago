@@ -3,11 +3,15 @@ from dataclasses import dataclass
 import typing
 from Options import Option, OptionGroup, Toggle, PerGameCommonOptions, Range, NamedRange
 
+class MapShadowsEnabled(Toggle):
+    """Enables Map: \"Shadows of Evil\""""
+    display_name =  "\"Shadows of Evil\" map enabled"
+    default = True
 
 class MapTheGiantEnabled(Toggle):
     """Enables Map: \"The Giant\"."""
     display_name = "\"The Giant\" map enabled"
-    default = True
+    default = False
 
 class MapCastleEnabled(Toggle):
     """Enables Map: \"Castle\"."""
@@ -27,14 +31,14 @@ class RandomizeShieldParts(Toggle):
 class PerkLimitDefaultModifier(Range):
     """Modifier for initial perk limit, e.g If a map has a perk limit of 4, then -1 modifier will make it 3"""
     display_name = "Perk Limit Default Modifier"
-    default = -1
+    default = -2
     range_start = -4
     range_end = 4
 
 class ProgressivePerkLimitIncrease(Range):
     """How many increases to the perk limit to add to the item pool"""
     display_name = "Progressive Perk Limit Increase"
-    default = 2
+    default = 4
     range_start = 0
     range_end = 6
 
@@ -83,6 +87,7 @@ class VictoryRoundChoice(NamedRange):
 
 @dataclass
 class BO3ZombiesOptions(PerGameCommonOptions):
+    map_shadows_enabled: MapShadowsEnabled
     map_the_giant_enabled: MapTheGiantEnabled
     map_castle_enabled: MapCastleEnabled
     special_rounds_enabled: SpecialRoundsEnabled
@@ -108,6 +113,7 @@ bo3_option_groups = [
         ProgressivePerkLimitIncrease,
     ]),
     OptionGroup("Map Settings", [
+        MapShadowsEnabled,
         MapTheGiantEnabled,
         MapCastleEnabled,
     ]),
