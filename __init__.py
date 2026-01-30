@@ -217,15 +217,9 @@ class BO3ZombiesWorld(World):
             # Get list of compatible enabled maps
             ee_pairs = []
             if self.options.map_shadows_enabled:
-                ee_item = self.create_item(Maps.Shadows_Map_String + ItemName.EE_Victory)
-                print("Shadows EE Victory classification: ")
-                print(ee_item.classification)
-                ee_pairs.append((LocationName.Shadows_Quest_MainEE_Victory, ee_item))
+                ee_pairs.append((LocationName.Shadows_Quest_MainEE_Victory, Maps.Shadows_Map_String + ItemName.EE_Victory))
             if self.options.map_castle_enabled:
-                ee_item = self.create_item(Maps.Castle_Map_String + ItemName.EE_Victory)
-                print("Castle EE Victory classification: ")
-                print(ee_item.classification)
-                ee_pairs.append((LocationName.Castle_Quest_MainEE_Victory, ee_item))
+                ee_pairs.append((LocationName.Castle_Quest_MainEE_Victory, Maps.Castle_Map_String + ItemName.EE_Victory))
 
             # Get bounds for number of victory items to add
             ee_allow_any = not self.options.goal_ee_random
@@ -238,7 +232,8 @@ class BO3ZombiesWorld(World):
 
             # Fill victory items at their victory locations
             for pair in ee_pairs:
-                self.multiworld.get_location(pair[0], self.player).place_locked_item(pair[1])
+                item = self.create_item(pair[1])
+                self.multiworld.get_location(pair[0], self.player).place_locked_item(item)
                 self.ee_goal_items.append(pair[1])
 
         # Weapon Quest
