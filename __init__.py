@@ -6,6 +6,8 @@ from BaseClasses import MultiWorld, Region, Item, ItemClassification, Tutorial
 
 from worlds.AutoWorld import World, WebWorld
 
+from worlds.generic.Rules import set_rule
+
 from . import Regions, Locations, Items, Options
 from .Options import BO3ZombiesOptions, bo3_option_groups
 from .Names import ItemName, LocationName, RegionName, Maps
@@ -65,21 +67,17 @@ class BO3ZombiesWorld(World):
             all_locations.extend([loc.name for loc in Locations.Shadows_Quest_MainQuest_Locations])
             all_locations.extend([loc.name for loc in Locations.Shadows_Quest_ApothiconSword_Locations])
             all_locations.extend([loc.name for loc in Locations.Shadows_Quest_MainEE_Locations])
-            self.multiworld.regions.append(
-                self.create_region(self.multiworld, self.player, RegionName.Shadows_Alleyway, all_locations)
-            )
-        else:
-            self.multiworld.regions.append(self.create_region(self.multiworld, self.player, RegionName.Shadows_Alleyway, []))
+            main_region = self.create_region(self.multiworld, self.player, RegionName.Shadows_Alleyway, all_locations)
+            self.multiworld.regions.append(main_region)
+            menu_region.connect(main_region)
 
         if self.options.map_the_giant_enabled:
             all_locations = []
             add_round_locations(all_locations, Locations.TheGiant_Round_Locations, round_max, round_freq, is_round_goal_cond, goal_round)
-            self.multiworld.regions.append(
-                self.create_region(self.multiworld, self.player, RegionName.TheGiant_Courtyard, all_locations)
-            )
-        else:
-            self.multiworld.regions.append(self.create_region(self.multiworld, self.player, RegionName.TheGiant_Courtyard, []))
-        
+            main_region = self.create_region(self.multiworld, self.player, RegionName.TheGiant_Courtyard, all_locations)
+            self.multiworld.regions.append(main_region)
+            menu_region.connect(main_region)
+
         if self.options.map_castle_enabled:
             all_locations = []
 
@@ -98,17 +96,26 @@ class BO3ZombiesWorld(World):
             add_round_locations(all_locations, Locations.Castle_Round_Locations, round_max, round_freq, is_round_goal_cond, goal_round)
             all_locations.extend([loc.name for loc in Locations.Castle_Craftable_Locations])
             all_locations.extend([loc.name for loc in Locations.Castle_Quest_Locations])
-            all_locations.extend([loc.name for loc in Locations.Castle_Quest_MainEE_Locations])
+            all_locations.extend([loc.name for loc in Locations.Castle_Quest_MainEE_Locations[:4]]) # Up to Boss Fight start
             all_locations.extend([loc.name for loc in Locations.Castle_Quest_Music_Locations])
-            self.multiworld.regions.append(self.create_region(self.multiworld, self.player, RegionName.Castle_Gondola, all_locations))
             # Weapon Quest - Add available bows
             if self.options.goal_condition == 1:
                 for bow in bow_pairs:
                     self.multiworld.get_location(bow[0][-1].name, self.player).place_locked_item(bow[1])
-        else:
-            self.multiworld.regions.append(self.create_region(self.multiworld, self.player, RegionName.Castle_Gondola, []))
-        
-        Regions.connect_regions(self.multiworld, self.player)
+
+            main_region = self.create_region(self.multiworld, self.player, RegionName.Castle_Gondola, all_locations)
+            self.multiworld.regions.append(main_region)
+
+            boss_fight_locations = [loc.name for loc in Locations.Castle_Quest_MainEE_Locations[4:]]
+            boss_region = self.create_region(self.multiworld, self.player, RegionName.Castle_BossFight, boss_fight_locations)
+            self.multiworld.regions.append(boss_region)
+
+            menu_region.connect(main_region)            
+            main_region.connect(boss_region, lambda state: state.has(ItemName.Castle_Craftable_GravitySpikes_Body, self.player) and
+                state.has(ItemName.Castle_Craftable_GravitySpikes_Guards, self.player) and
+                state.has(ItemName.Castle_Craftable_GravitySpikes_Handle, self.player))
+
+            print(self.multiworld.regions)
 
     def create_region(self, world: MultiWorld, player: int, name: str, locations=None):
         ret = Region(name, player, world)
@@ -205,12 +212,14 @@ class BO3ZombiesWorld(World):
             map_list.append(Maps.Shadows_Map_String)
             if self.options.randomized_shield_parts:
                 enabled_items += Items.Shadows_Shield
+            enabled_items += Items.Shadows_Craftables
         if self.options.map_the_giant_enabled:
             map_list.append(Maps.The_Giant_Map_String)
         if self.options.map_castle_enabled:
             map_list.append(Maps.Castle_Map_String)
             if self.options.randomized_shield_parts:
                 enabled_items += Items.Castle_Shield
+            enabled_items += Items.Castle_Craftables
 
         # Easter Egg Hunt
         if self.options.goal_condition == 0:
@@ -258,10 +267,9 @@ class BO3ZombiesWorld(World):
                 self.multiworld.get_location(goal_location, self.player).place_locked_item(goal_item)
 
         locations_left = len(self.multiworld.get_unfilled_locations(self.player))
-        enabled_items_dict = {item_data.name: item_data for item_data in enabled_items}
 
-        for item in map(self.create_item, enabled_items_dict):
-            self.multiworld.itempool.append(item)
+        for item_data in enabled_items:
+            self.multiworld.itempool.append(self.create_item(item_data.name))
             locations_left -= 1
 
         print("Unfilled after item allocation: " + str(locations_left))
@@ -283,6 +291,8 @@ class BO3ZombiesWorld(World):
         pass
 
     def set_rules(self) -> None:
+        # Goal Conditions
+
         # Easter Egg Hunt
         if self.options.goal_condition == 0:
             # Whether or not we require *all* selected goal items (Randomised goal selection)
@@ -338,11 +348,11 @@ def add_universal_items(enabled_items, seen, items):
 
 def add_round_locations(enabled_location_names, round_locations, round_max, round_freq, is_goal_cond, goal_round):
     if round_freq > 0:
-        i = 0
+        i = round_freq
         # Add rounds into pool
         while i <= round_max:
-            i += round_freq
             enabled_location_names.append(round_locations[i - 1].name)
+            i += round_freq
         # Make sure the Goal Round is always included
         if is_goal_cond:
             if goal_round > round_max or goal_round % round_freq != 0:

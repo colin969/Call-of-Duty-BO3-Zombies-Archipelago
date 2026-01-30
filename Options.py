@@ -1,7 +1,7 @@
 # Options.py
 from dataclasses import dataclass
 import typing
-from Options import Option, OptionGroup, Toggle, PerGameCommonOptions, Range, NamedRange
+from Options import OptionGroup, Toggle, PerGameCommonOptions, Range, Choice
 
 class MapShadowsEnabled(Toggle):
     """Enables Map: \"Shadows of Evil\""""
@@ -31,7 +31,7 @@ class RandomizeShieldParts(Toggle):
 class CastleBowCount(Range):
     """Number of Elemental Bow quests to include in checks or Weapon Quest goal conditions"""
     display_name = "(Castle) Weapon Quest - Bow Count"
-    default = 4
+    default = 2
     range_start = 0
     range_end = 4
 
@@ -77,7 +77,7 @@ class MapSpecificMachinesEnabled(Toggle):
 class GiftWeight(Range):
     """Weighting of gifts to replace filler with"""
     display_name = "Gift Weight"
-    default = 20
+    default = 40
     range_start = 0
     range_end = 100
 
@@ -86,7 +86,7 @@ class RoundMaxLocation(Range):
     display_name = "Max Round Location"
     range_start = 0
     range_end = 50
-    default = 15
+    default = 16
 
 class RoundLocationFrequency(Range):
     """Frequency of rounds to award an AP location / check for.
@@ -106,27 +106,17 @@ class MusicEasterEggsEnabled(Toggle):
     display_name = "Music Easter Egg Locations (Streamer Warning)"
     default = True
 
-class GoalCondition(NamedRange):
+class GoalCondition(Choice):
     """Condition to finish the see.
     Easter Egg Hunt: Complete the Main Easter Egg on enabled maps
     Weapon Quest: Complete all weapon quests on enabled maps
     Victory Round: Reach a selected round on enabled maps"""
     display_name = "Victory Condition"
-    range_start = 0
-    range_end = 4
     default = 0
 
     option_easter_egg_hunt = 0
     option_weapon_quest = 1
     option_goal_round = 2
-
-    special_range_names = {
-        "easter_egg_hunt": 0,
-        "weapon_quest": 1,
-        "goal_round": 2,
-    }
-
-    default = 0
 
 class GoalEasterEggCount(Range):
     """Number of Main Easter Eggs needed to complete the seed when running Easter Egg Hunt. This will not exceed the number of selected maps"""

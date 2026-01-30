@@ -12,6 +12,7 @@ def connect_regions(world: MultiWorld, player: int):
     # connecting Menu to enabled starting locations
     connect(world, player, names, "Menu", RegionName.TheGiant_Courtyard)
     connect(world, player, names, "Menu", RegionName.Castle_Gondola)
+    connect(world, player, names, RegionName.Castle_Gondola, RegionName.Castle_BossFight)
     connect(world, player, names, "Menu", RegionName.Shadows_Alleyway)
 
 # shamelessly stolen from the sa2b (and hk2)

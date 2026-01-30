@@ -115,9 +115,9 @@ ShieldPart_Door = "Shield Part - Door"
 ShieldPart_Dolly = "Shield Part - Dolly"
 ShieldPart_Clamp = "Shield Part - Clamp"
 
-Castle_Craftable_GravitySpikes_Body = "Ragnarok DG-4 Part - Body"
-Castle_Craftable_GravitySpikes_Guards = "Ragnarok DG-4 Part - Guards"
-Castle_Craftable_GravitySpikes_Handle = "Ragnarok DG-4 Part - Handle"
+Castle_Craftable_GravitySpikes_Body = Maps.Castle_Map_String + " Ragnarok DG-4 Part - Body"
+Castle_Craftable_GravitySpikes_Guards = Maps.Castle_Map_String + " Ragnarok DG-4 Part - Guards"
+Castle_Craftable_GravitySpikes_Handle = Maps.Castle_Map_String + " Ragnarok DG-4 Part - Handle"
 
 Castle_Victory_ElementalBow_Storm = Maps.Castle_Map_String + " Storm Bow - Victory"
 Castle_Victory_ElementalBow_Wolf = Maps.Castle_Map_String + " Wolf Howl - Victory"
