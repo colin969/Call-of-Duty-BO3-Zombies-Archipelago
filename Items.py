@@ -31,6 +31,12 @@ class BO3ZombiesItem(Item):
     def get_name_to_id(base_id) -> dict:
         return {item_data.name: id for id, item_data in enumerate(all_items, base_id)}
 
+ShieldParts = [ItemData(row, BO3ZombiesItemCategory.PROGRESSIVE) for row in[
+    ItemName.ShieldPart_Door,
+    ItemName.ShieldPart_Dolly,
+    ItemName.ShieldPart_Clamp,
+]]
+
 # The Giant Items
 
 The_Giant_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
@@ -103,6 +109,8 @@ Castle_Wallbuys = [ItemData(row, BO3ZombiesItemCategory.WALLBUY) for row in [
 Castle_Wallbuys_Specific = gen_map_specific_list(Maps.Castle_Map_String, Castle_Wallbuys)
 Castle_Machines_Specific = gen_map_specific_list(Maps.Castle_Map_String, Castle_Machines)
 
+Castle_Shield = gen_map_specific_list(Maps.Castle_Map_String, ShieldParts)
+
 Castle_Craftables = [ItemData(row, BO3ZombiesItemCategory.MISC) for row in[
     ItemName.Castle_Craftable_GravitySpikes_Body,
     ItemName.Castle_Craftable_GravitySpikes_Guards,
@@ -140,6 +148,8 @@ Shadows_Wallbuys = [ItemData(row, BO3ZombiesItemCategory.WALLBUY) for row in[
 
 Shadows_Wallbuys_Specific = gen_map_specific_list(Maps.Shadows_Map_String, Shadows_Wallbuys)
 
+Shadows_Shield = gen_map_specific_list(Maps.Shadows_Map_String, ShieldParts)
+
 Shadows_Craftables = [ItemData(row, BO3ZombiesItemCategory.MISC) for row in[
     ItemName.Shadows_Craftable_ApothiconServant_Heart,
     ItemName.Shadows_Craftable_ApothiconServant_Skeleton,
@@ -155,14 +165,6 @@ Progressive_PerkLimitIncrease = ItemData(ItemName.Progressive_PerkLimitIncrease,
 Progressive_Items = [
     Progressive_PerkLimitIncrease
 ]
-
-# Craftables
-
-ShieldParts = [ItemData(row, BO3ZombiesItemCategory.PROGRESSIVE) for row in[
-    ItemName.ShieldPart_Door,
-    ItemName.ShieldPart_Dolly,
-    ItemName.ShieldPart_Clamp,
-]]
 
 # Point Drop Items
 
@@ -207,7 +209,7 @@ Trap_Items = [ItemData(row, BO3ZombiesItemCategory.TRAP) for row in [
 base_items = Points_Items
 
 all_items = (
-    Progressive_Items + ShieldParts + Points_Items + Victory_Items + Gift_Items + Trap_Items + Misc_Items
+    Progressive_Items + Points_Items + Victory_Items + Gift_Items + Trap_Items + Misc_Items
     + [PapItem]
     # The Giant
     + The_Giant_Machines + The_Giant_Machines_Specific
@@ -215,11 +217,11 @@ all_items = (
     # Castle
     + Castle_Machines + Castle_Machines_Specific
     + Castle_Wallbuys + Castle_Wallbuys_Specific
-    + Castle_Craftables
+    + Castle_Craftables + Castle_Shield
     # Shadows of Evil
     + Shadows_Machines + Shadows_Machines_Specific
     + Shadows_Wallbuys + Shadows_Wallbuys_Specific
-    + Shadows_Craftables
+    + Shadows_Craftables + Shadows_Shield
 )
 
 all_items_dict = {item_data.name: item_data for item_data in all_items}

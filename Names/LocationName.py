@@ -79,5 +79,9 @@ Shadows_Craftable_CivilProtector_Fuse1 = Maps.Shadows_Map_String + " Civil Prote
 Shadows_Craftable_CivilProtector_Fuse2 = Maps.Shadows_Map_String + " Civil Protector Part Pickup - Fuse 2"
 Shadows_Craftable_CivilProtector_Fuse3 = Maps.Shadows_Map_String + " Civil Protector Part Pickup - Fuse 3"
 
+Shadows_Craftable_ShieldPartDolly = Maps.Shadows_Map_String + " Shield Part Pickup - Dolly"
+Shadows_Craftable_ShieldPartDoor = Maps.Shadows_Map_String + " Shield Part Pickup - Door"
+Shadows_Craftable_ShieldPartClamp = Maps.Shadows_Map_String + " Shield Part Pickup - Clamp"
+
 
 RepairWindows_5 = "Repair Windows 5 Times"

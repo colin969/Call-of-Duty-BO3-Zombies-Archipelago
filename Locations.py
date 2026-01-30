@@ -164,6 +164,9 @@ Shadows_Craftable_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.M
     (LocationName.Shadows_Craftable_CivilProtector_Fuse1, 3310),
     (LocationName.Shadows_Craftable_CivilProtector_Fuse2, 3311),
     (LocationName.Shadows_Craftable_CivilProtector_Fuse3, 3312),
+    (LocationName.Shadows_Craftable_ShieldPartDolly, 3320),
+    (LocationName.Shadows_Craftable_ShieldPartDoor, 3321),
+    (LocationName.Shadows_Craftable_ShieldPartClamp, 3322),
 ]]
 
 early_locations =  [LocationData(row[0], row[1], row[2]) for row in [

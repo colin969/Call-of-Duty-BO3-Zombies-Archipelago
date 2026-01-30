@@ -173,10 +173,6 @@ class BO3ZombiesWorld(World):
         enabled_items = Items.base_items
         enabled_items += [Items.PapItem]
 
-        # Add shield parts to pool
-        if self.options.randomized_shield_parts:
-            enabled_items += Items.ShieldParts
-
         # Add progressives to pool
         if self.options.progressive_perk_limit_increase > 0:
             for i in range(self.options.progressive_perk_limit_increase):
@@ -220,17 +216,19 @@ class BO3ZombiesWorld(World):
             if self.options.map_castle_enabled:
                 add_universal_items(enabled_items, seen, Items.Castle_Wallbuys)
 
-
-
-        enabled_items_dict = {item_data.name: item_data for item_data in enabled_items}
-
         map_list = []
         if self.options.map_shadows_enabled:
             map_list.append(Maps.Shadows_Map_String)
+            if self.options.randomized_shield_parts:
+                enabled_items += Items.Shadows_Shield
         if self.options.map_the_giant_enabled:
             map_list.append(Maps.The_Giant_Map_String)
         if self.options.map_castle_enabled:
             map_list.append(Maps.Castle_Map_String)
+            if self.options.randomized_shield_parts:
+                enabled_items += Items.Castle_Shield
+        
+        enabled_items_dict = {item_data.name: item_data for item_data in enabled_items}
 
         if self.options.victory_round_choice == 0:
             # Random victory round item
