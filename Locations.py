@@ -37,8 +37,8 @@ def gen_map_round_locations(map_string, count):
         locations.append(LocationData(location_name, BO3ZombiesLocationCategory.ROUND, base_map_id + i))
     return locations
 
-def get_map_victory_location(map_string, victory_round):
-    converted = int(victory_round)
+def get_map_victory_location(map_string, goal_round):
+    converted = int(goal_round)
     if map_string not in BaseMapIds:
         raise Exception("victory gen - Map string not in base map ids?")
     base_map_id = BaseMapIds[map_string]
@@ -179,5 +179,6 @@ all_locations = (
     + Castle_Quest_ElementalBow_Fire_Locations + Castle_Quest_ElementalBow_Void_Locations + Castle_Quest_ElementalBow_Storm_Locations + Castle_Quest_ElementalBow_Wolf_Locations
     + Castle_Quest_MainEE_Locations
     + Shadows_Round_Locations + Shadows_Quest_Locations + Shadows_Craftable_Locations
-    + Shadows_Quest_MainQuest_Locations + Shadows_Quest_ApothiconSword_Locations + Shadows_Quest_MainEE_Locations
+    + Shadows_Quest_MainQuest_Locations + Shadows_Quest_ApothiconSword_Locations 
+    + Shadows_Quest_MainEE_Locations
     + early_locations)

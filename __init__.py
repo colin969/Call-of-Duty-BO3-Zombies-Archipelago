@@ -35,108 +35,93 @@ class BO3ZombiesWorld(World):
     # Full Remote Items
     items_handling = 0b111
 
-    enabled_location_names = []
-    victory_items = []
-    # Options
-
     def generate_early(self) -> None:
-        for location in Locations.early_locations:
-            self.enabled_location_names.append(location.name)
-
-        if self.options.map_shadows_enabled:
-            self.enabled_location_names.extend([row.name for row in Locations.Shadows_Craftable_Locations])
-            self.enabled_location_names.extend([row.name for row in Locations.Shadows_Quest_Locations])
-            self.enabled_location_names.extend([row.name for row in Locations.Shadows_Quest_MainQuest_Locations])
-            self.enabled_location_names.extend([row.name for row in Locations.Shadows_Quest_ApothiconSword_Locations])
-            self.enabled_location_names.extend([row.name for row in Locations.Shadows_Quest_MainEE_Locations])
-            for i in range(0, self.options.victory_round):
-                self.enabled_location_names.append(Locations.Shadows_Round_Locations[i].name)
-
-        if self.options.map_the_giant_enabled:
-            for i in range(0, self.options.victory_round):
-                self.enabled_location_names.append(Locations.TheGiant_Round_Locations[i].name)
-
-        if self.options.map_castle_enabled:
-            self.enabled_location_names.extend([row.name for row in Locations.Castle_Craftable_Locations])
-            self.enabled_location_names.extend([row.name for row in Locations.Castle_Quest_Locations])
-            self.enabled_location_names.extend([row.name for row in Locations.Castle_Quest_Music_Locations])
-            self.enabled_location_names.extend([row.name for row in Locations.Castle_Quest_ElementalBow_Storm_Locations])
-            self.enabled_location_names.extend([row.name for row in Locations.Castle_Quest_ElementalBow_Wolf_Locations])
-            for i in range(0, self.options.victory_round):
-                self.enabled_location_names.append(Locations.Castle_Round_Locations[i].name)
+        self.weapon_quest_items = []
+        pass
 
     def create_regions(self):
         universal_locations = [
             LocationName.RepairWindows_5
         ]
-        menu_region = self.create_region(self.multiworld, self.player, self.enabled_location_names, 'Menu', universal_locations)
+        menu_region = self.create_region(self.multiworld, self.player, 'Menu', universal_locations)
         
         self.multiworld.regions.append(menu_region)
         
         # Default Balancing, Make sure you get to every region
         # TODO: Randomize this a bit/weight it
-
-        map_rounds = self.options.victory_round
+        
+        is_round_goal_cond = self.options.goal_condition == 2
+        goal_round = self.options.goal_round
+        round_max = self.options.round_location_max
+        if is_round_goal_cond:
+            round_max = min(round_max, goal_round)
+        round_freq = self.options.round_location_freq
 
         if self.options.map_shadows_enabled:
             all_locations = []
-            all_locations.extend([loc.name for loc in Locations.Shadows_Round_Locations[0:map_rounds]])
+            add_round_locations(all_locations, Locations.Shadows_Round_Locations, round_max, round_freq, is_round_goal_cond, goal_round)
             all_locations.extend([loc.name for loc in Locations.Shadows_Craftable_Locations])
             all_locations.extend([loc.name for loc in Locations.Shadows_Quest_Locations])
             all_locations.extend([loc.name for loc in Locations.Shadows_Quest_MainQuest_Locations])
             all_locations.extend([loc.name for loc in Locations.Shadows_Quest_ApothiconSword_Locations])
             all_locations.extend([loc.name for loc in Locations.Shadows_Quest_MainEE_Locations])
             self.multiworld.regions.append(
-                self.create_region(self.multiworld, self.player, self.enabled_location_names,
-                    RegionName.Shadows_Alleyway,
-                    all_locations
-                )
+                self.create_region(self.multiworld, self.player, RegionName.Shadows_Alleyway, all_locations)
             )
         else:
-            self.multiworld.regions.append(self.create_region(self.multiworld, self.player, [], RegionName.Shadows_Alleyway, []))
+            self.multiworld.regions.append(self.create_region(self.multiworld, self.player, RegionName.Shadows_Alleyway, []))
 
         if self.options.map_the_giant_enabled:
             all_locations = []
-            all_locations.extend([loc.name for loc in Locations.TheGiant_Round_Locations[0:map_rounds]])
+            add_round_locations(all_locations, Locations.TheGiant_Round_Locations, round_max, round_freq, is_round_goal_cond, goal_round)
             self.multiworld.regions.append(
-                self.create_region(self.multiworld, self.player, self.enabled_location_names,
-                    RegionName.TheGiant_Courtyard,
-                    all_locations
-                )
+                self.create_region(self.multiworld, self.player, RegionName.TheGiant_Courtyard, all_locations)
             )
         else:
-            self.multiworld.regions.append(self.create_region(self.multiworld, self.player, [], RegionName.TheGiant_Courtyard, []))
+            self.multiworld.regions.append(self.create_region(self.multiworld, self.player, RegionName.TheGiant_Courtyard, []))
         
         if self.options.map_castle_enabled:
             all_locations = []
-            all_locations.extend([loc.name for loc in Locations.Castle_Round_Locations[0:map_rounds]])
+
+            bow_pairs = [
+                (Locations.Castle_Quest_ElementalBow_Storm_Locations, self.create_item(ItemName.Castle_Victory_ElementalBow_Storm)),
+                (Locations.Castle_Quest_ElementalBow_Wolf_Locations, self.create_item(ItemName.Castle_Victory_ElementalBow_Wolf)),
+                (Locations.Castle_Quest_ElementalBow_Fire_Locations, self.create_item(ItemName.Castle_Victory_ElementalBow_Fire)),
+                (Locations.Castle_Quest_ElementalBow_Void_Locations, self.create_item(ItemName.Castle_Victory_ElementalBow_Void)),
+            ]
+            bow_count = min(self.options.castle_bow_count, 4)
+            bow_pairs = self.random.sample(bow_pairs, bow_count)
+            for bow in bow_pairs:
+                all_locations.extend([loc.name for loc in bow[0]])
+                self.weapon_quest_items.append(bow[1])
+
+            add_round_locations(all_locations, Locations.Castle_Round_Locations, round_max, round_freq, is_round_goal_cond, goal_round)
             all_locations.extend([loc.name for loc in Locations.Castle_Craftable_Locations])
             all_locations.extend([loc.name for loc in Locations.Castle_Quest_Locations])
+            all_locations.extend([loc.name for loc in Locations.Castle_Quest_MainEE_Locations])
             all_locations.extend([loc.name for loc in Locations.Castle_Quest_Music_Locations])
-            all_locations.extend([loc.name for loc in Locations.Castle_Quest_ElementalBow_Storm_Locations])
-            all_locations.extend([loc.name for loc in Locations.Castle_Quest_ElementalBow_Wolf_Locations])
-            self.multiworld.regions.append(
-                self.create_region(self.multiworld, self.player, self.enabled_location_names,
-                    RegionName.Castle_Gondola,
-                    all_locations
-                )
-            )
+            self.multiworld.regions.append(self.create_region(self.multiworld, self.player, RegionName.Castle_Gondola, all_locations))
+            # Weapon Quest - Add available bows
+            if self.options.goal_condition == 1:
+                for bow in bow_pairs:
+                    self.multiworld.get_location(bow[0][-1].name, self.player).place_locked_item(bow[1])
         else:
-            self.multiworld.regions.append(self.create_region(self.multiworld, self.player, [], RegionName.Castle_Gondola, []))
+            self.multiworld.regions.append(self.create_region(self.multiworld, self.player, RegionName.Castle_Gondola, []))
         
         Regions.connect_regions(self.multiworld, self.player)
 
-    def create_region(self, world: MultiWorld, player: int, active_location_names: list, name: str, locations=None):
+    def create_region(self, world: MultiWorld, player: int, name: str, locations=None):
         ret = Region(name, player, world)
         if locations:
             for location in locations:
-                if location in active_location_names:
-                    location = Locations.BO3ZombiesLocation(player, location, self.location_name_to_id[location], ret)
-                    ret.locations.append(location)
+                location = Locations.BO3ZombiesLocation(player, location, self.location_name_to_id[location], ret)
+                ret.locations.append(location)
 
         return ret
 
     def create_item(self, name: str) -> Item:
+        data = self.item_name_to_id[name]
+
         useful_categories = {
             Items.BO3ZombiesItemCategory.WALLBUY,
             Items.BO3ZombiesItemCategory.MACHINE,
@@ -150,7 +135,6 @@ class BO3ZombiesWorld(World):
             Items.BO3ZombiesItemCategory.EASTER_EGG,
             Items.BO3ZombiesItemCategory.VICTORY
         }
-        data = self.item_name_to_id[name]
 
         if Items.all_items_dict[name].category in progression_categories:
             item_classification = ItemClassification.progression
@@ -171,7 +155,7 @@ class BO3ZombiesWorld(World):
 
     def create_items(self) -> None:
         enabled_items = Items.base_items
-        enabled_items += [Items.PapItem]
+        enabled_items.append(Items.PapItem)
 
         # Add progressives to pool
         if self.options.progressive_perk_limit_increase > 0:
@@ -227,40 +211,69 @@ class BO3ZombiesWorld(World):
             map_list.append(Maps.Castle_Map_String)
             if self.options.randomized_shield_parts:
                 enabled_items += Items.Castle_Shield
-        
-        enabled_items_dict = {item_data.name: item_data for item_data in enabled_items}
 
-        if self.options.victory_round_choice == 0:
-            # Random victory round item
-            victory_map = random.choice(map_list)
-            self.victory_items.append(victory_map + " Victory")
-            victory_location = Locations.get_map_victory_location(victory_map, self.options.victory_round)
-            self.multiworld.get_location(victory_location, self.player).place_locked_item(
-                self.create_item(victory_map + " Victory")
-            )
-        else:
+        # Easter Egg Hunt
+        if self.options.goal_condition == 0:
+            # Get list of compatible enabled maps
+            ee_pairs = []
+            if self.options.map_shadows_enabled:
+                ee_item = self.create_item(Maps.Shadows_Map_String + ItemName.EE_Victory)
+                print("Shadows EE Victory classification: ")
+                print(ee_item.classification)
+                ee_pairs.append((LocationName.Shadows_Quest_MainEE_Victory, ee_item))
+            if self.options.map_castle_enabled:
+                ee_item = self.create_item(Maps.Castle_Map_String + ItemName.EE_Victory)
+                print("Castle EE Victory classification: ")
+                print(ee_item.classification)
+                ee_pairs.append((LocationName.Castle_Quest_MainEE_Victory, ee_item))
+
+            # Get bounds for number of victory items to add
+            ee_allow_any = not self.options.goal_ee_random
+            ee_count = min(self.options.goal_ee_count, len(ee_pairs))
+            self.ee_goal_items = []
+
+            # Preselect the list of required maps, if random selection is enabled
+            if not ee_allow_any:
+                ee_pairs = self.random.sample(ee_pairs, ee_count)
+
+            # Fill victory items at their victory locations
+            for pair in ee_pairs:
+                self.multiworld.get_location(pair[0], self.player).place_locked_item(pair[1])
+                self.ee_goal_items.append(pair[1])
+
+        # Weapon Quest
+        if self.options.goal_condition == 1:
+            if self.options.map_shadows_enabled:
+                goal_item = self.create_item(ItemName.Shadows_Victory_ApothiconSwordLvl2)
+                self.weapon_quest_items.append(goal_item)
+                self.multiworld.get_location(Locations.Shadows_Quest_ApothiconSword_Locations[-1].name, self.player).place_locked_item(goal_item)
+            if self.options.map_castle_enabled:
+                # Handled in create_regions
+                pass
+
+        # Goal Round Condition
+        if self.options.goal_condition == 2:
+            self.goal_round_items = []
             for m in map_list:
                 # Victory round item on every map
                 self.victory_items.append(m + " Victory")
-                victory_location = Locations.get_map_victory_location(m, self.options.victory_round)
-                self.multiworld.get_location(victory_location, self.player).place_locked_item(
-                    self.create_item(m + " Victory")
-                )
+                goal_location = Locations.get_map_victory_location(m, self.options.goal_round)
+                goal_item = self.create_item(m + " Victory")
+                self.goal_round_items.append(goal_item)
+                self.multiworld.get_location(goal_location, self.player).place_locked_item(goal_item)
 
-        filler_count = len(self.enabled_location_names)
-        exclude = [item for item in self.multiworld.precollected_items[self.player]]
-
-        filler_count -= len(exclude)
-        filler_count -= len(self.victory_items)
+        locations_left = len(self.multiworld.get_unfilled_locations(self.player))
+        enabled_items_dict = {item_data.name: item_data for item_data in enabled_items}
 
         for item in map(self.create_item, enabled_items_dict):
-            if (Items.all_items_dict[item.name] not in self.victory_items) and (item not in exclude):
-                self.multiworld.itempool.append(item)
-                filler_count -= 1
+            self.multiworld.itempool.append(item)
+            locations_left -= 1
+
+        print("Unfilled after item allocation: " + str(locations_left))
 
         gift_filler_weight = self.options.gift_weight / 100
-        gift_filler_count = math.floor(filler_count * gift_filler_weight)
-        filler_count -= gift_filler_count
+        gift_filler_count = math.floor(locations_left * gift_filler_weight)
+        filler_count = locations_left - gift_filler_count
 
         # Creates filler in remaining slots
         self.multiworld.itempool.extend([self.create_filler_gift() for _ in range(gift_filler_count)])
@@ -275,8 +288,27 @@ class BO3ZombiesWorld(World):
         pass
 
     def set_rules(self) -> None:
-        # Collect all Victory Items for Victory
-        self.multiworld.completion_condition[self.player] = lambda state: state.has_all(self.victory_items, self.player)
+        # Easter Egg Hunt
+        if self.options.goal_condition == 0:
+            # Whether or not we require *all* selected goal items (Randomised goal selection)
+            ee_goal_count = min(self.options.goal_ee_count, len(self.ee_goal_items))
+            ee_allow_any = not self.options.goal_ee_random
+            print("Allowed goal items:")
+            print(self.ee_goal_items)
+            print("Required number to goal:")
+            print(ee_goal_count)
+            if not ee_allow_any:
+                self.multiworld.completion_condition[self.player] = lambda state: state.has_all(self.ee_goal_items, self.player)
+            else:
+                self.multiworld.completion_condition[self.player] = lambda state: state.has_from_list(self.ee_goal_items, self.player, min(self.options.goal_ee_count, len(self.ee_goal_items)))
+            
+        # Weapon Quest
+        if self.options.goal_condition == 1:
+            self.multiworld.completion_condition[self.player] = lambda state: state.has_all(self.weapon_quest_items, self.player)
+
+        # Goal Round
+        if self.options.goal_condition == 2:
+            self.multiworld.completion_condition[self.player] = lambda state: state.has_all(self.goal_round_items, self.player)
 
     def fill_slot_data(self) -> dict:
         options = self.options
@@ -298,9 +330,9 @@ class BO3ZombiesWorld(World):
         return slot_data
 
     @staticmethod
-    def get_round_location_string(map_name: str, victory_round: int):
+    def get_round_location_string(map_name: str, goal_round: int):
         if map_name == "The Giant":
-            return Locations.TheGiant_Locations[victory_round - 1].name
+            return Locations.TheGiant_Locations[goal_round - 1].name
         return ""
 
 def add_universal_items(enabled_items, seen, items):
@@ -308,3 +340,15 @@ def add_universal_items(enabled_items, seen, items):
         if item[0] not in seen:
             enabled_items.append(item)
             seen.add(item[0])
+
+def add_round_locations(enabled_location_names, round_locations, round_max, round_freq, is_goal_cond, goal_round):
+    if round_freq > 0:
+        i = 0
+        # Add rounds into pool
+        while i <= round_max:
+            i += round_freq
+            enabled_location_names.append(round_locations[i - 1].name)
+        # Make sure the Goal Round is always included
+        if is_goal_cond:
+            if goal_round > round_max or goal_round % round_freq != 0:
+                enabled_location_names.append(round_locations[goal_round - 1].name)

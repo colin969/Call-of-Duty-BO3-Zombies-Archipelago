@@ -174,10 +174,20 @@ Points_Items = [ItemData(row[0], row[1]) for row in [
 
 # Victory
 
-Victory_Items = [ItemData(row[0], row[1]) for row in [
-    (Maps.Shadows_Map_String + " Victory", BO3ZombiesItemCategory.VICTORY),
-    (Maps.The_Giant_Map_String + " Victory", BO3ZombiesItemCategory.VICTORY),
-    (Maps.Castle_Map_String + " Victory", BO3ZombiesItemCategory.VICTORY)
+Weapon_Victory_Items = [ItemData(row, BO3ZombiesItemCategory.VICTORY) for row in [
+    ItemName.Shadows_Victory_ApothiconSwordLvl2,
+    ItemName.Castle_Victory_ElementalBow_Storm,
+    ItemName.Castle_Victory_ElementalBow_Wolf,
+    ItemName.Castle_Victory_ElementalBow_Fire,
+    ItemName.Castle_Victory_ElementalBow_Void,
+]]
+
+Victory_Items = [ItemData(row, BO3ZombiesItemCategory.VICTORY) for row in [
+    Maps.Shadows_Map_String + ItemName.Victory,
+    Maps.Shadows_Map_String + ItemName.EE_Victory,
+    Maps.The_Giant_Map_String + ItemName.Victory,
+    Maps.Castle_Map_String + ItemName.Victory,
+    Maps.Castle_Map_String + ItemName.EE_Victory,
 ]]
 
 # Misc/Filler Items
@@ -209,7 +219,7 @@ Trap_Items = [ItemData(row, BO3ZombiesItemCategory.TRAP) for row in [
 base_items = Points_Items
 
 all_items = (
-    Progressive_Items + Points_Items + Victory_Items + Gift_Items + Trap_Items + Misc_Items
+    Progressive_Items + Points_Items + Weapon_Victory_Items + Victory_Items + Gift_Items + Trap_Items + Misc_Items
     + [PapItem]
     # The Giant
     + The_Giant_Machines + The_Giant_Machines_Specific

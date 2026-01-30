@@ -1,5 +1,7 @@
 from . import Maps
 
+EE_Victory = " Main Easter Egg - Victory"
+
 Castle_Craftable_ShieldPartDolly = Maps.Castle_Map_String + " Shield Part Pickup - Dolly"
 Castle_Craftable_ShieldPartDoor = Maps.Castle_Map_String + " Shield Part Pickup - Door"
 Castle_Craftable_ShieldPartClamp = Maps.Castle_Map_String + " Shield Part Pickup - Clamp"
@@ -51,7 +53,7 @@ Castle_Quest_MainEE_RecoverRocket = Maps.Castle_Map_String + " Main Easter Egg -
 Castle_Quest_MainEE_OpenMPD = Maps.Castle_Map_String + " Main Easter Egg - Open the MPD"
 Castle_Quest_MainEE_BossFight = Maps.Castle_Map_String + " Main Easter Egg - Win the Boss Fight"
 Castle_Quest_MainEE_BlowUpMoon = Maps.Castle_Map_String + " Main Easter Egg - Blow up the Moon"
-Castle_Quest_MainEE_Victory = Maps.Castle_Map_String + " Main Easter Egg - Victory"
+Castle_Quest_MainEE_Victory = Maps.Castle_Map_String + EE_Victory
 
 Shadows_Quest_MainQuest_MagicianRitual = Maps.Shadows_Map_String + " Main Quest - Magician's Ritual"
 Shadows_Quest_MainQuest_BoxerRitual = Maps.Shadows_Map_String + " Main Quest - Boxer's Ritual"
@@ -66,7 +68,7 @@ Shadows_Quest_ApothiconSword_CollectUpgradedSword = Maps.Shadows_Map_String + " 
 Shadows_Quest_MainEE_FindNerosBook = Maps.Shadows_Map_String + " Main Easter Egg - Find Nero's Book"
 Shadows_Quest_MainEE_DefeatShadowman = Maps.Shadows_Map_String + " Main Easter Egg - Defeat the Shadowman"
 Shadows_Quest_MainEE_DefeatGiantSpaceSquid = Maps.Shadows_Map_String + " Main Easter Egg - Defeat the Giant Space Squid"
-Shadows_Quest_MainEE_Victory = Maps.Shadows_Map_String + " Main Easter Egg - Victory"
+Shadows_Quest_MainEE_Victory = Maps.Shadows_Map_String + EE_Victory
 
 Shadows_Quest_AllSpareChangeCollected = Maps.Shadows_Map_String + " All Spare Change Collected"
 Shadows_Quest_LaundryTicket = Maps.Shadows_Map_String + " Laundry Ticket"
@@ -82,6 +84,5 @@ Shadows_Craftable_CivilProtector_Fuse3 = Maps.Shadows_Map_String + " Civil Prote
 Shadows_Craftable_ShieldPartDolly = Maps.Shadows_Map_String + " Shield Part Pickup - Dolly"
 Shadows_Craftable_ShieldPartDoor = Maps.Shadows_Map_String + " Shield Part Pickup - Door"
 Shadows_Craftable_ShieldPartClamp = Maps.Shadows_Map_String + " Shield Part Pickup - Clamp"
-
 
 RepairWindows_5 = "Repair Windows 5 Times"

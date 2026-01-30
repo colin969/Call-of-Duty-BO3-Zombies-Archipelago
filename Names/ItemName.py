@@ -119,6 +119,11 @@ Castle_Craftable_GravitySpikes_Body = "Ragnarok DG-4 Part - Body"
 Castle_Craftable_GravitySpikes_Guards = "Ragnarok DG-4 Part - Guards"
 Castle_Craftable_GravitySpikes_Handle = "Ragnarok DG-4 Part - Handle"
 
+Castle_Victory_ElementalBow_Storm = Maps.Castle_Map_String + " Storm Bow - Victory"
+Castle_Victory_ElementalBow_Wolf = Maps.Castle_Map_String + " Wolf Howl - Victory"
+Castle_Victory_ElementalBow_Fire = Maps.Castle_Map_String + " Rune Prison - Victory"
+Castle_Victory_ElementalBow_Void = Maps.Castle_Map_String + " Demon Gate - Victory"
+
 Shadows_Craftable_ApothiconServant_Heart = "Apothicon Servant Part - Margwa Heart"
 Shadows_Craftable_ApothiconServant_Skeleton = "Apothicon Servant Part - Margwa Tentacle"
 Shadows_Craftable_ApothiconServant_Xenomatter = "Apothicon Servant Part - Xenomatter"
@@ -127,7 +132,10 @@ Shadows_Craftable_CivilProtector_Fuse01 = "Civil Protector Part - Fuse 1"
 Shadows_Craftable_CivilProtector_Fuse02 = "Civil Protector Part - Fuse 2"
 Shadows_Craftable_CivilProtector_Fuse03 = "Civil Protector Part - Fuse 3"
 
+Shadows_Victory_ApothiconSwordLvl2 = Maps.Shadows_Map_String + " Apothicon Sword Upgraded - Victory"
+
 # Misc
-Points50                            ="50 Points"
-Points500                           ="500 Points"
-Victory                             ="Victory"
+Points50                            = "50 Points"
+Points500                           = "500 Points"
+Victory                             = " Victory"
+EE_Victory                          = " Easter Egg Victory"
