@@ -124,13 +124,13 @@ Castle_Victory_ElementalBow_Wolf = Maps.Castle_Map_String + " Wolf Howl - Victor
 Castle_Victory_ElementalBow_Fire = Maps.Castle_Map_String + " Rune Prison - Victory"
 Castle_Victory_ElementalBow_Void = Maps.Castle_Map_String + " Demon Gate - Victory"
 
-Shadows_Craftable_ApothiconServant_Heart = "Apothicon Servant Part - Margwa Heart"
-Shadows_Craftable_ApothiconServant_Skeleton = "Apothicon Servant Part - Margwa Tentacle"
-Shadows_Craftable_ApothiconServant_Xenomatter = "Apothicon Servant Part - Xenomatter"
+Shadows_Craftable_ApothiconServant_Heart = Maps.Shadows_Map_String + " Apothicon Servant Part - Margwa Heart"
+Shadows_Craftable_ApothiconServant_Skeleton = Maps.Shadows_Map_String + " Apothicon Servant Part - Margwa Tentacle"
+Shadows_Craftable_ApothiconServant_Xenomatter = Maps.Shadows_Map_String + " Apothicon Servant Part - Xenomatter"
 
-Shadows_Craftable_CivilProtector_Fuse01 = "Civil Protector Part - Fuse 1"
-Shadows_Craftable_CivilProtector_Fuse02 = "Civil Protector Part - Fuse 2"
-Shadows_Craftable_CivilProtector_Fuse03 = "Civil Protector Part - Fuse 3"
+Shadows_Craftable_CivilProtector_Fuse01 = Maps.Shadows_Map_String + " Civil Protector Part - Waterfront Fuse"
+Shadows_Craftable_CivilProtector_Fuse02 = Maps.Shadows_Map_String + " Civil Protector Part - Canals Fuse"
+Shadows_Craftable_CivilProtector_Fuse03 = Maps.Shadows_Map_String + " Civil Protector Part - Footlight Fuse"
 
 Shadows_Victory_ApothiconSwordLvl2 = Maps.Shadows_Map_String + " Apothicon Sword Upgraded - Victory"
 
