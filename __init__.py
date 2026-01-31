@@ -91,20 +91,23 @@ class BO3ZombiesWorld(World):
             bow_pairs = self.random.sample(bow_pairs, bow_count)
             for bow in bow_pairs:
                 all_locations.extend([loc.name for loc in bow[0]])
-                self.weapon_quest_items.append(bow[1])
+                self.weapon_quest_items.append(bow[1].name)
 
             add_round_locations(all_locations, Locations.Castle_Round_Locations, round_max, round_freq, is_round_goal_cond, goal_round)
             all_locations.extend([loc.name for loc in Locations.Castle_Craftable_Locations])
             all_locations.extend([loc.name for loc in Locations.Castle_Quest_Locations])
             all_locations.extend([loc.name for loc in Locations.Castle_Quest_MainEE_Locations[:4]]) # Up to Boss Fight start
             all_locations.extend([loc.name for loc in Locations.Castle_Quest_Music_Locations])
+
+            main_region = self.create_region(self.multiworld, self.player, RegionName.Castle_Gondola, all_locations)
+            self.multiworld.regions.append(main_region)
+
             # Weapon Quest - Add available bows
             if self.options.goal_condition == 1:
                 for bow in bow_pairs:
                     self.multiworld.get_location(bow[0][-1].name, self.player).place_locked_item(bow[1])
 
-            main_region = self.create_region(self.multiworld, self.player, RegionName.Castle_Gondola, all_locations)
-            self.multiworld.regions.append(main_region)
+
 
             boss_fight_locations = [loc.name for loc in Locations.Castle_Quest_MainEE_Locations[4:]]
             boss_region = self.create_region(self.multiworld, self.player, RegionName.Castle_BossFight, boss_fight_locations)
@@ -249,7 +252,7 @@ class BO3ZombiesWorld(World):
         if self.options.goal_condition == 1:
             if self.options.map_shadows_enabled:
                 goal_item = self.create_item(ItemName.Shadows_Victory_ApothiconSwordLvl2)
-                self.weapon_quest_items.append(goal_item)
+                self.weapon_quest_items.append(ItemName.Shadows_Victory_ApothiconSwordLvl2)
                 self.multiworld.get_location(Locations.Shadows_Quest_ApothiconSword_Locations[-1].name, self.player).place_locked_item(goal_item)
             if self.options.map_castle_enabled:
                 # Handled in create_regions
@@ -260,10 +263,9 @@ class BO3ZombiesWorld(World):
             self.goal_round_items = []
             for m in map_list:
                 # Victory round item on every map
-                self.victory_items.append(m + " Victory")
                 goal_location = Locations.get_map_victory_location(m, self.options.goal_round)
                 goal_item = self.create_item(m + " Victory")
-                self.goal_round_items.append(goal_item)
+                self.goal_round_items.append(m + " Victory")
                 self.multiworld.get_location(goal_location, self.player).place_locked_item(goal_item)
 
         locations_left = len(self.multiworld.get_unfilled_locations(self.player))
