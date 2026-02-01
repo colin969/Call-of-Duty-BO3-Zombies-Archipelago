@@ -18,6 +18,8 @@ class BO3ZombiesItemCategory(IntEnum):
     GIFT = 12
     TRAP = 13
     PROGRESSIVE = 14
+    SPECIAL_WEAPON = 15
+    CRAFTABLE = 16
 
 
 class ItemData(typing.NamedTuple):
@@ -69,6 +71,12 @@ The_Giant_Wallbuys = [ItemData(row, BO3ZombiesItemCategory.WALLBUY) for row in[
 The_Giant_Wallbuys_Specific = gen_map_specific_list(Maps.The_Giant_Map_String, The_Giant_Wallbuys)
 The_Giant_Machines_Specific = gen_map_specific_list(Maps.The_Giant_Map_String, The_Giant_Machines)
 
+The_Giant_MysteryBox = [ItemData(row, BO3ZombiesItemCategory.SPECIAL_WEAPON) for row in[
+    Maps.The_Giant_Map_String + " Mystery Box - " + ItemName.Weapon_Raygun,
+    Maps.The_Giant_Map_String + " Mystery Box - " + ItemName.Weapon_Wunderwaffe,
+    Maps.The_Giant_Map_String + " Mystery Box - " + ItemName.Weapon_MonkeyBombs,
+]]
+
 # Castle Items
 
 Castle_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
@@ -111,10 +119,15 @@ Castle_Machines_Specific = gen_map_specific_list(Maps.Castle_Map_String, Castle_
 
 Castle_Shield = gen_map_specific_list(Maps.Castle_Map_String, ShieldParts)
 
-Castle_Craftables = [ItemData(row, BO3ZombiesItemCategory.MISC) for row in[
+Castle_Craftables = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for row in[
     ItemName.Castle_Craftable_GravitySpikes_Body,
     ItemName.Castle_Craftable_GravitySpikes_Guards,
     ItemName.Castle_Craftable_GravitySpikes_Handle
+]]
+
+Castle_MysteryBox = [ItemData(row, BO3ZombiesItemCategory.SPECIAL_WEAPON) for row in[
+    Maps.Castle_Map_String + " Mystery Box - " + ItemName.Weapon_Raygun,
+    Maps.Castle_Map_String + " Mystery Box - " + ItemName.Weapon_MonkeyBombs,
 ]]
 
 # Shadows of Evil
@@ -150,13 +163,64 @@ Shadows_Wallbuys_Specific = gen_map_specific_list(Maps.Shadows_Map_String, Shado
 
 Shadows_Shield = gen_map_specific_list(Maps.Shadows_Map_String, ShieldParts)
 
-Shadows_Craftables = [ItemData(row, BO3ZombiesItemCategory.MISC) for row in[
+Shadows_Craftables = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for row in[
     ItemName.Shadows_Craftable_ApothiconServant_Heart,
     ItemName.Shadows_Craftable_ApothiconServant_Skeleton,
     ItemName.Shadows_Craftable_ApothiconServant_Xenomatter,
     ItemName.Shadows_Craftable_CivilProtector_Fuse01,
     ItemName.Shadows_Craftable_CivilProtector_Fuse02,
     ItemName.Shadows_Craftable_CivilProtector_Fuse03,
+]]
+
+Shadows_MysteryBox = [ItemData(row, BO3ZombiesItemCategory.SPECIAL_WEAPON) for row in[
+    Maps.Shadows_Map_String + " Mystery Box - " + ItemName.Weapon_Raygun,
+    Maps.Shadows_Map_String + " Mystery Box - " + ItemName.Weapon_LilArnies,
+    Maps.Shadows_Map_String + " Mystery Box - " + ItemName.Weapon_ApothiconServant,
+]]
+
+# Gorod Krovi
+
+GorodKrovi_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
+    ItemName.Machine_Juggernog,
+    ItemName.Machine_QuickRevive,
+    ItemName.Machine_SpeedCola,
+    ItemName.Machine_DoubleTap,
+    ItemName.Machine_MuleKick,
+    ItemName.Machine_StaminUp,
+]]
+
+GorodKrovi_Wallbuys = [ItemData(row, BO3ZombiesItemCategory.WALLBUY) for row in[
+    ItemName.Weapon_RK5,
+    ItemName.Weapon_Sheiva,
+    ItemName.Weapon_Pharo,
+    ItemName.Weapon_LCAR,
+    ItemName.Weapon_KRM,
+    ItemName.Weapon_Kuda,
+    ItemName.Weapon_VMP,
+    ItemName.Weapon_Vesper,
+    ItemName.Weapon_Argus,
+    ItemName.Weapon_KN44,
+    ItemName.Weapon_ICR,
+    ItemName.Weapon_M8A7,
+    ItemName.Weapon_HVK,
+    ItemName.Weapon_BowieKnife,
+]]
+
+GorodKrovi_Machines_Specific = gen_map_specific_list(Maps.GorodKrovi_Map_String, GorodKrovi_Machines)
+GorodKrovi_Wallbuys_Specific = gen_map_specific_list(Maps.GorodKrovi_Map_String, GorodKrovi_Wallbuys)
+
+GorodKrovi_Shield = gen_map_specific_list(Maps.GorodKrovi_Map_String, ShieldParts)
+
+GorodKrovi_Craftables_Dragonride = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for row in[
+    ItemName.GorodKrovi_Craftable_Dragonride_Transmitter,
+    ItemName.GorodKrovi_Craftable_Dragonride_Codes,
+    ItemName.GorodKrovi_Craftable_Dragonride_Map,
+]]
+
+GorodKrovi_MysteryBox = [ItemData(row, BO3ZombiesItemCategory.SPECIAL_WEAPON) for row in[
+    Maps.GorodKrovi_Map_String + " Mystery Box - " + ItemName.Weapon_Raygun,
+    Maps.GorodKrovi_Map_String + " Mystery Box - " + ItemName.Weapon_MonkeyBombs,
+    Maps.GorodKrovi_Map_String + " Mystery Box - " + ItemName.Weapon_RaygunMk3,
 ]]
 
 # Progressives
@@ -180,6 +244,10 @@ Weapon_Victory_Items = [ItemData(row, BO3ZombiesItemCategory.VICTORY) for row in
     ItemName.Castle_Victory_ElementalBow_Wolf,
     ItemName.Castle_Victory_ElementalBow_Fire,
     ItemName.Castle_Victory_ElementalBow_Void,
+    ItemName.GorodKrovi_Victory_DragonGauntlets,
+    ItemName.GorodKrovi_Victory_TiamatsMaw,
+    ItemName.GorodKrovi_Victory_Upgraded_Dragonstrikes,
+    ItemName.GorodKrovi_Victory_Upgraded_MonkeyBombs
 ]]
 
 Victory_Items = [ItemData(row, BO3ZombiesItemCategory.VICTORY) for row in [
@@ -188,6 +256,8 @@ Victory_Items = [ItemData(row, BO3ZombiesItemCategory.VICTORY) for row in [
     Maps.The_Giant_Map_String + ItemName.Victory,
     Maps.Castle_Map_String + ItemName.Victory,
     Maps.Castle_Map_String + ItemName.EE_Victory,
+    Maps.GorodKrovi_Map_String + ItemName.Victory,
+    Maps.GorodKrovi_Map_String + ItemName.EE_Victory,
 ]]
 
 # Misc/Filler Items
@@ -224,14 +294,22 @@ all_items = (
     # The Giant
     + The_Giant_Machines + The_Giant_Machines_Specific
     + The_Giant_Wallbuys + The_Giant_Wallbuys_Specific
+    + The_Giant_MysteryBox
     # Castle
     + Castle_Machines + Castle_Machines_Specific
     + Castle_Wallbuys + Castle_Wallbuys_Specific
     + Castle_Craftables + Castle_Shield
+    + Castle_MysteryBox
     # Shadows of Evil
     + Shadows_Machines + Shadows_Machines_Specific
     + Shadows_Wallbuys + Shadows_Wallbuys_Specific
     + Shadows_Craftables + Shadows_Shield
+    + Shadows_MysteryBox
+    # Gorod Krovi
+    + GorodKrovi_Machines + GorodKrovi_Machines_Specific
+    + GorodKrovi_Wallbuys + GorodKrovi_Wallbuys_Specific
+    + GorodKrovi_Craftables_Dragonride + GorodKrovi_Shield
+    + GorodKrovi_MysteryBox
 )
 
 all_items_dict = {item_data.name: item_data for item_data in all_items}

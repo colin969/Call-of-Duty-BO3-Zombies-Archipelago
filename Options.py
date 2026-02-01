@@ -18,6 +18,11 @@ class MapCastleEnabled(Toggle):
     display_name = "\"Castle\" map enabled"
     default = True
 
+class MapGorodKroviEnabled(Toggle):
+    """Enabled Map: \"Gorod Krovi\""""
+    display_name = "\"Gorod Krovi\" map enabled"
+    default = True
+
 class SpecialRoundsEnabled(Toggle):
     """Enables Special Rounds (Dogs, Monkeys, ect.)."""
     display_name = "Special Rounds Enabled"
@@ -26,6 +31,11 @@ class SpecialRoundsEnabled(Toggle):
 class RandomizeShieldParts(Toggle):
     """Shuffles your shield parts into the item pool"""
     display_name = "Randomize Shield Parts"
+    default = True
+
+class RandomizeBoxWonderWeapons(Toggle):
+    """Shuffles Mystery Box Wonder Weapon unlocks into the item pool"""
+    display_name = "Randomize Mystery Box Wonder Weapons"
     default = True
 
 class CastleBowCount(Range):
@@ -143,6 +153,7 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     map_shadows_enabled: MapShadowsEnabled
     map_the_giant_enabled: MapTheGiantEnabled
     map_castle_enabled: MapCastleEnabled
+    map_gorod_enabled: MapGorodKroviEnabled
     special_rounds_enabled: SpecialRoundsEnabled
     round_location_max: RoundMaxLocation
     round_location_freq: RoundLocationFrequency
@@ -153,6 +164,7 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     perk_limit_default_modifier: PerkLimitDefaultModifier
     progressive_perk_limit_increase: ProgressivePerkLimitIncrease
     randomized_shield_parts: RandomizeShieldParts
+    randomized_box_wonder_weapons: RandomizeBoxWonderWeapons
     map_specific_wallbuys: MapSpecificWallbuysEnabled
     map_specific_machines: MapSpecificMachinesEnabled
     castle_bow_count: CastleBowCount
@@ -161,6 +173,7 @@ class BO3ZombiesOptions(PerGameCommonOptions):
 bo3_option_groups = [
     OptionGroup("General Options", [
         RandomizeShieldParts,
+        RandomizeBoxWonderWeapons,
         MapSpecificWallbuysEnabled,
         MapSpecificMachinesEnabled,
         RoundMaxLocation,
@@ -183,6 +196,7 @@ bo3_option_groups = [
         MapTheGiantEnabled,
         MapCastleEnabled,
         CastleBowCount,
+        MapGorodKroviEnabled,
     ]),
     OptionGroup("Filler", [
         GiftWeight,

@@ -8,7 +8,7 @@ from worlds.AutoWorld import World, WebWorld
 
 from worlds.generic.Rules import set_rule
 
-from . import Regions, Locations, Items, Options
+from . import Locations, Items, Options
 from .Options import BO3ZombiesOptions, bo3_option_groups
 from .Names import ItemName, LocationName, RegionName, Maps
 
@@ -107,8 +107,6 @@ class BO3ZombiesWorld(World):
                 for bow in bow_pairs:
                     self.multiworld.get_location(bow[0][-1].name, self.player).place_locked_item(bow[1])
 
-
-
             boss_fight_locations = [loc.name for loc in Locations.Castle_Quest_MainEE_Locations[4:]]
             boss_region = self.create_region(self.multiworld, self.player, RegionName.Castle_BossFight, boss_fight_locations)
             self.multiworld.regions.append(boss_region)
@@ -119,6 +117,43 @@ class BO3ZombiesWorld(World):
                 state.has(ItemName.Castle_Craftable_GravitySpikes_Handle, self.player))
 
             print(self.multiworld.regions)
+
+        if self.options.map_gorod_enabled:
+            all_locations = []
+            add_round_locations(all_locations, Locations.GorodKrovi_Round_Locations, round_max, round_freq, is_round_goal_cond, goal_round)
+            all_locations.extend([loc.name for loc in Locations.GorodKrovi_Quest_MainQuest_Locations])
+            all_locations.extend([loc.name for loc in Locations.GorodKrovi_Craftable_Locations])
+            all_locations.extend([loc.name for loc in Locations.GorodKrovi_Quest_MaineEE_Locations])
+            all_locations.extend([loc.name for loc in Locations.GorodKrovi_Quest_SideEE])
+            all_locations.append(Locations.GorodKrovi_Quest_Challenges[0].name)
+            all_locations.append(Locations.GorodKrovi_Quest_Challenges[2].name)
+            all_locations.extend([loc.name for loc in Locations.GorodKrovi_Quest_DragonGauntlets])
+            all_locations.extend([loc.name for loc in Locations.GorodKrovi_Quest_DragonStrikes])
+
+            # Shield required locations
+            # Challenge 2 has kills with dragon shield challenge
+            shield_locations = (
+                [Locations.GorodKrovi_Quest_Challenges[1].name] +
+                [loc.name for loc in Locations.GorodKrovi_Quest_TiamatsMaw]
+            )
+            shield_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_Shield, shield_locations)
+            self.multiworld.regions.append(shield_region)
+
+            # Monkey Bomb upgrade location
+            monkeybomb_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_MonkeyBombs, [Locations.GorodKrovi_Quest_Challenges[3].name])
+            self.multiworld.regions.append(monkeybomb_region)
+
+            main_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_Trenches, all_locations)
+            main_region.connect(shield_region, lambda state: state.has_all([item.name for item in Items.GorodKrovi_Shield], self.player))
+            # Upgrade requires shield as well
+            if self.options.randomized_box_wonder_weapons:
+                shield_region.connect(monkeybomb_region, lambda state: state.has(Items.GorodKrovi_MysteryBox[1].name, self.player))
+            else:
+                shield_region.connect(monkeybomb_region)
+
+            self.multiworld.regions.append(main_region)
+            menu_region.connect(main_region)
+
 
     def create_region(self, world: MultiWorld, player: int, name: str, locations=None):
         ret = Region(name, player, world)
@@ -135,11 +170,13 @@ class BO3ZombiesWorld(World):
         useful_categories = {
             Items.BO3ZombiesItemCategory.WALLBUY,
             Items.BO3ZombiesItemCategory.MACHINE,
-            Items.BO3ZombiesItemCategory.PROGRESSIVE,
+            Items.BO3ZombiesItemCategory.SPECIAL_WEAPON,
+            Items.BO3ZombiesItemCategory.CRAFTABLE,
         }
 
         # TODO: do a getProgressiveItems list instead
         progression_categories = {
+            Items.BO3ZombiesItemCategory.PROGRESSIVE,
             Items.BO3ZombiesItemCategory.BLOCKER,
             Items.BO3ZombiesItemCategory.POWER,
             Items.BO3ZombiesItemCategory.EASTER_EGG,
@@ -150,6 +187,8 @@ class BO3ZombiesWorld(World):
             item_classification = ItemClassification.progression
         elif Items.all_items_dict[name].category in useful_categories:
             item_classification = ItemClassification.useful
+        elif Items.all_items_dict[name].category == Items.BO3ZombiesItemCategory.TRAP:
+            item_classification = ItemClassification.trap
         else:
             item_classification = ItemClassification.filler
 
@@ -181,6 +220,8 @@ class BO3ZombiesWorld(World):
                 enabled_items += Items.The_Giant_Machines_Specific
             if self.options.map_castle_enabled:
                 enabled_items += Items.Castle_Machines_Specific
+            if self.options.map_gorod_enabled:
+                enabled_items += Items.GorodKrovi_Machines_Specific
         else:
             # Only add one instance per machine
             seen = set()
@@ -190,6 +231,8 @@ class BO3ZombiesWorld(World):
                 add_universal_items(enabled_items, seen, Items.The_Giant_Machines)
             if self.options.map_castle_enabled:
                 add_universal_items(enabled_items, seen, Items.Castle_Machines)
+            if self.options.map_gorod_enabled:
+                add_universal_items(enabled_items, seen, Items.GorodKrovi_Machines)
 
         # Add wallbuys to pool
         if self.options.map_specific_wallbuys:
@@ -200,6 +243,8 @@ class BO3ZombiesWorld(World):
                 enabled_items += Items.The_Giant_Wallbuys_Specific
             if self.options.map_castle_enabled:
                 enabled_items += Items.Castle_Wallbuys_Specific
+            if self.options.map_gorod_enabled:
+                enabled_items += Items.GorodKrovi_Wallbuys_Specific
         else:
             # Only add one instance per wallbuy
             seen = set()
@@ -209,6 +254,8 @@ class BO3ZombiesWorld(World):
                 add_universal_items(enabled_items, seen, Items.The_Giant_Wallbuys)
             if self.options.map_castle_enabled:
                 add_universal_items(enabled_items, seen, Items.Castle_Wallbuys)
+            if self.options.map_gorod_enabled:
+                add_universal_items(enabled_items, seen, Items.GorodKrovi_Wallbuys)
 
         map_list = []
         if self.options.map_shadows_enabled:
@@ -223,6 +270,21 @@ class BO3ZombiesWorld(World):
             if self.options.randomized_shield_parts:
                 enabled_items += Items.Castle_Shield
             enabled_items += Items.Castle_Craftables
+        if self.options.map_gorod_enabled:
+            map_list.append(Maps.GorodKrovi_Map_String)
+            if self.options.randomized_shield_parts:
+                enabled_items += Items.GorodKrovi_Shield
+            # enabled_items += Items.GorodKrovi_Craftables_Dragonride
+
+        if self.options.randomized_box_wonder_weapons:
+            if self.options.map_the_giant_enabled:
+                enabled_items += Items.The_Giant_MysteryBox
+            if self.options.map_shadows_enabled:
+                enabled_items += Items.Shadows_MysteryBox
+            if self.options.map_castle_enabled:
+                enabled_items += Items.Castle_MysteryBox
+            if self.options.map_gorod_enabled:
+                enabled_items += Items.GorodKrovi_MysteryBox
 
         # Easter Egg Hunt
         if self.options.goal_condition == 0:
@@ -232,6 +294,8 @@ class BO3ZombiesWorld(World):
                 ee_pairs.append((LocationName.Shadows_Quest_MainEE_Victory, Maps.Shadows_Map_String + ItemName.EE_Victory))
             if self.options.map_castle_enabled:
                 ee_pairs.append((LocationName.Castle_Quest_MainEE_Victory, Maps.Castle_Map_String + ItemName.EE_Victory))
+            if self.options.map_gorod_enabled:
+                ee_pairs.append((LocationName.GorodKrovi_Quest_MainEE_Victory, Maps.GorodKrovi_Map_String + ItemName.EE_Victory))
 
             # Get bounds for number of victory items to add
             ee_allow_any = not self.options.goal_ee_random
@@ -253,10 +317,22 @@ class BO3ZombiesWorld(World):
             if self.options.map_shadows_enabled:
                 goal_item = self.create_item(ItemName.Shadows_Victory_ApothiconSwordLvl2)
                 self.weapon_quest_items.append(ItemName.Shadows_Victory_ApothiconSwordLvl2)
-                self.multiworld.get_location(Locations.Shadows_Quest_ApothiconSword_Locations[-1].name, self.player).place_locked_item(goal_item)
+                self.multiworld.get_location(Locations.Shadows_Quest_ApothiconSword_Locations[-1].name, self.player).place_locked_item(goal_item) 
             if self.options.map_castle_enabled:
                 # Handled in create_regions
                 pass
+            if self.options.map_gorod_enabled:
+                goal_items = map(self.create_item, [(
+                    ItemName.GorodKrovi_Victory_DragonGauntlets,
+                    ItemName.GorodKrovi_Victory_Upgraded_Dragonstrikes,
+                    ItemName.GorodKrovi_Victory_Upgraded_MonkeyBombs,
+                    ItemName.GorodKrovi_Victory_TiamatsMaw
+                )])
+                self.weapon_quest_items.extend(goal_items)
+                self.multiworld.get_location(Locations.GorodKrovi_Quest_DragonGauntlets[-1].name, self.player).place_locked_item(goal_items[0])
+                self.multiworld.get_location(Locations.GorodKrovi_Quest_DragonStrikes[-1].name, self.player).place_locked_item(goal_items[1])
+                self.multiworld.get_location(Locations.GorodKrovi_Quest_Challenges[-1].name, self.player).place_locked_item(goal_items[2])
+                self.multiworld.get_location(Locations.GorodKrovi_Quest_TiamatsMaw[-1].name, self.player).place_locked_item(goal_items[3])
 
         # Goal Round Condition
         if self.options.goal_condition == 2:
@@ -332,6 +408,7 @@ class BO3ZombiesWorld(World):
             "special_rounds_enabled": bool(options.special_rounds_enabled),
             "perk_limit_default_modifier": int(options.perk_limit_default_modifier),
             "randomized_shield_parts": bool(options.randomized_shield_parts),
+            "randomized_box_wonder_weapons": bool(options.randomized_box_wonder_weapons),
         }
 
         return slot_data

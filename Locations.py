@@ -6,7 +6,8 @@ from .Names import LocationName, Maps
 BaseMapIds = {
     Maps.The_Giant_Map_String: 1000,
     Maps.Castle_Map_String: 2000,
-    Maps.Shadows_Map_String: 3000
+    Maps.Shadows_Map_String: 3000,
+    Maps.GorodKrovi_Map_String: 4000,
 }
 
 class BO3ZombiesLocationCategory(IntEnum):
@@ -169,6 +170,71 @@ Shadows_Craftable_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.M
     (LocationName.Shadows_Craftable_ShieldPartClamp, 3322),
 ]]
 
+# Gorod Krovi
+
+GorodKrovi_Round_Locations = gen_map_round_locations(Maps.GorodKrovi_Map_String, 100)
+
+GorodKrovi_Quest_MainQuest_Locations =  [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.GorodKrovi_Quest_MainQuest_Dragonride_Transmitter, 4000),
+    (LocationName.GorodKrovi_Quest_MainQuest_Dragonride_Codes, 4001),
+    (LocationName.GorodKrovi_Quest_MainQuest_Dragonride_Map, 4002),
+    (LocationName.GorodKrovi_Quest_MainQuest_Dragonride_Repaired, 4003),
+    (LocationName.GorodKrovi_Quest_MainQuest_SurviveTheLockdown, 4004),
+]]
+
+GorodKrovi_Quest_MaineEE_Locations =  [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.GorodKrovi_Quest_MainEE_CollectTrophies, 4010),
+    (LocationName.GorodKrovi_Quest_MainEE_ChargeGenerator, 4011),
+    (LocationName.GorodKrovi_Quest_MainEE_PnuematicTubes, 4012),
+    (LocationName.GorodKrovi_Quest_MainEE_EnterSophiasPassword, 4013),
+    (LocationName.GorodKrovi_Quest_MainEE_CompleteScenarios, 4014),
+    (LocationName.GorodKrovi_Quest_MainEE_DeliverPowerCore, 4015),
+    (LocationName.GorodKrovi_Quest_MainEE_SlayDragon, 4016),
+    (LocationName.GorodKrovi_Quest_MainEE_DefeatNikolai, 4017),
+    (LocationName.GorodKrovi_Quest_MainEE_Victory, 4018),
+]]
+
+GorodKrovi_Quest_DragonStrikes = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.GorodKrovi_Quest_Dragonstrikes_Acquire, 4020),
+    (LocationName.GorodKrovi_Quest_Dragonstrikes_Upgrade, 4021),
+]]
+
+GorodKrovi_Quest_DragonGauntlets = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.GorodKrovi_Quest_DragonGauntlets_AcquireEgg, 4030),
+    (LocationName.GorodKrovi_Quest_DragonGauntlets_WarmEgg, 4031),
+    (LocationName.GorodKrovi_Quest_DragonGauntlets_C1Napalm, 4032),
+    (LocationName.GorodKrovi_Quest_DragonGauntlets_C2Collatoral, 4033),
+    (LocationName.GorodKrovi_Quest_DragonGauntlets_C3Knife, 4034),
+    (LocationName.GorodKrovi_Quest_DragonGauntlets_IncubateEgg, 4035),
+    (LocationName.GorodKrovi_Quest_DragonGauntlets_HatchEgg, 4036),
+]]
+
+GorodKrovi_Quest_TiamatsMaw = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.GorodKrovi_Quest_TiamatsMaw_Kills, 4040),
+    (LocationName.GorodKrovi_Quest_TiamatsMaw_Bathe, 4041),
+    (LocationName.GorodKrovi_Quest_TiamatsMaw_Runes, 4042),
+    (LocationName.GorodKrovi_Quest_TiamatsMaw_Upgrade, 4043),
+]]
+
+GorodKrovi_Quest_SideEE = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.GorodKrovi_Quest_SideEE_DragonWings, 4050),
+    (LocationName.GorodKrovi_Quest_SideEE_ManglerHelm, 4051),
+    (LocationName.GorodKrovi_Quest_SideEE_ValkyrieHelm, 4052),
+]]
+
+GorodKrovi_Quest_Challenges = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.GorodKrovi_Quest_Challenges_1, 4060),
+    (LocationName.GorodKrovi_Quest_Challenges_2, 4061),
+    (LocationName.GorodKrovi_Quest_Challenges_3, 4062),
+    (LocationName.GorodKrovi_Quest_UpgradeMonkeyBombs, 4063),
+]]
+
+GorodKrovi_Craftable_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.MISC, row[1]) for row in [
+    (LocationName.GorodKrovi_Craftable_ShieldPartDoor, 4100),
+    (LocationName.GorodKrovi_Craftable_ShieldPartDolly, 4101),
+    (LocationName.GorodKrovi_Craftable_ShieldPartClamp, 4102),
+]]
+
 early_locations =  [LocationData(row[0], row[1], row[2]) for row in [
     (LocationName.RepairWindows_5, BO3ZombiesLocationCategory.MISC, 9001),
 ]]
@@ -181,4 +247,7 @@ all_locations = (
     + Shadows_Round_Locations + Shadows_Quest_Locations + Shadows_Craftable_Locations
     + Shadows_Quest_MainQuest_Locations + Shadows_Quest_ApothiconSword_Locations 
     + Shadows_Quest_MainEE_Locations
+    + GorodKrovi_Round_Locations + GorodKrovi_Craftable_Locations + GorodKrovi_Quest_MaineEE_Locations + GorodKrovi_Quest_SideEE
+    + GorodKrovi_Quest_DragonStrikes + GorodKrovi_Quest_DragonGauntlets + GorodKrovi_Quest_Challenges + GorodKrovi_Quest_TiamatsMaw
+    + GorodKrovi_Quest_MainQuest_Locations
     + early_locations)

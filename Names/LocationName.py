@@ -85,4 +85,49 @@ Shadows_Craftable_ShieldPartDolly = Maps.Shadows_Map_String + " Shield Part Pick
 Shadows_Craftable_ShieldPartDoor = Maps.Shadows_Map_String + " Shield Part Pickup - Door"
 Shadows_Craftable_ShieldPartClamp = Maps.Shadows_Map_String + " Shield Part Pickup - Clamp"
 
+GorodKrovi_Quest_MainQuest_Dragonride_Transmitter = Maps.GorodKrovi_Map_String + " Main Quest - Dragonride Part Pickup - Transmitter"
+GorodKrovi_Quest_MainQuest_Dragonride_Codes = Maps.GorodKrovi_Map_String + " Main Quest - Dragonride Part Pickup - Codes"
+GorodKrovi_Quest_MainQuest_Dragonride_Map = Maps.GorodKrovi_Map_String + " Main Quest - Dragonride Part Pickup - Map"
+GorodKrovi_Quest_MainQuest_Dragonride_Repaired = Maps.GorodKrovi_Map_String + " Main Quest - Repair the Dragonride"
+GorodKrovi_Quest_MainQuest_SurviveTheLockdown = Maps.GorodKrovi_Map_String + " Main Quest - Survive the Lockdown"
+
+GorodKrovi_Quest_MainEE_CollectTrophies = Maps.GorodKrovi_Map_String + " Main Easter Egg - Collect the Trophies"
+GorodKrovi_Quest_MainEE_ChargeGenerator = Maps.GorodKrovi_Map_String + " Main Easter Egg - Charge the Generator"
+GorodKrovi_Quest_MainEE_PnuematicTubes = Maps.GorodKrovi_Map_String + " Main Easter Egg - Pneumatic Tubes Puzzle"
+GorodKrovi_Quest_MainEE_EnterSophiasPassword = Maps.GorodKrovi_Map_String + " Main Easter Egg - Enter S.O.P.H.I.A's Password"
+GorodKrovi_Quest_MainEE_CompleteScenarios = Maps.GorodKrovi_Map_String + " Main Easter Egg - Complete All 6 Scenarios"
+GorodKrovi_Quest_MainEE_DeliverPowerCore = Maps.GorodKrovi_Map_String + " Main Easter Egg - Deliver the Power Core to Nikolai"
+GorodKrovi_Quest_MainEE_SlayDragon = Maps.GorodKrovi_Map_String + " Main Easter Egg - Slay the Dragon"
+GorodKrovi_Quest_MainEE_DefeatNikolai = Maps.GorodKrovi_Map_String + " Main Easter Egg - Defeat Nikolai"
+GorodKrovi_Quest_MainEE_Victory = Maps.GorodKrovi_Map_String + " Main Easter Egg - Victory"
+
+GorodKrovi_Quest_Dragonstrikes_Acquire = Maps.GorodKrovi_Map_String + " Acquire the Dragonstrikes"
+GorodKrovi_Quest_Dragonstrikes_Upgrade = Maps.GorodKrovi_Map_String + " Upgrade the Dragonstrikes"
+
+GorodKrovi_Quest_DragonGauntlets_AcquireEgg = Maps.GorodKrovi_Map_String + " Dragon Gauntlets - Acquire the Dragon Egg"
+GorodKrovi_Quest_DragonGauntlets_WarmEgg = Maps.GorodKrovi_Map_String + " Dragon Gauntlets - Warm up the Dragon Egg"
+GorodKrovi_Quest_DragonGauntlets_C1Napalm = Maps.GorodKrovi_Map_String + " Dragon Gauntlets - Challenge 1 - Napalm Zombies"
+GorodKrovi_Quest_DragonGauntlets_C2Collatoral = Maps.GorodKrovi_Map_String + " Dragon Gauntlets - Challenge 2 - Collateral Kills Challenge"
+GorodKrovi_Quest_DragonGauntlets_C3Knife = Maps.GorodKrovi_Map_String + " Dragon Gauntlets - Challenge 3 - Knife Kills Challenge"
+GorodKrovi_Quest_DragonGauntlets_IncubateEgg = Maps.GorodKrovi_Map_String + " Dragon Gauntlets - Incubate the Dragon Egg"
+GorodKrovi_Quest_DragonGauntlets_HatchEgg = Maps.GorodKrovi_Map_String + " Dragon Gauntlets - Dragon Gauntlets - Hatch the Baby Dragon"
+
+GorodKrovi_Quest_TiamatsMaw_Kills = Maps.GorodKrovi_Map_String + " Tiamat's Maw - 50 Dragon Shield Kills"
+GorodKrovi_Quest_TiamatsMaw_Bathe = Maps.GorodKrovi_Map_String + " Tiamat's Maw - Bathe in the Dragon's Flame"
+GorodKrovi_Quest_TiamatsMaw_Runes = Maps.GorodKrovi_Map_String + " Tiamat's Maw - Fire Blast the Purple Runes"
+GorodKrovi_Quest_TiamatsMaw_Upgrade = Maps.GorodKrovi_Map_String + " Tiamat's Maw - Upgrade the Dragon Shield"
+
+GorodKrovi_Quest_SideEE_DragonWings = Maps.GorodKrovi_Map_String + " Unlock the Dragon Wings"
+GorodKrovi_Quest_SideEE_ManglerHelm = Maps.GorodKrovi_Map_String + " Unlock the Mangler Helmet"
+GorodKrovi_Quest_SideEE_ValkyrieHelm = Maps.GorodKrovi_Map_String + " Unlock the Valkyrie Helmet"
+
+GorodKrovi_Quest_Challenges_1 = Maps.GorodKrovi_Map_String + " Complete Challenge 1"
+GorodKrovi_Quest_Challenges_2 = Maps.GorodKrovi_Map_String + " Complete Challenge 2"
+GorodKrovi_Quest_Challenges_3 = Maps.GorodKrovi_Map_String + " Complete Challenge 3"
+GorodKrovi_Quest_UpgradeMonkeyBombs = Maps.GorodKrovi_Map_String + " Upgrade the Monkey Bombs"
+
+GorodKrovi_Craftable_ShieldPartDolly = Maps.GorodKrovi_Map_String + " Shield Part Pickup - Dolly"
+GorodKrovi_Craftable_ShieldPartDoor = Maps.GorodKrovi_Map_String + " Shield Part Pickup - Door"
+GorodKrovi_Craftable_ShieldPartClamp = Maps.GorodKrovi_Map_String + " Shield Part Pickup - Clamp"
+
 RepairWindows_5 = "Repair Windows 5 Times"

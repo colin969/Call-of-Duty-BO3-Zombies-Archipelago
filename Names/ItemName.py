@@ -90,6 +90,16 @@ Weapon_MauserC96 = "Wallbuy - Mauser C96"
 
 Weapon_BowieKnife = "Wallbuy - Bowie Knife"
 
+# Other
+
+Weapon_Raygun = "Raygun"
+Weapon_RaygunMk2 = "Raygun Mark 2"
+Weapon_RaygunMk3 = "Raygun Mark 3"
+Weapon_Wunderwaffe = "Wunderwaffe DG-2"
+Weapon_ApothiconServant = "Apothicon Servant"
+Weapon_MonkeyBombs = "Monkey Bombs"
+Weapon_LilArnies = "Li'l Arnies"
+
 # Traps
 
 Trap_ThirdPersonMode = "Trap - Third Person Mode"
@@ -133,6 +143,16 @@ Shadows_Craftable_CivilProtector_Fuse02 = Maps.Shadows_Map_String + " Civil Prot
 Shadows_Craftable_CivilProtector_Fuse03 = Maps.Shadows_Map_String + " Civil Protector Part - Footlight Fuse"
 
 Shadows_Victory_ApothiconSwordLvl2 = Maps.Shadows_Map_String + " Apothicon Sword Upgraded - Victory"
+
+GorodKrovi_Craftable_Dragonride_Transmitter = Maps.GorodKrovi_Map_String + " Dragonride Network Circuit - Transmitter"
+GorodKrovi_Craftable_Dragonride_Codes = Maps.GorodKrovi_Map_String + " Dragonride Network Circuit - Codes"
+GorodKrovi_Craftable_Dragonride_Map = Maps.GorodKrovi_Map_String + " Dragonride Network Circuit - Map"
+
+GorodKrovi_Victory_Upgraded_Dragonstrikes = Maps.GorodKrovi_Map_String + " Upgraded Dragonstrikes - Victory"
+GorodKrovi_Victory_DragonGauntlets = Maps.GorodKrovi_Map_String + " Dragon Gauntlets - Victory"
+GorodKrovi_Victory_Upgraded_MonkeyBombs = Maps.GorodKrovi_Map_String + " Upgraded Monkey Bombs - Victory"
+GorodKrovi_Victory_TiamatsMaw = Maps.GorodKrovi_Map_String + " Tiamat's Maw - Victory"
+
 
 # Misc
 Points50                            = "50 Points"
