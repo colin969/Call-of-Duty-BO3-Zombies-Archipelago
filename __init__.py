@@ -24,7 +24,7 @@ class BO3ZombiesWorld(World):
     web = BO3ZombiesWeb()
 
     options_dataclass = BO3ZombiesOptions
-    options = BO3ZombiesOptions
+    options: BO3ZombiesOptions
 
     required_client_version = (0, 6, 5)
 
@@ -73,7 +73,7 @@ class BO3ZombiesWorld(World):
                 main_ee_region_requirements += [item.name for item in Items.Shadows_MysteryBox]
             else:
                 all_locations.extend([loc.name for loc in Locations.Shadows_Quest_MainEE_Locations]) # Up to Boss Fight start
-            menu_region.connect(main_ee_region, lambda state: state.has_all(main_ee_region_requirements))
+            menu_region.connect(main_ee_region, rule = lambda state: state.has_all(main_ee_region_requirements, self.player))
     
             main_region = self.create_region(self.multiworld, self.player, RegionName.Shadows_Alleyway, all_locations)
             self.multiworld.regions.append(main_region)
@@ -95,7 +95,7 @@ class BO3ZombiesWorld(World):
                 (Locations.Castle_Quest_ElementalBow_Fire_Locations, self.create_item(ItemName.Castle_Victory_ElementalBow_Fire)),
                 (Locations.Castle_Quest_ElementalBow_Void_Locations, self.create_item(ItemName.Castle_Victory_ElementalBow_Void)),
             ]
-            bow_count = min(self.options.castle_bow_count, 4)
+            bow_count = min(self.options.castle_bow_count.value, 4)
             bow_pairs = self.random.sample(bow_pairs, bow_count)
             for bow in bow_pairs:
                 all_locations.extend([loc.name for loc in bow[0]])
@@ -112,7 +112,7 @@ class BO3ZombiesWorld(World):
                 main_ee_region_requirements += [item.name for item in Items.Castle_MysteryBox]
             else:
                 all_locations.extend([loc.name for loc in Locations.Castle_Quest_MainEE_Locations[:4]]) # Up to Boss Fight start
-            menu_region.connect(main_ee_region, lambda state: state.has_all(main_ee_region_requirements))
+            menu_region.connect(main_ee_region, rule = lambda state: state.has_all(main_ee_region_requirements, self.player))
 
             main_region = self.create_region(self.multiworld, self.player, RegionName.Castle_Gondola, all_locations)
             self.multiworld.regions.append(main_region)
@@ -128,9 +128,9 @@ class BO3ZombiesWorld(World):
 
             menu_region.connect(main_region)
             if main_ee_region is not None:
-                main_ee_region.connect(boss_region, lambda state: state.has_all([item.naem for item in Items.Castle_Craftables], self.player))
+                main_ee_region.connect(boss_region, rule = lambda state: state.has_all([item.name for item in Items.Castle_Craftables], self.player))
             else:
-                main_region.connect(boss_region, lambda state: state.has_all([item.naem for item in Items.Castle_Craftables], self.player))
+                main_region.connect(boss_region, rule = lambda state: state.has_all([item.name for item in Items.Castle_Craftables], self.player))
 
 
         if self.options.map_gorod_enabled:
@@ -154,7 +154,7 @@ class BO3ZombiesWorld(World):
                 main_ee_region_requirements += [item.name for item in Items.GorodKrovi_MysteryBox]
             else:
                 all_locations.extend([loc.name for loc in Locations.GorodKrovi_Quest_MaineEE_Locations])
-            menu_region.connect(main_ee_region, lambda state: state.has_all(main_ee_region_requirements))
+            menu_region.connect(main_ee_region, rule = lambda state: state.has_all(main_ee_region_requirements, self.player))
 
             # Shield required locations
             # Challenge 2 has kills with dragon shield challenge
@@ -170,10 +170,10 @@ class BO3ZombiesWorld(World):
             self.multiworld.regions.append(monkeybomb_region)
 
             main_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_Trenches, all_locations)
-            main_region.connect(shield_region, lambda state: state.has_all([item.name for item in Items.GorodKrovi_Shield], self.player))
+            main_region.connect(shield_region, rule = lambda state: state.has_all([item.name for item in Items.GorodKrovi_Shield], self.player))
             # Upgrade requires shield as well
             if self.options.randomized_box_wonder_weapons:
-                shield_region.connect(monkeybomb_region, lambda state: state.has(Items.GorodKrovi_MysteryBox[1].name, self.player))
+                shield_region.connect(monkeybomb_region, rule= lambda state: state.has(Items.GorodKrovi_MysteryBox[1].name, self.player))
             else:
                 shield_region.connect(monkeybomb_region)
 
@@ -325,7 +325,7 @@ class BO3ZombiesWorld(World):
 
             # Get bounds for number of victory items to add
             ee_allow_any = not self.options.goal_ee_random
-            ee_count = min(self.options.goal_ee_count, len(ee_pairs))
+            ee_count = min(self.options.goal_ee_count.value, len(ee_pairs))
             self.ee_goal_items = []
 
             # Preselect the list of required maps, if random selection is enabled
@@ -348,12 +348,12 @@ class BO3ZombiesWorld(World):
                 # Handled in create_regions
                 pass
             if self.options.map_gorod_enabled:
-                goal_items = map(self.create_item, [(
+                goal_items = list(map(self.create_item, [
                     ItemName.GorodKrovi_Victory_DragonGauntlets,
                     ItemName.GorodKrovi_Victory_Upgraded_Dragonstrikes,
                     ItemName.GorodKrovi_Victory_Upgraded_MonkeyBombs,
                     ItemName.GorodKrovi_Victory_TiamatsMaw
-                )])
+                ]))
                 self.weapon_quest_items.extend(goal_items)
                 self.multiworld.get_location(Locations.GorodKrovi_Quest_DragonGauntlets[-1].name, self.player).place_locked_item(goal_items[0])
                 self.multiworld.get_location(Locations.GorodKrovi_Quest_DragonStrikes[-1].name, self.player).place_locked_item(goal_items[1])
@@ -400,7 +400,7 @@ class BO3ZombiesWorld(World):
         # Easter Egg Hunt
         if self.options.goal_condition == 0:
             # Whether or not we require *all* selected goal items (Randomised goal selection)
-            ee_goal_count = min(self.options.goal_ee_count, len(self.ee_goal_items))
+            ee_goal_count = min(self.options.goal_ee_count.value, len(self.ee_goal_items))
             ee_allow_any = not self.options.goal_ee_random
             print("Allowed goal items:")
             print(self.ee_goal_items)
@@ -409,7 +409,7 @@ class BO3ZombiesWorld(World):
             if not ee_allow_any:
                 self.multiworld.completion_condition[self.player] = lambda state: state.has_all(self.ee_goal_items, self.player)
             else:
-                self.multiworld.completion_condition[self.player] = lambda state: state.has_from_list(self.ee_goal_items, self.player, min(self.options.goal_ee_count, len(self.ee_goal_items)))
+                self.multiworld.completion_condition[self.player] = lambda state: state.has_from_list(self.ee_goal_items, self.player, min(self.options.goal_ee_count.value, len(self.ee_goal_items))) 
             
         # Weapon Quest
         if self.options.goal_condition == 1:
@@ -440,12 +440,6 @@ class BO3ZombiesWorld(World):
         }
 
         return slot_data
-
-    @staticmethod
-    def get_round_location_string(map_name: str, goal_round: int):
-        if map_name == "The Giant":
-            return Locations.TheGiant_Locations[goal_round - 1].name
-        return ""
 
 def add_universal_items(enabled_items, seen, items):
     for item in items:
