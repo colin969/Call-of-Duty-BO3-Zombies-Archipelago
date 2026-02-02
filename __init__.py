@@ -66,7 +66,15 @@ class BO3ZombiesWorld(World):
             all_locations.extend([loc.name for loc in Locations.Shadows_Quest_Locations])
             all_locations.extend([loc.name for loc in Locations.Shadows_Quest_MainQuest_Locations])
             all_locations.extend([loc.name for loc in Locations.Shadows_Quest_ApothiconSword_Locations])
-            all_locations.extend([loc.name for loc in Locations.Shadows_Quest_MainEE_Locations])
+
+            main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Shadows_MainEE, [loc.name for loc in Locations.Shadows_Quest_MainEE_Locations])
+            main_ee_region_requirements = [item.name for item in Items.Shadows_Shield]
+            if self.options.randomized_box_wonder_weapons:
+                main_ee_region_requirements += [item.name for item in Items.Shadows_MysteryBox]
+            else:
+                all_locations.extend([loc.name for loc in Locations.Shadows_Quest_MainEE_Locations]) # Up to Boss Fight start
+            menu_region.connect(main_ee_region, lambda state: state.has_all(main_ee_region_requirements))
+    
             main_region = self.create_region(self.multiworld, self.player, RegionName.Shadows_Alleyway, all_locations)
             self.multiworld.regions.append(main_region)
             menu_region.connect(main_region)
@@ -96,8 +104,15 @@ class BO3ZombiesWorld(World):
             add_round_locations(all_locations, Locations.Castle_Round_Locations, round_max, round_freq, is_round_goal_cond, goal_round)
             all_locations.extend([loc.name for loc in Locations.Castle_Craftable_Locations])
             all_locations.extend([loc.name for loc in Locations.Castle_Quest_Locations])
-            all_locations.extend([loc.name for loc in Locations.Castle_Quest_MainEE_Locations[:4]]) # Up to Boss Fight start
             all_locations.extend([loc.name for loc in Locations.Castle_Quest_Music_Locations])
+
+            main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Castle_MainEE, [loc.name for loc in Locations.Castle_Quest_MainEE_Locations[:4]])
+            main_ee_region_requirements = [item.name for item in Items.Castle_Shield]
+            if self.options.randomized_box_wonder_weapons:
+                main_ee_region_requirements += [item.name for item in Items.Castle_MysteryBox]
+            else:
+                all_locations.extend([loc.name for loc in Locations.Castle_Quest_MainEE_Locations[:4]]) # Up to Boss Fight start
+            menu_region.connect(main_ee_region, lambda state: state.has_all(main_ee_region_requirements))
 
             main_region = self.create_region(self.multiworld, self.player, RegionName.Castle_Gondola, all_locations)
             self.multiworld.regions.append(main_region)
@@ -111,24 +126,35 @@ class BO3ZombiesWorld(World):
             boss_region = self.create_region(self.multiworld, self.player, RegionName.Castle_BossFight, boss_fight_locations)
             self.multiworld.regions.append(boss_region)
 
-            menu_region.connect(main_region)            
-            main_region.connect(boss_region, lambda state: state.has(ItemName.Castle_Craftable_GravitySpikes_Body, self.player) and
-                state.has(ItemName.Castle_Craftable_GravitySpikes_Guards, self.player) and
-                state.has(ItemName.Castle_Craftable_GravitySpikes_Handle, self.player))
+            menu_region.connect(main_region)
+            if main_ee_region is not None:
+                main_ee_region.connect(boss_region, lambda state: state.has_all([item.naem for item in Items.Castle_Craftables], self.player))
+            else:
+                main_region.connect(boss_region, lambda state: state.has_all([item.naem for item in Items.Castle_Craftables], self.player))
 
-            print(self.multiworld.regions)
 
         if self.options.map_gorod_enabled:
             all_locations = []
             add_round_locations(all_locations, Locations.GorodKrovi_Round_Locations, round_max, round_freq, is_round_goal_cond, goal_round)
             all_locations.extend([loc.name for loc in Locations.GorodKrovi_Quest_MainQuest_Locations])
             all_locations.extend([loc.name for loc in Locations.GorodKrovi_Craftable_Locations])
-            all_locations.extend([loc.name for loc in Locations.GorodKrovi_Quest_MaineEE_Locations])
-            all_locations.extend([loc.name for loc in Locations.GorodKrovi_Quest_SideEE])
+            # Remove dragon wings location if we start with them
+            if self.options.difficulty_gorod_dragon_wings:
+                all_locations.extend([loc.name for loc in Locations.GorodKrovi_Quest_SideEE[1:]])
+            else:
+                all_locations.extend([loc.name for loc in Locations.GorodKrovi_Quest_SideEE])
             all_locations.append(Locations.GorodKrovi_Quest_Challenges[0].name)
             all_locations.append(Locations.GorodKrovi_Quest_Challenges[2].name)
             all_locations.extend([loc.name for loc in Locations.GorodKrovi_Quest_DragonGauntlets])
             all_locations.extend([loc.name for loc in Locations.GorodKrovi_Quest_DragonStrikes])
+
+            main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_MainEE, [loc.name for loc in Locations.GorodKrovi_Quest_MaineEE_Locations])
+            main_ee_region_requirements = [item.name for item in Items.GorodKrovi_Shield]
+            if self.options.randomized_box_wonder_weapons:
+                main_ee_region_requirements += [item.name for item in Items.GorodKrovi_MysteryBox]
+            else:
+                all_locations.extend([loc.name for loc in Locations.GorodKrovi_Quest_MaineEE_Locations])
+            menu_region.connect(main_ee_region, lambda state: state.has_all(main_ee_region_requirements))
 
             # Shield required locations
             # Challenge 2 has kills with dragon shield challenge
@@ -409,6 +435,8 @@ class BO3ZombiesWorld(World):
             "perk_limit_default_modifier": int(options.perk_limit_default_modifier),
             "randomized_shield_parts": bool(options.randomized_shield_parts),
             "randomized_box_wonder_weapons": bool(options.randomized_box_wonder_weapons),
+            "difficulty_gorod_egg_cooldown": bool(options.difficulty_gorod_egg_cooldown),
+            "difficulty_gorod_dragon_wings": bool(options.difficulty_gorod_dragon_wings),
         }
 
         return slot_data

@@ -148,6 +148,16 @@ class GoalRound(Range):
     range_end = 99
     default = 25
 
+class DifficultyGorodEggCooldown(Toggle):
+    """Instantly cool down the egg instead of waiting 2 rounds to retrieve it each time"""
+    display_name = "Gorod Krovi - Instant Egg Cooldown"
+    default = True
+
+class DifficultyGorodDragonWings(Toggle):
+    """Start the game with the Dragon Wings unlocked in the Department Store"""
+    display_name = "Gorod Krovi - Starting Dragon Wings"
+    default = False
+
 @dataclass
 class BO3ZombiesOptions(PerGameCommonOptions):
     map_shadows_enabled: MapShadowsEnabled
@@ -169,6 +179,8 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     map_specific_machines: MapSpecificMachinesEnabled
     castle_bow_count: CastleBowCount
     gift_weight: GiftWeight
+    difficulty_gorod_egg_cooldown: DifficultyGorodEggCooldown
+    difficulty_gorod_dragon_wings: DifficultyGorodDragonWings
 
 bo3_option_groups = [
     OptionGroup("General Options", [
@@ -197,6 +209,10 @@ bo3_option_groups = [
         MapCastleEnabled,
         CastleBowCount,
         MapGorodKroviEnabled,
+    ]),
+    OptionGroup("Difficulty Adjustments", [
+        DifficultyGorodEggCooldown,
+        DifficultyGorodDragonWings,
     ]),
     OptionGroup("Filler", [
         GiftWeight,
