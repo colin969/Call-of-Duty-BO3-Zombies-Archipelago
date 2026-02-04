@@ -178,6 +178,29 @@ Shadows_MysteryBox = [ItemData(row, BO3ZombiesItemCategory.SPECIAL_WEAPON) for r
     Maps.Shadows_Map_String + " Mystery Box - " + ItemName.Weapon_ApothiconServant,
 ]]
 
+# Zetsubou No Shima
+
+Zetsubou_Shield = gen_map_specific_list(Maps.Zetsubou_Map_String, ShieldParts)
+
+Zetsubou_Machines = []
+
+Zetsubou_Wallbuys = []
+
+Zetsubou_Machines_Specific = gen_map_specific_list(Maps.Zetsubou_Map_String, Zetsubou_Machines)
+Zetsubou_Wallbuys_Specific = gen_map_specific_list(Maps.Zetsubou_Map_String, Zetsubou_Wallbuys)
+
+Zetsubou_Craftables_Gasmask = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for row in[
+    ItemName.Zetsubou_Craftable_Gasmask_Visor,
+    ItemName.Zetsubou_Craftable_Gasmask_Filter,
+    ItemName.Zetsubou_Craftable_Gasmask_Strap,
+]]
+
+Zetsubou_MysteryBox = [ItemData(row, BO3ZombiesItemCategory.SPECIAL_WEAPON) for row in[
+    Maps.Zetsubou_Map_String + " Mystery Box - " + ItemName.Weapon_Raygun,
+    Maps.Zetsubou_Map_String + " Mystery Box - " + ItemName.Weapon_MonkeyBombs,
+    Maps.Zetsubou_Map_String + " Mystery Box - " + ItemName.Weapon_KT4,
+]]
+
 # Gorod Krovi
 
 GorodKrovi_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
@@ -256,6 +279,8 @@ Victory_Items = [ItemData(row, BO3ZombiesItemCategory.VICTORY) for row in [
     Maps.The_Giant_Map_String + ItemName.Victory,
     Maps.Castle_Map_String + ItemName.Victory,
     Maps.Castle_Map_String + ItemName.EE_Victory,
+    Maps.Zetsubou_Map_String + ItemName.Victory,
+    Maps.Zetsubou_Map_String + ItemName.EE_Victory,
     Maps.GorodKrovi_Map_String + ItemName.Victory,
     Maps.GorodKrovi_Map_String + ItemName.EE_Victory,
 ]]
@@ -305,6 +330,11 @@ all_items = (
     + Shadows_Wallbuys + Shadows_Wallbuys_Specific
     + Shadows_Craftables + Shadows_Shield
     + Shadows_MysteryBox
+    # Zetsubou No Shima
+    + Zetsubou_Machines + Zetsubou_Machines_Specific
+    + Zetsubou_Wallbuys + Zetsubou_Wallbuys_Specific
+    + Zetsubou_Craftables_Gasmask + Zetsubou_Shield
+    + Zetsubou_MysteryBox
     # Gorod Krovi
     + GorodKrovi_Machines + GorodKrovi_Machines_Specific
     + GorodKrovi_Wallbuys + GorodKrovi_Wallbuys_Specific

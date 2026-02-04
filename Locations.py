@@ -7,6 +7,7 @@ BaseMapIds = {
     Maps.Castle_Map_String: 2000,
     Maps.Shadows_Map_String: 3000,
     Maps.GorodKrovi_Map_String: 4000,
+    Maps.Zetsubou_Map_String: 5000,
 }
 
 class BO3ZombiesLocationCategory(IntEnum):
@@ -162,11 +163,58 @@ Shadows_Craftable_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.M
     (LocationName.Shadows_Craftable_ShieldPartClamp, 3322),
 ]]
 
+# Zetsubou No Shima
+
+Zetsubou_Round_Locations = gen_map_round_locations(Maps.Zetsubou_Map_String, 100)
+
+Zetsubou_Quest_MainQuest_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Zetsubou_Quest_MainQuest_Bucket, 5100),
+    (LocationName.Zetsubou_Quest_MainQuest_Bunker, 5101),
+    (LocationName.Zetsubou_Quest_MainQuest_Power, 5102),
+]]
+
+Zetsubou_Quest_MainEE_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Zetsubou_Quest_MainEE_AirplaneAmmo, 5110),
+    (LocationName.Zetsubou_Quest_MainEE_AirplaneDown, 5111),
+    (LocationName.Zetsubou_Quest_MainEE_Gear2, 5112),
+    (LocationName.Zetsubou_Quest_MainEE_Gear3, 5113),
+    (LocationName.Zetsubou_Quest_MainEE_FreeTakeo, 5114),
+    (LocationName.Zetsubou_Quest_MainEE_Victory, 5115),
+]]
+
+Zetsubou_Quest_KT4_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Zetsubou_Quest_KT4_Vial, 5120),
+    (LocationName.Zetsubou_Quest_KT4_Flower, 5121),
+    (LocationName.Zetsubou_Quest_KT4_Spider, 5122),
+    (LocationName.Zetsubou_Quest_Masamune_Vial, 5123),
+    (LocationName.Zetsubou_Quest_Masamune_Flower, 5124),
+    (LocationName.Zetsubou_Quest_Masamune_Spider, 5125),
+]]
+
+Zetsubou_Quest_Skull_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Zetsubou_Quest_Skull_Cleanse, 5130),
+    (LocationName.Zetsubou_Quest_Skull_CleanseAll, 5131),
+    (LocationName.Zetsubou_Quest_Skull_Survive, 5132),
+]]
+
+Zetsubou_Quest_Challenges_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Zetsubou_Quest_Challenge_1, 5140),
+    (LocationName.Zetsubou_Quest_Challenge_2, 5141),
+    (LocationName.Zetsubou_Quest_Challenge_3, 5142),
+    (LocationName.Zetsubou_Quest_Challenge_All, 5143),
+]]
+
+Zetsubou_Craftable_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Zetsubou_Craftable_Gasmask_Visor, 5200),
+    (LocationName.Zetsubou_Craftable_Gasmask_Filter, 5201),
+    (LocationName.Zetsubou_Craftable_Gasmask_Strap, 5202),
+]]
+
 # Gorod Krovi
 
 GorodKrovi_Round_Locations = gen_map_round_locations(Maps.GorodKrovi_Map_String, 100)
 
-GorodKrovi_Quest_MainQuest_Locations =  [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+GorodKrovi_Quest_MainQuest_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.GorodKrovi_Quest_MainQuest_Dragonride_Transmitter, 4100),
     (LocationName.GorodKrovi_Quest_MainQuest_Dragonride_Codes, 4101),
     (LocationName.GorodKrovi_Quest_MainQuest_Dragonride_Map, 4102),
@@ -238,6 +286,9 @@ all_locations = (
     + Shadows_Round_Locations + Shadows_Quest_Locations + Shadows_Craftable_Locations
     + Shadows_Quest_MainQuest_Locations + Shadows_Quest_ApothiconSword_Locations 
     + Shadows_Quest_MainEE_Locations
+    + Zetsubou_Round_Locations + Zetsubou_Craftable_Locations
+    + Zetsubou_Quest_MainQuest_Locations + Zetsubou_Quest_MainEE_Locations + Zetsubou_Quest_Challenges_Locations
+    + Zetsubou_Quest_KT4_Locations + Zetsubou_Quest_Skull_Locations
     + GorodKrovi_Round_Locations + GorodKrovi_Craftable_Locations + GorodKrovi_Quest_MaineEE_Locations + GorodKrovi_Quest_SideEE
     + GorodKrovi_Quest_DragonStrikes + GorodKrovi_Quest_DragonGauntlets + GorodKrovi_Quest_Challenges + GorodKrovi_Quest_TiamatsMaw
     + GorodKrovi_Quest_MainQuest_Locations

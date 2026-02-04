@@ -146,6 +146,24 @@ class BO3ZombiesWorld(World):
             self.multiworld.regions.append(boss_region)
             main_ee_region.connect(boss_region, rule = lambda state: state.has_all([item.name for item in Items.Castle_Craftables], self.player))
 
+        if self.options.map_zetsubou_enabled:
+            all_locations = []
+            add_round_locations(all_locations, Locations.Zetsubou_Round_Locations, round_max, round_freq, is_round_goal_cond, goal_round)
+            all_locations.extend([loc.name for loc in Locations.Zetsubou_Quest_MainQuest_Locations])
+            all_locations.extend([loc.name for loc in Locations.Zetsubou_Craftable_Locations])
+            all_locations.extend([loc.name for loc in Locations.Zetsubou_Quest_Challenges_Locations])
+            all_locations.extend([loc.name for loc in Locations.Zetsubou_Quest_KT4_Locations])
+            all_locations.extend([loc.name for loc in Locations.Zetsubou_Quest_Skull_Locations])
+
+            main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Zetsubou_MainEE, [loc.name for loc in Locations.Zetsubou_Quest_MainEE_Locations])
+            main_ee_region_requirements = [item.name for item in Items.Zetsubou_Shield]
+            if self.options.randomized_box_wonder_weapons:
+                main_ee_region_requirements += [item.name for item in Items.Zetsubou_MysteryBox]
+            menu_region.connect(main_ee_region, rule = lambda state: state.has_all(main_ee_region_requirements, self.player))
+
+            main_region = self.create_region(self.multiworld, self.player, RegionName.Zetsubou_Beach, all_locations)
+            self.multiworld.regions.append(main_region)
+            menu_region.connect(main_region)
 
 
         if self.options.map_gorod_enabled:
@@ -262,6 +280,8 @@ class BO3ZombiesWorld(World):
                 enabled_items += Items.The_Giant_Machines_Specific
             if self.options.map_castle_enabled:
                 enabled_items += Items.Castle_Machines_Specific
+            if self.options.map_zetsubou_enabled:
+                enabled_items += Items.Zetsubou_Machines_Specific
             if self.options.map_gorod_enabled:
                 enabled_items += Items.GorodKrovi_Machines_Specific
         else:
@@ -273,6 +293,8 @@ class BO3ZombiesWorld(World):
                 add_universal_items(enabled_items, seen, Items.The_Giant_Machines)
             if self.options.map_castle_enabled:
                 add_universal_items(enabled_items, seen, Items.Castle_Machines)
+            if self.options.map_zetsubou_enabled:
+                add_universal_items(enabled_items, seen, Items.Zetsubou_Machines)
             if self.options.map_gorod_enabled:
                 add_universal_items(enabled_items, seen, Items.GorodKrovi_Machines)
 
@@ -285,6 +307,8 @@ class BO3ZombiesWorld(World):
                 enabled_items += Items.The_Giant_Wallbuys_Specific
             if self.options.map_castle_enabled:
                 enabled_items += Items.Castle_Wallbuys_Specific
+            if self.options.map_zetsubou_enabled:
+                enabled_items += Items.Zetsubou_Wallbuys_Specific
             if self.options.map_gorod_enabled:
                 enabled_items += Items.GorodKrovi_Wallbuys_Specific
         else:
@@ -296,6 +320,8 @@ class BO3ZombiesWorld(World):
                 add_universal_items(enabled_items, seen, Items.The_Giant_Wallbuys)
             if self.options.map_castle_enabled:
                 add_universal_items(enabled_items, seen, Items.Castle_Wallbuys)
+            if self.options.map_zetsubou_enabled:
+                add_universal_items(enabled_items, seen, Items.Zetsubou_Wallbuys)
             if self.options.map_gorod_enabled:
                 add_universal_items(enabled_items, seen, Items.GorodKrovi_Wallbuys)
 
@@ -312,6 +338,11 @@ class BO3ZombiesWorld(World):
             if self.options.randomized_shield_parts:
                 enabled_items += Items.Castle_Shield
             enabled_items += Items.Castle_Craftables
+        if self.options.map_zetsubou_enabled:
+            map_list.append(Maps.Zetsubou_Map_String)
+            if self.options.randomized_shield_parts:
+                enabled_items += Items.Zetsubou_Shield
+            enabled_items += Items.Zetsubou_Craftables_Gasmask
         if self.options.map_gorod_enabled:
             map_list.append(Maps.GorodKrovi_Map_String)
             if self.options.randomized_shield_parts:
@@ -325,6 +356,8 @@ class BO3ZombiesWorld(World):
                 enabled_items += Items.Shadows_MysteryBox
             if self.options.map_castle_enabled:
                 enabled_items += Items.Castle_MysteryBox
+            if self.options.map_zetsubou_enabled:
+                enabled_items += Items.Zetsubou_MysteryBox
             if self.options.map_gorod_enabled:
                 enabled_items += Items.GorodKrovi_MysteryBox
 
@@ -336,6 +369,8 @@ class BO3ZombiesWorld(World):
                 ee_pairs.append((LocationName.Shadows_Quest_MainEE_Victory, Maps.Shadows_Map_String + ItemName.EE_Victory))
             if self.options.map_castle_enabled:
                 ee_pairs.append((LocationName.Castle_Quest_MainEE_Victory, Maps.Castle_Map_String + ItemName.EE_Victory))
+            if self.options.map_zetsubou_enabled:
+                ee_pairs.append((LocationName.Zetsubou_Quest_MainEE_Victory, Maps.Zetsubou_Map_String + ItemName.EE_Victory))
             if self.options.map_gorod_enabled:
                 ee_pairs.append((LocationName.GorodKrovi_Quest_MainEE_Victory, Maps.GorodKrovi_Map_String + ItemName.EE_Victory))
 
@@ -360,9 +395,19 @@ class BO3ZombiesWorld(World):
                 goal_item = self.create_item(ItemName.Shadows_Victory_ApothiconSwordLvl2)
                 self.weapon_quest_items.append(ItemName.Shadows_Victory_ApothiconSwordLvl2)
                 self.multiworld.get_location(Locations.Shadows_Quest_ApothiconSword_Locations[-1].name, self.player).place_locked_item(goal_item) 
+            
             if self.options.map_castle_enabled:
                 # Handled in create_regions
                 pass
+            
+            if self.options.map_zetsubou_enabled:
+                goal_items = list(map(self.create_item, [
+                    ItemName.Zetsubou_Victory_Masamune,
+                    ItemName.Zetsubou_Victory_Skull,
+                ]))
+                self.multiworld.get_location(Locations.Zetsubou_Quest_KT4_Locations[-1].name, self.player).place_locked_item(goal_items[0])
+                self.multiworld.get_location(Locations.Zetsubou_Quest_Skull_Locations[-1].name, self.player).place_locked_item(goal_items[1])
+            
             if self.options.map_gorod_enabled:
                 goal_items = list(map(self.create_item, [
                     ItemName.GorodKrovi_Victory_DragonGauntlets,
@@ -416,12 +461,7 @@ class BO3ZombiesWorld(World):
         # Easter Egg Hunt
         if self.options.goal_condition == 0:
             # Whether or not we require *all* selected goal items (Randomised goal selection)
-            ee_goal_count = min(self.options.goal_ee_count.value, len(self.ee_goal_items))
             ee_allow_any = not self.options.goal_ee_random
-            print("Allowed goal items:")
-            print(self.ee_goal_items)
-            print("Required number to goal:")
-            print(ee_goal_count)
             if not ee_allow_any:
                 self.multiworld.completion_condition[self.player] = lambda state: state.has_all(self.ee_goal_items, self.player)
             else:

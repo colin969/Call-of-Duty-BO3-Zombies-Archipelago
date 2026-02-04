@@ -18,6 +18,11 @@ class MapCastleEnabled(Toggle):
     display_name = "\"Castle\" map enabled"
     default = True
 
+class MapZetsubouEnabled(Toggle):
+    """Enables Map: \"Zetsubou No Shima\"."""
+    display_name = "\"Zetsubou No Shima\" map enabled"
+    default = True
+
 class MapGorodKroviEnabled(Toggle):
     """Enabled Map: \"Gorod Krovi\""""
     display_name = "\"Gorod Krovi\" map enabled"
@@ -162,6 +167,7 @@ class DifficultyGorodDragonWings(Toggle):
 class BO3ZombiesOptions(PerGameCommonOptions):
     map_shadows_enabled: MapShadowsEnabled
     map_the_giant_enabled: MapTheGiantEnabled
+    map_zetsubou_enabled: MapZetsubouEnabled
     map_castle_enabled: MapCastleEnabled
     map_gorod_enabled: MapGorodKroviEnabled
     special_rounds_enabled: SpecialRoundsEnabled

@@ -85,6 +85,37 @@ Shadows_Craftable_ShieldPartDolly = Maps.Shadows_Map_String + " Shield Part Pick
 Shadows_Craftable_ShieldPartDoor = Maps.Shadows_Map_String + " Shield Part Pickup - Door"
 Shadows_Craftable_ShieldPartClamp = Maps.Shadows_Map_String + " Shield Part Pickup - Clamp"
 
+Zetsubou_Quest_MainQuest_Bucket = Maps.Zetsubou_Map_String + " Main Quest - Find a Bucket"
+Zetsubou_Quest_MainQuest_Bunker = Maps.Zetsubou_Map_String + " Main Quest - Enter the Bunker"
+Zetsubou_Quest_MainQuest_Power = Maps.Zetsubou_Map_String + " Main Quest - Turn on the Power"
+
+Zetsubou_Quest_MainEE_AirplaneAmmo = Maps.Zetsubou_Map_String + " Main Easter Egg - Grow and Anti-Aircraft Shell"
+Zetsubou_Quest_MainEE_AirplaneDown = Maps.Zetsubou_Map_String + " Main Easter Egg - Shoot down the Plane"
+Zetsubou_Quest_MainEE_Gear2 = Maps.Zetsubou_Map_String + " Main Easter Egg - Collect the Cog from the Zipline drop"
+Zetsubou_Quest_MainEE_Gear3 = Maps.Zetsubou_Map_String + " Main Easter Egg - Collect the Gear from the Gobblegum teleport"
+Zetsubou_Quest_MainEE_FreeTakeo = Maps.Zetsubou_Map_String + " Main Easter Egg - Free Takeo"
+Zetsubou_Quest_MainEE_Victory = Maps.Zetsubou_Map_String + " Main Easter Egg - Victory"
+
+Zetsubou_Quest_KT4_Vial = Maps.Zetsubou_Map_String + " KT-4 - Collect the Green Vial"
+Zetsubou_Quest_KT4_Flower = Maps.Zetsubou_Map_String + " KT-4 - Collect the Underwater Flower"
+Zetsubou_Quest_KT4_Spider = Maps.Zetsubou_Map_String + " KT-4 - Extract the Spider Venom"
+Zetsubou_Quest_Masamune_Vial = Maps.Zetsubou_Map_String + " Masamune - Collect the Vial of Element 115"
+Zetsubou_Quest_Masamune_Spider = Maps.Zetsubou_Map_String + " Masamune - Take the Spider Queen's Tooth"
+Zetsubou_Quest_Masamune_Flower = Maps.Zetsubou_Map_String + " Masamune - Grow the Rainbow Plant"
+
+Zetsubou_Quest_Skull_Cleanse = Maps.Zetsubou_Map_String + " Skull of Nan'Sapwe - Cleanse a Ritual Skull"
+Zetsubou_Quest_Skull_CleanseAll = Maps.Zetsubou_Map_String + " Skull of Nan'Sapwe - Cleanse all 4 Ritual Skulls"
+Zetsubou_Quest_Skull_Survive = Maps.Zetsubou_Map_String + " Skull of Nan'Sapwe - Survive the Skull Room"
+
+Zetsubou_Quest_Challenge_1 = Maps.Zetsubou_Map_String + " Complete Challenge 1"
+Zetsubou_Quest_Challenge_2 = Maps.Zetsubou_Map_String + " Complete Challenge 2"
+Zetsubou_Quest_Challenge_3 = Maps.Zetsubou_Map_String + " Complete Challenge 3"
+Zetsubou_Quest_Challenge_All = Maps.Zetsubou_Map_String + " Complete all Challenges"
+
+Zetsubou_Craftable_Gasmask_Visor = Maps.Zetsubou_Map_String + " Gasmask Part Pickup - Visor"
+Zetsubou_Craftable_Gasmask_Filter = Maps.Zetsubou_Map_String + " Gasmask Part Pickup - Filter"
+Zetsubou_Craftable_Gasmask_Strap = Maps.Zetsubou_Map_String + " Gasmask Part Pickup - Strap"
+
 GorodKrovi_Quest_MainQuest_Dragonride_Transmitter = Maps.GorodKrovi_Map_String + " Main Quest - Dragonride Part Pickup - Transmitter"
 GorodKrovi_Quest_MainQuest_Dragonride_Codes = Maps.GorodKrovi_Map_String + " Main Quest - Dragonride Part Pickup - Codes"
 GorodKrovi_Quest_MainQuest_Dragonride_Map = Maps.GorodKrovi_Map_String + " Main Quest - Dragonride Part Pickup - Map"

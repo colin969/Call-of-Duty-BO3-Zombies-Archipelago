@@ -97,6 +97,7 @@ Weapon_RaygunMk2 = "Raygun Mark 2"
 Weapon_RaygunMk3 = "Raygun Mark 3"
 Weapon_Wunderwaffe = "Wunderwaffe DG-2"
 Weapon_ApothiconServant = "Apothicon Servant"
+Weapon_KT4 = "KT-4"
 Weapon_MonkeyBombs = "Monkey Bombs"
 Weapon_LilArnies = "Li'l Arnies"
 
@@ -143,6 +144,13 @@ Shadows_Craftable_CivilProtector_Fuse02 = Maps.Shadows_Map_String + " Civil Prot
 Shadows_Craftable_CivilProtector_Fuse03 = Maps.Shadows_Map_String + " Civil Protector Part - Footlight Fuse"
 
 Shadows_Victory_ApothiconSwordLvl2 = Maps.Shadows_Map_String + " Apothicon Sword Upgraded - Victory"
+
+Zetsubou_Craftable_Gasmask_Visor = Maps.Zetsubou_Map_String + " Gasmask Part - Visor"
+Zetsubou_Craftable_Gasmask_Filter = Maps.Zetsubou_Map_String + " Gasmask Part - Filter"
+Zetsubou_Craftable_Gasmask_Strap = Maps.Zetsubou_Map_String + " Gasmask Part - Strap"
+
+Zetsubou_Victory_Masamune = Maps.Zetsubou_Map_String + " Masamune - Victory"
+Zetsubou_Victory_Skull = Maps.Zetsubou_Map_String + " Skull of Nan'Swepe - Victory"
 
 GorodKrovi_Craftable_Dragonride_Transmitter = Maps.GorodKrovi_Map_String + " Dragonride Network Circuit - Transmitter"
 GorodKrovi_Craftable_Dragonride_Codes = Maps.GorodKrovi_Map_String + " Dragonride Network Circuit - Codes"
