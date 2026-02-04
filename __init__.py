@@ -1,8 +1,9 @@
 import string
 import math
 import random
+import os
 
-from BaseClasses import MultiWorld, Region, Item, ItemClassification, Tutorial
+from BaseClasses import Location, MultiWorld, Region, Item, ItemClassification, Tutorial
 
 from worlds.AutoWorld import World, WebWorld
 
@@ -15,6 +16,13 @@ from .Names import ItemName, LocationName, RegionName, Maps
 class BO3ZombiesWeb(WebWorld):
     theme = "ocean"
     option_groups = bo3_option_groups
+
+class BO3ZombiesLocation(Location):
+    game: str = "Black Ops 3 - Zombies"
+
+    @staticmethod
+    def get_name_to_id(base_id) -> dict:
+        return {loc_data.name: loc_data.code + base_id for loc_data in Locations.all_locations}
 
 class BO3ZombiesWorld(World):
     """
@@ -32,12 +40,23 @@ class BO3ZombiesWorld(World):
     # Game's SteamID
     base_id = 311210
     item_name_to_id = Items.BO3ZombiesItem.get_name_to_id(base_id)
-    location_name_to_id = Locations.BO3ZombiesLocation.get_name_to_id(base_id)
+    location_name_to_id = BO3ZombiesLocation.get_name_to_id(base_id)
 
     # Full Remote Items
     items_handling = 0b111
 
+    # Enable to log the location lua data
+    write_lua_locations = True
+
     def generate_early(self) -> None:
+        if self.write_lua_locations:
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+            with open(os.path.join(script_dir, 'Locations.lua'), 'w', encoding='utf-8') as f:
+                f.write("LocationToID = {}\n")
+                for location in Locations.all_locations:
+                    f.write("LocationToID[\"{}\"] = {}\n".format(location.name, location.code))
+                f.write("return { LocationToID = LocationToID }\n")
+
         self.weapon_quest_items = []
         pass
 
@@ -71,8 +90,6 @@ class BO3ZombiesWorld(World):
             main_ee_region_requirements = [item.name for item in Items.Shadows_Shield]
             if self.options.randomized_box_wonder_weapons:
                 main_ee_region_requirements += [item.name for item in Items.Shadows_MysteryBox]
-            else:
-                all_locations.extend([loc.name for loc in Locations.Shadows_Quest_MainEE_Locations]) # Up to Boss Fight start
             menu_region.connect(main_ee_region, rule = lambda state: state.has_all(main_ee_region_requirements, self.player))
     
             main_region = self.create_region(self.multiworld, self.player, RegionName.Shadows_Alleyway, all_locations)
@@ -110,12 +127,11 @@ class BO3ZombiesWorld(World):
             main_ee_region_requirements = [item.name for item in Items.Castle_Shield]
             if self.options.randomized_box_wonder_weapons:
                 main_ee_region_requirements += [item.name for item in Items.Castle_MysteryBox]
-            else:
-                all_locations.extend([loc.name for loc in Locations.Castle_Quest_MainEE_Locations[:4]]) # Up to Boss Fight start
             menu_region.connect(main_ee_region, rule = lambda state: state.has_all(main_ee_region_requirements, self.player))
 
             main_region = self.create_region(self.multiworld, self.player, RegionName.Castle_Gondola, all_locations)
             self.multiworld.regions.append(main_region)
+            menu_region.connect(main_region)
 
             # Weapon Quest - Add available bows
             if self.options.goal_condition == 1:
@@ -125,12 +141,8 @@ class BO3ZombiesWorld(World):
             boss_fight_locations = [loc.name for loc in Locations.Castle_Quest_MainEE_Locations[4:]]
             boss_region = self.create_region(self.multiworld, self.player, RegionName.Castle_BossFight, boss_fight_locations)
             self.multiworld.regions.append(boss_region)
+            main_ee_region.connect(boss_region, rule = lambda state: state.has_all([item.name for item in Items.Castle_Craftables], self.player))
 
-            menu_region.connect(main_region)
-            if main_ee_region is not None:
-                main_ee_region.connect(boss_region, rule = lambda state: state.has_all([item.name for item in Items.Castle_Craftables], self.player))
-            else:
-                main_region.connect(boss_region, rule = lambda state: state.has_all([item.name for item in Items.Castle_Craftables], self.player))
 
 
         if self.options.map_gorod_enabled:
@@ -152,8 +164,6 @@ class BO3ZombiesWorld(World):
             main_ee_region_requirements = [item.name for item in Items.GorodKrovi_Shield]
             if self.options.randomized_box_wonder_weapons:
                 main_ee_region_requirements += [item.name for item in Items.GorodKrovi_MysteryBox]
-            else:
-                all_locations.extend([loc.name for loc in Locations.GorodKrovi_Quest_MaineEE_Locations])
             menu_region.connect(main_ee_region, rule = lambda state: state.has_all(main_ee_region_requirements, self.player))
 
             # Shield required locations
@@ -173,7 +183,7 @@ class BO3ZombiesWorld(World):
             main_region.connect(shield_region, rule = lambda state: state.has_all([item.name for item in Items.GorodKrovi_Shield], self.player))
             # Upgrade requires shield as well
             if self.options.randomized_box_wonder_weapons:
-                shield_region.connect(monkeybomb_region, rule= lambda state: state.has(Items.GorodKrovi_MysteryBox[1].name, self.player))
+                shield_region.connect(monkeybomb_region, rule = lambda state: state.has(Items.GorodKrovi_MysteryBox[1].name, self.player))
             else:
                 shield_region.connect(monkeybomb_region)
 
@@ -185,7 +195,7 @@ class BO3ZombiesWorld(World):
         ret = Region(name, player, world)
         if locations:
             for location in locations:
-                location = Locations.BO3ZombiesLocation(player, location, self.location_name_to_id[location], ret)
+                location = BO3ZombiesLocation(player, location, self.location_name_to_id[location], ret)
                 ret.locations.append(location)
 
         return ret
@@ -202,7 +212,10 @@ class BO3ZombiesWorld(World):
 
         # TODO: do a getProgressiveItems list instead
         progression_categories = {
+            Items.BO3ZombiesItemCategory.MACHINE,
             Items.BO3ZombiesItemCategory.PROGRESSIVE,
+            Items.BO3ZombiesItemCategory.SPECIAL_WEAPON,
+            Items.BO3ZombiesItemCategory.CRAFTABLE,
             Items.BO3ZombiesItemCategory.BLOCKER,
             Items.BO3ZombiesItemCategory.POWER,
             Items.BO3ZombiesItemCategory.EASTER_EGG,

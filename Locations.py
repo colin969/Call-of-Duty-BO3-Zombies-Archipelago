@@ -1,6 +1,5 @@
 import typing
 from enum import IntEnum
-from BaseClasses import Location
 from .Names import LocationName, Maps
 
 BaseMapIds = {
@@ -20,13 +19,6 @@ class LocationData(typing.NamedTuple):
     name: str
     category: BO3ZombiesLocationCategory
     code: int
-
-class BO3ZombiesLocation(Location):
-    game: str = "Black Ops 3 - Zombies"
-
-    @staticmethod
-    def get_name_to_id(base_id) -> dict:
-        return {loc_data.name: loc_data.code + base_id for loc_data in all_locations}
 
 def gen_map_round_locations(map_string, count):
     if map_string not in BaseMapIds:
