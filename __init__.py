@@ -52,10 +52,10 @@ class BO3ZombiesWorld(World):
         if self.write_lua_locations:
             script_dir = os.path.dirname(os.path.abspath(__file__))
             with open(os.path.join(script_dir, 'Locations.lua'), 'w', encoding='utf-8') as f:
-                f.write("LocationToID = {}\n")
+                f.write("local LocationToID = {}\n")
                 for location in Locations.all_locations:
                     f.write("LocationToID[\"{}\"] = {}\n".format(location.name, location.code))
-                f.write("return { LocationToID = LocationToID }\n")
+                f.write("return LocationToID\n")
 
         self.weapon_quest_items = []
         pass
