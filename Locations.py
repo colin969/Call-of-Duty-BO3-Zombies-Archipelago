@@ -171,6 +171,7 @@ Zetsubou_Quest_MainQuest_Locations = [LocationData(row[0], BO3ZombiesLocationCat
     (LocationName.Zetsubou_Quest_MainQuest_Bucket, 5100),
     (LocationName.Zetsubou_Quest_MainQuest_Bunker, 5101),
     (LocationName.Zetsubou_Quest_MainQuest_Power, 5102),
+    (LocationName.Zetsubou_Quest_MainQuest_Pap, 5103),
 ]]
 
 Zetsubou_Quest_MainEE_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
@@ -208,6 +209,9 @@ Zetsubou_Craftable_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.
     (LocationName.Zetsubou_Craftable_Gasmask_Visor, 5200),
     (LocationName.Zetsubou_Craftable_Gasmask_Filter, 5201),
     (LocationName.Zetsubou_Craftable_Gasmask_Strap, 5202),
+    (LocationName.Zetsubou_Craftable_ShieldPartDolly, 5203),
+    (LocationName.Zetsubou_Craftable_ShieldPartDoor, 5204),
+    (LocationName.Zetsubou_Craftable_ShieldPartClamp, 5205),
 ]]
 
 # Gorod Krovi

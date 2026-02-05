@@ -77,9 +77,9 @@ Shadows_Craftable_ApothiconServant_MargwaHeart = Maps.Shadows_Map_String + " Apo
 Shadows_Craftable_ApothiconServant_MargwaTentacle = Maps.Shadows_Map_String + " Apothicon Servant Part Pickup - Margwa Tentacle"
 Shadows_Craftable_ApothiconServant_Xenomatter = Maps.Shadows_Map_String + " Apothicon Servant Part Pickup - Xenomatter"
 
-Shadows_Craftable_CivilProtector_Fuse1 = Maps.Shadows_Map_String + " Civil Protector Part Pickup - Fuse 1"
-Shadows_Craftable_CivilProtector_Fuse2 = Maps.Shadows_Map_String + " Civil Protector Part Pickup - Fuse 2"
-Shadows_Craftable_CivilProtector_Fuse3 = Maps.Shadows_Map_String + " Civil Protector Part Pickup - Fuse 3"
+Shadows_Craftable_CivilProtector_Fuse1 = Maps.Shadows_Map_String + " Civil Protector Part Pickup - Waterfront Fuse"
+Shadows_Craftable_CivilProtector_Fuse2 = Maps.Shadows_Map_String + " Civil Protector Part Pickup - Canals Fuse"
+Shadows_Craftable_CivilProtector_Fuse3 = Maps.Shadows_Map_String + " Civil Protector Part Pickup - Footlight Fuse"
 
 Shadows_Craftable_ShieldPartDolly = Maps.Shadows_Map_String + " Shield Part Pickup - Dolly"
 Shadows_Craftable_ShieldPartDoor = Maps.Shadows_Map_String + " Shield Part Pickup - Door"
@@ -88,8 +88,9 @@ Shadows_Craftable_ShieldPartClamp = Maps.Shadows_Map_String + " Shield Part Pick
 Zetsubou_Quest_MainQuest_Bucket = Maps.Zetsubou_Map_String + " Main Quest - Find a Bucket"
 Zetsubou_Quest_MainQuest_Bunker = Maps.Zetsubou_Map_String + " Main Quest - Enter the Bunker"
 Zetsubou_Quest_MainQuest_Power = Maps.Zetsubou_Map_String + " Main Quest - Turn on the Power"
+Zetsubou_Quest_MainQuest_Pap = Maps.Zetsubou_Map_String + " Main Quest - Drain the Pack-A-Punch"
 
-Zetsubou_Quest_MainEE_AirplaneAmmo = Maps.Zetsubou_Map_String + " Main Easter Egg - Grow and Anti-Aircraft Shell"
+Zetsubou_Quest_MainEE_AirplaneAmmo = Maps.Zetsubou_Map_String + " Main Easter Egg - Grow an Anti-Aircraft Shell"
 Zetsubou_Quest_MainEE_AirplaneDown = Maps.Zetsubou_Map_String + " Main Easter Egg - Shoot down the Plane"
 Zetsubou_Quest_MainEE_Gear2 = Maps.Zetsubou_Map_String + " Main Easter Egg - Collect the Cog from the Zipline drop"
 Zetsubou_Quest_MainEE_Gear3 = Maps.Zetsubou_Map_String + " Main Easter Egg - Collect the Gear from the Gobblegum teleport"
@@ -115,6 +116,10 @@ Zetsubou_Quest_Challenge_All = Maps.Zetsubou_Map_String + " Complete all Challen
 Zetsubou_Craftable_Gasmask_Visor = Maps.Zetsubou_Map_String + " Gasmask Part Pickup - Visor"
 Zetsubou_Craftable_Gasmask_Filter = Maps.Zetsubou_Map_String + " Gasmask Part Pickup - Filter"
 Zetsubou_Craftable_Gasmask_Strap = Maps.Zetsubou_Map_String + " Gasmask Part Pickup - Strap"
+
+Zetsubou_Craftable_ShieldPartDolly = Maps.Zetsubou_Map_String + " Shield Part Pickup - Dolly"
+Zetsubou_Craftable_ShieldPartDoor = Maps.Zetsubou_Map_String + " Shield Part Pickup - Door"
+Zetsubou_Craftable_ShieldPartClamp = Maps.Zetsubou_Map_String + " Shield Part Pickup - Clamp"
 
 GorodKrovi_Quest_MainQuest_Dragonride_Transmitter = Maps.GorodKrovi_Map_String + " Main Quest - Dragonride Part Pickup - Transmitter"
 GorodKrovi_Quest_MainQuest_Dragonride_Codes = Maps.GorodKrovi_Map_String + " Main Quest - Dragonride Part Pickup - Codes"
