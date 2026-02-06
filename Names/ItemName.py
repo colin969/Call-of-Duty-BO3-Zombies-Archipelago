@@ -100,6 +100,8 @@ Weapon_ApothiconServant = "Apothicon Servant"
 Weapon_KT4 = "KT-4"
 Weapon_MonkeyBombs = "Monkey Bombs"
 Weapon_LilArnies = "Li'l Arnies"
+Weapon_Thundergun = "Thundergun"
+Weapon_Ragnaroks = "Ragnarok DG-4s"
 
 # Traps
 
@@ -161,6 +163,8 @@ GorodKrovi_Victory_DragonGauntlets = Maps.GorodKrovi_Map_String + " Dragon Gaunt
 GorodKrovi_Victory_Upgraded_MonkeyBombs = Maps.GorodKrovi_Map_String + " Upgraded Monkey Bombs - Victory"
 GorodKrovi_Victory_TiamatsMaw = Maps.GorodKrovi_Map_String + " Tiamat's Maw - Victory"
 
+Revelations_Victory_Upgraded_LilArnies = Maps.Revelations_Map_String + " Upgraded Li'l Arnies - Victory"
+Revelations_Victory_Upgrade_ApothiconServant = Maps.Revelations_Map_String + " Upgraded Apothicon Servant - Victory"
 
 # Misc
 Points50                            = "50 Points"

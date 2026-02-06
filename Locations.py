@@ -8,6 +8,7 @@ BaseMapIds = {
     Maps.Shadows_Map_String: 3000,
     Maps.GorodKrovi_Map_String: 4000,
     Maps.Zetsubou_Map_String: 5000,
+    Maps.Revelations_Map_String: 6000,
 }
 
 class BO3ZombiesLocationCategory(IntEnum):
@@ -48,11 +49,11 @@ def get_map_victory_location(map_string, goal_round):
 
 # The Giant zm_giant
 
-TheGiant_Round_Locations = gen_map_round_locations(Maps.The_Giant_Map_String, 100)
+TheGiant_Round_Locations = gen_map_round_locations(Maps.The_Giant_Map_String, 99)
 
 # Castle zm_castle
 
-Castle_Round_Locations = gen_map_round_locations(Maps.Castle_Map_String, 100)
+Castle_Round_Locations = gen_map_round_locations(Maps.Castle_Map_String, 99)
 
 Castle_Craftable_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.CRAFTABLE_PART, row[1]) for row in [
     (LocationName.Castle_Craftable_ShieldPartDolly, 2200),
@@ -123,7 +124,7 @@ Castle_Quest_MainEE_Locations = [LocationData(row[0], BO3ZombiesLocationCategory
 ]]
 
 # Shadows of Evil zm_zod
-Shadows_Round_Locations = gen_map_round_locations(Maps.Shadows_Map_String, 100)
+Shadows_Round_Locations = gen_map_round_locations(Maps.Shadows_Map_String, 99)
 
 Shadows_Quest_MainQuest_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.Shadows_Quest_MainQuest_MagicianRitual, 3100),
@@ -165,7 +166,7 @@ Shadows_Craftable_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.M
 
 # Zetsubou No Shima
 
-Zetsubou_Round_Locations = gen_map_round_locations(Maps.Zetsubou_Map_String, 100)
+Zetsubou_Round_Locations = gen_map_round_locations(Maps.Zetsubou_Map_String, 99)
 
 Zetsubou_Quest_MainQuest_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.Zetsubou_Quest_MainQuest_Bucket, 5100),
@@ -216,7 +217,7 @@ Zetsubou_Craftable_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.
 
 # Gorod Krovi
 
-GorodKrovi_Round_Locations = gen_map_round_locations(Maps.GorodKrovi_Map_String, 100)
+GorodKrovi_Round_Locations = gen_map_round_locations(Maps.GorodKrovi_Map_String, 99)
 
 GorodKrovi_Quest_MainQuest_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.GorodKrovi_Quest_MainQuest_Dragonride_Transmitter, 4100),
@@ -278,6 +279,60 @@ GorodKrovi_Craftable_Locations = [LocationData(row[0], BO3ZombiesLocationCategor
     (LocationName.GorodKrovi_Craftable_ShieldPartClamp, 4202),
 ]]
 
+# Revelations
+
+Revelations_Round_Locations = gen_map_round_locations(Maps.Revelations_Map_String, 99)
+
+Revelations_Quest_MainQuest_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Revelations_Quest_MainQuest_Portal, 6100),
+    (LocationName.Revelations_Quest_MainQuest_AllPortals, 6101),
+    (LocationName.Revelations_Quest_MainQuest_PackAPunch, 6102),
+]]
+
+Revelations_Quest_MainEE_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Revelations_Quest_MainEE_Stones, 6200),
+    (LocationName.Revelations_Quest_MainEE_Reel1, 6201),
+    (LocationName.Revelations_Quest_MainEE_Reel2, 6202),
+    (LocationName.Revelations_Quest_MainEE_Reel3, 6203),
+    (LocationName.Revelations_Quest_MainEE_Sophia, 6204),
+    (LocationName.Revelations_Quest_MainEE_Book, 6205),
+    (LocationName.Revelations_Quest_MainEE_Eggs, 6206),
+    (LocationName.Revelations_Quest_MainEE_Runes, 6207),
+    (LocationName.Revelations_Quest_MainEE_SummoningKey, 6208),
+    (LocationName.Revelations_Quest_MainEE_BossFight, 6209),
+    (LocationName.Revelations_Quest_MainEE_Victory, 6210),
+]]
+
+Revelations_Quest_SideEE_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Revelations_Quest_SideEE_HatWolf, 6300),
+    # (LocationName.Revelations_Quest_SideEE_HatSiegfried, 6301),
+    (LocationName.Revelations_Quest_SideEE_HatKing, 6302),
+    (LocationName.Revelations_Quest_SideEE_HatKeeper, 6303),
+    (LocationName.Revelations_Quest_SideEE_HatMargwa, 6304),
+    (LocationName.Revelations_Quest_SideEE_HatApothigod, 6305),
+]]
+
+Revelations_Craftable_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.CRAFTABLE_PART, row[1]) for row in [
+    (LocationName.Revelations_Craftable_ShieldPartDolly, 6310),
+    (LocationName.Revelations_Craftable_ShieldPartDoor, 6311),
+    (LocationName.Revelations_Craftable_ShieldPartClamp, 6312),
+    (LocationName.Revelations_Craftable_KeeperProtector_Totem, 6313),
+    (LocationName.Revelations_Craftable_KeeperProtector_Head, 6314),
+    (LocationName.Revelations_Craftable_KeeperProtector_Gem, 6315),
+]]
+
+Revelations_Quest_Challenges = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Revelations_Quest_Challenges_1, 6320),
+    (LocationName.Revelations_Quest_Challenges_2, 6321),
+    (LocationName.Revelations_Quest_Challenges_3, 6322),
+    (LocationName.Revelations_Quest_Challenges_All, 6323),
+]]
+
+Revelations_Quest_Weapons = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Revelations_Quest_ApothiconServant, 6330),
+    (LocationName.Revelations_Quest_Arnies, 6331),
+]]
+
 early_locations =  [LocationData(row[0], row[1], row[2]) for row in [
     (LocationName.RepairWindows_5, BO3ZombiesLocationCategory.MISC, 9001),
 ]]
@@ -296,4 +351,7 @@ all_locations = (
     + GorodKrovi_Round_Locations + GorodKrovi_Craftable_Locations + GorodKrovi_Quest_MaineEE_Locations + GorodKrovi_Quest_SideEE
     + GorodKrovi_Quest_DragonStrikes + GorodKrovi_Quest_DragonGauntlets + GorodKrovi_Quest_Challenges + GorodKrovi_Quest_TiamatsMaw
     + GorodKrovi_Quest_MainQuest_Locations
+    + Revelations_Round_Locations + Revelations_Craftable_Locations
+    + Revelations_Quest_MainQuest_Locations + Revelations_Quest_MainEE_Locations + Revelations_Quest_Challenges
+    + Revelations_Quest_SideEE_Locations + Revelations_Quest_Weapons
     + early_locations)

@@ -246,6 +246,48 @@ GorodKrovi_MysteryBox = [ItemData(row, BO3ZombiesItemCategory.SPECIAL_WEAPON) fo
     Maps.GorodKrovi_Map_String + " Mystery Box - " + ItemName.Weapon_RaygunMk3,
 ]]
 
+# Revelations
+
+Revelations_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
+    ItemName.Machine_Juggernog,
+    ItemName.Machine_QuickRevive,
+    ItemName.Machine_DoubleTap,
+    ItemName.Machine_SpeedCola,
+    ItemName.Machine_StaminUp,
+    ItemName.Machine_MuleKick,
+    ItemName.Machine_WidowsWine,
+]]
+
+Revelations_Wallbuys = [ItemData(row, BO3ZombiesItemCategory.WALLBUY) for row in[
+    ItemName.Weapon_RK5,
+    ItemName.Weapon_Sheiva,
+    ItemName.Weapon_Pharo,
+    ItemName.Weapon_LCAR,
+    ItemName.Weapon_KRM,
+    ItemName.Weapon_Kuda,
+    ItemName.Weapon_VMP,
+    ItemName.Weapon_Vesper,
+    ItemName.Weapon_Argus,
+    ItemName.Weapon_KN44,
+    ItemName.Weapon_ICR,
+    ItemName.Weapon_M8A7,
+    ItemName.Weapon_HVK,
+    ItemName.Weapon_BowieKnife,
+]]
+
+Revelations_Machines_Specific = gen_map_specific_list(Maps.Revelations_Map_String, Revelations_Machines)
+Revelations_Wallbuys_Specific = gen_map_specific_list(Maps.Revelations_Map_String, Revelations_Wallbuys)
+
+Revelations_Shield = gen_map_specific_list(Maps.Revelations_Map_String, ShieldParts)
+
+Revelations_MysteryBox = [ItemData(row, BO3ZombiesItemCategory.SPECIAL_WEAPON) for row in[
+    Maps.Revelations_Map_String + " Mystery Box - " + ItemName.Weapon_Raygun,
+    Maps.Revelations_Map_String + " Mystery Box - " + ItemName.Weapon_LilArnies,
+    Maps.Revelations_Map_String + " Mystery Box - " + ItemName.Weapon_ApothiconServant,
+    Maps.Revelations_Map_String + " Mystery Box - " + ItemName.Weapon_Thundergun,
+    Maps.Revelations_Map_String + " Mystery Box - " + ItemName.Weapon_Ragnaroks,
+]]
+
 # Progressives
 
 Progressive_PerkLimitIncrease = ItemData(ItemName.Progressive_PerkLimitIncrease, BO3ZombiesItemCategory.PROGRESSIVE)
@@ -270,7 +312,9 @@ Weapon_Victory_Items = [ItemData(row, BO3ZombiesItemCategory.VICTORY) for row in
     ItemName.GorodKrovi_Victory_DragonGauntlets,
     ItemName.GorodKrovi_Victory_TiamatsMaw,
     ItemName.GorodKrovi_Victory_Upgraded_Dragonstrikes,
-    ItemName.GorodKrovi_Victory_Upgraded_MonkeyBombs
+    ItemName.GorodKrovi_Victory_Upgraded_MonkeyBombs,
+    ItemName.Revelations_Victory_Upgrade_ApothiconServant,
+    ItemName.Revelations_Victory_Upgraded_LilArnies
 ]]
 
 Victory_Items = [ItemData(row, BO3ZombiesItemCategory.VICTORY) for row in [
@@ -283,6 +327,8 @@ Victory_Items = [ItemData(row, BO3ZombiesItemCategory.VICTORY) for row in [
     Maps.Zetsubou_Map_String + ItemName.EE_Victory,
     Maps.GorodKrovi_Map_String + ItemName.Victory,
     Maps.GorodKrovi_Map_String + ItemName.EE_Victory,
+    Maps.Revelations_Map_String + ItemName.Victory,
+    Maps.Revelations_Map_String + ItemName.EE_Victory,
 ]]
 
 # Misc/Filler Items
@@ -340,6 +386,11 @@ all_items = (
     + GorodKrovi_Wallbuys + GorodKrovi_Wallbuys_Specific
     + GorodKrovi_Craftables_Dragonride + GorodKrovi_Shield
     + GorodKrovi_MysteryBox
+    # Revelations
+    + Revelations_Machines + Revelations_Machines_Specific
+    + Revelations_Wallbuys + Revelations_Wallbuys_Specific
+    + Revelations_Shield
+    + Revelations_MysteryBox
 )
 
 all_items_dict = {item_data.name: item_data for item_data in all_items}

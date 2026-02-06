@@ -14,3 +14,7 @@ Gorod_Trenches = "(Gorod Krovi) Trenches"
 Gorod_Shield = "(Gorod Krovi) Shield Required"
 Gorod_MonkeyBombs = "(Gorod Krovi) Monkey Bombs Required"
 Gorod_MainEE = "(Gorod Krovi) Main Easter Egg"
+
+Revelations_House = "(Revelations House"
+Revelations_MainEE = "(Revelations) Main Easter Egg"
+Revelations_WeaponQuest = "(Revelations) Weapon Quest"

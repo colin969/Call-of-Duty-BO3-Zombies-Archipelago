@@ -165,4 +165,43 @@ GorodKrovi_Craftable_ShieldPartDolly = Maps.GorodKrovi_Map_String + " Shield Par
 GorodKrovi_Craftable_ShieldPartDoor = Maps.GorodKrovi_Map_String + " Shield Part Pickup - Door"
 GorodKrovi_Craftable_ShieldPartClamp = Maps.GorodKrovi_Map_String + " Shield Part Pickup - Clamp"
 
+Revelations_Quest_MainQuest_Portal = Maps.Revelations_Map_String + " Main Quest - Override a Corruption Engine"
+Revelations_Quest_MainQuest_AllPortals = Maps.Revelations_Map_String + " Main Quest - Override all 4 Corruption Engines"
+Revelations_Quest_MainQuest_PackAPunch = Maps.Revelations_Map_String + " Main Quest - Free the Pack-A-Punch"
+
+Revelations_Quest_MainEE_Stones = Maps.Revelations_Map_String + " Main Easter Egg - Shoot the Graves"
+Revelations_Quest_MainEE_Reel1 = Maps.Revelations_Map_String + " Main Easter Egg - Get the first Audio Reel (Keeper Protector)"
+Revelations_Quest_MainEE_Reel2 = Maps.Revelations_Map_String + " Main Easter Egg - Get the second Audio Reel (Apothicon Stomach)"
+Revelations_Quest_MainEE_Reel3 = Maps.Revelations_Map_String + " Main Easter Egg - Get the third Audio Reel (Bones)"
+Revelations_Quest_MainEE_Sophia = Maps.Revelations_Map_String + " Main Easter Egg - Help S.O.P.H.I.A Materialize"
+Revelations_Quest_MainEE_Book = Maps.Revelations_Map_String + " Main Easter Egg - Pick up the Kronorium"
+Revelations_Quest_MainEE_Eggs = Maps.Revelations_Map_String + " Main Easter Egg - Hatch the 4 Gateworm Eggs"
+Revelations_Quest_MainEE_Runes = Maps.Revelations_Map_String + " Main Easter Egg - Activate the Book Runes in order"
+Revelations_Quest_MainEE_SummoningKey = Maps.Revelations_Map_String + " Main Easter Egg - Collect all 7 objects with the Summoning Key"
+Revelations_Quest_MainEE_BossFight = Maps.Revelations_Map_String + " Main Easter Egg - Feed the Shadowman to the Apothicon God"
+Revelations_Quest_MainEE_Victory = Maps.Revelations_Map_String + " Main Easter Egg - Victory"
+
+Revelations_Craftable_KeeperProtector_Totem = Maps.Revelations_Map_String + " Keeper Protector Part Pickup - Totem"
+Revelations_Craftable_KeeperProtector_Head = Maps.Revelations_Map_String + " Keeper Protector Part Pickup - Head"
+Revelations_Craftable_KeeperProtector_Gem = Maps.Revelations_Map_String + " Keeper Protector Part Pickup - Gem"
+
+Revelations_Quest_ApothiconServant = Maps.Revelations_Map_String + " Eat the shards with the Apothicon Servant"
+Revelations_Quest_Arnies = Maps.Revelations_Map_String + " Upgrade the Li'l Arnies"
+
+Revelations_Quest_Challenges_1 = Maps.Revelations_Map_String + " Complete Challenge 1"
+Revelations_Quest_Challenges_2 = Maps.Revelations_Map_String + " Complete Challenge 2"
+Revelations_Quest_Challenges_3 = Maps.Revelations_Map_String + " Complete Challenge 3"
+Revelations_Quest_Challenges_All = Maps.Revelations_Map_String + " Complete all Challenges"
+
+Revelations_Quest_SideEE_HatWolf = Maps.Revelations_Map_String + " Unlock the Wolf Mask"
+# Revelations_Quest_SideEE_HatSiegfried = Maps.Revelations_Map_String + " Unlock the Helmet of Siegfried"
+Revelations_Quest_SideEE_HatKing = Maps.Revelations_Map_String + " Unlock the Helmet of the King"
+Revelations_Quest_SideEE_HatKeeper = Maps.Revelations_Map_String + " Unlock the Keeper Skull Mask"
+Revelations_Quest_SideEE_HatMargwa = Maps.Revelations_Map_String + " Unlock the Margwa Mask"
+Revelations_Quest_SideEE_HatApothigod = Maps.Revelations_Map_String + " Unlock the Apothigod Mask"
+
+Revelations_Craftable_ShieldPartDolly = Maps.Revelations_Map_String + " Shield Part Pickup - Dolly"
+Revelations_Craftable_ShieldPartDoor = Maps.Revelations_Map_String + " Shield Part Pickup - Door"
+Revelations_Craftable_ShieldPartClamp = Maps.Revelations_Map_String + " Shield Part Pickup - Clamp"
+
 RepairWindows_5 = "Repair Windows 5 Times"

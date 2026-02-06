@@ -211,6 +211,30 @@ class BO3ZombiesWorld(World):
             self.multiworld.regions.append(main_region)
             menu_region.connect(main_region)
 
+        if self.options.map_revelations_enabled:
+            all_locations = []
+            add_round_locations(all_locations, Locations.Revelations_Round_Locations, round_max, round_freq, is_round_goal_cond, goal_round)
+            all_locations.extend([loc.name for loc in Locations.Revelations_Quest_MainQuest_Locations])
+            all_locations.extend([loc.name for loc in Locations.Revelations_Craftable_Locations])
+            all_locations.extend([loc.name for loc in Locations.Revelations_Quest_SideEE_Locations])
+            all_locations.extend([loc.name for loc in Locations.Revelations_Quest_Challenges])
+
+            weapon_quest_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_WeaponQuest, [loc.name for loc in Locations.Revelations_Quest_Weapons])
+            weapon_quest_region_requirements = []
+            if self.options.randomized_box_wonder_weapons:
+                weapon_quest_region_requirements += [Items.Revelations_MysteryBox[1].name, Items.Revelations_Machines[2].name]
+            menu_region.connect(weapon_quest_region, rule = lambda state: state.has_all(weapon_quest_region_requirements, self.player))
+
+            main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_MainEE, [loc.name for loc in Locations.Revelations_Quest_MainEE_Locations])
+            main_ee_region_requirements = [item.name for item in Items.Revelations_Shield]
+            if self.options.randomized_box_wonder_weapons:
+                main_ee_region_requirements += [item.name for item in Items.Revelations_MysteryBox]
+            menu_region.connect(main_ee_region, rule = lambda state: state.has_all(main_ee_region_requirements, self.player))
+            
+            main_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_House, all_locations)
+
+            self.multiworld.regions.append(main_region)
+            menu_region.connect(main_region)
 
     def create_region(self, world: MultiWorld, player: int, name: str, locations=None):
         ret = Region(name, player, world)
@@ -284,6 +308,8 @@ class BO3ZombiesWorld(World):
                 enabled_items += Items.Zetsubou_Machines_Specific
             if self.options.map_gorod_enabled:
                 enabled_items += Items.GorodKrovi_Machines_Specific
+            if self.options.map_revelations_enabled:
+                enabled_items += Items.Revelations_Machines_Specific
         else:
             # Only add one instance per machine
             seen = set()
@@ -297,6 +323,8 @@ class BO3ZombiesWorld(World):
                 add_universal_items(enabled_items, seen, Items.Zetsubou_Machines)
             if self.options.map_gorod_enabled:
                 add_universal_items(enabled_items, seen, Items.GorodKrovi_Machines)
+            if self.options.map_revelations_enabled:
+                add_universal_items(enabled_items, seen, Items.Revelations_Machines)
 
         # Add wallbuys to pool
         if self.options.map_specific_wallbuys:
@@ -311,6 +339,8 @@ class BO3ZombiesWorld(World):
                 enabled_items += Items.Zetsubou_Wallbuys_Specific
             if self.options.map_gorod_enabled:
                 enabled_items += Items.GorodKrovi_Wallbuys_Specific
+            if self.options.map_revelations_enabled:
+                enabled_items += Items.Revelations_Wallbuys_Specific
         else:
             # Only add one instance per wallbuy
             seen = set()
@@ -324,6 +354,8 @@ class BO3ZombiesWorld(World):
                 add_universal_items(enabled_items, seen, Items.Zetsubou_Wallbuys)
             if self.options.map_gorod_enabled:
                 add_universal_items(enabled_items, seen, Items.GorodKrovi_Wallbuys)
+            if self.options.map_revelations_enabled:
+                add_universal_items(enabled_items, seen, Items.Revelations_Wallbuys)
 
         map_list = []
         if self.options.map_shadows_enabled:
@@ -348,6 +380,10 @@ class BO3ZombiesWorld(World):
             if self.options.randomized_shield_parts:
                 enabled_items += Items.GorodKrovi_Shield
             # enabled_items += Items.GorodKrovi_Craftables_Dragonride
+        if self.options.map_revelations_enabled:
+            map_list.append(Maps.Revelations_Map_String)
+            if self.options.randomized_shield_parts:
+                enabled_items += Items.Revelations_Shield
 
         if self.options.randomized_box_wonder_weapons:
             if self.options.map_the_giant_enabled:
@@ -360,6 +396,8 @@ class BO3ZombiesWorld(World):
                 enabled_items += Items.Zetsubou_MysteryBox
             if self.options.map_gorod_enabled:
                 enabled_items += Items.GorodKrovi_MysteryBox
+            if self.options.map_revelations_enabled:
+                enabled_items += Items.Revelations_MysteryBox
 
         # Easter Egg Hunt
         if self.options.goal_condition == 0:
@@ -373,6 +411,8 @@ class BO3ZombiesWorld(World):
                 ee_pairs.append((LocationName.Zetsubou_Quest_MainEE_Victory, Maps.Zetsubou_Map_String + ItemName.EE_Victory))
             if self.options.map_gorod_enabled:
                 ee_pairs.append((LocationName.GorodKrovi_Quest_MainEE_Victory, Maps.GorodKrovi_Map_String + ItemName.EE_Victory))
+            if self.options.map_revelations_enabled:
+                ee_pairs.append((LocationName.Revelations_Quest_MainEE_Victory, Maps.Revelations_Map_String + ItemName.EE_Victory))
 
             # Get bounds for number of victory items to add
             ee_allow_any = not self.options.goal_ee_random

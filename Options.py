@@ -27,6 +27,11 @@ class MapGorodKroviEnabled(Toggle):
     """Enabled Map: \"Gorod Krovi\""""
     display_name = "\"Gorod Krovi\" map enabled"
     default = True
+    
+class MapRevelationsEnabled(Toggle):
+    """Enabled Map: \"Revelations\""""
+    display_name = "\"Revelations\" map enabled"
+    default = True
 
 class SpecialRoundsEnabled(Toggle):
     """Enables Special Rounds (Dogs, Monkeys, ect.)."""
@@ -94,7 +99,7 @@ class GiftWeight(Range):
     display_name = "Gift Weight"
     default = 40
     range_start = 0
-    range_end = 100
+    range_end = 99
 
 class RoundMaxLocation(Range):
     """Maximum of rounds per map to be included as an AP location / check. This will not exceed Goal Round if your goal condiiton is Victory Round"""
@@ -170,6 +175,7 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     map_zetsubou_enabled: MapZetsubouEnabled
     map_castle_enabled: MapCastleEnabled
     map_gorod_enabled: MapGorodKroviEnabled
+    map_revelations_enabled: MapRevelationsEnabled
     special_rounds_enabled: SpecialRoundsEnabled
     round_location_max: RoundMaxLocation
     round_location_freq: RoundLocationFrequency
@@ -215,6 +221,7 @@ bo3_option_groups = [
         MapCastleEnabled,
         CastleBowCount,
         MapGorodKroviEnabled,
+        MapRevelationsEnabled,
     ]),
     OptionGroup("Difficulty Adjustments", [
         DifficultyGorodEggCooldown,
