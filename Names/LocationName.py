@@ -175,14 +175,15 @@ Revelations_Quest_MainEE_Reel2 = Maps.Revelations_Map_String + " Main Easter Egg
 Revelations_Quest_MainEE_Reel3 = Maps.Revelations_Map_String + " Main Easter Egg - Get the third Audio Reel (Bones)"
 Revelations_Quest_MainEE_Sophia = Maps.Revelations_Map_String + " Main Easter Egg - Help S.O.P.H.I.A Materialize"
 Revelations_Quest_MainEE_Book = Maps.Revelations_Map_String + " Main Easter Egg - Pick up the Kronorium"
-Revelations_Quest_MainEE_Eggs = Maps.Revelations_Map_String + " Main Easter Egg - Hatch the 4 Gateworm Eggs"
+Revelations_Quest_MainEE_Eggs = Maps.Revelations_Map_String + " Main Easter Egg - Collect the Runes of Creation"
 Revelations_Quest_MainEE_Runes = Maps.Revelations_Map_String + " Main Easter Egg - Activate the Book Runes in order"
+Revelations_Quest_MainEE_Gauntlet = Maps.Revelations_Map_String + " Main Easter Egg - Survive the Margwa Gauntlet"
 Revelations_Quest_MainEE_SummoningKey = Maps.Revelations_Map_String + " Main Easter Egg - Collect all 7 objects with the Summoning Key"
 Revelations_Quest_MainEE_BossFight = Maps.Revelations_Map_String + " Main Easter Egg - Feed the Shadowman to the Apothicon God"
 Revelations_Quest_MainEE_Victory = Maps.Revelations_Map_String + " Main Easter Egg - Victory"
 
 Revelations_Craftable_KeeperProtector_Totem = Maps.Revelations_Map_String + " Keeper Protector Part Pickup - Totem"
-Revelations_Craftable_KeeperProtector_Head = Maps.Revelations_Map_String + " Keeper Protector Part Pickup - Head"
+Revelations_Craftable_KeeperProtector_Head = Maps.Revelations_Map_String + " Keeper Protector Part Pickup - Skull"
 Revelations_Craftable_KeeperProtector_Gem = Maps.Revelations_Map_String + " Keeper Protector Part Pickup - Gem"
 
 Revelations_Quest_ApothiconServant = Maps.Revelations_Map_String + " Eat the shards with the Apothicon Servant"

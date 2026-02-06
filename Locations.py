@@ -298,9 +298,10 @@ Revelations_Quest_MainEE_Locations = [LocationData(row[0], BO3ZombiesLocationCat
     (LocationName.Revelations_Quest_MainEE_Book, 6205),
     (LocationName.Revelations_Quest_MainEE_Eggs, 6206),
     (LocationName.Revelations_Quest_MainEE_Runes, 6207),
-    (LocationName.Revelations_Quest_MainEE_SummoningKey, 6208),
-    (LocationName.Revelations_Quest_MainEE_BossFight, 6209),
-    (LocationName.Revelations_Quest_MainEE_Victory, 6210),
+    (LocationName.Revelations_Quest_MainEE_Gauntlet, 6208),
+    (LocationName.Revelations_Quest_MainEE_SummoningKey, 6209),
+    (LocationName.Revelations_Quest_MainEE_BossFight, 6210),
+    (LocationName.Revelations_Quest_MainEE_Victory, 6211),
 ]]
 
 Revelations_Quest_SideEE_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
