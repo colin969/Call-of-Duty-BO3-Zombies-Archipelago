@@ -226,7 +226,7 @@ GorodKrovi_Quest_MainQuest_Locations = [LocationData(row[0], BO3ZombiesLocationC
     (LocationName.GorodKrovi_Quest_MainQuest_Dragonride_Repaired, 4103),
 ]]
 
-GorodKrovi_Quest_MaineEE_Locations =  [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+GorodKrovi_Quest_MainEE_Locations =  [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.GorodKrovi_Quest_MainEE_CollectTrophies, 4110),
     (LocationName.GorodKrovi_Quest_MainEE_ChargeGenerator, 4111),
     (LocationName.GorodKrovi_Quest_MainEE_PnuematicTubes, 4112),
@@ -349,7 +349,7 @@ all_locations = (
     + Zetsubou_Round_Locations + Zetsubou_Craftable_Locations
     + Zetsubou_Quest_MainQuest_Locations + Zetsubou_Quest_MainEE_Locations + Zetsubou_Quest_Challenges_Locations
     + Zetsubou_Quest_KT4_Locations + Zetsubou_Quest_Skull_Locations
-    + GorodKrovi_Round_Locations + GorodKrovi_Craftable_Locations + GorodKrovi_Quest_MaineEE_Locations + GorodKrovi_Quest_SideEE
+    + GorodKrovi_Round_Locations + GorodKrovi_Craftable_Locations + GorodKrovi_Quest_MainEE_Locations + GorodKrovi_Quest_SideEE
     + GorodKrovi_Quest_DragonStrikes + GorodKrovi_Quest_DragonGauntlets + GorodKrovi_Quest_Challenges + GorodKrovi_Quest_TiamatsMaw
     + GorodKrovi_Quest_MainQuest_Locations
     + Revelations_Round_Locations + Revelations_Craftable_Locations

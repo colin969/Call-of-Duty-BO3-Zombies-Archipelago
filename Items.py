@@ -314,7 +314,9 @@ Weapon_Victory_Items = [ItemData(row, BO3ZombiesItemCategory.VICTORY) for row in
     ItemName.GorodKrovi_Victory_Upgraded_Dragonstrikes,
     ItemName.GorodKrovi_Victory_Upgraded_MonkeyBombs,
     ItemName.Revelations_Victory_Upgrade_ApothiconServant,
-    ItemName.Revelations_Victory_Upgraded_LilArnies
+    ItemName.Revelations_Victory_Upgraded_LilArnies,
+    ItemName.Zetsubou_Victory_Masamune,
+    ItemName.Zetsubou_Victory_Skull,
 ]]
 
 Victory_Items = [ItemData(row, BO3ZombiesItemCategory.VICTORY) for row in [

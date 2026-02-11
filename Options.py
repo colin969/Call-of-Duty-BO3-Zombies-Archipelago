@@ -117,9 +117,9 @@ class RoundLocationFrequency(Range):
     default = 2
 
 class EasterEggsEnabled(Toggle):
-    """Include Easter Egg steps as AP locations / checks"""
+    """Include Easter Egg steps as AP locations / checks when Easter Egg Hunt is not the goal conditon"""
     display_name = "Easter Egg Locations"
-    default = True
+    default = False
 
 class MusicEasterEggsEnabled(Toggle):
     """Include music easter eggs as AP locations / checks"""
@@ -193,6 +193,8 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     gift_weight: GiftWeight
     difficulty_gorod_egg_cooldown: DifficultyGorodEggCooldown
     difficulty_gorod_dragon_wings: DifficultyGorodDragonWings
+    easter_egg_checks_enabled: EasterEggsEnabled
+    music_ee_enabled: MusicEasterEggsEnabled
 
 bo3_option_groups = [
     OptionGroup("General Options", [
@@ -220,6 +222,7 @@ bo3_option_groups = [
         MapTheGiantEnabled,
         MapCastleEnabled,
         CastleBowCount,
+        MapZetsubouEnabled,
         MapGorodKroviEnabled,
         MapRevelationsEnabled,
     ]),
