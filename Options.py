@@ -43,9 +43,14 @@ class RandomizeShieldParts(Toggle):
     display_name = "Randomize Shield Parts"
     default = True
 
-class RandomizeBoxWonderWeapons(Toggle):
-    """Shuffles Mystery Box Wonder Weapon unlocks into the item pool"""
-    display_name = "Randomize Mystery Box Wonder Weapons"
+class MysteryBoxSpecialItems(Toggle):
+    """Shuffles special Mystery Box item unlocks (Wonder weapons, special equipment, specialist weapons) into the item pool"""
+    display_name = "Mystery Box - Special Items"
+    default = True
+
+class MysteryBoxRegularItems(Toggle):
+    """Shuffles regular Mystery Box item unlocks into the item pool"""
+    display_name = "Mystery Box - Regular Items"
     default = True
 
 class CastleBowCount(Range):
@@ -99,7 +104,14 @@ class GiftWeight(Range):
     display_name = "Gift Weight"
     default = 40
     range_start = 0
-    range_end = 99
+    range_end = 100
+
+class TrapWeight(Range):
+    """Weighting of traps to replace filler with"""
+    display_name = "Trap Weight"
+    default = 0
+    range_start = 0
+    range_end = 100
 
 class RoundMaxLocation(Range):
     """Maximum of rounds per map to be included as an AP location / check. This will not exceed Goal Round if your goal condiiton is Victory Round"""
@@ -168,6 +180,20 @@ class DifficultyGorodDragonWings(Toggle):
     display_name = "Gorod Krovi - Starting Dragon Wings"
     default = False
 
+class DifficultyEasterEggCheckpoints(Range):
+    """Number of checkpoints along the easter egg quest, for completing various steps."""
+    display_name = "Easter Egg Checkpoints"
+    default = 0
+    range_start = 0
+    range_end = 3
+
+class DifficultyRoundCheckpoints(Range):
+    """Makes a checkpoint every X round, if above 0"""
+    display_name = "Round Checkpoints"
+    default = 0
+    range_start = 0
+    range_end = 15
+
 @dataclass
 class BO3ZombiesOptions(PerGameCommonOptions):
     map_shadows_enabled: MapShadowsEnabled
@@ -186,20 +212,25 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     perk_limit_default_modifier: PerkLimitDefaultModifier
     progressive_perk_limit_increase: ProgressivePerkLimitIncrease
     randomized_shield_parts: RandomizeShieldParts
-    randomized_box_wonder_weapons: RandomizeBoxWonderWeapons
+    mystery_box_special_items: MysteryBoxSpecialItems
+    mystery_box_regular_items: MysteryBoxRegularItems
     map_specific_wallbuys: MapSpecificWallbuysEnabled
     map_specific_machines: MapSpecificMachinesEnabled
     castle_bow_count: CastleBowCount
     gift_weight: GiftWeight
+    trap_weight: TrapWeight
     difficulty_gorod_egg_cooldown: DifficultyGorodEggCooldown
     difficulty_gorod_dragon_wings: DifficultyGorodDragonWings
+    difficulty_ee_checkpoints: DifficultyEasterEggCheckpoints
+    difficulty_round_checkpoints: DifficultyRoundCheckpoints
     easter_egg_checks_enabled: EasterEggsEnabled
     music_ee_enabled: MusicEasterEggsEnabled
 
 bo3_option_groups = [
     OptionGroup("General Options", [
         RandomizeShieldParts,
-        RandomizeBoxWonderWeapons,
+        MysteryBoxSpecialItems,
+        MysteryBoxRegularItems,
         MapSpecificWallbuysEnabled,
         MapSpecificMachinesEnabled,
         RoundMaxLocation,
@@ -229,9 +260,12 @@ bo3_option_groups = [
     OptionGroup("Difficulty Adjustments", [
         DifficultyGorodEggCooldown,
         DifficultyGorodDragonWings,
+        DifficultyEasterEggCheckpoints,
+        DifficultyRoundCheckpoints,
     ]),
     OptionGroup("Filler", [
         GiftWeight,
+        TrapWeight,
     ]),
     OptionGroup("WIP", [
         SpecialRoundsEnabled,

@@ -32,14 +32,14 @@ Castle_Quest_ElementalBow_Wolf_Escort = Maps.Castle_Map_String + " Wolf Howl - F
 Castle_Quest_ElementalBow_Wolf_RepairArrow = Maps.Castle_Map_String + " Wolf Howl - Repair the Arrow"
 Castle_Quest_ElementalBow_Wolf_ForgeBow = Maps.Castle_Map_String + " Wolf Howl - Forge the Bow"
 
-Castle_Quest_ElementalBow_Fire_TakeArrow = Maps.Castle_Map_String + " Rune Prison - Take the Arrow"
+Castle_Quest_ElementalBow_Fire_TakeArrow = Maps.Castle_Map_String + " Rune Prison - Take Broken Arrow"
 Castle_Quest_ElementalBow_Fire_ShootOrb = Maps.Castle_Map_String + " Rune Prison - Shoot the Orb"
 Castle_Quest_ElementalBow_Fire_ChargeCircles = Maps.Castle_Map_String + " Rune Prison - Charge the Runic Circles"
 Castle_Quest_ElementalBow_Fire_MagmaBall = Maps.Castle_Map_String + " Rune Prison - Magma Ball Golf"
 Castle_Quest_ElementalBow_Fire_RepairArrow = Maps.Castle_Map_String + " Rune Prison - Repair the Arrow"
 Castle_Quest_ElementalBow_Fire_ForgeBow = Maps.Castle_Map_String + " Rune Prison - Forge the Bow"
 
-Castle_Quest_ElementalBow_Void_TakeArrow = Maps.Castle_Map_String + " Demon Gate - Take the Arrow"
+Castle_Quest_ElementalBow_Void_TakeArrow = Maps.Castle_Map_String + " Demon Gate - Take Broken Arrow"
 Castle_Quest_ElementalBow_Void_RitualSacrifice = Maps.Castle_Map_String + " Demon Gate - Ritual Sacrifice on the Seal"
 Castle_Quest_ElementalBow_Void_CollectSkulls = Maps.Castle_Map_String + " Demon Gate - Collect the Skulls"
 Castle_Quest_ElementalBow_Void_SacrificeCrawlers = Maps.Castle_Map_String + " Demon Gate - Sacrifice Crawlers"

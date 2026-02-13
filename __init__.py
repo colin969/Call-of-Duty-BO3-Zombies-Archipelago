@@ -46,7 +46,7 @@ class BO3ZombiesWorld(World):
     items_handling = 0b111
 
     # Enable to log the location lua data
-    write_lua_locations = True
+    write_lua_locations = False
 
     def generate_early(self) -> None:
         if self.write_lua_locations:
@@ -60,6 +60,7 @@ class BO3ZombiesWorld(World):
                 f.write("local locations = { LocationToID = LocationToID, IDToLocation = IDToLocation }\n")
                 f.write("return locations\n")
 
+        self.rolled_bows = []
         self.weapon_quest_items = []
         pass
 
@@ -98,7 +99,7 @@ class BO3ZombiesWorld(World):
             main_ee_region_requirements = []
             if self.options.randomized_shield_parts:
                 main_ee_region_requirements = [item.name for item in Items.Shadows_Shield]
-            if self.options.randomized_box_wonder_weapons:
+            if self.options.mystery_box_special_items:
                 main_ee_region_requirements += [item.name for item in Items.Shadows_MysteryBox]
             menu_region.connect(main_ee_region, rule = lambda state: state.has_all(main_ee_region_requirements, self.player))
     
@@ -127,6 +128,15 @@ class BO3ZombiesWorld(World):
             for bow in bow_pairs:
                 all_locations.extend([loc.name for loc in bow[0]])
                 self.weapon_quest_items.append(bow[1].name)
+                if bow[1].name == ItemName.Castle_Victory_ElementalBow_Storm:
+                    self.rolled_bows.append("storm")
+                if bow[1].name == ItemName.Castle_Victory_ElementalBow_Wolf:
+                    self.rolled_bows.append("wolf")
+                if bow[1].name == ItemName.Castle_Victory_ElementalBow_Fire:
+                    self.rolled_bows.append("fire")
+                if bow[1].name == ItemName.Castle_Victory_ElementalBow_Void:
+                    self.rolled_bows.append("void")
+
 
             add_round_locations(all_locations, Locations.Castle_Round_Locations, round_max, round_freq, is_round_goal_cond, goal_round)
             all_locations.extend([loc.name for loc in Locations.Castle_Craftable_Locations])
@@ -142,7 +152,7 @@ class BO3ZombiesWorld(World):
             main_ee_region_requirements = []
             if self.options.randomized_shield_parts:
                 main_ee_region_requirements = [item.name for item in Items.Castle_Shield]
-            if self.options.randomized_box_wonder_weapons:
+            if self.options.mystery_box_special_items:
                 main_ee_region_requirements += [item.name for item in Items.Castle_MysteryBox]
             menu_region.connect(main_ee_region, rule = lambda state: state.has_all(main_ee_region_requirements, self.player))
 
@@ -179,8 +189,9 @@ class BO3ZombiesWorld(World):
             main_ee_region_requirements = []
             if self.options.randomized_shield_parts:
                 main_ee_region_requirements = [item.name for item in Items.Zetsubou_Shield]
-            if self.options.randomized_box_wonder_weapons:
+            if self.options.mystery_box_special_items:
                 main_ee_region_requirements += [item.name for item in Items.Zetsubou_MysteryBox]
+                main_ee_region_requirements += [item.name for item in Items.Zetsubou_Craftables_Gasmask]
             menu_region.connect(main_ee_region, rule = lambda state: state.has_all(main_ee_region_requirements, self.player))
 
             main_region = self.create_region(self.multiworld, self.player, RegionName.Zetsubou_Beach, all_locations)
@@ -212,7 +223,7 @@ class BO3ZombiesWorld(World):
             main_ee_region_requirements = []
             if self.options.randomized_shield_parts:
                 main_ee_region_requirements = [item.name for item in Items.GorodKrovi_Shield]
-            if self.options.randomized_box_wonder_weapons:
+            if self.options.mystery_box_special_items:
                 main_ee_region_requirements += [item.name for item in Items.GorodKrovi_MysteryBox]
             menu_region.connect(main_ee_region, rule = lambda state: state.has_all(main_ee_region_requirements, self.player))
 
@@ -227,7 +238,7 @@ class BO3ZombiesWorld(World):
             # Monkey Bomb upgrade location - Requires shield as well as monkey bombs in box
             monkeybomb_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_MonkeyBombs, [Locations.GorodKrovi_Quest_Challenges[3].name])
             self.multiworld.regions.append(monkeybomb_region)
-            if self.options.randomized_box_wonder_weapons:
+            if self.options.mystery_box_special_items:
                 shield_region.connect(monkeybomb_region, rule = lambda state: state.has(Items.GorodKrovi_MysteryBox[1].name, self.player))
             else:
                 shield_region.connect(monkeybomb_region)
@@ -251,7 +262,7 @@ class BO3ZombiesWorld(World):
 
             weapon_quest_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_WeaponQuest, [loc.name for loc in Locations.Revelations_Quest_Weapons])
             weapon_quest_region_requirements = []
-            if self.options.randomized_box_wonder_weapons:
+            if self.options.mystery_box_special_items:
                 weapon_quest_region_requirements += [Items.Revelations_MysteryBox[1].name, Items.Revelations_Machines[2].name]
             menu_region.connect(weapon_quest_region, rule = lambda state: state.has_all(weapon_quest_region_requirements, self.player))
 
@@ -261,7 +272,7 @@ class BO3ZombiesWorld(World):
 
             main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_MainEE, ee_locs)
             main_ee_region_requirements = [item.name for item in Items.Revelations_Shield]
-            if self.options.randomized_box_wonder_weapons:
+            if self.options.mystery_box_special_items:
                 main_ee_region_requirements += [item.name for item in Items.Revelations_MysteryBox]
             menu_region.connect(main_ee_region, rule = lambda state: state.has_all(main_ee_region_requirements, self.player))
             
@@ -286,6 +297,7 @@ class BO3ZombiesWorld(World):
             Items.BO3ZombiesItemCategory.WALLBUY,
             Items.BO3ZombiesItemCategory.MACHINE,
             Items.BO3ZombiesItemCategory.SPECIAL_WEAPON,
+            Items.BO3ZombiesItemCategory.REGULAR_WEAPON,
             Items.BO3ZombiesItemCategory.CRAFTABLE,
         }
 
@@ -313,7 +325,19 @@ class BO3ZombiesWorld(World):
         return Items.BO3ZombiesItem(name, item_classification, data, self.player)
 
     def create_filler_gift(self) -> Item:
-        gift = random.choice(Items.Gift_Items)
+        if not hasattr(self, '_gift_bag') or not self._gift_bag:
+            self._gift_bag = list(Items.Gift_Items)
+            random.shuffle(self._gift_bag)
+
+        gift = self._gift_bag.pop()
+        return self.create_item(gift[0])
+    
+    def create_filler_trap(self) -> Item:
+        if not hasattr(self, '_trap_bag') or not self._trap_bag:
+            self._trap_bag = list(Items.Trap_Items)
+            random.shuffle(self._trap_bag)
+
+        gift = self._trap_bag.pop()
         return self.create_item(gift[0])
 
     def create_filler(self) -> Item:
@@ -419,7 +443,7 @@ class BO3ZombiesWorld(World):
             if self.options.randomized_shield_parts:
                 enabled_items += Items.Revelations_Shield
 
-        if self.options.randomized_box_wonder_weapons:
+        if self.options.mystery_box_special_items:
             if self.options.map_the_giant_enabled:
                 enabled_items += Items.The_Giant_MysteryBox
             if self.options.map_shadows_enabled:
@@ -432,6 +456,21 @@ class BO3ZombiesWorld(World):
                 enabled_items += Items.GorodKrovi_MysteryBox
             if self.options.map_revelations_enabled:
                 enabled_items += Items.Revelations_MysteryBox
+
+        if self.options.mystery_box_regular_items:
+            seen = set()
+            if self.options.map_the_giant_enabled:
+                add_universal_items(enabled_items, seen, Items.The_Giant_MysteryBox_Regular)
+            if self.options.map_shadows_enabled:
+                add_universal_items(enabled_items, seen, Items.Shadows_MysteryBox_Regular)
+            if self.options.map_castle_enabled:
+                add_universal_items(enabled_items, seen, Items.Castle_MysteryBox_Regular)
+            if self.options.map_zetsubou_enabled:
+                add_universal_items(enabled_items, seen, Items.Zetsubou_MysteryBox_Regular)
+            if self.options.map_gorod_enabled:
+                add_universal_items(enabled_items, seen, Items.GorodKrovi_MysteryBox_Regular)
+            if self.options.map_revelations_enabled:
+                add_universal_items(enabled_items, seen, Items.Revelations_MysteryBox_Regular)
 
         # Easter Egg Hunt
         if self.options.goal_condition == 0:
@@ -514,10 +553,17 @@ class BO3ZombiesWorld(World):
 
         if locations_left > 0:
             gift_filler_weight = self.options.gift_weight / 100
+            trap_filler_weight = self.options.trap_weight / 100
+            total_weight = gift_filler_weight + trap_filler_weight
+            if total_weight > 1:
+                gift_filler_weight *= 1 / total_weight
+                trap_filler_weight *= 1 / total_weight
+            trap_filler_count = math.floor(locations_left * trap_filler_weight)
             gift_filler_count = math.floor(locations_left * gift_filler_weight)
-            filler_count = locations_left - gift_filler_count
+            filler_count = locations_left - (gift_filler_count + trap_filler_count)
 
             # Creates filler in remaining slots
+            self.multiworld.itempool.extend([self.create_filler_trap() for _ in range(trap_filler_count)])
             self.multiworld.itempool.extend([self.create_filler_gift() for _ in range(gift_filler_count)])
             self.multiworld.itempool.extend([self.create_filler() for _ in range(filler_count)])
 
@@ -573,9 +619,13 @@ class BO3ZombiesWorld(World):
             "special_rounds_enabled": bool(options.special_rounds_enabled),
             "perk_limit_default_modifier": int(options.perk_limit_default_modifier),
             "randomized_shield_parts": bool(options.randomized_shield_parts),
-            "randomized_box_wonder_weapons": bool(options.randomized_box_wonder_weapons),
+            "mystery_box_special_items": bool(options.mystery_box_special_items),
+            "mystery_box_regular_items": bool(options.mystery_box_regular_items),
             "difficulty_gorod_egg_cooldown": bool(options.difficulty_gorod_egg_cooldown),
             "difficulty_gorod_dragon_wings": bool(options.difficulty_gorod_dragon_wings),
+            "difficulty_ee_checkpoints": options.difficulty_ee_checkpoints.value,
+            "difficulty_round_checkpoints": options.difficulty_round_checkpoints.value,
+            "rolled_bows": self.rolled_bows,
             "goal_items_required": int(self.slot_goal_items_required),
             "goal_items": self.slot_goal_items,
         }
