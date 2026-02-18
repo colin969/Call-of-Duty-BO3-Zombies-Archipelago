@@ -655,9 +655,9 @@ def add_round_locations(enabled_location_names, round_locations, round_max, roun
             # Never assign to round 1
             if i == 1:
                 continue
-            enabled_location_names.append(round_locations[i - 1].name)
+            enabled_location_names.append(round_locations[i - 2].name)
             i += round_freq
         # Make sure the Goal Round is always included
         if is_goal_cond:
             if goal_round > round_max or goal_round % round_freq != 0:
-                enabled_location_names.append(round_locations[goal_round - 1].name)
+                enabled_location_names.append(round_locations[goal_round - 2].name)
