@@ -166,8 +166,8 @@ class GoalEasterEggHuntRandom(Toggle):
 class GoalRound(Range):
     """Round to award Goal Round to award victory on when running the Victory Round goal condition"""
     display_name = "Goal Round"
-    range_start = 1
-    range_end = 99
+    range_start = 2
+    range_end = 100
     default = 25
 
 class DifficultyGorodEggCooldown(Toggle):
@@ -193,6 +193,43 @@ class DifficultyRoundCheckpoints(Range):
     default = 0
     range_start = 0
     range_end = 15
+
+class AttachmentsEnabled(Toggle):
+    """Whether to randomize attachments per weapon per seed"""
+    display_name = "Attachments - Randomized"
+    default = True
+
+class AttachmentsSightWeight(Range):
+    """Probability of a large sight (Recon, Infra-Red etc) being chosen instead of a small sight (Iron sights, reflex etc)"""
+    display_name = "Attachments - Large Sight Weighting"
+    default = 30
+    range_start = 0
+    range_end = 100
+
+class DeathlinkEnabled(Toggle):
+    """Deathlink Enabled. This can be disabled during the AP, but not during it."""
+    display_name = "Deathlink Enabled"
+    default = False
+
+class DeathlinkSendMode(Choice):
+    """Action which will send a deathlink"""
+    display_name = "Deathlink Sender Mode"
+    default = 0
+
+    option_any_player_down = 0
+    option_any_player_death = 1
+    option_end_game = 2
+
+class DeathlinkRecvMode(Choice):
+    """Consequence of being sent a deathlink"""
+    display_name = "Deathlink Receiver Mode"
+    default = 0
+
+    option_single_player_down = 0
+    option_single_player_death = 1
+    option_all_players_down = 2
+    option_end_game = 3
+
 
 @dataclass
 class BO3ZombiesOptions(PerGameCommonOptions):
@@ -225,6 +262,11 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     difficulty_round_checkpoints: DifficultyRoundCheckpoints
     easter_egg_checks_enabled: EasterEggsEnabled
     music_ee_enabled: MusicEasterEggsEnabled
+    attachments_randomized: AttachmentsEnabled
+    attachments_sight_weight: AttachmentsSightWeight
+    deathlink_enabled: DeathlinkEnabled
+    deathlink_send_mode: DeathlinkSendMode
+    deathlink_recv_mode: DeathlinkRecvMode
 
 bo3_option_groups = [
     OptionGroup("General Options", [
@@ -237,6 +279,8 @@ bo3_option_groups = [
         RoundLocationFrequency,
         EasterEggsEnabled,
         MusicEasterEggsEnabled,
+        AttachmentsEnabled,
+        AttachmentsSightWeight,
     ]),
     OptionGroup("Goal Conditions", [
         GoalCondition,
@@ -262,6 +306,11 @@ bo3_option_groups = [
         DifficultyGorodDragonWings,
         DifficultyEasterEggCheckpoints,
         DifficultyRoundCheckpoints,
+    ]),
+    OptionGroup("Deathlink", [
+        DeathlinkEnabled,
+        DeathlinkSendMode,
+        DeathlinkRecvMode,
     ]),
     OptionGroup("Filler", [
         GiftWeight,

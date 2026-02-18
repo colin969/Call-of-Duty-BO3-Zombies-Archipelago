@@ -27,9 +27,10 @@ def gen_map_round_locations(map_string, count):
         raise Exception("round location gen - Map string not in base map ids?")
     base_map_id = BaseMapIds[map_string]
     locations = []
-    for i in range(1, count + 1):
+    # Start on round 2
+    for i in range(2, count + 2):
         location_name = f"{map_string} Round {i:02d}"
-        locations.append(LocationData(location_name, BO3ZombiesLocationCategory.ROUND, base_map_id + i))
+        locations.append(LocationData(location_name, BO3ZombiesLocationCategory.ROUND, base_map_id + (i - 1)))
     return locations
 
 def get_map_victory_location(map_string, goal_round):

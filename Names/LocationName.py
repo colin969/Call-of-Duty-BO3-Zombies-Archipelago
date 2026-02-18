@@ -93,7 +93,7 @@ Zetsubou_Quest_MainQuest_Pap = Maps.Zetsubou_Map_String + " Main Quest - Drain t
 Zetsubou_Quest_MainEE_AirplaneAmmo = Maps.Zetsubou_Map_String + " Main Easter Egg - Grow an Anti-Aircraft Shell"
 Zetsubou_Quest_MainEE_AirplaneDown = Maps.Zetsubou_Map_String + " Main Easter Egg - Shoot down the Plane"
 Zetsubou_Quest_MainEE_Gear2 = Maps.Zetsubou_Map_String + " Main Easter Egg - Collect the Cog from the Zipline drop"
-Zetsubou_Quest_MainEE_Gear3 = Maps.Zetsubou_Map_String + " Main Easter Egg - Collect the Gear from the Gobblegum teleport"
+Zetsubou_Quest_MainEE_Gear3 = Maps.Zetsubou_Map_String + " Main Easter Egg - Collect the Cog from the Gobblegum teleport"
 Zetsubou_Quest_MainEE_FreeTakeo = Maps.Zetsubou_Map_String + " Main Easter Egg - Free Takeo"
 Zetsubou_Quest_MainEE_Victory = Maps.Zetsubou_Map_String + " Main Easter Egg - Victory"
 

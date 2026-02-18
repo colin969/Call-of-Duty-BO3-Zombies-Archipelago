@@ -382,8 +382,11 @@ Revelations_MysteryBox_Regular = [ItemData(ItemName.MysteryBox + row, BO3Zombies
 # Progressives
 
 Progressive_PerkLimitIncrease = ItemData(ItemName.Progressive_PerkLimitIncrease, BO3ZombiesItemCategory.PROGRESSIVE)
+Progressive_PackAPunch = ItemData(ItemName.Progressive_PackAPunch, BO3ZombiesItemCategory.PROGRESSIVE)
+
 Progressive_Items = [
-    Progressive_PerkLimitIncrease
+    Progressive_PerkLimitIncrease,
+    Progressive_PackAPunch,
 ]
 
 # Point Drop Items
@@ -430,8 +433,6 @@ Misc_Items = [ItemData(row[0], row[1]) for row in [
     (ItemName.Points50, BO3ZombiesItemCategory.MISC)
 ]]
 
-PapItem = ItemData(ItemName.PapMachine, BO3ZombiesItemCategory.MACHINE)
-
 # Gifts
 
 Gift_Items = [ItemData(row, BO3ZombiesItemCategory.GIFT) for row in [
@@ -457,7 +458,6 @@ base_items = Points_Items
 
 all_items = (
     Progressive_Items + Points_Items + Weapon_Victory_Items + Victory_Items + Gift_Items + Trap_Items + Misc_Items
-    + [PapItem]
     # The Giant
     + The_Giant_Machines + The_Giant_Machines_Specific
     + The_Giant_Wallbuys + The_Giant_Wallbuys_Specific

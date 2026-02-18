@@ -128,8 +128,7 @@ Gift_Free_Perk_Powerup =  "Gift - Free Perk Powerup"
 # Progressives
 
 Progressive_PerkLimitIncrease = "Progressive - Perk Limit Increase"
-
-PapMachine = "Pack-A-Punch Machine"
+Progressive_PackAPunch = "Progressive - Pack-A-Punch Machine"
 
 # Shield Parts
 ShieldPart_Door = "Shield Part - Door"

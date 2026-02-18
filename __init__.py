@@ -96,9 +96,9 @@ class BO3ZombiesWorld(World):
                 ee_locs = [loc.name for loc in Locations.Shadows_Quest_MainEE_Locations]
 
             main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Shadows_MainEE, ee_locs)
-            main_ee_region_requirements = []
+            main_ee_region_requirements = [ItemName.Progressive_PackAPunch]
             if self.options.randomized_shield_parts:
-                main_ee_region_requirements = [item.name for item in Items.Shadows_Shield]
+                main_ee_region_requirements += [item.name for item in Items.Shadows_Shield]
             if self.options.mystery_box_special_items:
                 main_ee_region_requirements += [item.name for item in Items.Shadows_MysteryBox]
             menu_region.connect(main_ee_region, rule = lambda state: state.has_all(main_ee_region_requirements, self.player))
@@ -149,9 +149,9 @@ class BO3ZombiesWorld(World):
                 ee_locs = [loc.name for loc in Locations.Castle_Quest_MainEE_Locations[:4]]
 
             main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Castle_MainEE, ee_locs)
-            main_ee_region_requirements = []
+            main_ee_region_requirements = [ItemName.Progressive_PackAPunch]
             if self.options.randomized_shield_parts:
-                main_ee_region_requirements = [item.name for item in Items.Castle_Shield]
+                main_ee_region_requirements += [item.name for item in Items.Castle_Shield]
             if self.options.mystery_box_special_items:
                 main_ee_region_requirements += [item.name for item in Items.Castle_MysteryBox]
             menu_region.connect(main_ee_region, rule = lambda state: state.has_all(main_ee_region_requirements, self.player))
@@ -186,9 +186,9 @@ class BO3ZombiesWorld(World):
                 ee_locs = [loc.name for loc in Locations.Zetsubou_Quest_MainEE_Locations]
 
             main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Zetsubou_MainEE, ee_locs)
-            main_ee_region_requirements = []
+            main_ee_region_requirements = [ItemName.Progressive_PackAPunch]
             if self.options.randomized_shield_parts:
-                main_ee_region_requirements = [item.name for item in Items.Zetsubou_Shield]
+                main_ee_region_requirements += [item.name for item in Items.Zetsubou_Shield]
             if self.options.mystery_box_special_items:
                 main_ee_region_requirements += [item.name for item in Items.Zetsubou_MysteryBox]
                 main_ee_region_requirements += [item.name for item in Items.Zetsubou_Craftables_Gasmask]
@@ -220,9 +220,9 @@ class BO3ZombiesWorld(World):
                 ee_locs = [loc.name for loc in Locations.GorodKrovi_Quest_MainEE_Locations]
 
             main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_MainEE, ee_locs)
-            main_ee_region_requirements = []
+            main_ee_region_requirements = [ItemName.Progressive_PackAPunch]
             if self.options.randomized_shield_parts:
-                main_ee_region_requirements = [item.name for item in Items.GorodKrovi_Shield]
+                main_ee_region_requirements += [item.name for item in Items.GorodKrovi_Shield]
             if self.options.mystery_box_special_items:
                 main_ee_region_requirements += [item.name for item in Items.GorodKrovi_MysteryBox]
             menu_region.connect(main_ee_region, rule = lambda state: state.has_all(main_ee_region_requirements, self.player))
@@ -271,7 +271,9 @@ class BO3ZombiesWorld(World):
                 ee_locs = [loc.name for loc in Locations.Revelations_Quest_MainEE_Locations]
 
             main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_MainEE, ee_locs)
-            main_ee_region_requirements = [item.name for item in Items.Revelations_Shield]
+            main_ee_region_requirements = [ItemName.Progressive_PackAPunch]
+            if self.options.randomized_shield_parts:
+                main_ee_region_requirements += [item.name for item in Items.Revelations_Shield]
             if self.options.mystery_box_special_items:
                 main_ee_region_requirements += [item.name for item in Items.Revelations_MysteryBox]
             menu_region.connect(main_ee_region, rule = lambda state: state.has_all(main_ee_region_requirements, self.player))
@@ -346,9 +348,11 @@ class BO3ZombiesWorld(World):
 
     def create_items(self) -> None:
         enabled_items = [item for item in Items.base_items]
-        enabled_items.append(Items.PapItem)
 
-        # Add progressives to pool
+        # 2 Progressive Pap items (turn on + alternate ammo types)
+        enabled_items.extend([Items.Progressive_PackAPunch, Items.Progressive_PackAPunch])
+
+        # Add progressive perk limits to pool
         if self.options.progressive_perk_limit_increase > 0:
             for i in range(self.options.progressive_perk_limit_increase):
                 enabled_items += [Items.Progressive_PerkLimitIncrease]
@@ -626,6 +630,11 @@ class BO3ZombiesWorld(World):
             "difficulty_ee_checkpoints": options.difficulty_ee_checkpoints.value,
             "difficulty_round_checkpoints": options.difficulty_round_checkpoints.value,
             "rolled_bows": self.rolled_bows,
+            "attachments_randomized": bool(options.attachments_randomized),
+            "attachments_sight_weight": int(options.attachments_sight_weight),
+            "deathlink_enabled": bool(options.deathlink_enabled),
+            "deathlink_send_mode": int(options.deathlink_send_mode),
+            "deathlink_recv_mode": int(options.deathlink_recv_mode),
             "goal_items_required": int(self.slot_goal_items_required),
             "goal_items": self.slot_goal_items,
         }
@@ -643,6 +652,9 @@ def add_round_locations(enabled_location_names, round_locations, round_max, roun
         i = round_freq
         # Add rounds into pool
         while i <= round_max:
+            # Never assign to round 1
+            if i == 1:
+                continue
             enabled_location_names.append(round_locations[i - 1].name)
             i += round_freq
         # Make sure the Goal Round is always included
