@@ -1,31 +1,33 @@
 import typing
-from enum import IntEnum
 from BaseClasses import Item
 from .Names import ItemName, Maps
+
+from typing import Dict, Set
 
 def gen_map_specific_list(mapString, items):
     map_specific_set = [ItemData(mapString + " " + item[0], item[1]) for item in items]
     return map_specific_set
 
-class BO3ZombiesItemCategory(IntEnum):
-    BLOCKER = 5
-    WALLBUY = 6
-    POWER = 7
-    EASTER_EGG = 8
-    MACHINE = 9
-    MISC = 10
-    VICTORY = 11
-    GIFT = 12
-    TRAP = 13
-    PROGRESSIVE = 14
-    SPECIAL_WEAPON = 15
-    CRAFTABLE = 16
-    REGULAR_WEAPON = 17
+class BO3ZombiesItemCategory():
+    BLOCKER = "Blockers"
+    WALLBUY = "Wallbuys"
+    POWER = "Power"
+    EASTER_EGG = "Easter Egg"
+    MACHINE = "Machines"
+    MISC = "Misc"
+    VICTORY = "Victory"
+    GIFT = "Gifts"
+    TRAP = "Traps"
+    PROGRESSIVE = "Progressive"
+    SPECIAL_WEAPON = "Special Weapons"
+    CRAFTABLE = "Craftables"
+    REGULAR_WEAPON = "Regular Weapons"
+    MAP_UNLOCK = "Map Unlocks"
 
 
 class ItemData(typing.NamedTuple):
     name: str
-    category: BO3ZombiesItemCategory
+    category: str
 
 class BO3ZombiesItem(Item):
     game: str = "Black Ops 3 - Zombies"
@@ -391,14 +393,14 @@ Progressive_Items = [
 
 # Point Drop Items
 
-Points_Items = [ItemData(row[0], row[1]) for row in [
-    (ItemName.Points500, BO3ZombiesItemCategory.MISC)
-]]
+Points_1500 = ItemData(ItemName.Points1500, BO3ZombiesItemCategory.MISC)
 
 # Victory
 
 Weapon_Victory_Items = [ItemData(row, BO3ZombiesItemCategory.VICTORY) for row in [
     ItemName.Shadows_Victory_ApothiconSwordLvl2,
+    ItemName.Shadows_Victory_Upgraded_LilArnies,
+    ItemName.Shadows_Victory_Upgraded_DoughnutMines,
     ItemName.Castle_Victory_ElementalBow_Storm,
     ItemName.Castle_Victory_ElementalBow_Wolf,
     ItemName.Castle_Victory_ElementalBow_Fire,
@@ -430,7 +432,7 @@ Victory_Items = [ItemData(row, BO3ZombiesItemCategory.VICTORY) for row in [
 # Misc/Filler Items
 
 Misc_Items = [ItemData(row[0], row[1]) for row in [
-    (ItemName.Points50, BO3ZombiesItemCategory.MISC)
+    (ItemName.Points200, BO3ZombiesItemCategory.MISC)
 ]]
 
 # Gifts
@@ -454,10 +456,18 @@ Trap_Items = [ItemData(row, BO3ZombiesItemCategory.TRAP) for row in [
     ItemName.Trap_KnuckleCrack,
 ]]
 
-base_items = Points_Items
+# Map Unlocks
+Map_Unlocks = [ItemData(row, BO3ZombiesItemCategory.MAP_UNLOCK) for row in [
+    ItemName.Map_Shadows,
+    ItemName.Map_Castle,
+    ItemName.Map_Zetsubou,
+    ItemName.Map_GorodKrovi,
+    ItemName.Map_Revelations,
+    ItemName.Map_The_Giant,
+]]
 
 all_items = (
-    Progressive_Items + Points_Items + Weapon_Victory_Items + Victory_Items + Gift_Items + Trap_Items + Misc_Items
+    Progressive_Items + [Points_1500] + Weapon_Victory_Items + Victory_Items + Gift_Items + Trap_Items + Misc_Items + Map_Unlocks
     # The Giant
     + The_Giant_Machines + The_Giant_Machines_Specific
     + The_Giant_Wallbuys + The_Giant_Wallbuys_Specific
@@ -490,3 +500,11 @@ all_items = (
 )
 
 all_items_dict = {item_data.name: item_data for item_data in all_items}
+
+item_groups: Dict[str, Set[str]] = {}
+# Maps
+for item in all_items_dict.keys():
+    category = all_items_dict[item].category
+    if category not in item_groups.keys():
+        item_groups[category] = set()
+    item_groups[category].add(all_items_dict[item].name)

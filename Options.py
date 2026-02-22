@@ -11,7 +11,7 @@ class MapShadowsEnabled(Toggle):
 class MapTheGiantEnabled(Toggle):
     """Enables Map: \"The Giant\"."""
     display_name = "\"The Giant\" map enabled"
-    default = False
+    default = True
 
 class MapCastleEnabled(Toggle):
     """Enables Map: \"Castle\"."""
@@ -154,9 +154,9 @@ class GoalEasterEggCount(Range):
     """Number of Main Easter Eggs needed to complete the seed when running Easter Egg Hunt. This will not exceed the number of selected maps"""
     display_name = "Easter Egg Goal Count"
     range_start = 1
-    range_end = 4
+    range_end = 6
 
-    default = 1
+    default = 2
 
 class GoalEasterEggHuntRandom(Toggle):
     """Randomize which Easter Eggs are required. If disabled, you may complete any number of enabled maps to meet your Easter Egg Goal Count"""
@@ -230,9 +230,17 @@ class DeathlinkRecvMode(Choice):
     option_all_players_down = 2
     option_end_game = 3
 
+class StartingMapsUnlocked(Range):
+    """Number of maps to start unlocked, the rest will require AP items to access"""
+    display_name = "Number of Starting Maps"
+    default = 1
+    
+    range_start = 0
+    range_end = 15
 
 @dataclass
 class BO3ZombiesOptions(PerGameCommonOptions):
+    starting_maps_unlocked: StartingMapsUnlocked
     map_shadows_enabled: MapShadowsEnabled
     map_the_giant_enabled: MapTheGiantEnabled
     map_zetsubou_enabled: MapZetsubouEnabled
@@ -270,6 +278,7 @@ class BO3ZombiesOptions(PerGameCommonOptions):
 
 bo3_option_groups = [
     OptionGroup("General Options", [
+        StartingMapsUnlocked,
         RandomizeShieldParts,
         MysteryBoxSpecialItems,
         MysteryBoxRegularItems,

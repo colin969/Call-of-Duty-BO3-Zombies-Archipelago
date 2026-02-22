@@ -72,6 +72,10 @@ Shadows_Quest_MainEE_Victory = Maps.Shadows_Map_String + EE_Victory
 
 Shadows_Quest_AllSpareChangeCollected = Maps.Shadows_Map_String + " All Spare Change Collected"
 Shadows_Quest_LaundryTicket = Maps.Shadows_Map_String + " Laundry Ticket"
+# Shadows_Quest_GrowGum = Maps.Shadows_Map_String + " Grow a Mega Gobblegum"
+Shadows_Quest_MargwaHead = Maps.Shadows_Map_String + " Unlock the Margwa's Head"
+Shadows_Quest_LilArnies_Upgrade = Maps.Shadows_Map_String + " Upgrade the Li'l Arnies"
+Shadows_Quest_DoughnutMines = Maps.Shadows_Map_String + " Unlock the Doughnut or Cream Cake Mines"
 
 Shadows_Craftable_ApothiconServant_MargwaHeart = Maps.Shadows_Map_String + " Apothicon Servant Part Pickup - Margwa Heart"
 Shadows_Craftable_ApothiconServant_MargwaTentacle = Maps.Shadows_Map_String + " Apothicon Servant Part Pickup - Margwa Tentacle"
@@ -85,6 +89,9 @@ Shadows_Craftable_ShieldPartDolly = Maps.Shadows_Map_String + " Shield Part Pick
 Shadows_Craftable_ShieldPartDoor = Maps.Shadows_Map_String + " Shield Part Pickup - Door"
 Shadows_Craftable_ShieldPartClamp = Maps.Shadows_Map_String + " Shield Part Pickup - Clamp"
 
+Shadows_Quest_Music_SnakeskinBoots = Maps.Shadows_Map_String + " Music EE - Snakeskin Boots"
+Shadows_Quest_Music_ColdHardCash = Maps.Shadows_Map_String + " Music EE - Cold Hard Cash"
+
 Zetsubou_Quest_MainQuest_Bucket = Maps.Zetsubou_Map_String + " Main Quest - Find a Bucket"
 Zetsubou_Quest_MainQuest_Bunker = Maps.Zetsubou_Map_String + " Main Quest - Enter the Bunker"
 Zetsubou_Quest_MainQuest_Power = Maps.Zetsubou_Map_String + " Main Quest - Turn on the Power"
@@ -96,6 +103,10 @@ Zetsubou_Quest_MainEE_Gear2 = Maps.Zetsubou_Map_String + " Main Easter Egg - Col
 Zetsubou_Quest_MainEE_Gear3 = Maps.Zetsubou_Map_String + " Main Easter Egg - Collect the Cog from the Gobblegum teleport"
 Zetsubou_Quest_MainEE_FreeTakeo = Maps.Zetsubou_Map_String + " Main Easter Egg - Free Takeo"
 Zetsubou_Quest_MainEE_Victory = Maps.Zetsubou_Map_String + " Main Easter Egg - Victory"
+
+Zetsubou_Quest_Music_DeadFlowers = Maps.Zetsubou_Map_String + " Music EE - Dead Flowers"
+
+Zetsubou_Quest_AllSpareChangeCollected = Maps.Zetsubou_Map_String + " All Spare Change Collected"
 
 Zetsubou_Quest_KT4_Vial = Maps.Zetsubou_Map_String + " KT-4 - Collect the Green Vial"
 Zetsubou_Quest_KT4_Flower = Maps.Zetsubou_Map_String + " KT-4 - Collect the Underwater Flower"
@@ -165,6 +176,11 @@ GorodKrovi_Craftable_ShieldPartDolly = Maps.GorodKrovi_Map_String + " Shield Par
 GorodKrovi_Craftable_ShieldPartDoor = Maps.GorodKrovi_Map_String + " Shield Part Pickup - Door"
 GorodKrovi_Craftable_ShieldPartClamp = Maps.GorodKrovi_Map_String + " Shield Part Pickup - Clamp"
 
+GorodKrovi_Quest_Music_DeadEnded = Maps.GorodKrovi_Map_String + " Music EE - Dead Ended"
+GorodKrovi_Quest_Music_AceOfSpades = Maps.GorodKrovi_Map_String + " Music EE - Ace of Spades"
+
+GorodKrovi_Quest_AllSpareChangeCollected = Maps.GorodKrovi_Map_String + " All Spare Change Collected"
+
 Revelations_Quest_MainQuest_Portal = Maps.Revelations_Map_String + " Main Quest - Override a Corruption Engine"
 Revelations_Quest_MainQuest_AllPortals = Maps.Revelations_Map_String + " Main Quest - Override all 4 Corruption Engines"
 Revelations_Quest_MainQuest_PackAPunch = Maps.Revelations_Map_String + " Main Quest - Free the Pack-A-Punch"
@@ -204,5 +220,19 @@ Revelations_Quest_SideEE_HatApothigod = Maps.Revelations_Map_String + " Unlock t
 Revelations_Craftable_ShieldPartDolly = Maps.Revelations_Map_String + " Shield Part Pickup - Dolly"
 Revelations_Craftable_ShieldPartDoor = Maps.Revelations_Map_String + " Shield Part Pickup - Door"
 Revelations_Craftable_ShieldPartClamp = Maps.Revelations_Map_String + " Shield Part Pickup - Clamp"
+
+Revelations_Quest_Music_TheGift = Maps.Revelations_Map_String + " Music EE - The Gift"
+
+Revelations_Quest_AllSpareChangeCollected = Maps.Revelations_Map_String + " All Spare Change Collected"
+
+TheGiant_Quest_LinkAnyTeleporter = Maps.The_Giant_Map_String + " Link a Teleporter"
+TheGiant_Quest_LinkAllTeleporters = Maps.The_Giant_Map_String + " Link All 3 Teleporters"
+
+TheGiant_Quest_FlyTrap = Maps.The_Giant_Map_String + " Fly Trap Quest"
+TheGiant_Quest_SecretPerk = Maps.The_Giant_Map_String + " Reveal the Secret Perk Machine"
+
+TheGiant_Quest_Music_BeautyOfAnnihilation = Maps.The_Giant_Map_String + " Music EE - Beauty of Annihilation Remix"
+
+TheGiant_Quest_AllSpareChangeCollected = Maps.The_Giant_Map_String + " All Spare Change Collected"
 
 RepairWindows_5 = "Repair Windows 5 Times"

@@ -1,5 +1,13 @@
 from . import Maps
 
+# Maps
+Map_Shadows = "Map Unlock - Shadows of Evil"
+Map_Castle = "Map Unlock - Castle"
+Map_Zetsubou = "Map Unlock - Zetsubou No Shima"
+Map_GorodKrovi = "Map Unlock - Gorod Krovi"
+Map_Revelations = "Map Unlock - Revelations"
+Map_The_Giant = "Map Unlock - The Giant"
+
 # Machines
 
 Machine_Juggernog = "Juggernog"
@@ -153,6 +161,8 @@ Shadows_Craftable_CivilProtector_Fuse02 = Maps.Shadows_Map_String + " Civil Prot
 Shadows_Craftable_CivilProtector_Fuse03 = Maps.Shadows_Map_String + " Civil Protector Part - Footlight Fuse"
 
 Shadows_Victory_ApothiconSwordLvl2 = Maps.Shadows_Map_String + " Apothicon Sword Upgraded - Victory"
+Shadows_Victory_Upgraded_LilArnies = Maps.Shadows_Map_String + " Li'l Arnies Upgraded - Victory"
+Shadows_Victory_Upgraded_DoughnutMines = Maps.Shadows_Map_String + " Doughnut Mines - Victory"
 
 Zetsubou_Craftable_Gasmask_Visor = Maps.Zetsubou_Map_String + " Gasmask Part - Visor"
 Zetsubou_Craftable_Gasmask_Filter = Maps.Zetsubou_Map_String + " Gasmask Part - Filter"
@@ -174,8 +184,8 @@ Revelations_Victory_Upgraded_LilArnies = Maps.Revelations_Map_String + " Upgrade
 Revelations_Victory_Upgrade_ApothiconServant = Maps.Revelations_Map_String + " Upgraded Apothicon Servant - Victory"
 
 # Misc
-Points50                            = "50 Points"
-Points500                           = "500 Points"
+Points200                            = "200 Points"
+Points1500                           = "1500 Points"
 Victory                             = " Victory"
 EE_Victory                          = " Easter Egg Victory"
 

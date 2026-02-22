@@ -52,6 +52,24 @@ def get_map_victory_location(map_string, goal_round):
 
 TheGiant_Round_Locations = gen_map_round_locations(Maps.The_Giant_Map_String, 99)
 
+TheGiant_Quest_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.TheGiant_Quest_LinkAnyTeleporter, 1101),
+    (LocationName.TheGiant_Quest_LinkAllTeleporters, 1102),
+    (LocationName.TheGiant_Quest_AllSpareChangeCollected, 1109),
+]]
+
+TheGiant_Pap = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.TheGiant_Quest_FlyTrap, 1110),
+]]
+
+TheGiant_MonkeyBomb = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.TheGiant_Quest_SecretPerk, 1120),
+]]
+
+TheGiant_Quest_Music_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.TheGiant_Quest_Music_BeautyOfAnnihilation, 1201),
+]]
+
 # Castle zm_castle
 
 Castle_Round_Locations = gen_map_round_locations(Maps.Castle_Map_String, 99)
@@ -138,8 +156,12 @@ Shadows_Quest_MainQuest_Locations = [LocationData(row[0], BO3ZombiesLocationCate
 Shadows_Quest_ApothiconSword_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.Shadows_Quest_ApothiconSword_EnterCode, 3110),
     (LocationName.Shadows_Quest_ApothiconSword_CollectSword, 3111),
+]]
+
+Shadows_Quest_ApothiconSword_Upgrade_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.Shadows_Quest_ApothiconSword_CollectUpgradedSword, 3112),
 ]]
+
 
 Shadows_Quest_MainEE_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.Shadows_Quest_MainEE_FindNerosBook, 3200),
@@ -151,6 +173,19 @@ Shadows_Quest_MainEE_Locations = [LocationData(row[0], BO3ZombiesLocationCategor
 Shadows_Quest_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.Shadows_Quest_AllSpareChangeCollected, 3500),
     (LocationName.Shadows_Quest_LaundryTicket, 3501),
+    (LocationName.Shadows_Quest_DoughnutMines, 3513),
+]]
+
+# Shadows_Widows_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+#     (LocationName.Shadows_Quest_GrowGum, 3510),
+# ]]
+
+# Shadows_RayGun_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+#     (LocationName.Shadows_Quest_MargwaHead, 3511),
+# ]]
+
+Shadows_LilArnies_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Shadows_Quest_LilArnies_Upgrade, 3512),
 ]]
 
 Shadows_Craftable_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.MISC, row[1]) for row in [
@@ -165,6 +200,11 @@ Shadows_Craftable_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.M
     (LocationName.Shadows_Craftable_ShieldPartClamp, 3322),
 ]]
 
+Shadows_Quest_Music_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Shadows_Quest_Music_SnakeskinBoots, 3400),
+    (LocationName.Shadows_Quest_Music_ColdHardCash, 3401),
+]]
+
 # Zetsubou No Shima
 
 Zetsubou_Round_Locations = gen_map_round_locations(Maps.Zetsubou_Map_String, 99)
@@ -174,6 +214,7 @@ Zetsubou_Quest_MainQuest_Locations = [LocationData(row[0], BO3ZombiesLocationCat
     (LocationName.Zetsubou_Quest_MainQuest_Bunker, 5101),
     (LocationName.Zetsubou_Quest_MainQuest_Power, 5102),
     (LocationName.Zetsubou_Quest_MainQuest_Pap, 5103),
+    (LocationName.Zetsubou_Quest_AllSpareChangeCollected, 5109),
 ]]
 
 Zetsubou_Quest_MainEE_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
@@ -189,6 +230,9 @@ Zetsubou_Quest_KT4_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.
     (LocationName.Zetsubou_Quest_KT4_Vial, 5120),
     (LocationName.Zetsubou_Quest_KT4_Flower, 5121),
     (LocationName.Zetsubou_Quest_KT4_Spider, 5122),
+]]
+
+Zetsubou_Quest_Masamune_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.Zetsubou_Quest_Masamune_Vial, 5123),
     (LocationName.Zetsubou_Quest_Masamune_Flower, 5124),
     (LocationName.Zetsubou_Quest_Masamune_Spider, 5125),
@@ -216,6 +260,10 @@ Zetsubou_Craftable_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.
     (LocationName.Zetsubou_Craftable_ShieldPartClamp, 5205),
 ]]
 
+Zetsubou_Quest_Music_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Zetsubou_Quest_Music_DeadFlowers, 5300),
+]]
+
 # Gorod Krovi
 
 GorodKrovi_Round_Locations = gen_map_round_locations(Maps.GorodKrovi_Map_String, 99)
@@ -225,6 +273,7 @@ GorodKrovi_Quest_MainQuest_Locations = [LocationData(row[0], BO3ZombiesLocationC
     (LocationName.GorodKrovi_Quest_MainQuest_Dragonride_Codes, 4101),
     (LocationName.GorodKrovi_Quest_MainQuest_Dragonride_Map, 4102),
     (LocationName.GorodKrovi_Quest_MainQuest_Dragonride_Repaired, 4103),
+    (LocationName.GorodKrovi_Quest_AllSpareChangeCollected, 4109),
 ]]
 
 GorodKrovi_Quest_MainEE_Locations =  [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
@@ -241,18 +290,25 @@ GorodKrovi_Quest_MainEE_Locations =  [LocationData(row[0], BO3ZombiesLocationCat
 
 GorodKrovi_Quest_DragonStrikes = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.GorodKrovi_Quest_Dragonstrikes_Acquire, 4120),
+]]
+
+GorodKrovi_Quest_DragonStrikes_Upgraded = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.GorodKrovi_Quest_Dragonstrikes_Upgrade, 4121),
 ]]
 
-GorodKrovi_Quest_DragonGauntlets = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+GorodKrovi_Quest_DragonGauntlets_Early = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.GorodKrovi_Quest_DragonGauntlets_AcquireEgg, 4130),
     (LocationName.GorodKrovi_Quest_DragonGauntlets_WarmEgg, 4131),
     (LocationName.GorodKrovi_Quest_DragonGauntlets_C1Napalm, 4132),
+]]
+
+GorodKrovi_Quest_DragonGauntlets_Late = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.GorodKrovi_Quest_DragonGauntlets_C2Collatoral, 4133),
     (LocationName.GorodKrovi_Quest_DragonGauntlets_C3Knife, 4134),
     (LocationName.GorodKrovi_Quest_DragonGauntlets_IncubateEgg, 4135),
     (LocationName.GorodKrovi_Quest_DragonGauntlets_HatchEgg, 4136),
 ]]
+
 
 GorodKrovi_Quest_TiamatsMaw = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.GorodKrovi_Quest_TiamatsMaw_Kills, 4140),
@@ -280,6 +336,11 @@ GorodKrovi_Craftable_Locations = [LocationData(row[0], BO3ZombiesLocationCategor
     (LocationName.GorodKrovi_Craftable_ShieldPartClamp, 4202),
 ]]
 
+GorodKrovi_Quest_Music_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.GorodKrovi_Quest_Music_DeadEnded, 4300),
+    (LocationName.GorodKrovi_Quest_Music_AceOfSpades, 4301),
+]]
+
 # Revelations
 
 Revelations_Round_Locations = gen_map_round_locations(Maps.Revelations_Map_String, 99)
@@ -288,6 +349,7 @@ Revelations_Quest_MainQuest_Locations = [LocationData(row[0], BO3ZombiesLocation
     (LocationName.Revelations_Quest_MainQuest_Portal, 6100),
     (LocationName.Revelations_Quest_MainQuest_AllPortals, 6101),
     (LocationName.Revelations_Quest_MainQuest_PackAPunch, 6102),
+    (LocationName.Revelations_Quest_AllSpareChangeCollected, 6109),
 ]]
 
 Revelations_Quest_MainEE_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
@@ -335,25 +397,29 @@ Revelations_Quest_Weapons = [LocationData(row[0], BO3ZombiesLocationCategory.QUE
     (LocationName.Revelations_Quest_Arnies, 6331),
 ]]
 
+Revelations_Quest_Music_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Revelations_Quest_Music_TheGift, 6400),
+]]
+
 early_locations =  [LocationData(row[0], row[1], row[2]) for row in [
     (LocationName.RepairWindows_5, BO3ZombiesLocationCategory.MISC, 9001),
 ]]
 
 all_locations = (
-    TheGiant_Round_Locations 
+    TheGiant_Round_Locations + TheGiant_Quest_Locations + TheGiant_Pap + TheGiant_MonkeyBomb + TheGiant_Quest_Music_Locations
     + Castle_Round_Locations + Castle_Quest_Locations + Castle_Quest_Music_Locations + Castle_Craftable_Locations 
     + Castle_Quest_ElementalBow_Fire_Locations + Castle_Quest_ElementalBow_Void_Locations + Castle_Quest_ElementalBow_Storm_Locations + Castle_Quest_ElementalBow_Wolf_Locations
     + Castle_Quest_MainEE_Locations
-    + Shadows_Round_Locations + Shadows_Quest_Locations + Shadows_Craftable_Locations
-    + Shadows_Quest_MainQuest_Locations + Shadows_Quest_ApothiconSword_Locations 
+    + Shadows_Round_Locations + Shadows_Quest_Locations + Shadows_Craftable_Locations + Shadows_Quest_Music_Locations + Shadows_LilArnies_Locations
+    + Shadows_Quest_MainQuest_Locations + Shadows_Quest_ApothiconSword_Locations + Shadows_Quest_ApothiconSword_Upgrade_Locations
     + Shadows_Quest_MainEE_Locations
-    + Zetsubou_Round_Locations + Zetsubou_Craftable_Locations
+    + Zetsubou_Round_Locations + Zetsubou_Craftable_Locations + Zetsubou_Quest_Music_Locations
     + Zetsubou_Quest_MainQuest_Locations + Zetsubou_Quest_MainEE_Locations + Zetsubou_Quest_Challenges_Locations
-    + Zetsubou_Quest_KT4_Locations + Zetsubou_Quest_Skull_Locations
-    + GorodKrovi_Round_Locations + GorodKrovi_Craftable_Locations + GorodKrovi_Quest_MainEE_Locations + GorodKrovi_Quest_SideEE
-    + GorodKrovi_Quest_DragonStrikes + GorodKrovi_Quest_DragonGauntlets + GorodKrovi_Quest_Challenges + GorodKrovi_Quest_TiamatsMaw
+    + Zetsubou_Quest_KT4_Locations + Zetsubou_Quest_Masamune_Locations + Zetsubou_Quest_Skull_Locations
+    + GorodKrovi_Round_Locations + GorodKrovi_Craftable_Locations + GorodKrovi_Quest_MainEE_Locations + GorodKrovi_Quest_SideEE + GorodKrovi_Quest_Music_Locations
+    + GorodKrovi_Quest_DragonStrikes + GorodKrovi_Quest_DragonStrikes_Upgraded + GorodKrovi_Quest_DragonGauntlets_Early + GorodKrovi_Quest_DragonGauntlets_Late + GorodKrovi_Quest_Challenges + GorodKrovi_Quest_TiamatsMaw
     + GorodKrovi_Quest_MainQuest_Locations
-    + Revelations_Round_Locations + Revelations_Craftable_Locations
+    + Revelations_Round_Locations + Revelations_Craftable_Locations + Revelations_Quest_Music_Locations
     + Revelations_Quest_MainQuest_Locations + Revelations_Quest_MainEE_Locations + Revelations_Quest_Challenges
     + Revelations_Quest_SideEE_Locations + Revelations_Quest_Weapons
     + early_locations)
