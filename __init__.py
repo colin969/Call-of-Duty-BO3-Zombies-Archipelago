@@ -101,6 +101,7 @@ class BO3ZombiesWorld(World):
         pass
 
     def create_regions(self):
+        is_ut = getattr(self.multiworld, "generation_is_fake", False)
         # Create list of already unlocked maps
         locked_maps = []
         if self.options.map_shadows_enabled:
@@ -264,7 +265,9 @@ class BO3ZombiesWorld(World):
                 (Locations.Castle_Quest_ElementalBow_Void_Locations, ItemName.Castle_Victory_ElementalBow_Void),
             ]
             bow_count = min(self.options.castle_bow_count.value, len(bow_pairs))
-            bow_pairs = self.random.sample(bow_pairs, bow_count)
+            # Make sure universal tracker sees all 4 location groups
+            if not is_ut:
+                bow_pairs = self.random.sample(bow_pairs, bow_count)
             for bow in bow_pairs:
                 all_locations.extend([loc.name for loc in bow[0]])
                 self.weapon_quest_items.append(bow[1])
