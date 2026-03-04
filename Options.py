@@ -206,6 +206,38 @@ class AttachmentsSightWeight(Range):
     range_start = 0
     range_end = 100
 
+class CamoEnabled(Toggle):
+    display_name = "Camo - Base Weapon Randomized"
+    default = True
+
+class CamoMixed(Toggle):
+    display_name = "Camo - Base Weapon Can Have Upgraded Camo"
+    default = False
+
+class CamoPapEnabled(Toggle):
+    display_name = "Camo - Upgraded Weapon Randomized"
+    default = True
+
+class CamoPapMixed(Toggle):
+    display_name = "Camo - Upgraded Weapon Can Have Base Camo"
+    default = False
+
+class CamoJoined(Toggle):
+    display_name = "Camo - Base Weapon will match Upgraded Weapon"
+    default = False
+
+class ReticleEnabled(Toggle):
+    display_name = "Scope Reticle - Base Weapon Randomized"
+    default = False
+
+class ReticlePapEnabled(Toggle):
+    display_name = "Scope Reticle - Upgraded Weapon Randomized"
+    default = True
+
+class ReticleJoined(Toggle):
+    display_name = "Scope Reticle - Base Weapon will match Upgraded Weapon"
+    default = False
+
 class DeathlinkEnabled(Toggle):
     """Deathlink Enabled. This can be disabled during the AP, but not during it."""
     display_name = "Deathlink Enabled"
@@ -272,6 +304,14 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     music_ee_enabled: MusicEasterEggsEnabled
     attachments_randomized: AttachmentsEnabled
     attachments_sight_weight: AttachmentsSightWeight
+    camo_randomized: CamoEnabled
+    camo_mixed: CamoMixed
+    camo_pap_randomized: CamoPapEnabled
+    camo_pap_mixed: CamoPapMixed
+    camo_joined: CamoJoined
+    reticle_randomized: ReticleEnabled
+    reticle_pap_randomized: ReticlePapEnabled
+    reticle_joined: ReticleJoined
     deathlink_enabled: DeathlinkEnabled
     deathlink_send_mode: DeathlinkSendMode
     deathlink_recv_mode: DeathlinkRecvMode
@@ -288,8 +328,18 @@ bo3_option_groups = [
         RoundLocationFrequency,
         EasterEggsEnabled,
         MusicEasterEggsEnabled,
+    ]),
+    OptionGroup("Weapons", [
         AttachmentsEnabled,
         AttachmentsSightWeight,
+        CamoEnabled,
+        CamoMixed,
+        CamoPapEnabled,
+        CamoPapMixed,
+        CamoJoined,
+        ReticleEnabled,
+        ReticlePapEnabled,
+        ReticleJoined
     ]),
     OptionGroup("Goal Conditions", [
         GoalCondition,

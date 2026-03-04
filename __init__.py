@@ -312,7 +312,7 @@ class BO3ZombiesWorld(World):
             # Weapon Quest - Add available bows
             if self.options.goal_condition == 1:
                 for bow in bow_pairs:
-                    self.multiworld.get_location(bow[0][-1].name, self.player).place_locked_item(bow[1])
+                    self.multiworld.get_location(bow[0][-1].name, self.player).place_locked_item(self.create_item(bow[1]))
             
             boss_fight_locations = []
             if add_ee_checks:
@@ -840,6 +840,14 @@ class BO3ZombiesWorld(World):
             "rolled_bows": self.rolled_bows,
             "attachments_randomized": bool(options.attachments_randomized),
             "attachments_sight_weight": int(options.attachments_sight_weight),
+            "camo_randomized": bool(options.camo_randomized),
+            "camo_mixed": bool(options.camo_mixed),
+            "camo_pap_randomized": bool(options.camo_pap_randomized),
+            "camo_pap_mixed": bool(options.camo_pap_mixed),
+            "camo_joined": bool(options.camo_joined),
+            "reticle_randomized": bool(options.reticle_randomized),
+            "reticle_pap_randomized": bool(options.reticle_pap_randomized),
+            "reticle_joined": bool(options.reticle_joined),
             "deathlink_enabled": bool(options.deathlink_enabled),
             "deathlink_send_mode": int(options.deathlink_send_mode),
             "deathlink_recv_mode": int(options.deathlink_recv_mode),
