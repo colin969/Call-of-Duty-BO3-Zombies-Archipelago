@@ -419,6 +419,8 @@ Victory_Items = [ItemData(row, BO3ZombiesItemCategory.VICTORY) for row in [
     Maps.Shadows_Map_String + ItemName.Victory,
     Maps.Shadows_Map_String + ItemName.EE_Victory,
     Maps.The_Giant_Map_String + ItemName.Victory,
+    # Only used in emergency
+    Maps.The_Giant_Map_String + ItemName.EE_Victory,
     Maps.Castle_Map_String + ItemName.Victory,
     Maps.Castle_Map_String + ItemName.EE_Victory,
     Maps.Zetsubou_Map_String + ItemName.Victory,
