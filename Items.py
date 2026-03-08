@@ -228,9 +228,34 @@ Shadows_MysteryBox_Regular = [ItemData(ItemName.MysteryBox + row, BO3ZombiesItem
 
 Zetsubou_Shield = gen_map_specific_list(Maps.Zetsubou_Map_String, ShieldParts)
 
-Zetsubou_Machines = []
+Zetsubou_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
+    ItemName.Machine_Juggernog,
+    ItemName.Machine_QuickRevive,
+    ItemName.Machine_SpeedCola,
+    ItemName.Machine_DoubleTap,
+    ItemName.Machine_MuleKick,
+    ItemName.Machine_StaminUp,
+    ItemName.Machine_DeadShot,
+    ItemName.Machine_ElectricCherry,
+    ItemName.Machine_WidowsWine,
+]]
 
-Zetsubou_Wallbuys = []
+Zetsubou_Wallbuys = [ItemData(ItemName.Wallbuy + row, BO3ZombiesItemCategory.WALLBUY) for row in[
+    ItemName.Weapon_RK5,
+    ItemName.Weapon_Sheiva,
+    ItemName.Weapon_Pharo,
+    ItemName.Weapon_LCAR,
+    ItemName.Weapon_KRM,
+    ItemName.Weapon_Kuda,
+    ItemName.Weapon_VMP,
+    ItemName.Weapon_Vesper,
+    ItemName.Weapon_Argus,
+    ItemName.Weapon_KN44,
+    ItemName.Weapon_ICR,
+    ItemName.Weapon_M8A7,
+    ItemName.Weapon_HVK,
+    ItemName.Weapon_BowieKnife,
+]]
 
 Zetsubou_Machines_Specific = gen_map_specific_list(Maps.Zetsubou_Map_String, Zetsubou_Machines)
 Zetsubou_Wallbuys_Specific = gen_map_specific_list(Maps.Zetsubou_Map_String, Zetsubou_Wallbuys)
