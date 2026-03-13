@@ -216,7 +216,7 @@ class BO3ZombiesWorld(World):
                 lambda state: (
                     state.has(ItemName.Progressive_PackAPunch, self.player) and
                     (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_half) if self.options.mystery_box_regular_items else True) and
-                    (state.has_all({item.name for item in Items.Shadows_Shield}, self.player) if self.options.randomized_shield_parts else True) and
+                    state.has_all({item.name for item in Items.Shadows_Shield}, self.player) and
                     (state.has_all({item.name for item in Items.Shadows_MysteryBox}, self.player) if self.options.mystery_box_special_items else True)
                 )
             )
@@ -313,12 +313,16 @@ class BO3ZombiesWorld(World):
                 ee_locs = [loc.name for loc in Locations.Castle_Quest_MainEE_Locations[:4]]
 
             main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Castle_MainEE, ee_locs)
-            main_ee_region_requirements = [ItemName.Progressive_PackAPunch]
-            if self.options.randomized_shield_parts:
-                main_ee_region_requirements += [item.name for item in Items.Castle_Shield]
-            if self.options.mystery_box_special_items:
-                main_ee_region_requirements += [item.name for item in Items.Castle_MysteryBox]
-            menu_region.connect(main_ee_region, rule = lambda state: state.has_all(main_ee_region_requirements, self.player))
+            create_entrance(
+                main_region, 
+                main_ee_region, 
+                lambda state: (
+                    state.has(ItemName.Progressive_PackAPunch, self.player) and
+                    (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_half) if self.options.mystery_box_regular_items else True) and
+                    state.has_all({item.name for item in Items.Castle_Shield}, self.player) and
+                    (state.has_all({item.name for item in Items.Castle_MysteryBox}, self.player) if self.options.mystery_box_special_items else True)
+                )
+            )
 
             # Weapon Quest - Add available bows
             if self.options.goal_condition == 1:
@@ -370,7 +374,7 @@ class BO3ZombiesWorld(World):
                 lambda state: (
                     state.has(ItemName.Progressive_PackAPunch, self.player) and
                     (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_half) if self.options.mystery_box_regular_items else True) and
-                    (state.has_all({item.name for item in Items.Zetsubou_Shield}, self.player) if self.options.randomized_shield_parts else True) and
+                    state.has_all({item.name for item in Items.Zetsubou_Shield}, self.player) and
                     (state.has_all({item.name for item in Items.Zetsubou_MysteryBox}, self.player) if self.options.mystery_box_special_items else True)
                 )
             )
@@ -391,25 +395,34 @@ class BO3ZombiesWorld(World):
                 all_locations.extend([loc.name for loc in Locations.GorodKrovi_Quest_SideEE[1:]])
             else:
                 all_locations.extend([loc.name for loc in Locations.GorodKrovi_Quest_SideEE])
-            # Challenges 2 and 4 are locked behind other regions
-            all_locations.append(Locations.GorodKrovi_Quest_Challenges[0].name)
-            all_locations.append(Locations.GorodKrovi_Quest_Challenges[2].name)
-            all_locations.extend([loc.name for loc in Locations.GorodKrovi_Quest_DragonGauntlets_Early])
-            all_locations.extend([loc.name for loc in Locations.GorodKrovi_Quest_DragonStrikes])
             if self.options.music_ee_enabled:
                 all_locations.extend([loc.name for loc in Locations.GorodKrovi_Quest_Music_Locations])
-
-            ee_locs = []
-            if add_ee_checks:
-                ee_locs = [loc.name for loc in Locations.GorodKrovi_Quest_MainEE_Locations]
 
             main_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_Trenches, all_locations)
             self.multiworld.regions.append(main_region)
             # create_entrance(menu_region, main_region, Has(ItemName.Map_GorodKrovi))
             create_entrance(menu_region, main_region, lambda state: state.has(ItemName.Map_GorodKrovi, self.player))
 
+
+            bunker_locs = [loc.name for loc in Locations.GorodKrovi_Quest_DragonStrikes]
+            bunker_locs.extend([loc.name for loc in Locations.GorodKrovi_Quest_DragonGauntlets_Early])
+            bunker_locs.append(Locations.GorodKrovi_Quest_Challenges[0].name)
+            bunker_locs.append(Locations.GorodKrovi_Quest_Challenges[2].name)
+            bunker_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_Bunker, bunker_locs)
+            create_entrance(
+                main_region,
+                bunker_region,
+                lambda state: (
+                    state.has_all({item.name for item in Items.GorodKrovi_Craftables_Dragonride}, self.player)
+                )
+            )
+
             #self.add_quarter_round_region(main_region, RegionName.Gorod_Quarter_Weapons, quarter_locs)
             #self.add_half_round_region(main_region, RegionName.Gorod_Half_Weapons, half_locs)
+
+            ee_locs = []
+            if add_ee_checks:
+                ee_locs = [loc.name for loc in Locations.GorodKrovi_Quest_MainEE_Locations]
 
             main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_MainEE, ee_locs)
             # rule = Has(ItemName.Progressive_PackAPunch) & HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.mystery_box_regular_items_half)
@@ -419,12 +432,12 @@ class BO3ZombiesWorld(World):
             #     rule = rule & HasAll(*[item.name for item in Items.GorodKrovi_MysteryBox])
             # create_entrance(main_region, main_ee_region, rule)
             create_entrance(
-                main_region, 
+                bunker_region, 
                 main_ee_region, 
                 lambda state: (
                     state.has(ItemName.Progressive_PackAPunch, self.player) and
                     (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_half) if self.options.mystery_box_regular_items else True) and
-                    (state.has_all({item.name for item in Items.GorodKrovi_Shield}, self.player) if self.options.randomized_shield_parts else True) and
+                    state.has_all({item.name for item in Items.GorodKrovi_Shield}, self.player) and
                     (state.has_all({item.name for item in Items.GorodKrovi_MysteryBox}, self.player) if self.options.mystery_box_special_items else True)
                 )
             )
@@ -436,11 +449,8 @@ class BO3ZombiesWorld(World):
             )
             shield_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_Shield, shield_locations)
             self.multiworld.regions.append(shield_region)
-            if self.options.randomized_shield_parts:
-                # create_entrance(main_region, shield_region, HasAll(*[item.name for item in Items.GorodKrovi_Shield]))
-                create_entrance(main_region, shield_region, lambda state: state.has_all([item.name for item in Items.GorodKrovi_Shield], self.player))
-            else:
-                create_entrance(main_region, shield_region)
+            # create_entrance(main_region, shield_region, HasAll(*[item.name for item in Items.GorodKrovi_Shield]))
+            create_entrance(main_region, shield_region, lambda state: state.has_all([item.name for item in Items.GorodKrovi_Shield], self.player))
 
             # Monkey Bomb upgrade location - Requires shield as well as monkey bombs in box
             monkeybomb_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_MonkeyBombs, [Locations.GorodKrovi_Quest_Challenges[3].name])
@@ -456,7 +466,7 @@ class BO3ZombiesWorld(World):
             upgraded_locs += [loc.name for loc in Locations.GorodKrovi_Quest_DragonGauntlets_Late]
             upgraded_weapon_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_Upgraded, upgraded_locs)
             # create_entrance(main_region, upgraded_weapon_region, HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.mystery_box_regular_items_half))
-            create_entrance(main_region, upgraded_weapon_region, lambda state: (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_half) if self.options.mystery_box_regular_items else True))
+            create_entrance(bunker_region, upgraded_weapon_region, lambda state: (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_half) if self.options.mystery_box_regular_items else True))
 
         if self.options.map_revelations_enabled:
             all_locations = []
@@ -494,7 +504,7 @@ class BO3ZombiesWorld(World):
                 lambda state: (
                     state.has(ItemName.Progressive_PackAPunch, self.player) and
                     (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_half) if self.options.mystery_box_regular_items else True) and
-                    (state.has_all({item.name for item in Items.Revelations_Shield}, self.player) if self.options.randomized_shield_parts else True) and
+                    state.has_all({item.name for item in Items.Revelations_Shield}, self.player) and
                     (state.has_all({item.name for item in Items.Revelations_MysteryBox}, self.player) if self.options.mystery_box_special_items else True)
                 )
             )
@@ -533,6 +543,7 @@ class BO3ZombiesWorld(World):
             Items.BO3ZombiesItemCategory.SPECIAL_WEAPON,
             Items.BO3ZombiesItemCategory.CRAFTABLE,
             Items.BO3ZombiesItemCategory.MAP_UNLOCK,
+            Items.BO3ZombiesItemCategory.SHOP_ITEMS,
         }
 
         # TODO: do a getProgressiveItems list instead
@@ -590,6 +601,12 @@ class BO3ZombiesWorld(World):
         # Add locked map items
         enabled_items += list(map(self.create_item, self.cod_locked_maps))
 
+        # Add progressive starting items
+        if self.options.progressive_starting_points > 0:
+            num_items = math.floor(self.options.progressive_starting_points / 500)
+            for i in range(num_items):
+                enabled_items.append(Items.Progressive_StartingPoints500)
+
         # 2 Progressive Pap items (turn on + alternate ammo types)
         enabled_items.extend([Items.Progressive_PackAPunch, Items.Progressive_PackAPunch])
 
@@ -597,6 +614,20 @@ class BO3ZombiesWorld(World):
         if self.options.progressive_perk_limit_increase > 0:
             for i in range(self.options.progressive_perk_limit_increase):
                 enabled_items += [Items.Progressive_PerkLimitIncrease]
+
+        # Add shop items
+        if self.options.shop_perk_tokens > 0:
+            for i in range(self.options.shop_perk_tokens):
+                enabled_items.append(Items.Shop_Items[0])
+        if self.options.shop_mega_gums > 0:
+            for i in range(self.options.shop_mega_gums):
+                enabled_items.append(Items.Shop_Items[1])
+        if self.options.shop_rare_gums > 0:
+            for i in range(self.options.shop_rare_gums):
+                enabled_items.append(Items.Shop_Items[2])
+        if self.options.shop_legendary_gums > 0:
+            for i in range(self.options.shop_legendary_gums):
+                enabled_items.append(Items.Shop_Items[3])
 
         # Add machines to pool
         if self.options.map_specific_machines:
@@ -665,6 +696,10 @@ class BO3ZombiesWorld(World):
             map_list.append((Maps.Shadows_Map_String, RegionName.Shadows_Alleyway, RegionName.Shadows_Half_Weapons, RegionName.Shadows_Quarter_Weapons, Locations.Shadows_Round_Locations))
             if self.options.randomized_shield_parts:
                 enabled_items += Items.Shadows_Shield
+            else:
+                self.multiworld.get_location(LocationName.Shadows_Craftable_ShieldPartDoor, self.player).place_locked_item(self.create_item(Items.Shadows_Shield[0].name))
+                self.multiworld.get_location(LocationName.Shadows_Craftable_ShieldPartDolly, self.player).place_locked_item(self.create_item(Items.Shadows_Shield[1].name))
+                self.multiworld.get_location(LocationName.Shadows_Craftable_ShieldPartClamp, self.player).place_locked_item(self.create_item(Items.Shadows_Shield[2].name))
             enabled_items += Items.Shadows_Craftables
         if self.options.map_the_giant_enabled:
             map_list.append((Maps.The_Giant_Map_String, RegionName.TheGiant_Courtyard, RegionName.TheGiant_Half_Weapons, RegionName.TheGiant_Quarter_Weapons, Locations.TheGiant_Round_Locations))
@@ -672,21 +707,42 @@ class BO3ZombiesWorld(World):
             map_list.append((Maps.Castle_Map_String, RegionName.Castle_Gondola, RegionName.Castle_Half_Weapons, RegionName.Castle_Quarter_Weapons, Locations.Castle_Round_Locations))
             if self.options.randomized_shield_parts:
                 enabled_items += Items.Castle_Shield
+            else:
+                self.multiworld.get_location(LocationName.Castle_Craftable_ShieldPartDoor, self.player).place_locked_item(self.create_item(Items.Castle_Shield[0].name))
+                self.multiworld.get_location(LocationName.Castle_Craftable_ShieldPartDolly, self.player).place_locked_item(self.create_item(Items.Castle_Shield[1].name))
+                self.multiworld.get_location(LocationName.Castle_Craftable_ShieldPartClamp, self.player).place_locked_item(self.create_item(Items.Castle_Shield[2].name))
             enabled_items += Items.Castle_Craftables
         if self.options.map_zetsubou_enabled:
             map_list.append((Maps.Zetsubou_Map_String, RegionName.Zetsubou_Beach, RegionName.Zetsubou_Half_Weapons, RegionName.Zetsubou_Quarter_Weapons, Locations.Zetsubou_Round_Locations))
             if self.options.randomized_shield_parts:
                 enabled_items += Items.Zetsubou_Shield
+            else:
+                self.multiworld.get_location(LocationName.Zetsubou_Craftable_ShieldPartDoor, self.player).place_locked_item(self.create_item(Items.Zetsubou_Shield[0].name))
+                self.multiworld.get_location(LocationName.Zetsubou_Craftable_ShieldPartDolly, self.player).place_locked_item(self.create_item(Items.Zetsubou_Shield[1].name))
+                self.multiworld.get_location(LocationName.Zetsubou_Craftable_ShieldPartClamp, self.player).place_locked_item(self.create_item(Items.Zetsubou_Shield[2].name))
             enabled_items += Items.Zetsubou_Craftables_Gasmask
         if self.options.map_gorod_enabled:
             map_list.append((Maps.GorodKrovi_Map_String, RegionName.Gorod_Trenches, RegionName.Gorod_Half_Weapons, RegionName.Gorod_Quarter_Weapons, Locations.GorodKrovi_Round_Locations))
             if self.options.randomized_shield_parts:
                 enabled_items += Items.GorodKrovi_Shield
-            # enabled_items += Items.GorodKrovi_Craftables_Dragonride
+            else:
+                self.multiworld.get_location(LocationName.GorodKrovi_Craftable_ShieldPartDoor, self.player).place_locked_item(self.create_item(Items.GorodKrovi_Shield[0].name))
+                self.multiworld.get_location(LocationName.GorodKrovi_Craftable_ShieldPartDolly, self.player).place_locked_item(self.create_item(Items.GorodKrovi_Shield[1].name))
+                self.multiworld.get_location(LocationName.GorodKrovi_Craftable_ShieldPartClamp, self.player).place_locked_item(self.create_item(Items.GorodKrovi_Shield[2].name))
+            if self.options.randomized_gorod_dragonride_parts:
+                enabled_items += Items.GorodKrovi_Craftables_Dragonride
+            else:
+                self.multiworld.get_location(LocationName.GorodKrovi_Quest_MainQuest_Dragonride_Transmitter, self.player).place_locked_item(self.create_item(ItemName.GorodKrovi_Craftable_Dragonride_Transmitter))
+                self.multiworld.get_location(LocationName.GorodKrovi_Quest_MainQuest_Dragonride_Codes, self.player).place_locked_item(self.create_item(ItemName.GorodKrovi_Craftable_Dragonride_Codes))
+                self.multiworld.get_location(LocationName.GorodKrovi_Quest_MainQuest_Dragonride_Map, self.player).place_locked_item(self.create_item(ItemName.GorodKrovi_Craftable_Dragonride_Map))
         if self.options.map_revelations_enabled:
             map_list.append((Maps.Revelations_Map_String, RegionName.Revelations_House, RegionName.Revelations_Half_Weapons, RegionName.Revelations_Quarter_Weapons, Locations.Revelations_Round_Locations))
             if self.options.randomized_shield_parts:
                 enabled_items += Items.Revelations_Shield
+            else:
+                self.multiworld.get_location(LocationName.Revelations_Craftable_ShieldPartDoor, self.player).place_locked_item(self.create_item(Items.Revelations_Shield[0].name))
+                self.multiworld.get_location(LocationName.Revelations_Craftable_ShieldPartDolly, self.player).place_locked_item(self.create_item(Items.Revelations_Shield[1].name))
+                self.multiworld.get_location(LocationName.Revelations_Craftable_ShieldPartClamp, self.player).place_locked_item(self.create_item(Items.Revelations_Shield[2].name))
 
         enabled_items += self.mystery_box_special_items
         enabled_items += self.mystery_box_regular_items
@@ -911,7 +967,6 @@ class BO3ZombiesWorld(World):
             "map_specific_wallbuys": bool(options.map_specific_wallbuys),
             "special_rounds_enabled": bool(options.special_rounds_enabled),
             "perk_limit_default_modifier": int(options.perk_limit_default_modifier),
-            "randomized_shield_parts": bool(options.randomized_shield_parts),
             "mystery_box_special_items": bool(options.mystery_box_special_items),
             "mystery_box_regular_items": bool(options.mystery_box_regular_items),
             "difficulty_gorod_egg_cooldown": bool(options.difficulty_gorod_egg_cooldown),

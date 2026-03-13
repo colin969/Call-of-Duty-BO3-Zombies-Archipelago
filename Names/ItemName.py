@@ -116,6 +116,12 @@ Weapon_LilArnies = "Li'l Arnies"
 Weapon_Thundergun = "Thundergun"
 Weapon_Ragnaroks = "Ragnarok DG-4s"
 
+# Shop Tokens
+Shop_PerkToken = "Shop - Perk Token"
+Shop_MegaGumToken = "Shop - Mega Gobblegum Token"
+Shop_RareGumToken = "Shop - Rare Mega Gobblegum Token"
+Shop_LegendaryGumToken = "Shop - Legendary Mega Gobblegum Token"
+
 # Traps
 
 Trap_ThirdPersonMode = "Trap - Third Person Mode"
@@ -137,6 +143,7 @@ Gift_Free_Perk_Powerup =  "Gift - Free Perk Powerup"
 
 Progressive_PerkLimitIncrease = "Progressive - Perk Limit Increase"
 Progressive_PackAPunch = "Progressive - Pack-A-Punch Machine"
+Progressive_StartingPoints500 = "Progressive - 500 Starting Points"
 
 # Shield Parts
 ShieldPart_Door = "Shield Part - Door"

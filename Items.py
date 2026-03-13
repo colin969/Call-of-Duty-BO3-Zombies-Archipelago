@@ -23,6 +23,7 @@ class BO3ZombiesItemCategory():
     CRAFTABLE = "Craftables"
     REGULAR_WEAPON = "Regular Weapons"
     MAP_UNLOCK = "Map Unlocks"
+    SHOP_ITEMS = "Shop Items"
 
 
 class ItemData(typing.NamedTuple):
@@ -410,10 +411,12 @@ Revelations_MysteryBox_Regular = [ItemData(ItemName.MysteryBox + row, BO3Zombies
 
 Progressive_PerkLimitIncrease = ItemData(ItemName.Progressive_PerkLimitIncrease, BO3ZombiesItemCategory.PROGRESSIVE)
 Progressive_PackAPunch = ItemData(ItemName.Progressive_PackAPunch, BO3ZombiesItemCategory.PROGRESSIVE)
+Progressive_StartingPoints500 = ItemData(ItemName.Progressive_StartingPoints500, BO3ZombiesItemCategory.PROGRESSIVE)
 
 Progressive_Items = [
     Progressive_PerkLimitIncrease,
     Progressive_PackAPunch,
+    Progressive_StartingPoints500,
 ]
 
 # Point Drop Items
@@ -493,8 +496,16 @@ Map_Unlocks = [ItemData(row, BO3ZombiesItemCategory.MAP_UNLOCK) for row in [
     ItemName.Map_The_Giant,
 ]]
 
+# Shop items
+Shop_Items = [ItemData(row, BO3ZombiesItemCategory.SHOP_ITEMS) for row in [
+    ItemName.Shop_PerkToken,
+    ItemName.Shop_MegaGumToken,
+    ItemName.Shop_RareGumToken,
+    ItemName.Shop_LegendaryGumToken,
+]]
+
 all_items = (
-    Progressive_Items + [Points_1500] + Weapon_Victory_Items + Victory_Items + Gift_Items + Trap_Items + Misc_Items + Map_Unlocks
+    Shop_Items + Progressive_Items + [Points_1500] + Weapon_Victory_Items + Victory_Items + Gift_Items + Trap_Items + Misc_Items + Map_Unlocks
     # The Giant
     + The_Giant_Machines + The_Giant_Machines_Specific
     + The_Giant_Wallbuys + The_Giant_Wallbuys_Specific

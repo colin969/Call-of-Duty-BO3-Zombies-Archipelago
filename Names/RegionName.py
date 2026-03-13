@@ -27,6 +27,7 @@ Zetsubou_Quarter_Weapons = "(Zetsubou No Shima) Quarter Weapons"
 Zetsubou_Half_Weapons = "(Zetsubou No Shima) Half Weapons"
 
 Gorod_Trenches = "(Gorod Krovi) Trenches"
+Gorod_Bunker = "(Gorod Krovi) Bunker"
 Gorod_Shield = "(Gorod Krovi) Shield Required"
 Gorod_Upgraded = "(Gorod Krovi) Upgraded Weapons"
 Gorod_MonkeyBombs = "(Gorod Krovi) Monkey Bombs Required"

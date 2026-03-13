@@ -43,6 +43,11 @@ class RandomizeShieldParts(Toggle):
     display_name = "Randomize Shield Parts"
     default = True
 
+class RandomizeGorodDragonrideParts(Toggle):
+    """Shuffles the parts to unlock the pack-a-punch into the item pool"""
+    display_name = "Randomized Gorod Dragonride Parts"
+    default = False
+
 class MysteryBoxSpecialItems(Toggle):
     """Shuffles special Mystery Box item unlocks (Wonder weapons, special equipment, specialist weapons) into the item pool"""
     display_name = "Mystery Box - Special Items"
@@ -88,6 +93,12 @@ class ProgressivePerkLimitIncrease(Range):
     default = 4
     range_start = 0
     range_end = 6
+
+class ProgressiveStartingPoints(Range):
+    """How many extra starting points to add into the pool. This will be rounded to 500"""
+    default = 2500
+    range_start = 0
+    range_end = 10000
 
 class MapSpecificWallbuysEnabled(Toggle):
     """Enables map specific wallbuy items"""
@@ -262,6 +273,16 @@ class DeathlinkRecvMode(Choice):
     option_all_players_down = 2
     option_end_game = 3
 
+class DeathlinkSoloUnlimitedQuickRevive(Toggle):
+    """In a solo game, allow more than 3 uses of quick revive when deathlink is enabled"""
+    display_name = "Deathlink - Solo Quick Revive Uncapped"
+    default = True
+
+class DeathlinkSoloFreeQuickRevive(Toggle):
+    """In a solo game, unlock quick revive immediately"""
+    display_name = "Deathlink - Solo Starting Quick Revive"
+    default = True
+
 class StartingMapsUnlocked(Range):
     """Number of maps to start unlocked, the rest will require AP items to access"""
     display_name = "Number of Starting Maps"
@@ -269,6 +290,38 @@ class StartingMapsUnlocked(Range):
     
     range_start = 0
     range_end = 15
+
+class ShopPerkTokens(Range):
+    """One time use per map (unless save data is cleared), these can be spent to get any perk including those not unlocked yet"""
+    display_name = "Shop - Perk Tokens (UNUSED)"
+    default = 0
+
+    range_start = 0
+    range_end = 10
+
+class ShopMegaGumTokens(Range):
+    """One time use per map (unless save data is cleared), these can be spent to get a random mega gobblegum"""
+    display_name = "Shop - Mega Gobblegum Tokens"
+    default = 3
+
+    range_start = 0
+    range_end = 10
+
+class ShopRareGumTokens(Range):
+    """One time use per map (unless save data is cleared), these can be spent to get a random rare mega gobblegum"""
+    display_name = "Shop - Rare Mega Gobblegum Tokens"
+    default = 2
+
+    range_start = 0
+    range_end = 10
+
+class ShopLegendaryGumTokens(Range):
+    """One time use per map (unless save data is cleared), these can be spent to get a random legandary mega gobblegum"""
+    display_name = "Shop - Legendary Mega Gobblegum Tokens"
+    default = 1
+
+    range_start = 0
+    range_end = 10
 
 @dataclass
 class BO3ZombiesOptions(PerGameCommonOptions):
@@ -288,7 +341,9 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     goal_ee_random: GoalEasterEggHuntRandom
     perk_limit_default_modifier: PerkLimitDefaultModifier
     progressive_perk_limit_increase: ProgressivePerkLimitIncrease
+    progressive_starting_points: ProgressiveStartingPoints
     randomized_shield_parts: RandomizeShieldParts
+    randomized_gorod_dragonride_parts: RandomizeGorodDragonrideParts
     mystery_box_special_items: MysteryBoxSpecialItems
     mystery_box_regular_items: MysteryBoxRegularItems
     map_specific_wallbuys: MapSpecificWallbuysEnabled
@@ -315,6 +370,10 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     deathlink_enabled: DeathlinkEnabled
     deathlink_send_mode: DeathlinkSendMode
     deathlink_recv_mode: DeathlinkRecvMode
+    shop_perk_tokens: ShopPerkTokens
+    shop_mega_gums: ShopMegaGumTokens
+    shop_rare_gums: ShopRareGumTokens
+    shop_legendary_gums: ShopLegendaryGumTokens
 
 bo3_option_groups = [
     OptionGroup("General Options", [
@@ -350,6 +409,7 @@ bo3_option_groups = [
     OptionGroup("Progressive Settings", [
         PerkLimitDefaultModifier,
         ProgressivePerkLimitIncrease,
+        ProgressiveStartingPoints,
     ]),
     OptionGroup("Map Settings", [
         MapShadowsEnabled,
@@ -358,7 +418,14 @@ bo3_option_groups = [
         CastleBowCount,
         MapZetsubouEnabled,
         MapGorodKroviEnabled,
+        RandomizeGorodDragonrideParts,
         MapRevelationsEnabled,
+    ]),
+    OptionGroup("Shop Settings", [
+        ShopPerkTokens,
+        ShopMegaGumTokens,
+        ShopRareGumTokens,
+        ShopLegendaryGumTokens,
     ]),
     OptionGroup("Difficulty Adjustments", [
         DifficultyGorodEggCooldown,
@@ -370,6 +437,8 @@ bo3_option_groups = [
         DeathlinkEnabled,
         DeathlinkSendMode,
         DeathlinkRecvMode,
+        DeathlinkSoloUnlimitedQuickRevive,
+        DeathlinkSoloFreeQuickRevive,
     ]),
     OptionGroup("Filler", [
         GiftWeight,
