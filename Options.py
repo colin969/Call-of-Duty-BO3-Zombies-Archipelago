@@ -45,7 +45,7 @@ class RandomizeShieldParts(Toggle):
 
 class RandomizeGorodDragonrideParts(Toggle):
     """Shuffles the parts to unlock the pack-a-punch into the item pool"""
-    display_name = "Randomized Gorod Dragonride Parts"
+    display_name = "(UNUSED) Randomized Gorod Dragonride Parts"
     default = False
 
 class MysteryBoxSpecialItems(Toggle):
@@ -275,12 +275,12 @@ class DeathlinkRecvMode(Choice):
 
 class DeathlinkSoloUnlimitedQuickRevive(Toggle):
     """In a solo game, allow more than 3 uses of quick revive when deathlink is enabled"""
-    display_name = "Deathlink - Solo Quick Revive Uncapped"
+    display_name = "(UNUSED) Deathlink - Solo Quick Revive Uncapped"
     default = True
 
 class DeathlinkSoloFreeQuickRevive(Toggle):
     """In a solo game, unlock quick revive immediately"""
-    display_name = "Deathlink - Solo Starting Quick Revive"
+    display_name = "(UNUSED) Deathlink - Solo Starting Quick Revive"
     default = True
 
 class StartingMapsUnlocked(Range):

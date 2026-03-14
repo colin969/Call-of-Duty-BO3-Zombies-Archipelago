@@ -412,9 +412,6 @@ class BO3ZombiesWorld(World):
             create_entrance(
                 main_region,
                 bunker_region,
-                lambda state: (
-                    state.has_all({item.name for item in Items.GorodKrovi_Craftables_Dragonride}, self.player)
-                )
             )
 
             #self.add_quarter_round_region(main_region, RegionName.Gorod_Quarter_Weapons, quarter_locs)
@@ -729,12 +726,12 @@ class BO3ZombiesWorld(World):
                 self.multiworld.get_location(LocationName.GorodKrovi_Craftable_ShieldPartDoor, self.player).place_locked_item(self.create_item(Items.GorodKrovi_Shield[0].name))
                 self.multiworld.get_location(LocationName.GorodKrovi_Craftable_ShieldPartDolly, self.player).place_locked_item(self.create_item(Items.GorodKrovi_Shield[1].name))
                 self.multiworld.get_location(LocationName.GorodKrovi_Craftable_ShieldPartClamp, self.player).place_locked_item(self.create_item(Items.GorodKrovi_Shield[2].name))
-            if self.options.randomized_gorod_dragonride_parts:
-                enabled_items += Items.GorodKrovi_Craftables_Dragonride
-            else:
-                self.multiworld.get_location(LocationName.GorodKrovi_Quest_MainQuest_Dragonride_Transmitter, self.player).place_locked_item(self.create_item(ItemName.GorodKrovi_Craftable_Dragonride_Transmitter))
-                self.multiworld.get_location(LocationName.GorodKrovi_Quest_MainQuest_Dragonride_Codes, self.player).place_locked_item(self.create_item(ItemName.GorodKrovi_Craftable_Dragonride_Codes))
-                self.multiworld.get_location(LocationName.GorodKrovi_Quest_MainQuest_Dragonride_Map, self.player).place_locked_item(self.create_item(ItemName.GorodKrovi_Craftable_Dragonride_Map))
+            # if self.options.randomized_gorod_dragonride_parts:
+            #     enabled_items += Items.GorodKrovi_Craftables_Dragonride
+            # else:
+            #     self.multiworld.get_location(LocationName.GorodKrovi_Quest_MainQuest_Dragonride_Transmitter, self.player).place_locked_item(self.create_item(ItemName.GorodKrovi_Craftable_Dragonride_Transmitter))
+            #     self.multiworld.get_location(LocationName.GorodKrovi_Quest_MainQuest_Dragonride_Codes, self.player).place_locked_item(self.create_item(ItemName.GorodKrovi_Craftable_Dragonride_Codes))
+            #     self.multiworld.get_location(LocationName.GorodKrovi_Quest_MainQuest_Dragonride_Map, self.player).place_locked_item(self.create_item(ItemName.GorodKrovi_Craftable_Dragonride_Map))
         if self.options.map_revelations_enabled:
             map_list.append((Maps.Revelations_Map_String, RegionName.Revelations_House, RegionName.Revelations_Half_Weapons, RegionName.Revelations_Quarter_Weapons, Locations.Revelations_Round_Locations))
             if self.options.randomized_shield_parts:
