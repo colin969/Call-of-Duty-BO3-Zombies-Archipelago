@@ -407,6 +407,54 @@ Revelations_MysteryBox_Regular = [ItemData(ItemName.MysteryBox + row, BO3Zombies
     ItemName.Weapon_VMP,
 ]]
 
+# Wanted
+
+Wanted_Shield = gen_map_specific_list(Maps.Wanted_Map_String, ShieldParts)
+
+Wanted_Craftable_Acidgat = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for row in[
+    ItemName.Wanted_Craftable_Acidgat_Engine,
+    ItemName.Wanted_Craftable_Acidgat_Acid,
+]]
+
+Wanted_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
+    ItemName.Machine_Juggernog,
+    ItemName.Machine_QuickRevive,
+    ItemName.Machine_DoubleTap,
+    ItemName.Machine_SpeedCola,
+    ItemName.Machine_StaminUp,
+    ItemName.Machine_MuleKick,
+    ItemName.Machine_WidowsWine,
+    ItemName.Machine_DeadShot,
+    ItemName.Machine_ElectricCherry,
+    ItemName.Machine_PhdFlopper,
+]]
+
+Wanted_Wallbuys = [ItemData(Maps.Wanted_Map_String + " " + ItemName.Wallbuy + row, BO3ZombiesItemCategory.WALLBUY) for row in[
+    ItemName.Weapon_Modded_WinchesterModel94,
+    ItemName.Weapon_Modded_Escargot,
+    ItemName.Weapon_Modded_Ribeyrolles,
+    ItemName.Weapon_Modded_M1903,
+    ItemName.Weapon_Modded_RemingtonM1889,
+    ItemName.Weapon_Modded_RedTalon
+]]
+
+Wanted_Machines_Specific = gen_map_specific_list(Maps.Wanted_Map_String, Wanted_Machines)
+
+Wanted_MysteryBox = [ItemData(Maps.Wanted_Map_String + " " + ItemName.MysteryBox + row, BO3ZombiesItemCategory.SPECIAL_WEAPON) for row in[
+    ItemName.Weapon_Modded_HomunculusBomb,
+    ItemName.Weapon_Thundergun,
+    ItemName.Weapon_Modded_Blundergat,
+    ItemName.Weapon_Raygun,
+    ItemName.Weapon_Wunderwaffe,
+]]
+
+Wanted_MysteryBox_Regular = [ItemData(Maps.Wanted_Map_String + " " + ItemName.MysteryBox + row, BO3ZombiesItemCategory.REGULAR_WEAPON) for row in[
+    ItemName.Weapon_Modded_Ww2Lewis,
+    ItemName.Weapon_Modded_M1831Blundergat,
+    ItemName.Weapon_Modded_Nightbreaker,
+    ItemName.Weapon_Modded_Model1897,
+]]
+
 # Progressives
 
 Progressive_PerkLimitIncrease = ItemData(ItemName.Progressive_PerkLimitIncrease, BO3ZombiesItemCategory.PROGRESSIVE)
@@ -441,6 +489,9 @@ Weapon_Victory_Items = [ItemData(row, BO3ZombiesItemCategory.VICTORY) for row in
     ItemName.Revelations_Victory_Upgraded_LilArnies,
     ItemName.Zetsubou_Victory_Masamune,
     ItemName.Zetsubou_Victory_Skull,
+    # == Modded Maps ===
+    ItemName.Wanted_Victory_Magmagat,
+    ItemName.Wanted_Victory_GreatScott,
 ]]
 
 Victory_Items = [ItemData(row, BO3ZombiesItemCategory.VICTORY) for row in [
@@ -457,6 +508,9 @@ Victory_Items = [ItemData(row, BO3ZombiesItemCategory.VICTORY) for row in [
     Maps.GorodKrovi_Map_String + ItemName.EE_Victory,
     Maps.Revelations_Map_String + ItemName.Victory,
     Maps.Revelations_Map_String + ItemName.EE_Victory,
+    # == Modded Maps ==
+    Maps.Wanted_Map_String + ItemName.Victory,
+    Maps.Wanted_Map_String + ItemName.EE_Victory,
 ]]
 
 # Misc/Filler Items
@@ -494,6 +548,7 @@ Map_Unlocks = [ItemData(row, BO3ZombiesItemCategory.MAP_UNLOCK) for row in [
     ItemName.Map_GorodKrovi,
     ItemName.Map_Revelations,
     ItemName.Map_The_Giant,
+    ItemName.Map_Wanted,
 ]]
 
 # Shop items
@@ -535,6 +590,11 @@ all_items = (
     + Revelations_Wallbuys + Revelations_Wallbuys_Specific
     + Revelations_Shield
     + Revelations_MysteryBox + Revelations_MysteryBox_Regular
+    # == Modded Maps ==
+    + Wanted_Wallbuys
+    + Wanted_Machines + Wanted_Machines_Specific
+    + Wanted_Shield + Wanted_Craftable_Acidgat
+    + Wanted_MysteryBox + Wanted_MysteryBox_Regular
 )
 
 all_items_dict = {item_data.name: item_data for item_data in all_items}

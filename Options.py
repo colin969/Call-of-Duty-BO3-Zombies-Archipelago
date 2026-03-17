@@ -33,6 +33,11 @@ class MapRevelationsEnabled(Toggle):
     display_name = "\"Revelations\" map enabled"
     default = True
 
+class MapWorkshopWantedEnabled(Toggle):
+    """Enabled Map: \"Wanted\""""
+    display_name = "(Workshop) \"Wanted\" map enabled"
+    default = False
+
 class SpecialRoundsEnabled(Toggle):
     """Enables Special Rounds (Dogs, Monkeys, ect.)."""
     display_name = "Special Rounds Enabled"
@@ -332,6 +337,7 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     map_castle_enabled: MapCastleEnabled
     map_gorod_enabled: MapGorodKroviEnabled
     map_revelations_enabled: MapRevelationsEnabled
+    map_workshop_wanted_enabled: MapWorkshopWantedEnabled
     special_rounds_enabled: SpecialRoundsEnabled
     round_location_max: RoundMaxLocation
     round_location_freq: RoundLocationFrequency
@@ -420,6 +426,7 @@ bo3_option_groups = [
         MapGorodKroviEnabled,
         RandomizeGorodDragonrideParts,
         MapRevelationsEnabled,
+        MapWorkshopWantedEnabled,
     ]),
     OptionGroup("Shop Settings", [
         ShopPerkTokens,

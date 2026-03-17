@@ -9,6 +9,8 @@ BaseMapIds = {
     Maps.GorodKrovi_Map_String: 4000,
     Maps.Zetsubou_Map_String: 5000,
     Maps.Revelations_Map_String: 6000,
+    # === Modded Maps ===
+    Maps.Wanted_Map_String: 20000,
 }
 
 class BO3ZombiesLocationCategory(IntEnum):
@@ -401,25 +403,65 @@ Revelations_Quest_Music_Locations = [LocationData(row[0], BO3ZombiesLocationCate
     (LocationName.Revelations_Quest_Music_TheGift, 6400),
 ]]
 
+# Wanted
+
+Wanted_Round_Locations = gen_map_round_locations(Maps.Wanted_Map_String, 99)
+
+Wanted_Quest_MainQuest_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Wanted_Quest_MainQuest_CollectSkulls, 20100),
+    (LocationName.Wanted_Quest_MainQuest_Werewolf, 20101),
+    (LocationName.Wanted_Quest_MainQuest_WeaponSafe, 20102),
+]]
+
+Wanted_Quest_MainEE_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Wanted_Quest_MainEE_Church, 20200),
+    (LocationName.Wanted_Quest_MainEE_TotemPole, 20201),
+    (LocationName.Wanted_Quest_MainEE_Leroy, 20202),
+    (LocationName.Wanted_Quest_MainEE_Victory, 20203),
+]]
+
+Wanted_Quest_Weapons = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Wanted_Weapon_Magmagat, 20300),
+    (LocationName.Wanted_Weapon_GreatScott, 20301),
+]]
+
+Wanted_Craftable_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.CRAFTABLE_PART, row[1]) for row in [
+    (LocationName.Wanted_Craftable_ShieldPartDolly, 20400),
+    (LocationName.Wanted_Craftable_ShieldPartDoor, 20401),
+    (LocationName.Wanted_Craftable_ShieldPartClamp, 20402),
+    (LocationName.Wanted_Craftable_AcidgatUpgradePartEngine, 20403),
+    (LocationName.Wanted_Craftable_AcidgatUpgradePartAcid, 20404),
+]]
+
 early_locations =  [LocationData(row[0], row[1], row[2]) for row in [
     (LocationName.RepairWindows_5, BO3ZombiesLocationCategory.MISC, 9001),
 ]]
 
 all_locations = (
+    # The Giant
     TheGiant_Round_Locations + TheGiant_Quest_Locations + TheGiant_Pap + TheGiant_MonkeyBomb + TheGiant_Quest_Music_Locations
+    # Castle
     + Castle_Round_Locations + Castle_Quest_Locations + Castle_Quest_Music_Locations + Castle_Craftable_Locations 
     + Castle_Quest_ElementalBow_Fire_Locations + Castle_Quest_ElementalBow_Void_Locations + Castle_Quest_ElementalBow_Storm_Locations + Castle_Quest_ElementalBow_Wolf_Locations
     + Castle_Quest_MainEE_Locations
+    # Shadows
     + Shadows_Round_Locations + Shadows_Quest_Locations + Shadows_Craftable_Locations + Shadows_Quest_Music_Locations + Shadows_LilArnies_Locations
     + Shadows_Quest_MainQuest_Locations + Shadows_Quest_ApothiconSword_Locations + Shadows_Quest_ApothiconSword_Upgrade_Locations
     + Shadows_Quest_MainEE_Locations
+    # Zetsubou
     + Zetsubou_Round_Locations + Zetsubou_Craftable_Locations + Zetsubou_Quest_Music_Locations
     + Zetsubou_Quest_MainQuest_Locations + Zetsubou_Quest_MainEE_Locations + Zetsubou_Quest_Challenges_Locations
     + Zetsubou_Quest_KT4_Locations + Zetsubou_Quest_Masamune_Locations + Zetsubou_Quest_Skull_Locations
+    # Gorod Krovi
     + GorodKrovi_Round_Locations + GorodKrovi_Craftable_Locations + GorodKrovi_Quest_MainEE_Locations + GorodKrovi_Quest_SideEE + GorodKrovi_Quest_Music_Locations
     + GorodKrovi_Quest_DragonStrikes + GorodKrovi_Quest_DragonStrikes_Upgraded + GorodKrovi_Quest_DragonGauntlets_Early + GorodKrovi_Quest_DragonGauntlets_Late + GorodKrovi_Quest_Challenges + GorodKrovi_Quest_TiamatsMaw
     + GorodKrovi_Quest_MainQuest_Locations
+    # Revelations
     + Revelations_Round_Locations + Revelations_Craftable_Locations + Revelations_Quest_Music_Locations
     + Revelations_Quest_MainQuest_Locations + Revelations_Quest_MainEE_Locations + Revelations_Quest_Challenges
     + Revelations_Quest_SideEE_Locations + Revelations_Quest_Weapons
+    # === Modded Maps ===
+    # Wanted
+    + Wanted_Round_Locations + Wanted_Craftable_Locations
+    + Wanted_Quest_MainQuest_Locations + Wanted_Quest_Weapons + Wanted_Quest_MainEE_Locations
     + early_locations)

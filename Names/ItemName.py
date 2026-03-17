@@ -8,6 +8,8 @@ Map_GorodKrovi = "Map Unlock - Gorod Krovi"
 Map_Revelations = "Map Unlock - Revelations"
 Map_The_Giant = "Map Unlock - The Giant"
 
+Map_Wanted = "Map Unlock - Wanted"
+
 # Machines
 
 Machine_Juggernog = "Juggernog"
@@ -116,6 +118,20 @@ Weapon_LilArnies = "Li'l Arnies"
 Weapon_Thundergun = "Thundergun"
 Weapon_Ragnaroks = "Ragnarok DG-4s"
 
+# Modded
+Weapon_Modded_HomunculusBomb = "Homunculus Bomb"
+Weapon_Modded_Blundergat = "Blundergate"
+Weapon_Modded_WinchesterModel94 = "Winchester Model 94"
+Weapon_Modded_Ww2Lewis = "Lewis"
+Weapon_Modded_M1831Blundergat = "M1831 Blundergat"
+Weapon_Modded_Nightbreaker = "Nightbreaker"
+Weapon_Modded_Model1897 = "Model 1987"
+Weapon_Modded_Escargot = "Escargot"
+Weapon_Modded_Ribeyrolles = "Ribeyrolles"
+Weapon_Modded_M1903 = "Model 1903"
+Weapon_Modded_RemingtonM1889 = "Remington M1889"
+Weapon_Modded_RedTalon = "Red Talon"
+
 # Shop Tokens
 Shop_PerkToken = "Shop - Perk Token"
 Shop_MegaGumToken = "Shop - Mega Gobblegum Token"
@@ -189,6 +205,14 @@ GorodKrovi_Victory_TiamatsMaw = Maps.GorodKrovi_Map_String + " Tiamat's Maw - Vi
 
 Revelations_Victory_Upgraded_LilArnies = Maps.Revelations_Map_String + " Upgraded Li'l Arnies - Victory"
 Revelations_Victory_Upgrade_ApothiconServant = Maps.Revelations_Map_String + " Upgraded Apothicon Servant - Victory"
+
+# Wanted
+
+Wanted_Craftable_Acidgat_Engine = Maps.Wanted_Map_String + " Acidgat Upgrade Part - Engine"
+Wanted_Craftable_Acidgat_Acid = Maps.Wanted_Map_String + " Acidgat Upgrade Part - Acid"
+
+Wanted_Victory_Magmagat = Maps.Wanted_Map_String + " Magmagat - Victory"
+Wanted_Victory_GreatScott = Maps.Wanted_Map_String + " Great Scott - Victory"
 
 # Misc
 Points200                            = "200 Points"

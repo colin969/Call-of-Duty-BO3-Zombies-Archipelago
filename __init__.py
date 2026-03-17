@@ -83,6 +83,8 @@ class BO3ZombiesWorld(World):
                 add_universal_items(self.mystery_box_regular_items, seen, Items.GorodKrovi_MysteryBox_Regular)
             if self.options.map_revelations_enabled:
                 add_universal_items(self.mystery_box_regular_items, seen, Items.Revelations_MysteryBox_Regular)
+            if self.options.map_workshop_wanted_enabled:
+                self.mystery_box_regular_items += Items.Wanted_MysteryBox_Regular
         self.mystery_box_regular_items_half = math.ceil(len(self.mystery_box_regular_items) / 2)
         self.mystery_box_regular_items_quarter = math.ceil(len(self.mystery_box_regular_items) / 4)
 
@@ -100,6 +102,8 @@ class BO3ZombiesWorld(World):
                 self.mystery_box_special_items += Items.GorodKrovi_MysteryBox
             if self.options.map_revelations_enabled:
                 self.mystery_box_special_items += Items.Revelations_MysteryBox
+            if self.options.map_workshop_wanted_enabled:
+                self.mystery_box_special_items += Items.Wanted_MysteryBox
 
         self.rolled_bows = []
         self.weapon_quest_items = []
@@ -122,6 +126,8 @@ class BO3ZombiesWorld(World):
             locked_maps.append(ItemName.Map_Revelations)
         if self.options.map_the_giant_enabled:
             locked_maps.append(ItemName.Map_The_Giant)
+        if self.options.map_workshop_wanted_enabled:
+            locked_maps.append(ItemName.Map_Wanted)
 
         self.num_maps = len(locked_maps)
 
@@ -264,7 +270,6 @@ class BO3ZombiesWorld(World):
 
             #self.add_quarter_round_region(main_region, RegionName.TheGiant_Quarter_Weapons, quarter_locs)
             #self.add_half_round_region(main_region, RegionName.TheGiant_Half_Weapons, half_locs)
-
 
         if self.options.map_castle_enabled:
             all_locations = []
@@ -489,6 +494,7 @@ class BO3ZombiesWorld(World):
                 ee_locs = [loc.name for loc in Locations.Revelations_Quest_MainEE_Locations]
 
             main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_MainEE, ee_locs)
+            self.multiworld.regions.append(main_ee_region)
             # rule = Has(ItemName.Progressive_PackAPunch) & HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.mystery_box_regular_items_half)
             # if self.options.randomized_shield_parts:
             #     rule = rule & HasAll(*[item.name for item in Items.Revelations_Shield])
@@ -506,7 +512,6 @@ class BO3ZombiesWorld(World):
                 )
             )
 
-
             apothicon_ugprade_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_Apothicon_Upgrade, [Locations.Revelations_Quest_Weapons[0].name])
             if self.options.mystery_box_special_items:
                 # create_entrance(main_region, apothicon_ugprade_region, Has(Items.Revelations_MysteryBox[2].name))
@@ -521,6 +526,37 @@ class BO3ZombiesWorld(World):
                 create_entrance(main_region, arnies_ugprade_region, lambda state: state.has(Items.Revelations_MysteryBox[1].name, self.player))
             else:
                 create_entrance(main_region, arnies_ugprade_region)
+
+        # == Modded Maps ==
+
+        if self.options.map_workshop_wanted_enabled:
+            all_locations = []
+            # free_locs, quarter_locs, half_locs = add_round_locations(Locations.Revelations_Round_Locations, round_max, round_freq, is_round_goal_cond, goal_round)
+            # all_locations.extend(free_locs)
+            all_locations.extend([loc.name for loc in Locations.Wanted_Quest_MainQuest_Locations])
+            all_locations.extend([loc.name for loc in Locations.Wanted_Quest_Weapons])
+            all_locations.extend([loc.name for loc in Locations.Wanted_Craftable_Locations])
+            main_region = self.create_region(self.multiworld, self.player, RegionName.Wanted_Town, all_locations)
+            self.multiworld.regions.append(main_region)
+            create_entrance(menu_region, main_region, lambda state: state.has(ItemName.Map_Wanted, self.player))
+
+            ee_locs = []
+            if add_ee_checks:
+                ee_locs = [loc.name for loc in Locations.Wanted_Quest_MainEE_Locations]
+
+            main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Wanted_MainEE, ee_locs)
+            self.multiworld.regions.append(main_ee_region)
+            create_entrance(
+                main_region, 
+                main_ee_region, 
+                lambda state: (
+                    state.has(ItemName.Progressive_PackAPunch, self.player) and
+                    (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_half) if self.options.mystery_box_regular_items else True) and
+                    state.has_all({item.name for item in Items.Wanted_Shield}, self.player)
+                    # (state.has_all({item.name for item in Items.Revelations_MysteryBox}, self.player) if self.options.mystery_box_special_items else True)
+                )
+            )
+
 
     def create_region(self, world: MultiWorld, player: int, name: str, locations=None):
         ret = Region(name, player, world)
@@ -641,6 +677,8 @@ class BO3ZombiesWorld(World):
                 enabled_items += Items.GorodKrovi_Machines_Specific
             if self.options.map_revelations_enabled:
                 enabled_items += Items.Revelations_Machines_Specific
+            if self.options.map_workshop_wanted_enabled:
+                enabled_items += Items.Wanted_Machines_Specific
         else:
             # Only add one instance per machine
             seen = set()
@@ -656,6 +694,8 @@ class BO3ZombiesWorld(World):
                 add_universal_items(enabled_items, seen, Items.GorodKrovi_Machines)
             if self.options.map_revelations_enabled:
                 add_universal_items(enabled_items, seen, Items.Revelations_Machines)
+            if self.options.map_workshop_wanted_enabled:
+                add_universal_items(enabled_items, seen, Items.Wanted_Machines)
 
         # Add wallbuys to pool
         if self.options.map_specific_wallbuys:
@@ -687,6 +727,10 @@ class BO3ZombiesWorld(World):
                 add_universal_items(enabled_items, seen, Items.GorodKrovi_Wallbuys)
             if self.options.map_revelations_enabled:
                 add_universal_items(enabled_items, seen, Items.Revelations_Wallbuys)
+
+        # Modded maps without universal wallbuys
+        if self.options.map_workshop_wanted_enabled:
+            enabled_items += Items.Wanted_Wallbuys
 
         map_list = []
         if self.options.map_shadows_enabled:
@@ -740,6 +784,15 @@ class BO3ZombiesWorld(World):
                 self.multiworld.get_location(LocationName.Revelations_Craftable_ShieldPartDoor, self.player).place_locked_item(self.create_item(Items.Revelations_Shield[0].name))
                 self.multiworld.get_location(LocationName.Revelations_Craftable_ShieldPartDolly, self.player).place_locked_item(self.create_item(Items.Revelations_Shield[1].name))
                 self.multiworld.get_location(LocationName.Revelations_Craftable_ShieldPartClamp, self.player).place_locked_item(self.create_item(Items.Revelations_Shield[2].name))
+        if self.options.map_workshop_wanted_enabled:
+            map_list.append((Maps.Wanted_Map_String, RegionName.Wanted_Town, RegionName.Wanted_Half_Weapons, RegionName.Wanted_Quarter_Weapons, Locations.Wanted_Round_Locations))
+            if self.options.randomized_shield_parts:
+                enabled_items += Items.Wanted_Shield
+            else:
+                self.multiworld.get_location(LocationName.Wanted_Craftable_ShieldPartDoor, self.player).place_locked_item(self.create_item(Items.Wanted_Shield[0].name))
+                self.multiworld.get_location(LocationName.Wanted_Craftable_ShieldPartDolly, self.player).place_locked_item(self.create_item(Items.Wanted_Shield[1].name))
+                self.multiworld.get_location(LocationName.Wanted_Craftable_ShieldPartClamp, self.player).place_locked_item(self.create_item(Items.Wanted_Shield[2].name))
+            enabled_items += Items.Wanted_Craftable_Acidgat
 
         enabled_items += self.mystery_box_special_items
         enabled_items += self.mystery_box_regular_items
@@ -758,6 +811,8 @@ class BO3ZombiesWorld(World):
                 ee_pairs.append((LocationName.GorodKrovi_Quest_MainEE_Victory, Maps.GorodKrovi_Map_String + ItemName.EE_Victory))
             if self.options.map_revelations_enabled:
                 ee_pairs.append((LocationName.Revelations_Quest_MainEE_Victory, Maps.Revelations_Map_String + ItemName.EE_Victory))
+            if self.options.map_workshop_wanted_enabled:
+                ee_pairs.append((LocationName.Wanted_Quest_MainEE_Victory, Maps.Wanted_Map_String + ItemName.EE_Victory))
 
             if len(ee_pairs) == 0:
                 ee_pairs.append((LocationName.TheGiant_Quest_FlyTrap, Maps.The_Giant_Map_String + ItemName.EE_Victory))
@@ -815,6 +870,15 @@ class BO3ZombiesWorld(World):
                 self.multiworld.get_location(Locations.GorodKrovi_Quest_DragonStrikes_Upgraded[-1].name, self.player).place_locked_item(goal_items[1])
                 self.multiworld.get_location(Locations.GorodKrovi_Quest_Challenges[3].name, self.player).place_locked_item(goal_items[2])
                 self.multiworld.get_location(Locations.GorodKrovi_Quest_TiamatsMaw[-1].name, self.player).place_locked_item(goal_items[3])
+
+            if self.options.map_workshop_wanted_enabled:
+                goal_items = list(map(self.create_item, [
+                    ItemName.Wanted_Victory_Magmagat,
+                    ItemName.Wanted_Victory_GreatScott,
+                ]))
+                self.weapon_quest_items.extend([item.name for item in goal_items])
+                self.multiworld.get_location(Locations.Wanted_Quest_Weapons[0].name, self.player).place_locked_item(goal_items[0])
+                self.multiworld.get_location(Locations.Wanted_Quest_Weapons[1].name, self.player).place_locked_item(goal_items[1])
 
         is_goal_cond = self.options.goal_condition == 2
 

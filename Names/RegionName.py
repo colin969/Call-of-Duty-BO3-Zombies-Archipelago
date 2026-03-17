@@ -42,3 +42,10 @@ Revelations_Apothicon_Upgrade = "(Revelations) Apothicon Upgrade"
 Revelations_Arnies_Upgrade = "(Revelations) Arnies Upgrade"
 Revelations_Quarter_Weapons = "(Revelations) Quarter Weapons"
 Revelations_Half_Weapons = "(Revelations) Half Weapons"
+
+# == Modded Maps ==
+
+Wanted_Town = "(Wanted) Town"
+Wanted_MainEE = "(Wanted) Main Easter Egg"
+Wanted_Quarter_Weapons = "(Wanted) Quarter Weapons"
+Wanted_Half_Weapons = "(Wanted) Half Weapons"

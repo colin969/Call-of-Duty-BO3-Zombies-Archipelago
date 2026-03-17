@@ -235,4 +235,23 @@ TheGiant_Quest_Music_BeautyOfAnnihilation = Maps.The_Giant_Map_String + " Music 
 
 TheGiant_Quest_AllSpareChangeCollected = Maps.The_Giant_Map_String + " All Spare Change Collected"
 
+Wanted_Quest_MainQuest_CollectSkulls = Maps.Wanted_Map_String + " Collect the Skulls"
+Wanted_Quest_MainQuest_Werewolf = Maps.Wanted_Map_String + " Kill a Werewolf"
+Wanted_Quest_MainQuest_WeaponSafe = Maps.Wanted_Map_String + " Open the Weapon Safe"
+
+Wanted_Weapon_Magmagat = Maps.Wanted_Map_String + " Build the Magmagat"
+Wanted_Weapon_GreatScott = Maps.Wanted_Map_String + " Pickup the Great Scott Weapon"
+
+Wanted_Quest_MainEE_Church = Maps.Wanted_Map_String + " Main Easter Egg - Enter the Church"
+Wanted_Quest_MainEE_TotemPole = Maps.Wanted_Map_String + " Main Easter Egg - Fill a Totem Pole with Souls"
+Wanted_Quest_MainEE_Leroy = Maps.Wanted_Map_String + " Main Easter Egg - Kill Arthur Leroy"
+Wanted_Quest_MainEE_Victory = Maps.Wanted_Map_String + " Main Easter Egg - Back to the Future"
+
+Wanted_Craftable_ShieldPartDolly = Maps.Wanted_Map_String + " Shield Part Pickup - Dolly"
+Wanted_Craftable_ShieldPartDoor = Maps.Wanted_Map_String + " Shield Part Pickup - Door"
+Wanted_Craftable_ShieldPartClamp = Maps.Wanted_Map_String + " Shield Part Pickup - Clamp"
+
+Wanted_Craftable_AcidgatUpgradePartEngine = Maps.Wanted_Map_String + " Acidgat Upgrade Part Pickup - Engine"
+Wanted_Craftable_AcidgatUpgradePartAcid = Maps.Wanted_Map_String + " Acidgat Upgrade Part Pickup - Acid"
+
 RepairWindows_5 = "Repair Windows 5 Times"
