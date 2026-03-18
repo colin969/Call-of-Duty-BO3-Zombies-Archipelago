@@ -83,8 +83,6 @@ Revelations_Round_Regions = (Revelations_Round_10, Revelations_Round_15, Revelat
 
 Wanted_Town = "(Wanted) Town"
 Wanted_MainEE = "(Wanted) Main Easter Egg"
-Wanted_Quarter_Weapons = "(Wanted) Quarter Weapons"
-Wanted_Half_Weapons = "(Wanted) Half Weapons"
 Wanted_Round_10 = "(Wanted) Round 10"
 Wanted_Round_15 = "(Wanted) Round 15"
 Wanted_Round_20 = "(Wanted) Round 20"
