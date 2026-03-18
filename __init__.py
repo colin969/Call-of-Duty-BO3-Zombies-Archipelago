@@ -87,8 +87,8 @@ class BO3ZombiesWorld(World):
                 add_universal_items(self.mystery_box_regular_items, seen, Items.Revelations_MysteryBox_Regular)
             if self.options.map_workshop_wanted_enabled:
                 self.mystery_box_regular_items += Items.Wanted_MysteryBox_Regular
-        self.mystery_box_regular_items_half = math.ceil(len(self.mystery_box_regular_items) / 2)
-        self.mystery_box_regular_items_quarter = math.ceil(len(self.mystery_box_regular_items) / 4)
+        self.mystery_box_regular_items_two_third = math.ceil(len(self.mystery_box_regular_items) * 0.67)
+        self.mystery_box_regular_items_third = math.ceil(len(self.mystery_box_regular_items) * 0.33)
 
         self.mystery_box_special_items = []
         if self.options.mystery_box_special_items:
@@ -212,7 +212,7 @@ class BO3ZombiesWorld(World):
                 ee_locs = [loc.name for loc in Locations.Shadows_Quest_MainEE_Locations]
 
             main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Shadows_MainEE, ee_locs)
-            # rule = Has(ItemName.Progressive_PackAPunch) & HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.mystery_box_regular_items_half)
+            # rule = Has(ItemName.Progressive_PackAPunch) & HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.mystery_box_regular_items_two_third)
             # if self.options.randomized_shield_parts:
             #     rule = rule & HasAll(*[item.name for item in Items.Shadows_Shield])
             # if self.options.mystery_box_special_items:
@@ -222,24 +222,24 @@ class BO3ZombiesWorld(World):
                 main_region, 
                 main_ee_region, 
                 lambda state: (
-                    state.has(ItemName.Progressive_PackAPunch, self.player) and
-                    (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_half) if self.options.mystery_box_regular_items else True) and
-                    state.has_all({item.name for item in Items.Shadows_Shield}, self.player) and
-                    (state.has_all({item.name for item in Items.Shadows_MysteryBox}, self.player) if self.options.mystery_box_special_items else True)
+                        state.has(ItemName.Progressive_PackAPunch, self.player) and
+                        (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_two_third) if self.options.mystery_box_regular_items else True) and
+                        state.has_all({item.name for item in Items.Shadows_Shield}, self.player) and
+                        (state.has_all({item.name for item in Items.Shadows_MysteryBox}, self.player) if self.options.mystery_box_special_items else True)
                 )
             )
 
             upgraded_locs = [loc.name for loc in Locations.Shadows_Quest_ApothiconSword_Upgrade_Locations]
             upgraded_weapon_region = self.create_region(self.multiworld, self.player, RegionName.Shadows_Upgraded, upgraded_locs)
-            # create_entrance(main_region, upgraded_weapon_region, HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.mystery_box_regular_items_half))
-            create_entrance(main_region, upgraded_weapon_region, lambda state: (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_half) if self.options.mystery_box_regular_items else True))
+            # create_entrance(main_region, upgraded_weapon_region, HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.mystery_box_regular_items_two_third))
+            create_entrance(main_region, upgraded_weapon_region, lambda state: (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_two_third) if self.options.mystery_box_regular_items else True))
 
             upgraded_arnies_locs = [loc.name for loc in Locations.Shadows_LilArnies_Locations]
             upgraded_arnies_region = self.create_region(self.multiworld, self.player, RegionName.Shadows_Arnies, upgraded_arnies_locs)
             self.multiworld.regions.append(upgraded_arnies_region)
             create_entrance(main_region, upgraded_arnies_region, lambda state:
                 ((not self.options.mystery_box_special_items) or state.has(Items.Shadows_MysteryBox[1].name, self.player))
-                and (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_half) if self.options.mystery_box_regular_items else True)
+                and (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_two_third) if self.options.mystery_box_regular_items else True)
             )
 
         if self.options.map_the_giant_enabled:
@@ -324,10 +324,10 @@ class BO3ZombiesWorld(World):
                 main_region, 
                 main_ee_region, 
                 lambda state: (
-                    state.has(ItemName.Progressive_PackAPunch, self.player) and
-                    (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_half) if self.options.mystery_box_regular_items else True) and
-                    state.has_all({item.name for item in Items.Castle_Shield}, self.player) and
-                    (state.has_all({item.name for item in Items.Castle_MysteryBox}, self.player) if self.options.mystery_box_special_items else True)
+                        state.has(ItemName.Progressive_PackAPunch, self.player) and
+                        (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_two_third) if self.options.mystery_box_regular_items else True) and
+                        state.has_all({item.name for item in Items.Castle_Shield}, self.player) and
+                        (state.has_all({item.name for item in Items.Castle_MysteryBox}, self.player) if self.options.mystery_box_special_items else True)
                 )
             )
 
@@ -368,7 +368,7 @@ class BO3ZombiesWorld(World):
             #self.add_half_round_region(main_region, RegionName.Zetsubou_Half_Weapons, half_locs)
 
             main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Zetsubou_MainEE, ee_locs)
-            # rule = Has(ItemName.Progressive_PackAPunch) & HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.mystery_box_regular_items_half)
+            # rule = Has(ItemName.Progressive_PackAPunch) & HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.mystery_box_regular_items_two_third)
             # if self.options.randomized_shield_parts:
             #     rule = rule & HasAll(*[item.name for item in Items.Zetsubou_Shield])
             # if self.options.mystery_box_special_items:
@@ -379,17 +379,17 @@ class BO3ZombiesWorld(World):
                 main_region, 
                 main_ee_region, 
                 lambda state: (
-                    state.has(ItemName.Progressive_PackAPunch, self.player) and
-                    (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_half) if self.options.mystery_box_regular_items else True) and
-                    state.has_all({item.name for item in Items.Zetsubou_Shield}, self.player) and
-                    (state.has_all({item.name for item in Items.Zetsubou_MysteryBox}, self.player) if self.options.mystery_box_special_items else True)
+                        state.has(ItemName.Progressive_PackAPunch, self.player) and
+                        (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_two_third) if self.options.mystery_box_regular_items else True) and
+                        state.has_all({item.name for item in Items.Zetsubou_Shield}, self.player) and
+                        (state.has_all({item.name for item in Items.Zetsubou_MysteryBox}, self.player) if self.options.mystery_box_special_items else True)
                 )
             )
 
             upgraded_locs = [loc.name for loc in Locations.Zetsubou_Quest_Masamune_Locations]
             upgraded_weapon_region = self.create_region(self.multiworld, self.player, RegionName.Zetsubou_Upgraded, upgraded_locs)
-            # create_entrance(main_region, upgraded_weapon_region, HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.mystery_box_regular_items_half))
-            create_entrance(main_region, upgraded_weapon_region, lambda state: (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_half) if self.options.mystery_box_regular_items else True))
+            # create_entrance(main_region, upgraded_weapon_region, HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.mystery_box_regular_items_two_third))
+            create_entrance(main_region, upgraded_weapon_region, lambda state: (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_two_third) if self.options.mystery_box_regular_items else True))
 
         if self.options.map_gorod_enabled:
             all_locations = []
@@ -429,7 +429,7 @@ class BO3ZombiesWorld(World):
                 ee_locs = [loc.name for loc in Locations.GorodKrovi_Quest_MainEE_Locations]
 
             main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_MainEE, ee_locs)
-            # rule = Has(ItemName.Progressive_PackAPunch) & HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.mystery_box_regular_items_half)
+            # rule = Has(ItemName.Progressive_PackAPunch) & HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.mystery_box_regular_items_two_third)
             # if self.options.randomized_shield_parts:
             #     rule = rule & HasAll(*[item.name for item in Items.GorodKrovi_Shield])
             # if self.options.mystery_box_special_items:
@@ -439,10 +439,10 @@ class BO3ZombiesWorld(World):
                 bunker_region, 
                 main_ee_region, 
                 lambda state: (
-                    state.has(ItemName.Progressive_PackAPunch, self.player) and
-                    (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_half) if self.options.mystery_box_regular_items else True) and
-                    state.has_all({item.name for item in Items.GorodKrovi_Shield}, self.player) and
-                    (state.has_all({item.name for item in Items.GorodKrovi_MysteryBox}, self.player) if self.options.mystery_box_special_items else True)
+                        state.has(ItemName.Progressive_PackAPunch, self.player) and
+                        (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_two_third) if self.options.mystery_box_regular_items else True) and
+                        state.has_all({item.name for item in Items.GorodKrovi_Shield}, self.player) and
+                        (state.has_all({item.name for item in Items.GorodKrovi_MysteryBox}, self.player) if self.options.mystery_box_special_items else True)
                 )
             )
 
@@ -469,8 +469,8 @@ class BO3ZombiesWorld(World):
             upgraded_locs = [loc.name for loc in Locations.GorodKrovi_Quest_DragonStrikes_Upgraded]
             upgraded_locs += [loc.name for loc in Locations.GorodKrovi_Quest_DragonGauntlets_Late]
             upgraded_weapon_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_Upgraded, upgraded_locs)
-            # create_entrance(main_region, upgraded_weapon_region, HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.mystery_box_regular_items_half))
-            create_entrance(bunker_region, upgraded_weapon_region, lambda state: (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_half) if self.options.mystery_box_regular_items else True))
+            # create_entrance(main_region, upgraded_weapon_region, HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.mystery_box_regular_items_two_third))
+            create_entrance(bunker_region, upgraded_weapon_region, lambda state: (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_two_third) if self.options.mystery_box_regular_items else True))
 
         if self.options.map_revelations_enabled:
             all_locations = []
@@ -497,7 +497,7 @@ class BO3ZombiesWorld(World):
 
             main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_MainEE, ee_locs)
             self.multiworld.regions.append(main_ee_region)
-            # rule = Has(ItemName.Progressive_PackAPunch) & HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.mystery_box_regular_items_half)
+            # rule = Has(ItemName.Progressive_PackAPunch) & HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.mystery_box_regular_items_two_third)
             # if self.options.randomized_shield_parts:
             #     rule = rule & HasAll(*[item.name for item in Items.Revelations_Shield])
             # if self.options.mystery_box_special_items:
@@ -507,10 +507,10 @@ class BO3ZombiesWorld(World):
                 main_region, 
                 main_ee_region, 
                 lambda state: (
-                    state.has(ItemName.Progressive_PackAPunch, self.player) and
-                    (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_half) if self.options.mystery_box_regular_items else True) and
-                    state.has_all({item.name for item in Items.Revelations_Shield}, self.player) and
-                    (state.has_all({item.name for item in Items.Revelations_MysteryBox}, self.player) if self.options.mystery_box_special_items else True)
+                        state.has(ItemName.Progressive_PackAPunch, self.player) and
+                        (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_two_third) if self.options.mystery_box_regular_items else True) and
+                        state.has_all({item.name for item in Items.Revelations_Shield}, self.player) and
+                        (state.has_all({item.name for item in Items.Revelations_MysteryBox}, self.player) if self.options.mystery_box_special_items else True)
                 )
             )
 
@@ -552,9 +552,9 @@ class BO3ZombiesWorld(World):
                 main_region, 
                 main_ee_region, 
                 lambda state: (
-                    state.has(ItemName.Progressive_PackAPunch, self.player) and
-                    (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_half) if self.options.mystery_box_regular_items else True) and
-                    state.has_all({item.name for item in Items.Wanted_Shield}, self.player)
+                        state.has(ItemName.Progressive_PackAPunch, self.player) and
+                        (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_two_third) if self.options.mystery_box_regular_items else True) and
+                        state.has_all({item.name for item in Items.Wanted_Shield}, self.player)
                     # (state.has_all({item.name for item in Items.Revelations_MysteryBox}, self.player) if self.options.mystery_box_special_items else True)
                 )
             )
@@ -1068,7 +1068,7 @@ class BO3ZombiesWorld(World):
         map_name = new_region_name.split(")")[0] + ")"
         region = self.create_region(self.multiworld, self.player, new_region_name, round_locs)
         self.multiworld.regions.append(region)
-        create_entrance(main_region, region, lambda state: rules.check_round_logic(state, self.player, self.options, round_num, map_name, self.mystery_box_regular_items_quarter, self.mystery_box_regular_items_half))
+        create_entrance(main_region, region, lambda state: rules.check_round_logic(state, self.player, self.options, round_num, map_name, self.mystery_box_regular_items_third, self.mystery_box_regular_items_two_third))
 
 def add_universal_items(enabled_items, seen, items):
     for item in items:

@@ -4,7 +4,7 @@ from .Options import BO3ZombiesOptions, bo3_option_groups
 from .Names import ItemName, LocationName, RegionName, Maps
 
 
-def check_round_logic(state:CollectionState, player: int, options, round_num, map_name, quarter, half) -> bool:
+def check_round_logic(state:CollectionState, player: int, options, round_num, map_name, third, two_third) -> bool:
     # Let's just say we can reach round 5 without any progression items
     round_can_reach = 5
     # Value where we stop caring about round logic because we have enough items based on our settings
@@ -58,7 +58,9 @@ def check_round_logic(state:CollectionState, player: int, options, round_num, ma
         for perk in perk_list:
             if state.has(perk.name, player):
                 perks_owned.append(perk.name)
-                perks += 1
+                # Let's... not consider deadshot for perk logic LOL
+                if "Dead Shot" not in perk.name:
+                    perks += 1
         # If we have too many perks for our current limit (1 over whatever), limit logical perk count
         if perks > (current_perk_limit + 1):
             perks = current_perk_limit + 1
@@ -75,10 +77,10 @@ def check_round_logic(state:CollectionState, player: int, options, round_num, ma
 
     if options.mystery_box_regular_items:
         # We have a lot of weapons, add 5 rounds
-        if state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, player, quarter):
+        if state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, player, third):
             round_can_reach += rounds_from_important
         # Now we really have a lot of weapons, add 5 more
-        if state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, player, half):
+        if state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, player, two_third):
             round_can_reach += rounds_from_important
     else:
         round_can_reach += (rounds_from_important * 2)
