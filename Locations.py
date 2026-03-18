@@ -80,6 +80,9 @@ Castle_Craftable_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.CR
     (LocationName.Castle_Craftable_ShieldPartDolly, 2200),
     (LocationName.Castle_Craftable_ShieldPartDoor, 2201),
     (LocationName.Castle_Craftable_ShieldPartClamp, 2202),
+]]
+
+Castle_DG4_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.CRAFTABLE_PART, row[1]) for row in [
     (LocationName.Castle_Craftable_RagnarokDG4PartBody, 2210),
     (LocationName.Castle_Craftable_RagnarokDG4PartGuards, 2211),
     (LocationName.Castle_Craftable_RagnarokDG4PartHandle, 2212),
@@ -191,15 +194,18 @@ Shadows_LilArnies_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.Q
 ]]
 
 Shadows_Craftable_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.MISC, row[1]) for row in [
-    (LocationName.Shadows_Craftable_ApothiconServant_MargwaHeart, 3300),
-    (LocationName.Shadows_Craftable_ApothiconServant_MargwaTentacle, 3301),
-    (LocationName.Shadows_Craftable_ApothiconServant_Xenomatter, 3302),
     (LocationName.Shadows_Craftable_CivilProtector_Fuse1, 3310),
     (LocationName.Shadows_Craftable_CivilProtector_Fuse2, 3311),
     (LocationName.Shadows_Craftable_CivilProtector_Fuse3, 3312),
     (LocationName.Shadows_Craftable_ShieldPartDolly, 3320),
     (LocationName.Shadows_Craftable_ShieldPartDoor, 3321),
     (LocationName.Shadows_Craftable_ShieldPartClamp, 3322),
+]]
+
+Shadows_ApothiconServant_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.MISC, row[1]) for row in [
+    (LocationName.Shadows_Craftable_ApothiconServant_MargwaHeart, 3300),
+    (LocationName.Shadows_Craftable_ApothiconServant_MargwaTentacle, 3301),
+    (LocationName.Shadows_Craftable_ApothiconServant_Xenomatter, 3302),
 ]]
 
 Shadows_Quest_Music_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
@@ -441,11 +447,11 @@ all_locations = (
     # The Giant
     TheGiant_Round_Locations + TheGiant_Quest_Locations + TheGiant_Pap + TheGiant_MonkeyBomb + TheGiant_Quest_Music_Locations
     # Castle
-    + Castle_Round_Locations + Castle_Quest_Locations + Castle_Quest_Music_Locations + Castle_Craftable_Locations 
+    + Castle_Round_Locations + Castle_Quest_Locations + Castle_Quest_Music_Locations + Castle_Craftable_Locations + Castle_DG4_Locations
     + Castle_Quest_ElementalBow_Fire_Locations + Castle_Quest_ElementalBow_Void_Locations + Castle_Quest_ElementalBow_Storm_Locations + Castle_Quest_ElementalBow_Wolf_Locations
     + Castle_Quest_MainEE_Locations
     # Shadows
-    + Shadows_Round_Locations + Shadows_Quest_Locations + Shadows_Craftable_Locations + Shadows_Quest_Music_Locations + Shadows_LilArnies_Locations
+    + Shadows_Round_Locations + Shadows_Quest_Locations + Shadows_Craftable_Locations + Shadows_ApothiconServant_Locations + Shadows_Quest_Music_Locations + Shadows_LilArnies_Locations
     + Shadows_Quest_MainQuest_Locations + Shadows_Quest_ApothiconSword_Locations + Shadows_Quest_ApothiconSword_Upgrade_Locations
     + Shadows_Quest_MainEE_Locations
     # Zetsubou

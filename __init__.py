@@ -196,6 +196,15 @@ class BO3ZombiesWorld(World):
             # create_entrance(menu_region, main_region, Has(ItemName.Map_Shadows))
             create_entrance(menu_region, main_region, lambda state: state.has(ItemName.Map_Shadows, self.player))
 
+            servant_locations = []
+            servant_locations.extend([loc.name for loc in Locations.Shadows_ApothiconServant_Locations])
+            servant_region = self.create_region(self.multiworld, self.player, RegionName.Shadows_Servant, servant_locations)
+            self.multiworld.regions.append(servant_region)
+            create_entrance(main_region, servant_region,
+                            lambda state: rules.check_round_logic(state, self.player, self.options, 12, "(Shadows of Evil)",
+                                                                  self.mystery_box_regular_items_third,
+                                                                  self.mystery_box_regular_items_two_third))
+
             #self.add_quarter_round_region(main_region, RegionName.Shadows_Quarter_Weapons, quarter_locs)
             #self.add_half_round_region(main_region, RegionName.Shadows_Half_Weapons, half_locs)
 
@@ -311,9 +320,15 @@ class BO3ZombiesWorld(World):
             # create_entrance(menu_region, main_region, Has(ItemName.Map_Castle))
             create_entrance(menu_region, main_region, lambda state: state.has(ItemName.Map_Castle, self.player))
 
-
-            #self.add_quarter_round_region(main_region, RegionName.Castle_Quarter_Weapons, quarter_locs)
-            #self.add_half_round_region(main_region, RegionName.Castle_Half_Weapons, half_locs)
+            dg4_locations = []
+            dg4_locations.extend([loc.name for loc in Locations.Castle_DG4_Locations])
+            dg4_region = self.create_region(self.multiworld, self.player, RegionName.Castle_DG4, dg4_locations)
+            self.multiworld.regions.append(dg4_region)
+            create_entrance(main_region, dg4_region,
+                            lambda state: rules.check_round_logic(state, self.player, self.options, 12,
+                                                                  "(Castle)",
+                                                                  self.mystery_box_regular_items_third,
+                                                                  self.mystery_box_regular_items_two_third))
 
             ee_locs = []
             if add_ee_checks:
@@ -479,7 +494,6 @@ class BO3ZombiesWorld(World):
             all_locations.extend([loc.name for loc in Locations.Revelations_Quest_MainQuest_Locations])
             all_locations.extend([loc.name for loc in Locations.Revelations_Craftable_Locations])
             all_locations.extend([loc.name for loc in Locations.Revelations_Quest_SideEE_Locations])
-            all_locations.extend([loc.name for loc in Locations.Revelations_Quest_Challenges])
             if self.options.music_ee_enabled:
                 all_locations.extend([loc.name for loc in Locations.Revelations_Quest_Music_Locations])
 
@@ -488,8 +502,17 @@ class BO3ZombiesWorld(World):
             # create_entrance(menu_region, main_region, Has(ItemName.Map_Revelations))
             create_entrance(menu_region, main_region, lambda state: state.has(ItemName.Map_Revelations, self.player))
 
-            #self.add_quarter_round_region(main_region, RegionName.Revelations_Quarter_Weapons, quarter_locs)
-            #self.add_half_round_region(main_region, RegionName.Revelations_Half_Weapons, half_locs)
+            # Round 18 logic for the panzer/margwa challenges and shield for the possible shield challenge
+            challenge_locations = []
+            challenge_locations.extend([loc.name for loc in Locations.Revelations_Quest_Challenges])
+            challenge_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_Challenges, challenge_locations)
+            self.multiworld.regions.append(challenge_region)
+            create_entrance(main_region, challenge_region,
+                            lambda state: rules.check_round_logic(state, self.player, self.options, 18,
+                                                                  "(Revelations)",
+                                                                  self.mystery_box_regular_items_third,
+                                                                  self.mystery_box_regular_items_two_third) and
+                                          state.has_all({item.name for item in Items.Revelations_Shield}, self.player))
 
             ee_locs = []
             if add_ee_checks:

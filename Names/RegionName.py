@@ -12,6 +12,7 @@ TheGiant_Round_Regions = (TheGiant_Round_10, TheGiant_Round_15, TheGiant_Round_2
 
 Castle_Gondola = "(Castle) Gondola"
 Castle_MainEE = "(Castle) Main Easter Egg"
+Castle_DG4 = "(Castle) DG4 Parts"
 Castle_Upgraded = "(Castle) Upgraded Weapons"
 Castle_BossFight = "(Castle) Boss Fight"
 Castle_Round_10 = "(Castle) Round 10"
@@ -24,6 +25,7 @@ Castle_Round_40 = "(Castle) Round 40"
 Castle_Round_Regions = (Castle_Round_10, Castle_Round_15, Castle_Round_20, Castle_Round_25, Castle_Round_30, Castle_Round_35, Castle_Round_40)
 
 Shadows_Alleyway = "(Shadows of Evil) Alleyway"
+Shadows_Servant = "(Shadows of Evil) Craft Apothican Servant"
 Shadows_Widows = "(Shadows of Evil) Widows Wine Required"
 Shadows_RayGun = "(Shadows of Evil) Ray Gun Required"
 Shadows_Arnies = "(Shadows of Evil) Li'l Arnies Required"
@@ -68,6 +70,7 @@ Gorod_Round_Regions = (Gorod_Round_10, Gorod_Round_15, Gorod_Round_20, Gorod_Rou
 Revelations_House = "(Revelations) House"
 Revelations_MainEE = "(Revelations) Main Easter Egg"
 Revelations_Upgraded = "(Revelations) Upgraded Weapons"
+Revelations_Challenges = "(Revelations) Complete Challenges"
 Revelations_Apothicon_Upgrade = "(Revelations) Apothicon Upgrade"
 Revelations_Arnies_Upgrade = "(Revelations) Arnies Upgrade"
 Revelations_Round_10 = "(Revelations) Round 10"
