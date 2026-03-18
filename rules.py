@@ -5,7 +5,7 @@ from .Names import ItemName, LocationName, RegionName, Maps
 
 
 def check_round_logic(state:CollectionState, player: int, options, round_num, map_name, quarter, half) -> bool:
-    # Let's just say we can reach round 10 without any progression items
+    # Let's just say we can reach round 5 without any progression items
     round_can_reach = 5
     # Value where we stop caring about round logic because we have enough items based on our settings
     round_max_threshold = 40
@@ -21,7 +21,7 @@ def check_round_logic(state:CollectionState, player: int, options, round_num, ma
 
     # We scale up the rounds from important items the lower our max perk limit is from 5
     # This was no matter our perk limit we can hit the round_max_threshold
-    max_perk_limit = min((starting_perk_count + options.progressive_perk_limit_increase.value), 5)
+    max_perk_limit = starting_perk_count + options.progressive_perk_limit_increase.value
     if max_perk_limit < 5:
         # rounds_from_improvement becomes 6 at 4 max limit, and so on
         round_adjustment = (5 - max_perk_limit) * 2
