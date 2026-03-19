@@ -575,9 +575,9 @@ class BO3ZombiesWorld(World):
                 main_region, 
                 main_ee_region, 
                 lambda state: (
-                        state.has(ItemName.Progressive_PackAPunch, self.player) and
-                        (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_two_third) if self.options.mystery_box_regular_items else True) and
-                        state.has_all({item.name for item in Items.Wanted_Shield}, self.player)
+                    state.has(ItemName.Progressive_PackAPunch, self.player) and
+                    (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_two_third) if self.options.mystery_box_regular_items else True) and
+                    state.has_all({item.name for item in Items.Wanted_Shield}, self.player)
                     # (state.has_all({item.name for item in Items.Revelations_MysteryBox}, self.player) if self.options.mystery_box_special_items else True)
                 )
             )
@@ -810,7 +810,7 @@ class BO3ZombiesWorld(World):
                 self.multiworld.get_location(LocationName.Revelations_Craftable_ShieldPartDolly, self.player).place_locked_item(self.create_item(Items.Revelations_Shield[1].name))
                 self.multiworld.get_location(LocationName.Revelations_Craftable_ShieldPartClamp, self.player).place_locked_item(self.create_item(Items.Revelations_Shield[2].name))
         if self.options.map_workshop_wanted_enabled:
-            map_list.append((Maps.Wanted_Map_String, RegionName.Wanted_Town, RegionName.Wanted_Half_Weapons, RegionName.Wanted_Quarter_Weapons, Locations.Wanted_Round_Locations))
+            map_list.append((Maps.Wanted_Map_String, RegionName.Wanted_Town, RegionName.Wanted_Round_Regions, Locations.Wanted_Round_Locations))
             if self.options.randomized_shield_parts:
                 enabled_items += Items.Wanted_Shield
             else:
@@ -1137,22 +1137,22 @@ def add_round_locations(round_locations, round_max, round_freq, is_goal_cond, go
         # Make sure the Goal Round is always included
         if is_goal_cond:
             if goal_round > round_max or goal_round % round_freq != 0:
-                if i <= 5:
-                    round_locs_early.append(round_locations[i - 2].name)
-                elif i <= 10:
-                    round_locs_10.append(round_locations[i - 2].name)
-                elif i <= 15:
-                    round_locs_15.append(round_locations[i - 2].name)
-                elif i <= 20:
-                    round_locs_20.append(round_locations[i - 2].name)
-                elif i <= 25:
-                    round_locs_25.append(round_locations[i - 2].name)
-                elif i <= 30:
-                    round_locs_30.append(round_locations[i - 2].name)
-                elif i <= 35:
-                    round_locs_35.append(round_locations[i - 2].name)
+                if goal_round <= 5:
+                    round_locs_early.append(round_locations[goal_round - 2].name)
+                elif goal_round <= 10:
+                    round_locs_10.append(round_locations[goal_round - 2].name)
+                elif goal_round <= 15:
+                    round_locs_15.append(round_locations[goal_round - 2].name)
+                elif goal_round <= 20:
+                    round_locs_20.append(round_locations[goal_round - 2].name)
+                elif goal_round <= 25:
+                    round_locs_25.append(round_locations[goal_round - 2].name)
+                elif goal_round <= 30:
+                    round_locs_30.append(round_locations[goal_round - 2].name)
+                elif goal_round <= 35:
+                    round_locs_35.append(round_locations[goal_round - 2].name)
                 else:
-                    round_locs_40.append(round_locations[i - 2].name)
+                    round_locs_40.append(round_locations[goal_round - 2].name)
     return [round_locs_early, round_locs_10, round_locs_15, round_locs_20, round_locs_25, round_locs_30, round_locs_35, round_locs_40]
 
 # REMOVE IN 0.6.7
