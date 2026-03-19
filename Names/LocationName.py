@@ -236,8 +236,7 @@ TheGiant_Quest_Music_BeautyOfAnnihilation = Maps.The_Giant_Map_String + " Music 
 TheGiant_Quest_AllSpareChangeCollected = Maps.The_Giant_Map_String + " All Spare Change Collected"
 
 Wanted_Quest_MainQuest_CollectSkulls = Maps.Wanted_Map_String + " Collect the Skulls"
-Wanted_Quest_MainQuest_Werewolf = Maps.Wanted_Map_String + " Kill a Werewolf"
-Wanted_Quest_MainQuest_WeaponSafe = Maps.Wanted_Map_String + " Open the Weapon Safe"
+Wanted_Quest_MainQuest_WeaponSafe = Maps.Wanted_Map_String + " Open the Barn"
 
 Wanted_Weapon_Magmagat = Maps.Wanted_Map_String + " Build the Magmagat"
 Wanted_Weapon_GreatScott = Maps.Wanted_Map_String + " Pickup the Great Scott Weapon"

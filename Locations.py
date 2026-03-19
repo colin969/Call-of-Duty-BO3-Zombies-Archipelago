@@ -409,7 +409,6 @@ Wanted_Round_Locations = gen_map_round_locations(Maps.Wanted_Map_String, 99)
 
 Wanted_Quest_MainQuest_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.Wanted_Quest_MainQuest_CollectSkulls, 20100),
-    (LocationName.Wanted_Quest_MainQuest_Werewolf, 20101),
     (LocationName.Wanted_Quest_MainQuest_WeaponSafe, 20102),
 ]]
 
