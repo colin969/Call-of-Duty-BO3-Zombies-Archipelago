@@ -4,7 +4,7 @@ from .Options import BO3ZombiesOptions, bo3_option_groups
 from .Names import ItemName, LocationName, RegionName, Maps
 
 
-def check_round_logic(state:CollectionState, player: int, options, round_num, map_name, third, two_third) -> bool:
+def check_round_logic(state: CollectionState, player: int, options, round_num, map_name, third, two_third) -> bool:
     # Let's just say we can reach round 5 without any progression items
     round_can_reach = 5
     # Value where we stop caring about round logic because we have enough items based on our settings
