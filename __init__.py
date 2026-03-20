@@ -3,8 +3,8 @@ import math
 import os
 import json
 
-from BaseClasses import Location, MultiWorld, Region, Item, ItemClassification, CollectionRule, CollectionState
-from worlds.generic.Rules import set_rule, add_rule
+from BaseClasses import Location, MultiWorld, Region, Item, ItemClassification, CollectionState
+from worlds.generic.Rules import CollectionRule
 from . import rules
 
 from worlds.AutoWorld import World, WebWorld
@@ -927,8 +927,8 @@ class BO3ZombiesWorld(World):
         # Add round locations
         round_max = self.options.round_location_max.value
         goal_round = self.options.goal_round.value
-        if is_goal_cond:
-            round_max = min(round_max, goal_round)
+        #if is_goal_cond:
+            #round_max = min(round_max, goal_round)
 
         for str_map, str_main_region, list_round_regions, round_locations in map_list:
             round_locs = add_round_locations(round_locations, round_max, self.options.round_location_freq.value, is_goal_cond, goal_round)
@@ -1033,8 +1033,8 @@ class BO3ZombiesWorld(World):
         # Goal Round
         if self.options.goal_condition == 2:
             self.slot_goal_items = self.goal_round_items
-            self.slot_goal_items_required = len(self.slot_goal_items)
-            self.multiworld.completion_condition[self.player] = lambda state: state.has_all(self.goal_round_items, self.player)
+            self.slot_goal_items_required = self.options.goal_round_count.value
+            self.multiworld.completion_condition[self.player] = lambda state: state.has_from_list(self.goal_round_items, self.player, min(self.options.goal_round_count.value, len(self.goal_round_items)))
 
     def fill_slot_data(self) -> dict:
         options = self.options
