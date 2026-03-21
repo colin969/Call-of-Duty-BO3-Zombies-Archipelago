@@ -947,9 +947,7 @@ class BO3ZombiesWorld(World):
         # Goal Round Condition
         if self.options.goal_condition == 2:
             self.goal_round_items = []
-            num_to_finish = min(len(map_list), self.options.goal_round_count.value)
-            selected_maps = self.random.sample(map_list, num_to_finish)
-            for m in selected_maps:
+            for m in map_list:
                 # Victory round item on every map
                 goal_location = Locations.get_map_victory_location(m[0], self.options.goal_round)
                 goal_item = self.create_item(m[0] + " Victory")
@@ -1039,7 +1037,7 @@ class BO3ZombiesWorld(World):
         # Goal Round
         if self.options.goal_condition == 2:
             self.slot_goal_items = self.goal_round_items
-            self.slot_goal_items_required = len(self.slot_goal_items)
+            self.slot_goal_items_required = min(len(self.slot_goal_items), self.options.goal_round_count.value)
             self.multiworld.completion_condition[self.player] = lambda state: state.has_all(self.goal_round_items, self.player)
 
     def fill_slot_data(self) -> dict:
