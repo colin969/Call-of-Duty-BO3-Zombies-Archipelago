@@ -35,7 +35,7 @@ class MapRevelationsEnabled(Toggle):
 
 class MapWorkshopWantedEnabled(Toggle):
     """Enabled Map: \"Wanted\""""
-    display_name = "(Workshop) \"Wanted\" map enabled"
+    display_name = "WIP (Workshop) \"Wanted\" map enabled"
     default = False
 
 class SpecialRoundsEnabled(Toggle):
@@ -64,25 +64,30 @@ class MysteryBoxRegularItems(Toggle):
     default = True
 
 class CastleBowCount(Range):
-    """Number of Elemental Bow quests to include in checks or Weapon Quest goal conditions"""
-    display_name = "(Castle) Weapon Quest - Bow Count"
+    """Number of random Elemental Bow quests to include in checks or Weapon Quest goal conditions"""
+    display_name = "(Castle) Number of Elemental Bow Quests with Checks"
     default = 2
     range_start = 0
     range_end = 4
 
-class CastleWolfBow(Toggle):
-    """Include Wolf Bow / Wolf Howl in Castle location list"""
-    display_name = "(Castle) Wolf Bow / Wolf Howl Locations"
+class CastleBowEnabledStorm(Toggle):
+    """Allow the Storm bow to be one of your random Elemental Bow quest checks"""
+    display_name = "(Castle) Elemental Bow - Storm"
     default = True
 
-class CastleFireBow(Toggle):
-    """Include Fire Bow / Rune Prison in Castle location list"""
-    display_name = "(Castle) Fire Bow / Rune Prison Locations"
+class CastleBowEnabledWolf(Toggle):
+    """Allow the Wolf bow to be one of your random Elemental Bow quest checks"""
+    display_name = "(Castle) Elemental Bow - Wolf"
     default = True
 
-class CastleVoidBow(Toggle):
-    """Include Void Bow / Demon Gate in Castle location list"""
-    display_name = "(Castle) Void Bow / Demon Gate Locations"
+class CastleBowEnabledFire(Toggle):
+    """Allow the Fire bow to be one of your random Elemental Bow quest checks"""
+    display_name = "(Castle) Elemental Bow - Fire"
+    default = True
+
+class CastleBowEnabledVoid(Toggle):
+    """Allow the Void bow to be one of your random Elemental Bow quest checks"""
+    display_name = "(Castle) Elemental Bow - Void"
     default = True
 
 class PerkLimitDefaultModifier(Range):
@@ -146,12 +151,12 @@ class RoundLocationFrequency(Range):
 
 class EasterEggsEnabled(Toggle):
     """Include Easter Egg steps as AP locations / checks when Easter Egg Hunt is not the goal condition"""
-    display_name = "Easter Egg Locations"
+    display_name = "Easter Egg Checks"
     default = False
 
 class MusicEasterEggsEnabled(Toggle):
     """Include music easter eggs as AP locations / checks"""
-    display_name = "Music Easter Egg Locations (Streamer Warning)"
+    display_name = "Music Easter Egg Checks (Streamer Warning)"
     default = True
 
 class GoalCondition(Choice):
@@ -168,7 +173,7 @@ class GoalCondition(Choice):
 
 class GoalEasterEggCount(Range):
     """Number of Main Easter Eggs needed to complete the seed when running Easter Egg Hunt. This will not exceed the number of selected maps"""
-    display_name = "Easter Egg Goal Count"
+    display_name = "Easter Egg Hunt - Goal Count"
     range_start = 1
     range_end = 6
 
@@ -176,19 +181,19 @@ class GoalEasterEggCount(Range):
 
 class GoalEasterEggHuntRandom(Toggle):
     """Randomize which Easter Eggs are required. If disabled, you may complete any number of enabled maps to meet your Easter Egg Goal Count"""
-    display_name = "Easter Egg Randomize Requirement"
+    display_name = "Easter Egg Hunt - Specific Required Maps"
     default = False
 
 class GoalRound(Range):
     """Round to award Goal Round to award victory on when running the Victory Round goal condition"""
-    display_name = "Goal Round"
+    display_name = "Goal Round - Round Number"
     range_start = 2
     range_end = 100
     default = 25
 
 class GoalRoundCount(Range):
     """Number of maps to meet the goal round to satisfy the win condition. This will not exceed the number of selected maps."""
-    display_name = "Goal Round Count"
+    display_name = "Goal Round - Number of maps to goal"
     range_start = 1
     range_end = 7
     default = 7
@@ -363,6 +368,10 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     map_specific_wallbuys: MapSpecificWallbuysEnabled
     map_specific_machines: MapSpecificMachinesEnabled
     castle_bow_count: CastleBowCount
+    castle_bow_storm: CastleBowEnabledStorm
+    castle_bow_wolf: CastleBowEnabledWolf
+    castle_bow_fire: CastleBowEnabledFire
+    castle_bow_void: CastleBowEnabledVoid
     gift_weight: GiftWeight
     trap_weight: TrapWeight
     difficulty_gorod_egg_cooldown: DifficultyGorodEggCooldown
@@ -430,11 +439,17 @@ bo3_option_groups = [
         MapShadowsEnabled,
         MapTheGiantEnabled,
         MapCastleEnabled,
-        CastleBowCount,
         MapZetsubouEnabled,
         MapGorodKroviEnabled,
-        RandomizeGorodDragonrideParts,
         MapRevelationsEnabled,
+        CastleBowCount,
+        CastleBowEnabledStorm,
+        CastleBowEnabledWolf,
+        CastleBowEnabledFire,
+        CastleBowEnabledVoid,
+        RandomizeGorodDragonrideParts,
+    ]),
+    OptionGroup("Workshop Map Settings", [
         MapWorkshopWantedEnabled,
     ]),
     OptionGroup("Shop Settings", [

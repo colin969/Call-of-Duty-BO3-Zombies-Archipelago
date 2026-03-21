@@ -3,8 +3,8 @@ import math
 import os
 import json
 
-from BaseClasses import Location, MultiWorld, Region, Item, ItemClassification, CollectionState
-from worlds.generic.Rules import CollectionRule
+from BaseClasses import Location, MultiWorld, Region, Item, ItemClassification, CollectionRule, CollectionState
+from worlds.generic.Rules import set_rule, add_rule
 from . import rules
 
 from worlds.AutoWorld import World, WebWorld
@@ -283,12 +283,16 @@ class BO3ZombiesWorld(World):
         if self.options.map_castle_enabled:
             all_locations = []
 
-            bow_pairs = [
-                (Locations.Castle_Quest_ElementalBow_Storm_Locations, ItemName.Castle_Victory_ElementalBow_Storm),
-                (Locations.Castle_Quest_ElementalBow_Wolf_Locations, ItemName.Castle_Victory_ElementalBow_Wolf),
-                (Locations.Castle_Quest_ElementalBow_Fire_Locations, ItemName.Castle_Victory_ElementalBow_Fire),
-                (Locations.Castle_Quest_ElementalBow_Void_Locations, ItemName.Castle_Victory_ElementalBow_Void),
-            ]
+            bow_pairs = []
+            if self.options.castle_bow_storm:
+                bow_pairs.append((Locations.Castle_Quest_ElementalBow_Storm_Locations, ItemName.Castle_Victory_ElementalBow_Storm))
+            if self.options.castle_bow_wolf:
+                bow_pairs.append((Locations.Castle_Quest_ElementalBow_Wolf_Locations, ItemName.Castle_Victory_ElementalBow_Wolf))
+            if self.options.castle_bow_fire:
+                bow_pairs.append((Locations.Castle_Quest_ElementalBow_Fire_Locations, ItemName.Castle_Victory_ElementalBow_Fire))
+            if self.options.castle_bow_void:
+                bow_pairs.append((Locations.Castle_Quest_ElementalBow_Void_Locations, ItemName.Castle_Victory_ElementalBow_Void))
+
             bow_count = min(self.options.castle_bow_count.value, len(bow_pairs))
             # Make sure universal tracker sees all 4 location groups
             if not is_ut:
@@ -927,8 +931,8 @@ class BO3ZombiesWorld(World):
         # Add round locations
         round_max = self.options.round_location_max.value
         goal_round = self.options.goal_round.value
-        #if is_goal_cond:
-            #round_max = min(round_max, goal_round)
+        if is_goal_cond:
+            round_max = min(round_max, goal_round)
 
         for str_map, str_main_region, list_round_regions, round_locations in map_list:
             round_locs = add_round_locations(round_locations, round_max, self.options.round_location_freq.value, is_goal_cond, goal_round)
@@ -943,7 +947,9 @@ class BO3ZombiesWorld(World):
         # Goal Round Condition
         if self.options.goal_condition == 2:
             self.goal_round_items = []
-            for m in map_list:
+            num_to_finish = min(len(map_list), self.options.goal_round_count.value)
+            selected_maps = self.random.sample(map_list, num_to_finish)
+            for m in selected_maps:
                 # Victory round item on every map
                 goal_location = Locations.get_map_victory_location(m[0], self.options.goal_round)
                 goal_item = self.create_item(m[0] + " Victory")
@@ -1033,8 +1039,8 @@ class BO3ZombiesWorld(World):
         # Goal Round
         if self.options.goal_condition == 2:
             self.slot_goal_items = self.goal_round_items
-            self.slot_goal_items_required = self.options.goal_round_count.value
-            self.multiworld.completion_condition[self.player] = lambda state: state.has_from_list(self.goal_round_items, self.player, min(self.options.goal_round_count.value, len(self.goal_round_items)))
+            self.slot_goal_items_required = len(self.slot_goal_items)
+            self.multiworld.completion_condition[self.player] = lambda state: state.has_all(self.goal_round_items, self.player)
 
     def fill_slot_data(self) -> dict:
         options = self.options
