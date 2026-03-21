@@ -113,12 +113,12 @@ class ProgressiveStartingPoints(Range):
 class MapSpecificWallbuysEnabled(Toggle):
     """Enables map specific wallbuy items"""
     display_name = "Map specific wallbuys"
-    default = False
+    default = True
 
 class MapSpecificMachinesEnabled(Toggle):
     """Enables map specific perk machine items"""
     display_name = "Map specific perk machines"
-    default = False
+    default = True
 
 class GiftWeight(Range):
     """Weighting of gifts to replace filler with"""
