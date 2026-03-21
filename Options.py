@@ -130,7 +130,7 @@ class TrapWeight(Range):
     range_end = 100
 
 class RoundMaxLocation(Range):
-    """Maximum of rounds per map to be included as an AP location / check. This will not exceed Goal Round if your goal condiiton is Victory Round"""
+    """Maximum of rounds per map to be included as an AP location / check."""
     display_name = "Max Round Location"
     range_start = 0
     range_end = 50
@@ -145,7 +145,7 @@ class RoundLocationFrequency(Range):
     default = 2
 
 class EasterEggsEnabled(Toggle):
-    """Include Easter Egg steps as AP locations / checks when Easter Egg Hunt is not the goal conditon"""
+    """Include Easter Egg steps as AP locations / checks when Easter Egg Hunt is not the goal condition"""
     display_name = "Easter Egg Locations"
     default = False
 
@@ -185,6 +185,13 @@ class GoalRound(Range):
     range_start = 2
     range_end = 100
     default = 25
+
+class GoalRoundCount(Range):
+    """Number of maps to meet the goal round to satisfy the win condition. This will not exceed the number of selected maps."""
+    display_name = "Goal Round Count"
+    range_start = 1
+    range_end = 7
+    default = 7
 
 class DifficultyGorodEggCooldown(Toggle):
     """Instantly cool down the egg instead of waiting 2 rounds to retrieve it each time"""
@@ -343,6 +350,7 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     round_location_freq: RoundLocationFrequency
     goal_condition: GoalCondition
     goal_round: GoalRound
+    goal_round_count: GoalRoundCount
     goal_ee_count: GoalEasterEggCount
     goal_ee_random: GoalEasterEggHuntRandom
     perk_limit_default_modifier: PerkLimitDefaultModifier
@@ -411,6 +419,7 @@ bo3_option_groups = [
         GoalEasterEggHuntRandom,
         GoalEasterEggCount,
         GoalRound,
+        GoalRoundCount,
     ]),
     OptionGroup("Progressive Settings", [
         PerkLimitDefaultModifier,
