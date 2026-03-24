@@ -35,7 +35,7 @@ class MapRevelationsEnabled(Toggle):
 
 class MapWorkshopWantedEnabled(Toggle):
     """Enabled Map: \"Wanted\""""
-    display_name = "WIP (Workshop) \"Wanted\" map enabled"
+    display_name = "(BROKEN) \"Wanted\" map enabled"
     default = False
 
 class SpecialRoundsEnabled(Toggle):
@@ -83,12 +83,12 @@ class CastleBowEnabledWolf(Toggle):
 class CastleBowEnabledFire(Toggle):
     """Allow the Fire bow to be one of your random Elemental Bow quest checks"""
     display_name = "(Castle) Elemental Bow - Fire"
-    default = True
+    default = False
 
 class CastleBowEnabledVoid(Toggle):
     """Allow the Void bow to be one of your random Elemental Bow quest checks"""
     display_name = "(Castle) Elemental Bow - Void"
-    default = True
+    default = False
 
 class PerkLimitDefaultModifier(Range):
     """Modifier for initial perk limit, e.g If a map has a perk limit of 4, then -1 modifier will make it 3"""
@@ -106,19 +106,19 @@ class ProgressivePerkLimitIncrease(Range):
 
 class ProgressiveStartingPoints(Range):
     """How many extra starting points to add into the pool. This will be rounded to 500"""
-    default = 2500
+    default = 3000
     range_start = 0
     range_end = 10000
 
 class MapSpecificWallbuysEnabled(Toggle):
     """Enables map specific wallbuy items"""
     display_name = "Map specific wallbuys"
-    default = True
+    default = False
 
 class MapSpecificMachinesEnabled(Toggle):
     """Enables map specific perk machine items"""
     display_name = "Map specific perk machines"
-    default = True
+    default = False
 
 class GiftWeight(Range):
     """Weighting of gifts to replace filler with"""
@@ -292,12 +292,12 @@ class DeathlinkRecvMode(Choice):
 
 class DeathlinkSoloUnlimitedQuickRevive(Toggle):
     """In a solo game, allow more than 3 uses of quick revive when deathlink is enabled"""
-    display_name = "(UNUSED) Deathlink - Solo Quick Revive Uncapped"
+    display_name = "Deathlink - More than 3 Solo Quick Revive uses"
     default = True
 
 class DeathlinkSoloFreeQuickRevive(Toggle):
     """In a solo game, unlock quick revive immediately"""
-    display_name = "(UNUSED) Deathlink - Solo Starting Quick Revive"
+    display_name = "Deathlink - Start with Quick Revive machine turned on"
     default = True
 
 class StartingMapsUnlocked(Range):
@@ -393,6 +393,8 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     deathlink_enabled: DeathlinkEnabled
     deathlink_send_mode: DeathlinkSendMode
     deathlink_recv_mode: DeathlinkRecvMode
+    deathlink_solo_quickrevive_unlocked: DeathlinkSoloFreeQuickRevive
+    deathlink_solo_quickrevive_unlimited: DeathlinkSoloUnlimitedQuickRevive
     shop_perk_tokens: ShopPerkTokens
     shop_mega_gums: ShopMegaGumTokens
     shop_rare_gums: ShopRareGumTokens

@@ -3,7 +3,7 @@ import math
 import os
 import json
 
-from BaseClasses import Location, MultiWorld, Region, Item, ItemClassification, CollectionRule, CollectionState
+from BaseClasses import Location, MultiWorld, Region, Item, ItemClassification
 from worlds.generic.Rules import set_rule, add_rule
 from . import rules
 
@@ -173,13 +173,6 @@ class BO3ZombiesWorld(World):
         # Default Balancing, Make sure you get to every region
         # TODO: Randomize this a bit/weight it
         
-        is_round_goal_cond = self.options.goal_condition == 2
-        goal_round = self.options.goal_round
-        round_max = self.options.round_location_max
-        if is_round_goal_cond:
-            round_max = min(round_max, goal_round)
-        round_freq = self.options.round_location_freq
-
         if self.options.map_shadows_enabled:
             all_locations = []
             #free_locs, quarter_locs, half_locs = add_round_locations(Locations.Shadows_Round_Locations, round_max, round_freq, is_round_goal_cond, goal_round)
@@ -200,7 +193,7 @@ class BO3ZombiesWorld(World):
             servant_locations.extend([loc.name for loc in Locations.Shadows_ApothiconServant_Locations])
             servant_region = self.create_region(self.multiworld, self.player, RegionName.Shadows_Servant, servant_locations)
             self.multiworld.regions.append(servant_region)
-            rule: CollectionRule = lambda state: rules.check_round_logic(state, self.player, self.options, 12, "(Shadows of Evil)", self.mystery_box_regular_items_third, self.mystery_box_regular_items_two_third)
+            rule = lambda state: rules.check_round_logic(state, self.player, self.options, 12, "(Shadows of Evil)", self.mystery_box_regular_items_third, self.mystery_box_regular_items_two_third)
             create_entrance(main_region, servant_region, rule)
 
             #self.add_quarter_round_region(main_region, RegionName.Shadows_Quarter_Weapons, quarter_locs)
@@ -326,7 +319,7 @@ class BO3ZombiesWorld(World):
             dg4_locations.extend([loc.name for loc in Locations.Castle_DG4_Locations])
             dg4_region = self.create_region(self.multiworld, self.player, RegionName.Castle_DG4, dg4_locations)
             self.multiworld.regions.append(dg4_region)
-            rule: CollectionRule = lambda state: rules.check_round_logic(state, self.player, self.options, 12, "(Castle)", self.mystery_box_regular_items_third, self.mystery_box_regular_items_two_third)
+            rule = lambda state: rules.check_round_logic(state, self.player, self.options, 12, "(Castle)", self.mystery_box_regular_items_third, self.mystery_box_regular_items_two_third)
             create_entrance(main_region, dg4_region, rule)
 
             ee_locs = []
@@ -506,7 +499,7 @@ class BO3ZombiesWorld(World):
             challenge_locations.extend([loc.name for loc in Locations.Revelations_Quest_Challenges])
             challenge_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_Challenges, challenge_locations)
             self.multiworld.regions.append(challenge_region)
-            rule: CollectionRule = lambda state: (
+            rule = lambda state: (
                 rules.check_round_logic(state, self.player, self.options, 18, "(Revelations)", self.mystery_box_regular_items_third, self.mystery_box_regular_items_two_third) and
                 state.has_all({item.name for item in Items.Revelations_Shield}, self.player)
             )
@@ -931,8 +924,6 @@ class BO3ZombiesWorld(World):
         # Add round locations
         round_max = self.options.round_location_max.value
         goal_round = self.options.goal_round.value
-        if is_goal_cond:
-            round_max = min(round_max, goal_round)
 
         for str_map, str_main_region, list_round_regions, round_locations in map_list:
             round_locs = add_round_locations(round_locations, round_max, self.options.round_location_freq.value, is_goal_cond, goal_round)
@@ -979,8 +970,6 @@ class BO3ZombiesWorld(World):
     def calc_round_locations(self, num_maps, is_goal_cond) -> int:
         round_freq = self.options.round_location_freq.value
         round_max = self.options.round_location_max.value
-        if is_goal_cond:
-            round_max = min(round_max, self.options.goal_round.value)
         goal_round = self.options.goal_round.value
         
         if round_freq == 0:
@@ -1072,6 +1061,8 @@ class BO3ZombiesWorld(World):
             "deathlink_enabled": bool(options.deathlink_enabled),
             "deathlink_send_mode": int(options.deathlink_send_mode),
             "deathlink_recv_mode": int(options.deathlink_recv_mode),
+            "deathlink_solo_quickrevive_unlocked": bool(options.deathlink_solo_quickrevive_unlocked),
+            "deathlink_solo_quickrevive_unlimited": bool(options.deathlink_solo_quickrevive_unlimited),
             "goal_items_required": int(self.slot_goal_items_required),
             "goal_items": self.slot_goal_items,
         }
@@ -1089,7 +1080,7 @@ class BO3ZombiesWorld(World):
         map_name = new_region_name.split(")")[0] + ")"
         region = self.create_region(self.multiworld, self.player, new_region_name, round_locs)
         self.multiworld.regions.append(region)
-        rule: CollectionRule = lambda state: rules.check_round_logic(state, self.player, self.options, round_num, map_name, self.mystery_box_regular_items_third, self.mystery_box_regular_items_two_third)
+        rule = lambda state: rules.check_round_logic(state, self.player, self.options, round_num, map_name, self.mystery_box_regular_items_third, self.mystery_box_regular_items_two_third)
         create_entrance(main_region, region, rule)
 
 def add_universal_items(enabled_items, seen, items):
@@ -1155,5 +1146,5 @@ def add_round_locations(round_locations, round_max, round_freq, is_goal_cond, go
     return [round_locs_early, round_locs_10, round_locs_15, round_locs_20, round_locs_25, round_locs_30, round_locs_35, round_locs_40]
 
 # REMOVE IN 0.6.7
-def create_entrance(from_region: Region, to_region: Region, rule: CollectionRule | None = None):
+def create_entrance(from_region: Region, to_region: Region, rule = None):
     from_region.connect(to_region, None, rule)
