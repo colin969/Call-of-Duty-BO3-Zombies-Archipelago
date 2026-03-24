@@ -38,6 +38,11 @@ class MapWorkshopWantedEnabled(Toggle):
     display_name = "(BROKEN) \"Wanted\" map enabled"
     default = False
 
+class StartMapHints(Toggle):
+    """Start hints the maps you have in the pool."""
+    display_name = "Start Hint Maps"
+    default = True
+
 class SpecialRoundsEnabled(Toggle):
     """Enables Special Rounds (Dogs, Monkeys, ect.)."""
     display_name = "Special Rounds Enabled"
@@ -355,6 +360,7 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     map_gorod_enabled: MapGorodKroviEnabled
     map_revelations_enabled: MapRevelationsEnabled
     map_workshop_wanted_enabled: MapWorkshopWantedEnabled
+    start_map_hints: StartMapHints
     special_rounds_enabled: SpecialRoundsEnabled
     round_location_max: RoundMaxLocation
     round_location_freq: RoundLocationFrequency
@@ -451,6 +457,7 @@ bo3_option_groups = [
         MapZetsubouEnabled,
         MapGorodKroviEnabled,
         MapRevelationsEnabled,
+        StartMapHints,
         CastleBowCount,
         CastleBowEnabledStorm,
         CastleBowEnabledWolf,

@@ -179,9 +179,10 @@ class BO3ZombiesWorld(World):
                 self.push_precollected(item)
             locked_maps = []
 
-        # Auto-hint map unlocks, let players spend hints on things they really want, not what they desperately need
-        for item in locked_maps:
-            self.options.start_hints.value.add(item)
+        # Auto-hint map unlocks based on setting, letting players spend hints on things they really want, not what they desperately need
+        if self.options.start_map_hints:
+            for item in locked_maps:
+                self.options.start_hints.value.add(item)
         self.cod_locked_maps = locked_maps
 
         universal_locations = [
@@ -580,7 +581,6 @@ class BO3ZombiesWorld(World):
                     # (state.has_all({item.name for item in Items.Revelations_MysteryBox}, self.player) if self.options.mystery_box_special_items else True)
                 )
             )
-
 
     def create_region(self, world: MultiWorld, player: int, name: str, locations=None):
         ret = Region(name, player, world)
