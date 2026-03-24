@@ -90,6 +90,11 @@ class CastleBowEnabledVoid(Toggle):
     display_name = "(Castle) Elemental Bow - Void"
     default = False
 
+class StartingQuickRevive(Toggle):
+    """Start with Quick Revive on all maps."""
+    display_name = "Quick Revive on Start"
+    default = False
+
 class PerkLimitDefaultModifier(Range):
     """Modifier for initial perk limit, e.g If a map has a perk limit of 4, then -1 modifier will make it 3"""
     display_name = "Perk Limit Default Modifier"
@@ -358,6 +363,7 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     goal_round_count: GoalRoundCount
     goal_ee_count: GoalEasterEggCount
     goal_ee_random: GoalEasterEggHuntRandom
+    start_quick_revive: StartingQuickRevive
     perk_limit_default_modifier: PerkLimitDefaultModifier
     progressive_perk_limit_increase: ProgressivePerkLimitIncrease
     progressive_starting_points: ProgressiveStartingPoints
@@ -412,6 +418,7 @@ bo3_option_groups = [
         RoundLocationFrequency,
         EasterEggsEnabled,
         MusicEasterEggsEnabled,
+        StartingQuickRevive
     ]),
     OptionGroup("Weapons", [
         AttachmentsEnabled,

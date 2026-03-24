@@ -14,6 +14,10 @@ def check_round_logic(state: CollectionState, player: int, options, round_num, m
     # Number of rounds from important aspects, like box weapons and pap
     rounds_from_important = 4
 
+    # The giant doesn't have enough logical perks to hit the round max threshold, so we'll softcap at 35
+    if map_name == Maps.The_Giant_Map_String and options.round_location_max.value > 35:
+        round_max_threshold = 35
+
     # We'll start with adjusting our round logic for our perks, +4 logical rounds per perk
     # However, we'll only consider perks we have up to 2 over our current limit (4 perks logical at a 2 perk limit)
     starting_perk_count = 4 + options.perk_limit_default_modifier.value
@@ -58,16 +62,17 @@ def check_round_logic(state: CollectionState, player: int, options, round_num, m
         for perk in perk_list:
             if state.has(perk.name, player):
                 perks_owned.append(perk.name)
-                # Let's... not consider deadshot for perk logic LOL
-                if "Dead Shot" not in perk.name:
+                # Let's not consider deadshot or quick revive for perk logic
+                if ("Dead Shot" not in perk.name) and ("Quick Revive" not in perk.name):
                     perks += 1
         # If we have too many perks for our current limit (1 over whatever), limit logical perk count
-        if perks > (current_perk_limit + 1):
-            perks = current_perk_limit + 1
-        # If we don't have quick revive or jugg, lets limit our logical perk count to 2
+        if len(perks_owned) > (current_perk_limit + 1):
+            # Don't set the perk count based on limit unless our logical perks are actually higher in count
+            perks = min(perks, current_perk_limit + 1)
+        # If we don't have jugg, lets limit our logical perk count to 2
         has_important_perk = False
         for perk in perks_owned:
-            if ("Juggernog" in perk) or ("QuickRevive" in perk):
+            if "Juggernog" in perk:
                 has_important_perk = True
                 break
         if not has_important_perk and perks > 2:
