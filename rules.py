@@ -3,6 +3,19 @@ from . import Locations, Items, Options
 from .Options import BO3ZombiesOptions, bo3_option_groups
 from .Names import ItemName, LocationName, RegionName, Maps
 
+def can_open_map(state: CollectionState, player: int, options, map_name, third, two_third) -> bool:
+    # This is a rule meant to basically say "yeah we can open the map now" based on round logic and current starting points
+    starting_points = 500
+    starting_points += (500 * state.count(Items.Progressive_StartingPoints500.name, player))
+    # Various ways we can pass this check
+    # points only - we have enough starting points we don't care about what round we can reach
+    points_only = (starting_points >= 5000)
+    # mixed - enough starting points and can reach round 7
+    mixed = (starting_points >= 2500) and check_round_logic(state, player, options, 7, map_name, third, two_third)
+    # round only - we have enough round access logically to reliably open the map
+    round_only = check_round_logic(state, player, options, 10, map_name, third, two_third)
+
+    return any([points_only, mixed, round_only])
 
 def check_round_logic(state: CollectionState, player: int, options, round_num, map_name, third, two_third) -> bool:
     # Let's just say we can reach round 5 without any progression items

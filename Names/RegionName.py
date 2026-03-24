@@ -1,4 +1,5 @@
 TheGiant_Courtyard  = "(The Giant) Courtyard"
+TheGiant_Open  = "(The Giant) Open the Map"
 TheGiant_Pap = "(The Giant) Pack a Punch"
 TheGiant_MonkeyBombs = "(The Giant) Monkey Bombs"
 TheGiant_Round_10 = "(The Giant) Round 10"
@@ -11,6 +12,7 @@ TheGiant_Round_40 = "(The Giant) Round 40"
 TheGiant_Round_Regions = (TheGiant_Round_10, TheGiant_Round_15, TheGiant_Round_20, TheGiant_Round_25, TheGiant_Round_30, TheGiant_Round_35, TheGiant_Round_40)
 
 Castle_Gondola = "(Castle) Gondola"
+Castle_Open  = "(Castle) Open the Map"
 Castle_MainEE = "(Castle) Main Easter Egg"
 Castle_DG4 = "(Castle) DG4 Parts"
 Castle_Upgraded = "(Castle) Upgraded Weapons"
@@ -25,6 +27,7 @@ Castle_Round_40 = "(Castle) Round 40"
 Castle_Round_Regions = (Castle_Round_10, Castle_Round_15, Castle_Round_20, Castle_Round_25, Castle_Round_30, Castle_Round_35, Castle_Round_40)
 
 Shadows_Alleyway = "(Shadows of Evil) Alleyway"
+Shadows_Open  = "(Shadows of Evil) Open the Map"
 Shadows_Servant = "(Shadows of Evil) Craft Apothican Servant"
 Shadows_Widows = "(Shadows of Evil) Widows Wine Required"
 Shadows_RayGun = "(Shadows of Evil) Ray Gun Required"
@@ -41,6 +44,7 @@ Shadows_Round_40 = "(Shadows of Evil) Round 40"
 Shadows_Round_Regions = (Shadows_Round_10, Shadows_Round_15, Shadows_Round_20, Shadows_Round_25, Shadows_Round_30, Shadows_Round_35, Shadows_Round_40)
 
 Zetsubou_Beach = "(Zetsubou No Shima) Beach"
+Zetsubou_Open  = "(Zetsubou No Shima) Open the Map"
 Zetsubou_Upgraded = "(Zetsubou No Shima) Upgraded Weapons"
 Zetsubou_MainEE = "(Zetsubou No Shima) Main Easter Egg"
 Zetsubou_Round_10 = "(Zetsubou No Shima) Round 10"
@@ -54,6 +58,7 @@ Zetsubou_Round_Regions = (Zetsubou_Round_10, Zetsubou_Round_15, Zetsubou_Round_2
 
 Gorod_Trenches = "(Gorod Krovi) Trenches"
 Gorod_Bunker = "(Gorod Krovi) Bunker"
+Gorod_Open  = "(Gorod Krovi) Open the Map"
 Gorod_Shield = "(Gorod Krovi) Shield Required"
 Gorod_Upgraded = "(Gorod Krovi) Upgraded Weapons"
 Gorod_MonkeyBombs = "(Gorod Krovi) Monkey Bombs Required"
@@ -68,6 +73,7 @@ Gorod_Round_40 = "(Gorod Krovi) Round 40"
 Gorod_Round_Regions = (Gorod_Round_10, Gorod_Round_15, Gorod_Round_20, Gorod_Round_25, Gorod_Round_30, Gorod_Round_35, Gorod_Round_40)
 
 Revelations_House = "(Revelations) House"
+Revelations_Open  = "(Revelations) Open the Map"
 Revelations_MainEE = "(Revelations) Main Easter Egg"
 Revelations_Upgraded = "(Revelations) Upgraded Weapons"
 Revelations_Challenges = "(Revelations) Complete Challenges"
@@ -85,6 +91,7 @@ Revelations_Round_Regions = (Revelations_Round_10, Revelations_Round_15, Revelat
 # == Modded Maps ==
 
 Wanted_Town = "(Wanted) Town"
+Wanted_Open  = "(Wanted) Open the Map"
 Wanted_MainEE = "(Wanted) Main Easter Egg"
 Wanted_Round_10 = "(Wanted) Round 10"
 Wanted_Round_15 = "(Wanted) Round 15"
