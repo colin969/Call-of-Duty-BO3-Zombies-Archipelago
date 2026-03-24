@@ -26,23 +26,8 @@ def check_round_logic(state: CollectionState, player: int, options, round_num, m
     rounds_from_perks = 4
     # Number of rounds from important aspects, like box weapons and pap
     rounds_from_important = 4
-
-    # The giant doesn't have enough logical perks to hit the round max threshold, so we'll softcap at 35
-    if map_name == Maps.The_Giant_Map_String and options.round_location_max.value > 35:
-        round_max_threshold = 35
-
-    # We'll start with adjusting our round logic for our perks, +4 logical rounds per perk
-    # However, we'll only consider perks we have up to 2 over our current limit (4 perks logical at a 2 perk limit)
-    starting_perk_count = 4 + options.perk_limit_default_modifier.value
-    current_perk_limit = starting_perk_count + state.count(Items.Progressive_PerkLimitIncrease.name, player)
-
-    # We scale up the rounds from important items the lower our max perk limit is from 5
-    # This was no matter our perk limit we can hit the round_max_threshold
-    max_perk_limit = starting_perk_count + options.progressive_perk_limit_increase.value
-    if max_perk_limit < 5:
-        # rounds_from_improvement becomes 6 at 4 max limit, and so on
-        round_adjustment = (5 - max_perk_limit) * 2
-        rounds_from_important += round_adjustment
+    # Number of rounds to from having a shield
+    rounds_from_shield = 4
 
     map_perks = {
         Maps.Shadows_Map_String: Items.Shadows_Machines,
@@ -62,6 +47,47 @@ def check_round_logic(state: CollectionState, player: int, options, round_num, m
         Maps.Revelations_Map_String: Items.Revelations_Machines_Specific,
         Maps.Wanted_Map_String: Items.Wanted_Machines_Specific,
     }
+    map_shield = {
+        Maps.Shadows_Map_String: Items.Shadows_Shield,
+        Maps.Castle_Map_String: Items.Castle_Shield,
+        Maps.Zetsubou_Map_String: Items.Zetsubou_Shield,
+        Maps.GorodKrovi_Map_String: Items.GorodKrovi_Shield,
+        Maps.Revelations_Map_String: Items.Revelations_Shield,
+        Maps.Wanted_Map_String: Items.Wanted_Shield
+    }
+
+    # The giant doesn't have enough logical perks to hit the round max threshold, so we'll softcap at 35
+    if map_name == Maps.The_Giant_Map_String and options.round_location_max.value > 35:
+        round_max_threshold = 35
+
+    # We'll start with adjusting our round logic for our perks, +4 logical rounds per perk
+    # However, we'll only consider perks we have up to 2 over our current limit (4 perks logical at a 2 perk limit)
+    starting_perk_count = 4 + options.perk_limit_default_modifier.value
+    current_perk_limit = starting_perk_count + state.count(Items.Progressive_PerkLimitIncrease.name, player)
+
+    # We scale up the rounds from important items the lower our max perk limit is from 5
+    # This was no matter our perk limit we can hit the round_max_threshold
+    max_perk_limit = starting_perk_count + options.progressive_perk_limit_increase.value
+    scaling_threshold = 5
+    # If the map has a shield, start scaling other factors up with one less perk limit
+    if map_name in list(map_shield.keys()):
+        scaling_threshold -= 1
+    if max_perk_limit < scaling_threshold:
+        # rounds_from_improvement becomes 6 at 4 (3 on maps with shield) max limit, and so on
+        round_adjustment = (scaling_threshold - max_perk_limit) * 2
+        rounds_from_important += round_adjustment
+
+    # Check if we have our shield
+    if map_name in list(map_shield.keys()):
+        has_shield = True
+        for part in map_shield[map_name]:
+            # We don't have our shield, break and give up
+            if not state.has(part.name, player):
+                has_shield = False
+                break
+        if has_shield:
+            rounds_from_perks += rounds_from_shield
+
     # Get our perks based on the map and our perk item setting
     perks = 0
     # Let's only do these calculations if we can even have perks
