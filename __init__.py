@@ -206,7 +206,7 @@ class BO3ZombiesWorld(World):
             open_locations = []
             open_locations.extend([loc.name for loc in Locations.Shadows_Craftable_Locations])
             open_locations.extend([loc.name for loc in Locations.Shadows_Quest_Locations])
-            open_locations.extend([loc.name for loc in Locations.Shadows_Quest_Locations][1:])
+            open_locations.extend([loc.name for loc in Locations.Shadows_Quest_MainQuest_Locations][1:])
             open_locations.extend([loc.name for loc in Locations.Shadows_Quest_ApothiconSword_Locations])
             if self.options.music_ee_enabled:
                 open_locations.extend([loc.name for loc in Locations.Shadows_Quest_Music_Locations])
