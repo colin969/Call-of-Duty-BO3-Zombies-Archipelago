@@ -86,7 +86,7 @@ def check_round_logic(state: CollectionState, player: int, options, round_num, m
                 has_shield = False
                 break
         if has_shield:
-            rounds_from_perks += rounds_from_shield
+            round_can_reach += rounds_from_shield
 
     # Get our perks based on the map and our perk item setting
     perks = 0
