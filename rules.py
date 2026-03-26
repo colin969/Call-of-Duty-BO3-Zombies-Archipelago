@@ -114,8 +114,8 @@ def check_round_logic(state: CollectionState, player: int, options, round_num, m
             if "Juggernog" in perk:
                 has_important_perk = True
                 break
-        if not has_important_perk and perks > 2:
-            perks = 2
+        if not has_important_perk and perks > 1:
+            perks = 1
 
     round_can_reach += (perks * rounds_from_perks)
 
