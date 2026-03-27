@@ -59,9 +59,28 @@ def check_round_logic(state: CollectionState, player: int, options, round_num, m
         Maps.Wanted_Map_String: Items.Wanted_Shield
     }
 
-    # The giant doesn't have enough logical perks to hit the round max threshold, so we'll softcap at 35
-    if map_name == Maps.The_Giant_Map_String and options.round_location_max.value > 35:
-        round_max_threshold = 35
+    # Lets look at the length of our map's perks, and adjust the round threshold accordingly
+    perks_copy = map_perks[map_name]
+    # Looping through the full list of perks for the map, and removing from the copy as needed to get logical perk count
+    for perk in map_perks[map_name]:
+        if "Dead Shot" in perk.name:
+            perks_copy.remove(perk)
+        # Only remove quick revive if we start with it
+        if "Quick Revive" in perk.name and options.start_quick_revive:
+            perks_copy.remove(perk)
+
+    # Our number of logical perks for the map
+    num_logical_perks = len(perks_copy)
+
+    # Or we're the giant and quick revive is started with, we'll cheat here and say there's 4 because perk rng
+    # when we consider staminup vs deadshot spawning
+    if map_name == Maps.The_Giant_Map_String and options.start_quick_revive:
+        num_logical_perks = 4
+
+    # If we're at less than 5, we can't hit round 40 threshold, adjust accordingly
+    if num_logical_perks < 5:
+        times_to_adjust = (5 - num_logical_perks)
+        round_max_threshold -= (times_to_adjust * 5)
 
     # We'll start with adjusting our round logic for our perks, +4 logical rounds per perk
     # However, we'll only consider perks we have up to 2 over our current limit (4 perks logical at a 2 perk limit)
@@ -112,14 +131,16 @@ def check_round_logic(state: CollectionState, player: int, options, round_num, m
         if len(perks_owned) > (current_perk_limit + 1):
             # Don't set the perk count based on limit unless our logical perks are actually higher in count
             perks = min(perks, current_perk_limit + 1)
-        # If we don't have jugg, lets limit our logical perk count to 2
+        # If we don't have jugg, reduce value of perks past our first
         has_important_perk = False
         for perk in perks_owned:
             if "Juggernog" in perk:
                 has_important_perk = True
                 break
-        if not has_important_perk and perks > 1:
-            perks = 1
+        # From here perks past our first will only count as 3/8 of one for round logic
+        if not has_important_perk:
+            extra_perks = (perks - 1)
+            perks = 1 + (extra_perks * (3/8))
 
     round_can_reach += (perks * rounds_from_perks)
 
