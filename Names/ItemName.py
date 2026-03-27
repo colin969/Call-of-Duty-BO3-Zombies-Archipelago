@@ -137,6 +137,7 @@ Shop_PerkToken = "Shop - Perk Token"
 Shop_MegaGumToken = "Shop - Mega Gobblegum Token"
 Shop_RareGumToken = "Shop - Rare Mega Gobblegum Token"
 Shop_LegendaryGumToken = "Shop - Legendary Mega Gobblegum Token"
+Shop_CheckpointToken = "Shop - Checkpoint Token"
 
 # Traps
 

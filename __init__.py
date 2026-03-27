@@ -14,6 +14,7 @@ from worlds.AutoWorld import World, WebWorld
 from . import Locations, Items, Options
 from .Options import BO3ZombiesOptions, bo3_option_groups
 from .Names import ItemName, LocationName, RegionName, Maps
+from .Locations import LocationData
 
 class BO3ZombiesWeb(WebWorld):
     theme = "ocean"
@@ -50,7 +51,7 @@ class BO3ZombiesWorld(World):
     items_handling = 0b111
 
     # Enable to log the location lua data
-    write_lua_locations = False
+    write_lua_locations = True
 
     def generate_early(self) -> None:
         if self.write_lua_locations:
@@ -465,6 +466,7 @@ class BO3ZombiesWorld(World):
 
         if self.options.map_revelations_enabled:
             all_locations = [Locations.Revelations_Quest_MainQuest_Locations[0].name]
+ 
             main_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_House, all_locations)
             self.multiworld.regions.append(main_region)
             create_entrance(menu_region, main_region, lambda state: state.has(ItemName.Map_Revelations, self.player))
@@ -475,6 +477,31 @@ class BO3ZombiesWorld(World):
             open_locations.extend([loc.name for loc in Locations.Revelations_Quest_SideEE_Locations])
             if self.options.music_ee_enabled:
                 open_locations.extend([loc.name for loc in Locations.Revelations_Quest_Music_Locations])
+                
+            mask_locs: list[tuple[list[LocationData], str]] = []
+            if self.options.revelations_mask_enabled_dire_wolf:
+                mask_locs.append((Locations.Revelations_Quest_Mask_Wolf_Locations, "wolf"))
+            if self.options.revelations_mask_enabled_siegfried:
+                mask_locs.append((Locations.Revelations_Quest_Mask_Siegfried_Locations, "siegfried"))
+            if self.options.revelations_mask_enabled_king:
+                mask_locs.append((Locations.Revelations_Quest_Mask_King_Locations, "king"))
+            if self.options.revelations_mask_enabled_fury:
+                mask_locs.append((Locations.Revelations_Quest_Mask_Fury_Locations, "fury"))
+            if self.options.revelations_mask_enabled_keeper_skull:
+                mask_locs.append((Locations.Revelations_Quest_Mask_Keeper_Locations, "keeper"))
+            if self.options.revelations_mask_enabled_margwa:
+                mask_locs.append((Locations.Revelations_Quest_Mask_Margwa_Locations, "margwa"))
+            if self.options.revelations_mask_enabled_apothicon:
+                mask_locs.append((Locations.Revelations_Quest_Mask_Apothigod_Locations, "apothigod"))
+
+            self.random.shuffle(mask_locs)
+            max_mask_locs = min(self.options.revelations_mask_count.value, len(mask_locs))
+            self.rolled_masks = []
+            if max_mask_locs > 0:
+                for locations, mask_name in mask_locs[:max_mask_locs]:
+                    open_locations.extend([loc.name for loc in locations])
+                    self.rolled_masks.append(mask_name)
+                
             map_open_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_Open, open_locations)
             self.multiworld.regions.append(map_open_region)
             create_entrance(main_region, map_open_region,
@@ -663,6 +690,13 @@ class BO3ZombiesWorld(World):
         if self.options.shop_legendary_gums > 0:
             for i in range(self.options.shop_legendary_gums):
                 enabled_items.append(Items.Shop_Items[3])
+        if self.options.shop_additional_checkpoint_tokens > 0:
+            for i in range(self.options.shop_additional_checkpoint_tokens):
+                enabled_items.append(Items.Shop_Items[4])
+
+        if self.options.shop_starting_checkpoint_tokens > 0:
+            for i in range(self.options.shop_starting_checkpoint_tokens):
+                self.push_precollected(self.create_item(ItemName.Shop_CheckpointToken))
 
         # Add machines to pool
         if self.options.map_specific_machines:
@@ -1044,6 +1078,7 @@ class BO3ZombiesWorld(World):
             "difficulty_ee_checkpoints": options.difficulty_ee_checkpoints.value,
             "difficulty_round_checkpoints": options.difficulty_round_checkpoints.value,
             "rolled_bows": self.rolled_bows,
+            "rolled_masks": self.rolled_masks,
             "attachments_randomized": bool(options.attachments_randomized),
             "attachments_sight_weight": int(options.attachments_sight_weight),
             "camo_randomized": bool(options.camo_randomized),
@@ -1057,8 +1092,6 @@ class BO3ZombiesWorld(World):
             "deathlink_enabled": bool(options.deathlink_enabled),
             "deathlink_send_mode": int(options.deathlink_send_mode),
             "deathlink_recv_mode": int(options.deathlink_recv_mode),
-            "deathlink_solo_quickrevive_unlocked": bool(options.deathlink_solo_quickrevive_unlocked),
-            "deathlink_solo_quickrevive_unlimited": bool(options.deathlink_solo_quickrevive_unlimited),
             "goal_items_required": int(self.slot_goal_items_required),
             "goal_items": self.slot_goal_items,
         }

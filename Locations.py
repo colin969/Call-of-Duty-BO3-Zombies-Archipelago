@@ -375,14 +375,43 @@ Revelations_Quest_MainEE_Locations = [LocationData(row[0], BO3ZombiesLocationCat
     (LocationName.Revelations_Quest_MainEE_Victory, 6211),
 ]]
 
-Revelations_Quest_SideEE_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
-    (LocationName.Revelations_Quest_SideEE_HatWolf, 6300),
-    # (LocationName.Revelations_Quest_SideEE_HatSiegfried, 6301),
-    (LocationName.Revelations_Quest_SideEE_HatKing, 6302),
-    (LocationName.Revelations_Quest_SideEE_HatKeeper, 6303),
-    (LocationName.Revelations_Quest_SideEE_HatMargwa, 6304),
-    (LocationName.Revelations_Quest_SideEE_HatApothigod, 6305),
+Revelations_Quest_Mask_Wolf_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Revelations_Quest_SideEE_HatWolf, 6600),
 ]]
+
+Revelations_Quest_Mask_Siegfried_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Revelations_Quest_SideEE_HatSiegfried, 6610),
+]]
+
+Revelations_Quest_Mask_King_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Revelations_Quest_SideEE_HatKing, 6620),
+    (LocationName.Revelations_Quest_SideEE_HatKing2, 6621),
+]]
+
+Revelations_Quest_Mask_Fury_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Revelations_Quest_SideEE_HatFury, 6630),
+]]
+
+Revelations_Quest_Mask_Keeper_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Revelations_Quest_SideEE_HatKeeper, 6640),
+    (LocationName.Revelations_Quest_SideEE_HatKeeper2, 6641),
+]]
+
+Revelations_Quest_Mask_Margwa_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Revelations_Quest_SideEE_HatMargwa, 6650),
+    (LocationName.Revelations_Quest_SideEE_HatMargwa2, 6651),
+]]
+
+Revelations_Quest_Mask_Apothigod_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Revelations_Quest_SideEE_HatApothigod, 6660),
+    (LocationName.Revelations_Quest_SideEE_HatApothigod2, 6661),
+    (LocationName.Revelations_Quest_SideEE_HatApothigod3, 6662),
+]]
+
+Revelations_Quest_Masks_Locations = (Revelations_Quest_Mask_Wolf_Locations + Revelations_Quest_Mask_Siegfried_Locations
+    + Revelations_Quest_Mask_King_Locations + Revelations_Quest_Mask_Fury_Locations
+    + Revelations_Quest_Mask_Keeper_Locations + Revelations_Quest_Mask_Margwa_Locations
+    + Revelations_Quest_Mask_Apothigod_Locations)
 
 Revelations_Craftable_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.CRAFTABLE_PART, row[1]) for row in [
     (LocationName.Revelations_Craftable_ShieldPartDolly, 6310),
@@ -403,6 +432,10 @@ Revelations_Quest_Challenges = [LocationData(row[0], BO3ZombiesLocationCategory.
 Revelations_Quest_Weapons = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.Revelations_Quest_ApothiconServant, 6330),
     (LocationName.Revelations_Quest_Arnies, 6331),
+]]
+
+Revelations_Quest_SideEE_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Revelations_Quest_SideEE_Writing, 6500),
 ]]
 
 Revelations_Quest_Music_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
@@ -464,7 +497,7 @@ all_locations = (
     # Revelations
     + Revelations_Round_Locations + Revelations_Craftable_Locations + Revelations_Quest_Music_Locations
     + Revelations_Quest_MainQuest_Locations + Revelations_Quest_MainEE_Locations + Revelations_Quest_Challenges
-    + Revelations_Quest_SideEE_Locations + Revelations_Quest_Weapons
+    + Revelations_Quest_SideEE_Locations + Revelations_Quest_Masks_Locations + Revelations_Quest_Weapons
     # === Modded Maps ===
     # Wanted
     + Wanted_Round_Locations + Wanted_Craftable_Locations

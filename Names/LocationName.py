@@ -185,6 +185,7 @@ Revelations_Quest_MainQuest_Portal = Maps.Revelations_Map_String + " Main Quest 
 Revelations_Quest_MainQuest_AllPortals = Maps.Revelations_Map_String + " Main Quest - Override all 4 Corruption Engines"
 Revelations_Quest_MainQuest_PackAPunch = Maps.Revelations_Map_String + " Main Quest - Free the Pack-A-Punch"
 
+
 Revelations_Quest_MainEE_Stones = Maps.Revelations_Map_String + " Main Easter Egg - Shoot the Graves"
 Revelations_Quest_MainEE_Reel1 = Maps.Revelations_Map_String + " Main Easter Egg - Get the first Audio Reel (Keeper Protector)"
 Revelations_Quest_MainEE_Reel2 = Maps.Revelations_Map_String + " Main Easter Egg - Get the second Audio Reel (Apothicon Stomach)"
@@ -210,12 +211,19 @@ Revelations_Quest_Challenges_2 = Maps.Revelations_Map_String + " Complete Challe
 Revelations_Quest_Challenges_3 = Maps.Revelations_Map_String + " Complete Challenge 3"
 Revelations_Quest_Challenges_All = Maps.Revelations_Map_String + " Complete all Challenges"
 
-Revelations_Quest_SideEE_HatWolf = Maps.Revelations_Map_String + " Unlock the Wolf Mask"
-# Revelations_Quest_SideEE_HatSiegfried = Maps.Revelations_Map_String + " Unlock the Helmet of Siegfried"
-Revelations_Quest_SideEE_HatKing = Maps.Revelations_Map_String + " Unlock the Helmet of the King"
-Revelations_Quest_SideEE_HatKeeper = Maps.Revelations_Map_String + " Unlock the Keeper Skull Mask"
-Revelations_Quest_SideEE_HatMargwa = Maps.Revelations_Map_String + " Unlock the Margwa Mask"
-Revelations_Quest_SideEE_HatApothigod = Maps.Revelations_Map_String + " Unlock the Apothigod Mask"
+Revelations_Quest_SideEE_HatWolf = Maps.Revelations_Map_String + " Unlock the Dire Wolf Mask - Grenade the hole then 15 kills during low gravity"
+Revelations_Quest_SideEE_HatSiegfried = Maps.Revelations_Map_String + " Unlock the Helmet of Siegfried - Shoot the clock then charge the soul jars"
+Revelations_Quest_SideEE_HatKing = Maps.Revelations_Map_String + " Unlock the Helmet of the King (1) - 50 Trap Kills"
+Revelations_Quest_SideEE_HatKing2 = Maps.Revelations_Map_String + " Unlock the Helmet of the King (2) - Break off a Panzer's helmet and gun"
+Revelations_Quest_SideEE_HatFury = Maps.Revelations_Map_String + " Unlock the Fury's Head - 40 Fury kills after all power is turned on"
+Revelations_Quest_SideEE_HatKeeper = Maps.Revelations_Map_String + " Unlock the Keeper Skull (1) - Grenade the hole then 15 kills during low gravity"
+Revelations_Quest_SideEE_HatKeeper2 = Maps.Revelations_Map_String + " Unlock the Keeper Skull (2) - 30 zombies killed by the Keeper Protector"
+Revelations_Quest_SideEE_HatMargwa = Maps.Revelations_Map_String + " Unlock the Margwa's Head (1) - Explode all of a Margwa's heads with a Sniper"
+Revelations_Quest_SideEE_HatMargwa2 = Maps.Revelations_Map_String + " Unlock the Margwa's Head (2) - Kill both a Void and Fire Margwa"
+Revelations_Quest_SideEE_HatApothigod = Maps.Revelations_Map_String + " Unlock the Apothicon God Mask (1) - 50 Zombie, 5 Spider and 5 Wasp Kills in Stomach Gas"
+Revelations_Quest_SideEE_HatApothigod2 = Maps.Revelations_Map_String + " Unlock the Apothicon God Mask (2) - 10 Keeper and 10 Fury kills in Stomach Gas"
+Revelations_Quest_SideEE_HatApothigod3 = Maps.Revelations_Map_String + " Unlock the Apothicon God Mask (3) - 3 Margwa Kills in Stomach Gas"
+Revelations_Quest_SideEE_Writing = Maps.Revelations_Map_String + " Writing on the Wall";
 
 Revelations_Craftable_ShieldPartDolly = Maps.Revelations_Map_String + " Shield Part Pickup - Dolly"
 Revelations_Craftable_ShieldPartDoor = Maps.Revelations_Map_String + " Shield Part Pickup - Door"
