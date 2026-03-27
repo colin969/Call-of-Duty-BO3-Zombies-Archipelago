@@ -463,8 +463,6 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     deathlink_enabled: DeathlinkEnabled
     deathlink_send_mode: DeathlinkSendMode
     deathlink_recv_mode: DeathlinkRecvMode
-    deathlink_solo_quickrevive_unlocked: DeathlinkSoloFreeQuickRevive
-    deathlink_solo_quickrevive_unlimited: DeathlinkSoloUnlimitedQuickRevive
     shop_perk_tokens: ShopPerkTokens
     shop_mega_gums: ShopMegaGumTokens
     shop_rare_gums: ShopRareGumTokens
@@ -554,8 +552,6 @@ bo3_option_groups = [
         DeathlinkEnabled,
         DeathlinkSendMode,
         DeathlinkRecvMode,
-        DeathlinkSoloUnlimitedQuickRevive,
-        DeathlinkSoloFreeQuickRevive,
     ]),
     OptionGroup("Filler", [
         GiftWeight,

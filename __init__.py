@@ -51,7 +51,7 @@ class BO3ZombiesWorld(World):
     items_handling = 0b111
 
     # Enable to log the location lua data
-    write_lua_locations = True
+    write_lua_locations = False
 
     def generate_early(self) -> None:
         if self.write_lua_locations:
