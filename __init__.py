@@ -1103,7 +1103,7 @@ def add_round_locations(round_locations, round_max, round_freq, is_goal_cond, go
             if i == 1:
                 i += round_freq
                 continue
-            elif i <= 5:
+            elif i <= 6:
                 round_locs_early.append(round_locations[i - 2].name)
             elif i <= 10:
                 round_locs_10.append(round_locations[i - 2].name)
