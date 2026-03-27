@@ -53,6 +53,40 @@ class RandomizeGorodDragonrideParts(Toggle):
     display_name = "(UNUSED) Randomized Gorod Dragonride Parts"
     default = False
 
+class RevelationsMaskCount(Range):
+    """Number of random Revelations Mask quests to include in checks"""
+    default = 3
+    range_start = 0
+    range_end = 7
+
+class RevelationsMaskEnabledDireWolf(Toggle):
+    """Enable Dire Wolf mask check for Revelations Mask checks"""
+    default = True
+
+class RevelationsMaskEnabledSiegfried(Toggle):
+    """Enable Helmet of Siegfried mask check for Revelations Mask checks"""
+    default = True
+
+class RevelationsMaskEnabledKing(Toggle):
+    """Enable Helmet of the King mask check for Revelations Mask checks"""
+    default = True
+
+class RevelationsMaskEnabledFury(Toggle):
+    """Enable Fury's Head mask check for Revelations Mask checks"""
+    default = True
+
+class RevelationsMaskEnabledMargwa(Toggle):
+    """Enable Margwa's mask check for Revelations Mask checks"""
+    default = True
+
+class RevelationsMaskEnabledKeeperSkull(Toggle):
+    """Enable Keeper Skull mask check for Revelations Mask checks"""
+    default = True
+
+class RevelationsMaskEnabledApothicon(Toggle):
+    """Enable Apothicon God Mask check for Revelations Mask checks"""
+    default = True
+
 class MysteryBoxSpecialItems(Toggle):
     """Shuffles special Mystery Box item unlocks (Wonder weapons, special equipment, specialist weapons) into the item pool"""
     display_name = "Mystery Box - Special Items"
@@ -65,29 +99,29 @@ class MysteryBoxRegularItems(Toggle):
 
 class CastleBowCount(Range):
     """Number of random Elemental Bow quests to include in checks or Weapon Quest goal conditions"""
-    display_name = "(Castle) Number of Elemental Bow Quests with Checks"
+    display_name = "(Der Eisendrache) Number of Elemental Bow Quests with Checks"
     default = 2
     range_start = 0
     range_end = 4
 
 class CastleBowEnabledStorm(Toggle):
     """Allow the Storm bow to be one of your random Elemental Bow quest checks"""
-    display_name = "(Castle) Elemental Bow - Storm"
+    display_name = "(Der Eisendrache) Elemental Bow - Storm"
     default = True
 
 class CastleBowEnabledWolf(Toggle):
     """Allow the Wolf bow to be one of your random Elemental Bow quest checks"""
-    display_name = "(Castle) Elemental Bow - Wolf"
+    display_name = "(Der Eisendrache) Elemental Bow - Wolf"
     default = True
 
 class CastleBowEnabledFire(Toggle):
     """Allow the Fire bow to be one of your random Elemental Bow quest checks"""
-    display_name = "(Castle) Elemental Bow - Fire"
+    display_name = "(Der Eisendrache) Elemental Bow - Fire"
     default = False
 
 class CastleBowEnabledVoid(Toggle):
     """Allow the Void bow to be one of your random Elemental Bow quest checks"""
-    display_name = "(Castle) Elemental Bow - Void"
+    display_name = "(Der Eisendrache) Elemental Bow - Void"
     default = False
 
 class PerkLimitDefaultModifier(Range):
@@ -340,6 +374,22 @@ class ShopLegendaryGumTokens(Range):
     range_start = 0
     range_end = 10
 
+class ShopStartingCheckpointTokens(Range):
+    """Added to starting inventory. One time use per map (unless save data is cleared), these can be spent to immediately make a checkpoint."""
+    display_name = "Shop - Starting Checkpoint Tokens"
+    default = 1
+
+    range_start = 0
+    range_end = 3
+
+class ShopAdditionalCheckpointTokens(Range):
+    """Shuffled into the item pool. One time use per map (unless save data is cleared), these can be spent to immediately make a checkpoint."""
+    display_name = "Shop - Additional Checkpoint Tokens"
+    default = 1
+
+    range_start = 0
+    range_end = 3
+
 @dataclass
 class BO3ZombiesOptions(PerGameCommonOptions):
     starting_maps_unlocked: StartingMapsUnlocked
@@ -372,6 +422,14 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     castle_bow_wolf: CastleBowEnabledWolf
     castle_bow_fire: CastleBowEnabledFire
     castle_bow_void: CastleBowEnabledVoid
+    revelations_mask_count: RevelationsMaskCount
+    revelations_mask_enabled_dire_wolf: RevelationsMaskEnabledDireWolf
+    revelations_mask_enabled_siegfried: RevelationsMaskEnabledSiegfried
+    revelations_mask_enabled_king: RevelationsMaskEnabledKing
+    revelations_mask_enabled_fury: RevelationsMaskEnabledFury
+    revelations_mask_enabled_margwa: RevelationsMaskEnabledMargwa
+    revelations_mask_enabled_keeper_skull: RevelationsMaskEnabledKeeperSkull
+    revelations_mask_enabled_apothicon: RevelationsMaskEnabledApothicon
     gift_weight: GiftWeight
     trap_weight: TrapWeight
     difficulty_gorod_egg_cooldown: DifficultyGorodEggCooldown
@@ -399,6 +457,8 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     shop_mega_gums: ShopMegaGumTokens
     shop_rare_gums: ShopRareGumTokens
     shop_legendary_gums: ShopLegendaryGumTokens
+    shop_starting_checkpoint_tokens: ShopStartingCheckpointTokens
+    shop_additional_checkpoint_tokens: ShopAdditionalCheckpointTokens
 
 bo3_option_groups = [
     OptionGroup("General Options", [
@@ -450,6 +510,14 @@ bo3_option_groups = [
         CastleBowEnabledFire,
         CastleBowEnabledVoid,
         RandomizeGorodDragonrideParts,
+        RevelationsMaskCount,
+        RevelationsMaskEnabledDireWolf,
+        RevelationsMaskEnabledSiegfried,
+        RevelationsMaskEnabledKing,
+        RevelationsMaskEnabledMargwa,
+        RevelationsMaskEnabledFury,
+        RevelationsMaskEnabledKeeperSkull,
+        RevelationsMaskEnabledApothicon,
     ]),
     OptionGroup("Workshop Map Settings", [
         MapWorkshopWantedEnabled,
@@ -459,6 +527,8 @@ bo3_option_groups = [
         ShopMegaGumTokens,
         ShopRareGumTokens,
         ShopLegendaryGumTokens,
+        ShopStartingCheckpointTokens,
+        ShopAdditionalCheckpointTokens,
     ]),
     OptionGroup("Difficulty Adjustments", [
         DifficultyGorodEggCooldown,

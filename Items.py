@@ -557,6 +557,7 @@ Shop_Items = [ItemData(row, BO3ZombiesItemCategory.SHOP_ITEMS) for row in [
     ItemName.Shop_MegaGumToken,
     ItemName.Shop_RareGumToken,
     ItemName.Shop_LegendaryGumToken,
+    ItemName.Shop_CheckpointToken,
 ]]
 
 all_items = (
