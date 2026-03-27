@@ -61,10 +61,8 @@ def check_round_logic(state: CollectionState, player: int, options, round_num, m
     perks_copy = map_perks[map_name]
     # Looping through the full list of perks for the map, and removing from the copy as needed to get logical perk count
     for perk in map_perks[map_name]:
-        if "Dead Shot" in perk.name:
-            perks_copy.remove(perk)
-        # Only remove quick revive if we start with it
-        if "Quick Revive" in perk.name and options.start_quick_revive:
+        # Remove deadshot and only remove quick revive if we start with it
+        if ("Dead Shot" in perk.name) or ("Quick Revive" in perk.name and options.start_quick_revive):
             perks_copy.remove(perk)
 
     # Our number of logical perks for the map
