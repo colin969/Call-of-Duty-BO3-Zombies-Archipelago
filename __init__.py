@@ -109,6 +109,7 @@ class BO3ZombiesWorld(World):
                 self.mystery_box_special_items += Items.Wanted_MysteryBox
 
         self.rolled_bows = []
+        self.rolled_masks = []
         self.weapon_quest_items = []
         pass
 
@@ -496,7 +497,6 @@ class BO3ZombiesWorld(World):
 
             self.random.shuffle(mask_locs)
             max_mask_locs = min(self.options.revelations_mask_count.value, len(mask_locs))
-            self.rolled_masks = []
             if max_mask_locs > 0:
                 for locations, mask_name in mask_locs[:max_mask_locs]:
                     open_locations.extend([loc.name for loc in locations])
