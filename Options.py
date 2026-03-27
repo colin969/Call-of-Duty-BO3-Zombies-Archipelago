@@ -60,36 +60,44 @@ class RandomizeGorodDragonrideParts(Toggle):
 
 class RevelationsMaskCount(Range):
     """Number of random Revelations Mask quests to include in checks"""
+    display_name = "(Revelations) Number of Masks with Checks"
     default = 3
     range_start = 0
     range_end = 7
 
 class RevelationsMaskEnabledDireWolf(Toggle):
     """Enable Dire Wolf mask check for Revelations Mask checks"""
+    display_name = "(Revelations) Mask - Dire Wolf"
     default = True
 
 class RevelationsMaskEnabledSiegfried(Toggle):
     """Enable Helmet of Siegfried mask check for Revelations Mask checks"""
+    display_name = "(Revelations) Mask - Helmet of Siegfried"
     default = True
 
 class RevelationsMaskEnabledKing(Toggle):
     """Enable Helmet of the King mask check for Revelations Mask checks"""
+    display_name = "(Revelations) Mask - Helmet of the King"
     default = True
 
 class RevelationsMaskEnabledFury(Toggle):
     """Enable Fury's Head mask check for Revelations Mask checks"""
+    display_name = "(Revelations) Mask - Fury Head"
     default = True
 
 class RevelationsMaskEnabledMargwa(Toggle):
     """Enable Margwa's mask check for Revelations Mask checks"""
+    display_name = "(Revelations) Mask - Margwa Head"
     default = True
 
 class RevelationsMaskEnabledKeeperSkull(Toggle):
     """Enable Keeper Skull mask check for Revelations Mask checks"""
+    display_name = "(Revelations) Mask - Keeper Skull"
     default = True
 
 class RevelationsMaskEnabledApothicon(Toggle):
     """Enable Apothicon God Mask check for Revelations Mask checks"""
+    display_name = "(Revelations) Mask - Apothicon God"
     default = True
 
 class MysteryBoxSpecialItems(Toggle):
