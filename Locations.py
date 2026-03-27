@@ -377,11 +377,12 @@ Revelations_Quest_MainEE_Locations = [LocationData(row[0], BO3ZombiesLocationCat
 
 Revelations_Quest_SideEE_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.Revelations_Quest_SideEE_HatWolf, 6300),
-    # (LocationName.Revelations_Quest_SideEE_HatSiegfried, 6301),
+    (LocationName.Revelations_Quest_SideEE_HatSiegfried, 6301),
     (LocationName.Revelations_Quest_SideEE_HatKing, 6302),
     (LocationName.Revelations_Quest_SideEE_HatKeeper, 6303),
     (LocationName.Revelations_Quest_SideEE_HatMargwa, 6304),
     (LocationName.Revelations_Quest_SideEE_HatApothigod, 6305),
+    (LocationName.Revelations_Quest_SideEE_Writing, 6320),
 ]]
 
 Revelations_Craftable_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.CRAFTABLE_PART, row[1]) for row in [
