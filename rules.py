@@ -3,29 +3,32 @@ from . import Locations, Items, Options
 from .Options import BO3ZombiesOptions, bo3_option_groups
 from .Names import ItemName, LocationName, RegionName, Maps
 
+def can_open_map(state: CollectionState, player: int, options, map_name, third, two_third) -> bool:
+    # This is a rule meant to basically say "yeah we can open the map now" based on round logic and current starting points
+    starting_points = 500
+    starting_points += (500 * state.count(Items.Progressive_StartingPoints500.name, player))
+    # Various ways we can pass this check
+    # points only - we have enough starting points we don't care about what round we can reach
+    points_only = (starting_points >= 5000)
+    # round only - we have enough round access logically to reliably open the map
+    round_only = check_round_logic(state, player, options, 10, map_name, third, two_third)
+
+    return points_only or round_only
 
 def check_round_logic(state: CollectionState, player: int, options, round_num, map_name, third, two_third) -> bool:
-    # Let's just say we can reach round 5 without any progression items
-    round_can_reach = 5
+    # Let's just say we can reach round 6 without any progression items
+    round_can_reach = 6
     # Value where we stop caring about round logic because we have enough items based on our settings
     round_max_threshold = 40
     # Number of rounds we add with each perk
     rounds_from_perks = 4
     # Number of rounds from important aspects, like box weapons and pap
     rounds_from_important = 4
+    # Number of rounds to from having a shield
+    rounds_from_shield = 4
 
-    # We'll start with adjusting our round logic for our perks, +4 logical rounds per perk
-    # However, we'll only consider perks we have up to 2 over our current limit (4 perks logical at a 2 perk limit)
-    starting_perk_count = 4 + options.perk_limit_default_modifier.value
-    current_perk_limit = starting_perk_count + state.count(Items.Progressive_PerkLimitIncrease.name, player)
-
-    # We scale up the rounds from important items the lower our max perk limit is from 5
-    # This was no matter our perk limit we can hit the round_max_threshold
-    max_perk_limit = starting_perk_count + options.progressive_perk_limit_increase.value
-    if max_perk_limit < 5:
-        # rounds_from_improvement becomes 6 at 4 max limit, and so on
-        round_adjustment = (5 - max_perk_limit) * 2
-        rounds_from_important += round_adjustment
+    if options.start_quick_revive:
+        round_max_threshold -= rounds_from_perks
 
     map_perks = {
         Maps.Shadows_Map_String: Items.Shadows_Machines,
@@ -45,6 +48,64 @@ def check_round_logic(state: CollectionState, player: int, options, round_num, m
         Maps.Revelations_Map_String: Items.Revelations_Machines_Specific,
         Maps.Wanted_Map_String: Items.Wanted_Machines_Specific,
     }
+    map_shield = {
+        Maps.Shadows_Map_String: Items.Shadows_Shield,
+        Maps.Castle_Map_String: Items.Castle_Shield,
+        Maps.Zetsubou_Map_String: Items.Zetsubou_Shield,
+        Maps.GorodKrovi_Map_String: Items.GorodKrovi_Shield,
+        Maps.Revelations_Map_String: Items.Revelations_Shield,
+        Maps.Wanted_Map_String: Items.Wanted_Shield
+    }
+
+    # Lets look at the length of our map's perks, and adjust the round threshold accordingly
+    perks_copy = map_perks[map_name]
+    # Looping through the full list of perks for the map, and removing from the copy as needed to get logical perk count
+    for perk in map_perks[map_name]:
+        # Remove deadshot and only remove quick revive if we start with it
+        if ("Dead Shot" in perk.name) or ("Quick Revive" in perk.name and options.start_quick_revive):
+            perks_copy.remove(perk)
+
+    # Our number of logical perks for the map
+    num_logical_perks = len(perks_copy)
+
+    # Or we're the giant and quick revive is started with, we'll cheat here and say there's 4 because perk rng
+    # when we consider staminup vs deadshot spawning
+    if map_name == Maps.The_Giant_Map_String and options.start_quick_revive:
+        num_logical_perks = 4
+
+    # If we're at less than 5, we can't hit round 40 threshold, adjust accordingly
+    if num_logical_perks < 5:
+        times_to_adjust = (5 - num_logical_perks)
+        round_max_threshold -= (times_to_adjust * 5)
+
+    # We'll start with adjusting our round logic for our perks, +4 logical rounds per perk
+    # However, we'll only consider perks we have up to 2 over our current limit (4 perks logical at a 2 perk limit)
+    starting_perk_count = 4 + options.perk_limit_default_modifier.value
+    current_perk_limit = starting_perk_count + state.count(Items.Progressive_PerkLimitIncrease.name, player)
+
+    # We scale up the rounds from important items the lower our max perk limit is from 5
+    # This was no matter our perk limit we can hit the round_max_threshold
+    max_perk_limit = starting_perk_count + options.progressive_perk_limit_increase.value
+    scaling_threshold = 5
+    # If the map has a shield, start scaling other factors up with one less perk limit
+    if map_name in list(map_shield.keys()):
+        scaling_threshold -= 1
+    if max_perk_limit < scaling_threshold:
+        # rounds_from_improvement becomes 6 at 4 (3 on maps with shield) max limit, and so on
+        round_adjustment = (scaling_threshold - max_perk_limit) * 2
+        rounds_from_important += round_adjustment
+
+    # Check if we have our shield
+    if map_name in list(map_shield.keys()):
+        has_shield = True
+        for part in map_shield[map_name]:
+            # We don't have our shield, break and give up
+            if not state.has(part.name, player):
+                has_shield = False
+                break
+        if has_shield:
+            round_can_reach += rounds_from_shield
+
     # Get our perks based on the map and our perk item setting
     perks = 0
     # Let's only do these calculations if we can even have perks
@@ -58,20 +119,24 @@ def check_round_logic(state: CollectionState, player: int, options, round_num, m
         for perk in perk_list:
             if state.has(perk.name, player):
                 perks_owned.append(perk.name)
-                # Let's... not consider deadshot for perk logic LOL
-                if "Dead Shot" not in perk.name:
-                    perks += 1
+                # Let's not consider deadshot or quick revive for perk logic
+                if ("Dead Shot" in perk.name) or (options.start_quick_revive and ("Quick Revive" in perk.name)):
+                    continue
+                perks += 1
         # If we have too many perks for our current limit (1 over whatever), limit logical perk count
-        if perks > (current_perk_limit + 1):
-            perks = current_perk_limit + 1
-        # If we don't have quick revive or jugg, lets limit our logical perk count to 2
+        if len(perks_owned) > (current_perk_limit + 1):
+            # Don't set the perk count based on limit unless our logical perks are actually higher in count
+            perks = min(perks, current_perk_limit + 1)
+        # If we don't have jugg, reduce value of perks past our first
         has_important_perk = False
         for perk in perks_owned:
-            if ("Juggernog" in perk) or ("QuickRevive" in perk):
+            if "Juggernog" in perk:
                 has_important_perk = True
                 break
-        if not has_important_perk and perks > 2:
-            perks = 2
+        # From here perks past our first will only count as 3/8 of one for round logic
+        if not has_important_perk:
+            extra_perks = (perks - 1)
+            perks = 1 + (extra_perks * (3/8))
 
     round_can_reach += (perks * rounds_from_perks)
 

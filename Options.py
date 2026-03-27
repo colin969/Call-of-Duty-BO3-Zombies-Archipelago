@@ -38,6 +38,11 @@ class MapWorkshopWantedEnabled(Toggle):
     display_name = "(BROKEN) \"Wanted\" map enabled"
     default = False
 
+class StartMapHints(Toggle):
+    """Start hints the maps you have in the pool."""
+    display_name = "Start Hint Maps"
+    default = True
+
 class SpecialRoundsEnabled(Toggle):
     """Enables Special Rounds (Dogs, Monkeys, ect.)."""
     display_name = "Special Rounds Enabled"
@@ -122,6 +127,11 @@ class CastleBowEnabledFire(Toggle):
 class CastleBowEnabledVoid(Toggle):
     """Allow the Void bow to be one of your random Elemental Bow quest checks"""
     display_name = "(Der Eisendrache) Elemental Bow - Void"
+    default = False
+
+class StartingQuickRevive(Toggle):
+    """Start with Quick Revive on all maps."""
+    display_name = "Quick Revive on Start"
     default = False
 
 class PerkLimitDefaultModifier(Range):
@@ -400,6 +410,7 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     map_gorod_enabled: MapGorodKroviEnabled
     map_revelations_enabled: MapRevelationsEnabled
     map_workshop_wanted_enabled: MapWorkshopWantedEnabled
+    start_map_hints: StartMapHints
     special_rounds_enabled: SpecialRoundsEnabled
     round_location_max: RoundMaxLocation
     round_location_freq: RoundLocationFrequency
@@ -408,6 +419,7 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     goal_round_count: GoalRoundCount
     goal_ee_count: GoalEasterEggCount
     goal_ee_random: GoalEasterEggHuntRandom
+    start_quick_revive: StartingQuickRevive
     perk_limit_default_modifier: PerkLimitDefaultModifier
     progressive_perk_limit_increase: ProgressivePerkLimitIncrease
     progressive_starting_points: ProgressiveStartingPoints
@@ -472,6 +484,7 @@ bo3_option_groups = [
         RoundLocationFrequency,
         EasterEggsEnabled,
         MusicEasterEggsEnabled,
+        StartingQuickRevive
     ]),
     OptionGroup("Weapons", [
         AttachmentsEnabled,
@@ -504,6 +517,7 @@ bo3_option_groups = [
         MapZetsubouEnabled,
         MapGorodKroviEnabled,
         MapRevelationsEnabled,
+        StartMapHints,
         CastleBowCount,
         CastleBowEnabledStorm,
         CastleBowEnabledWolf,
