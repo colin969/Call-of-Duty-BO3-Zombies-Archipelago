@@ -29,6 +29,9 @@ def check_round_logic(state: CollectionState, player: int, options, round_num, m
     # Number of rounds to from having a shield
     rounds_from_shield = 4
 
+    if options.start_quick_revive:
+        round_max_threshold -= rounds_from_perks
+
     map_perks = {
         Maps.Shadows_Map_String: Items.Shadows_Machines,
         Maps.The_Giant_Map_String: Items.The_Giant_Machines,
@@ -102,8 +105,9 @@ def check_round_logic(state: CollectionState, player: int, options, round_num, m
             if state.has(perk.name, player):
                 perks_owned.append(perk.name)
                 # Let's not consider deadshot or quick revive for perk logic
-                if ("Dead Shot" not in perk.name) and ("Quick Revive" not in perk.name):
-                    perks += 1
+                if ("Dead Shot" in perk.name) or (options.start_quick_revive and ("Quick Revive" in perk.name)):
+                    continue
+                perks += 1
         # If we have too many perks for our current limit (1 over whatever), limit logical perk count
         if len(perks_owned) > (current_perk_limit + 1):
             # Don't set the perk count based on limit unless our logical perks are actually higher in count

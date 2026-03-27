@@ -116,42 +116,20 @@ class BO3ZombiesWorld(World):
 
         # Create list of already unlocked maps
         locked_maps = []
-        quick_revives = []
         if self.options.map_shadows_enabled:
             locked_maps.append(ItemName.Map_Shadows)
-            if self.options.map_specific_machines and self.options.start_quick_revive:
-                quick_revives.append((Maps.Shadows_Map_String + " Quick Revive"))
         if self.options.map_castle_enabled:
             locked_maps.append(ItemName.Map_Castle)
-            if self.options.map_specific_machines and self.options.start_quick_revive:
-                quick_revives.append((Maps.Castle_Map_String + " Quick Revive"))
         if self.options.map_zetsubou_enabled:
             locked_maps.append(ItemName.Map_Zetsubou)
-            if self.options.map_specific_machines and self.options.start_quick_revive:
-                quick_revives.append((Maps.Zetsubou_Map_String + " Quick Revive"))
         if self.options.map_gorod_enabled:
             locked_maps.append(ItemName.Map_GorodKrovi)
-            if self.options.map_specific_machines and self.options.start_quick_revive:
-                quick_revives.append((Maps.GorodKrovi_Map_String + " Quick Revive"))
         if self.options.map_revelations_enabled:
             locked_maps.append(ItemName.Map_Revelations)
-            if self.options.map_specific_machines and self.options.start_quick_revive:
-                quick_revives.append((Maps.Revelations_Map_String + " Quick Revive"))
         if self.options.map_the_giant_enabled:
             locked_maps.append(ItemName.Map_The_Giant)
-            if self.options.map_specific_machines and self.options.start_quick_revive:
-                quick_revives.append((Maps.The_Giant_Map_String + " Quick Revive"))
         if self.options.map_workshop_wanted_enabled:
             locked_maps.append(ItemName.Map_Wanted)
-            if self.options.map_specific_machines and self.options.start_quick_revive:
-                quick_revives.append((Maps.Wanted_Map_String + " Quick Revive"))
-
-        # Our quick revive list is empty, add base Quick Revive and/or precollect
-        if self.options.start_quick_revive:
-            if len(quick_revives) == 0:
-                quick_revives.append(ItemName.Machine_QuickRevive)
-            for revive in map(self.create_item, quick_revives):
-                self.push_precollected(revive)
 
         self.num_maps = len(locked_maps)
 
@@ -302,7 +280,7 @@ class BO3ZombiesWorld(World):
             if not is_ut:
                 bow_pairs = self.random.sample(bow_pairs, bow_count)
             for bow in bow_pairs:
-                all_locations.extend([loc.name for loc in bow[0]])
+                open_locations.extend([loc.name for loc in bow[0]])
                 self.weapon_quest_items.append(bow[1])
                 if bow[1] == ItemName.Castle_Victory_ElementalBow_Storm:
                     self.rolled_bows.append("storm")
@@ -727,6 +705,7 @@ class BO3ZombiesWorld(World):
             for item in enabled_items:
                 if "Quick Revive" in item.name:
                     enabled_items.remove(item)
+            self.push_precollected(self.create_item(ItemName.Machine_QuickRevive))
 
         # Add wallbuys to pool
         if self.options.map_specific_wallbuys:
@@ -918,6 +897,7 @@ class BO3ZombiesWorld(World):
         if self.options.goal_condition == 2:
             base_locations_left -= len(map_list)
         locations_left = base_locations_left + self.calc_round_locations(len(map_list), is_goal_cond)
+        print(base_locations_left)
 
         if len(enabled_items) > locations_left:
             print(f"Black Ops 3 - Zombies: (Player {self.player}) Too few locations, increasing round frequency and maximum")
@@ -1005,6 +985,7 @@ class BO3ZombiesWorld(World):
             if goal_round > round_max or goal_round % round_freq != 0:
                 count += 1
         
+        print(count * num_maps)
         return count * num_maps
 
     def generate_basic(self) -> None:
