@@ -29,9 +29,6 @@ def check_round_logic(state: CollectionState, player: int, options, round_num, m
 
     has_jugg = False
 
-    if options.start_quick_revive:
-        round_max_threshold -= rounds_from_perks
-
     map_perks = {
         Maps.Shadows_Map_String: Items.Shadows_Machines,
         Maps.The_Giant_Map_String: Items.The_Giant_Machines,
@@ -136,10 +133,6 @@ def check_round_logic(state: CollectionState, player: int, options, round_num, m
             if "Juggernog" in perk:
                 has_jugg = True
                 break
-        # From here perks past our first will only count as 3/8 of one for round logic
-        if not has_jugg:
-            extra_perks = (perks - 1)
-            perks = 1 + (extra_perks * (3/8))
 
     round_can_reach += (perks * rounds_from_perks)
 
@@ -153,7 +146,7 @@ def check_round_logic(state: CollectionState, player: int, options, round_num, m
     else:
         round_can_reach += (rounds_from_important * 2)
 
-    # Give 5 rounds logically for each pap upgrade
+    # Give 4 rounds logically for each pap upgrade
     current_pap_upgrades = state.count(Items.Progressive_PackAPunch.name, player)
     round_can_reach += (current_pap_upgrades * rounds_from_important)
     
