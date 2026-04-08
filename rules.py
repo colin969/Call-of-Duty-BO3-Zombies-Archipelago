@@ -27,6 +27,8 @@ def check_round_logic(state: CollectionState, player: int, options, round_num, m
     # Number of rounds to from having a shield
     rounds_from_shield = 4
 
+    has_jugg = False
+
     if options.start_quick_revive:
         round_max_threshold -= rounds_from_perks
 
@@ -37,6 +39,7 @@ def check_round_logic(state: CollectionState, player: int, options, round_num, m
         Maps.Zetsubou_Map_String: Items.Zetsubou_Machines,
         Maps.GorodKrovi_Map_String: Items.GorodKrovi_Machines,
         Maps.Revelations_Map_String: Items.Revelations_Machines,
+        Maps.Kino_Map_String: Items.Kino_Machines,
         Maps.Wanted_Map_String: Items.Wanted_Machines,
     }
     map_perks_specific = {
@@ -46,6 +49,7 @@ def check_round_logic(state: CollectionState, player: int, options, round_num, m
         Maps.Zetsubou_Map_String: Items.Zetsubou_Machines_Specific,
         Maps.GorodKrovi_Map_String: Items.GorodKrovi_Machines_Specific,
         Maps.Revelations_Map_String: Items.Revelations_Machines_Specific,
+        Maps.Kino_Map_String: Items.Kino_Machines_Specific,
         Maps.Wanted_Map_String: Items.Wanted_Machines_Specific,
     }
     map_shield = {
@@ -124,17 +128,16 @@ def check_round_logic(state: CollectionState, player: int, options, round_num, m
                     continue
                 perks += 1
         # If we have too many perks for our current limit (1 over whatever), limit logical perk count
-        if len(perks_owned) > (current_perk_limit + 1):
+        if len(perks_owned) > (current_perk_limit):
             # Don't set the perk count based on limit unless our logical perks are actually higher in count
-            perks = min(perks, current_perk_limit + 1)
+            perks = min(perks, current_perk_limit)
         # If we don't have jugg, reduce value of perks past our first
-        has_important_perk = False
         for perk in perks_owned:
             if "Juggernog" in perk:
-                has_important_perk = True
+                has_jugg = True
                 break
         # From here perks past our first will only count as 3/8 of one for round logic
-        if not has_important_perk:
+        if not has_jugg:
             extra_perks = (perks - 1)
             perks = 1 + (extra_perks * (3/8))
 
@@ -153,5 +156,8 @@ def check_round_logic(state: CollectionState, player: int, options, round_num, m
     # Give 5 rounds logically for each pap upgrade
     current_pap_upgrades = state.count(Items.Progressive_PackAPunch.name, player)
     round_can_reach += (current_pap_upgrades * rounds_from_important)
+    
+    if not has_jugg:
+        round_can_reach = min(12, round_can_reach)
 
     return (round_can_reach >= round_num) or (round_can_reach >= round_max_threshold)

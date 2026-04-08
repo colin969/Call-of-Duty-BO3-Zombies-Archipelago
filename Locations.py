@@ -9,6 +9,7 @@ BaseMapIds = {
     Maps.GorodKrovi_Map_String: 4000,
     Maps.Zetsubou_Map_String: 5000,
     Maps.Revelations_Map_String: 6000,
+    Maps.Kino_Map_String: 11000,
     # === Modded Maps ===
     Maps.Wanted_Map_String: 20000,
 }
@@ -442,6 +443,24 @@ Revelations_Quest_Music_Locations = [LocationData(row[0], BO3ZombiesLocationCate
     (LocationName.Revelations_Quest_Music_TheGift, 6400),
 ]]
 
+# == Zombie Chronicles ==
+
+# Kino der Toten
+Kino_Round_Locations = gen_map_round_locations(Maps.Kino_Map_String, 99)
+
+Kino_Quest_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Kino_Quest_Power, 11100),
+    (LocationName.Kino_Quest_Movie, 11102),
+    # (LocationName.Kino_Quest_Sorrow, 11103),
+    (LocationName.Kino_Quest_AllSpareChangeCollected, 11104),
+    (LocationName.Kino_Quest_ToyRocket, 11105),
+]]
+
+Kino_Quest_Music_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Kino_Quest_Music_115, 11200),
+]]
+
+# == Workshop ==
 # Wanted
 
 Wanted_Round_Locations = gen_map_round_locations(Maps.Wanted_Map_String, 99)
@@ -498,6 +517,9 @@ all_locations = (
     + Revelations_Round_Locations + Revelations_Craftable_Locations + Revelations_Quest_Music_Locations
     + Revelations_Quest_MainQuest_Locations + Revelations_Quest_MainEE_Locations + Revelations_Quest_Challenges
     + Revelations_Quest_SideEE_Locations + Revelations_Quest_Masks_Locations + Revelations_Quest_Weapons
+    # Kino der Toten
+    + Kino_Round_Locations
+    + Kino_Quest_Locations + Kino_Quest_Music_Locations
     # === Modded Maps ===
     # Wanted
     + Wanted_Round_Locations + Wanted_Craftable_Locations

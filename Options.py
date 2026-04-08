@@ -33,6 +33,11 @@ class MapRevelationsEnabled(Toggle):
     display_name = "\"Revelations\" map enabled"
     default = True
 
+class MapKinoEnabled(Toggle):
+    """Enabled Map: \"Kino der Toten\""""
+    display_name = "(Chronicles) \"Kino der Toten\" map enabled"
+    default = False
+
 class MapWorkshopWantedEnabled(Toggle):
     """Enabled Map: \"Wanted\""""
     display_name = "(BROKEN) \"Wanted\" map enabled"
@@ -146,7 +151,7 @@ class PerkLimitDefaultModifier(Range):
     """Modifier for initial perk limit, e.g If a map has a perk limit of 4, then -1 modifier will make it 3"""
     display_name = "Perk Limit Default Modifier"
     default = -2
-    range_start = -4
+    range_start = -3
     range_end = 4
 
 class ProgressivePerkLimitIncrease(Range):
@@ -417,6 +422,7 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     map_castle_enabled: MapCastleEnabled
     map_gorod_enabled: MapGorodKroviEnabled
     map_revelations_enabled: MapRevelationsEnabled
+    map_kino_enabled: MapKinoEnabled
     map_workshop_wanted_enabled: MapWorkshopWantedEnabled
     start_map_hints: StartMapHints
     special_rounds_enabled: SpecialRoundsEnabled
@@ -523,6 +529,7 @@ bo3_option_groups = [
         MapZetsubouEnabled,
         MapGorodKroviEnabled,
         MapRevelationsEnabled,
+        MapKinoEnabled,
         StartMapHints,
         CastleBowCount,
         CastleBowEnabledStorm,

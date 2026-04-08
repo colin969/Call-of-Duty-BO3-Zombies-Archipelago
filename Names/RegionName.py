@@ -88,6 +88,19 @@ Revelations_Round_35 = "(Revelations) Round 35"
 Revelations_Round_40 = "(Revelations) Round 40"
 Revelations_Round_Regions = (Revelations_Round_10, Revelations_Round_15, Revelations_Round_20, Revelations_Round_25, Revelations_Round_30, Revelations_Round_35, Revelations_Round_40)
 
+# == Zombie Chronicles ==
+
+Kino_Entrance = "(Kino der Toten) Entrance"
+Kino_Open = "(Kino der Toten) Open the Map"
+Kino_Round_10 = "(Kino der Toten) Round 10"
+Kino_Round_15 = "(Kino der Toten) Round 15"
+Kino_Round_20 = "(Kino der Toten) Round 20"
+Kino_Round_25 = "(Kino der Toten) Round 25"
+Kino_Round_30 = "(Kino der Toten) Round 30"
+Kino_Round_35 = "(Kino der Toten) Round 35"
+Kino_Round_40 = "(Kino der Toten) Round 40"
+Kino_Round_Regions = (Kino_Round_10, Kino_Round_15, Kino_Round_20, Kino_Round_25, Kino_Round_30, Kino_Round_35, Kino_Round_40)
+
 # == Modded Maps ==
 
 Wanted_Town = "(Wanted) Town"

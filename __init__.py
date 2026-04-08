@@ -15,6 +15,7 @@ from . import Locations, Items, Options
 from .Options import BO3ZombiesOptions, bo3_option_groups
 from .Names import ItemName, LocationName, RegionName, Maps
 from .Locations import LocationData
+from .Weapons import weapon_data_set, WeaponData, WeaponDistribution
 
 class BO3ZombiesWeb(WebWorld):
     theme = "ocean"
@@ -51,7 +52,7 @@ class BO3ZombiesWorld(World):
     items_handling = 0b111
 
     # Enable to log the location lua data
-    write_lua_locations = False
+    write_lua_locations = True
 
     def generate_early(self) -> None:
         if self.write_lua_locations:
@@ -68,7 +69,8 @@ class BO3ZombiesWorld(World):
         # At least one map has to be enabled
         if (not self.options.map_shadows_enabled and not self.options.map_castle_enabled
             and not self.options.map_zetsubou_enabled and not self.options.map_gorod_enabled
-            and not self.options.map_revelations_enabled and not self.options.map_the_giant_enabled):
+            and not self.options.map_revelations_enabled and not self.options.map_the_giant_enabled
+            and not self.options.map_kino_enabled):
             self.options.map_shadows_enabled.value = True
 
         self.mystery_box_regular_items = []
@@ -86,6 +88,8 @@ class BO3ZombiesWorld(World):
                 add_universal_items(self.mystery_box_regular_items, seen, Items.GorodKrovi_MysteryBox_Regular)
             if self.options.map_revelations_enabled:
                 add_universal_items(self.mystery_box_regular_items, seen, Items.Revelations_MysteryBox_Regular)
+            if self.options.map_kino_enabled:
+                add_universal_items(self.mystery_box_regular_items, seen, Items.Kino_MysteryBox_Regular)
             if self.options.map_workshop_wanted_enabled:
                 self.mystery_box_regular_items += Items.Wanted_MysteryBox_Regular
         self.mystery_box_regular_items_two_third = math.ceil(len(self.mystery_box_regular_items) * 0.67)
@@ -105,6 +109,8 @@ class BO3ZombiesWorld(World):
                 self.mystery_box_special_items += Items.GorodKrovi_MysteryBox
             if self.options.map_revelations_enabled:
                 self.mystery_box_special_items += Items.Revelations_MysteryBox
+            if self.options.map_kino_enabled:
+                self.mystery_box_special_items += Items.Kino_MysteryBox
             if self.options.map_workshop_wanted_enabled:
                 self.mystery_box_special_items += Items.Wanted_MysteryBox
 
@@ -130,6 +136,10 @@ class BO3ZombiesWorld(World):
             locked_maps.append(ItemName.Map_Revelations)
         if self.options.map_the_giant_enabled:
             locked_maps.append(ItemName.Map_The_Giant)
+
+        if self.options.map_kino_enabled:
+            locked_maps.append(ItemName.Map_Kino)
+
         if self.options.map_workshop_wanted_enabled:
             locked_maps.append(ItemName.Map_Wanted)
 
@@ -389,7 +399,10 @@ class BO3ZombiesWorld(World):
             upgraded_locs = [loc.name for loc in Locations.Zetsubou_Quest_Masamune_Locations]
             upgraded_weapon_region = self.create_region(self.multiworld, self.player, RegionName.Zetsubou_Upgraded, upgraded_locs)
             # create_entrance(main_region, upgraded_weapon_region, HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.mystery_box_regular_items_two_third))
-            create_entrance(map_open_region, upgraded_weapon_region, lambda state: (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_two_third) if self.options.mystery_box_regular_items else True))
+            create_entrance(map_open_region, upgraded_weapon_region, lambda state: (
+                state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_two_third) if self.options.mystery_box_regular_items else True
+                and state.has_all({item.name for item in Items.Zetsubou_Shield}, self.player)
+            ))
 
         if self.options.map_gorod_enabled:
             all_locations = []
@@ -550,6 +563,25 @@ class BO3ZombiesWorld(World):
             else:
                 create_entrance(map_open_region, arnies_ugprade_region)
 
+        if self.options.map_kino_enabled:
+            all_locations = []
+            main_region = self.create_region(self.multiworld, self.player, RegionName.Kino_Entrance, all_locations)
+            self.multiworld.regions.append(main_region)
+            create_entrance(menu_region, main_region, lambda state: state.has(ItemName.Map_Kino, self.player))
+
+            open_locations = []
+            open_locations.extend([loc.name for loc in Locations.Kino_Quest_Locations])
+            if self.options.music_ee_enabled:
+                open_locations.extend([loc.name for loc in Locations.Kino_Quest_Music_Locations])
+
+            map_open_region = self.create_region(self.multiworld, self.player, RegionName.Kino_Open, open_locations)
+            self.multiworld.regions.append(map_open_region)
+            create_entrance(main_region, map_open_region,
+                            lambda state: rules.can_open_map(state, self.player, self.options,
+                                                             Maps.Kino_Map_String,
+                                                             self.mystery_box_regular_items_third,
+                                                             self.mystery_box_regular_items_two_third))
+                
         # == Modded Maps ==
 
         if self.options.map_workshop_wanted_enabled:
@@ -654,7 +686,6 @@ class BO3ZombiesWorld(World):
         return self.create_item(ItemName.Points200)
 
     def create_items(self) -> None:
-        print("items")
         enabled_items = [
             Items.Points_1500,
             Items.Points_1500,
@@ -713,6 +744,10 @@ class BO3ZombiesWorld(World):
                 enabled_items += Items.GorodKrovi_Machines_Specific
             if self.options.map_revelations_enabled:
                 enabled_items += Items.Revelations_Machines_Specific
+            
+            if self.options.map_kino_enabled:
+                enabled_items += Items.Kino_Machines_Specific
+
             if self.options.map_workshop_wanted_enabled:
                 enabled_items += Items.Wanted_Machines_Specific
 
@@ -731,6 +766,10 @@ class BO3ZombiesWorld(World):
                 add_universal_items(enabled_items, seen, Items.GorodKrovi_Machines)
             if self.options.map_revelations_enabled:
                 add_universal_items(enabled_items, seen, Items.Revelations_Machines)
+
+            if self.options.map_kino_enabled:
+                add_universal_items(enabled_items, seen, Items.Kino_Machines)
+
             if self.options.map_workshop_wanted_enabled:
                 add_universal_items(enabled_items, seen, Items.Wanted_Machines)
 
@@ -756,6 +795,8 @@ class BO3ZombiesWorld(World):
                 enabled_items += Items.GorodKrovi_Wallbuys_Specific
             if self.options.map_revelations_enabled:
                 enabled_items += Items.Revelations_Wallbuys_Specific
+            if self.options.map_kino_enabled:
+                enabled_items += Items.Kino_Wallbuys_Specific
         else:
             # Only add one instance per wallbuy
             seen = set()
@@ -771,6 +812,8 @@ class BO3ZombiesWorld(World):
                 add_universal_items(enabled_items, seen, Items.GorodKrovi_Wallbuys)
             if self.options.map_revelations_enabled:
                 add_universal_items(enabled_items, seen, Items.Revelations_Wallbuys)
+            if self.options.map_kino_enabled:
+                add_universal_items(enabled_items, seen, Items.Kino_Wallbuys)
 
         # Modded maps without universal wallbuys
         if self.options.map_workshop_wanted_enabled:
@@ -828,6 +871,10 @@ class BO3ZombiesWorld(World):
                 self.multiworld.get_location(LocationName.Revelations_Craftable_ShieldPartDoor, self.player).place_locked_item(self.create_item(Items.Revelations_Shield[0].name))
                 self.multiworld.get_location(LocationName.Revelations_Craftable_ShieldPartDolly, self.player).place_locked_item(self.create_item(Items.Revelations_Shield[1].name))
                 self.multiworld.get_location(LocationName.Revelations_Craftable_ShieldPartClamp, self.player).place_locked_item(self.create_item(Items.Revelations_Shield[2].name))
+        
+        if self.options.map_kino_enabled:
+            map_list.append((Maps.Kino_Map_String, RegionName.Kino_Entrance, RegionName.Kino_Round_Regions, Locations.Kino_Round_Locations))
+        
         if self.options.map_workshop_wanted_enabled:
             map_list.append((Maps.Wanted_Map_String, RegionName.Wanted_Town, RegionName.Wanted_Round_Regions, Locations.Wanted_Round_Locations))
             if self.options.randomized_shield_parts:
@@ -839,6 +886,18 @@ class BO3ZombiesWorld(World):
             enabled_items += Items.Wanted_Craftable_Acidgat
 
         enabled_items += self.mystery_box_special_items
+
+        distribution = WeaponDistribution()
+        distribution.percent_of_group = [50, 25, 15, 1, 0]
+        weapon_names = [item.name for item in self.mystery_box_regular_items]
+        precollected_weapons = self.preselect_weapons(weapon_names, distribution)
+        for weapon in precollected_weapons:
+            self.multiworld.push_precollected(self.create_item(weapon))
+        self.mystery_box_regular_items = [
+            item for item in self.mystery_box_regular_items 
+            if item.name not in precollected_weapons
+        ]
+
         enabled_items += self.mystery_box_regular_items
 
         # Easter Egg Hunt
@@ -859,7 +918,11 @@ class BO3ZombiesWorld(World):
                 ee_pairs.append((LocationName.Wanted_Quest_MainEE_Victory, Maps.Wanted_Map_String + ItemName.EE_Victory))
 
             if len(ee_pairs) == 0:
-                ee_pairs.append((LocationName.TheGiant_Quest_FlyTrap, Maps.The_Giant_Map_String + ItemName.EE_Victory))
+                if self.options.map_the_giant_enabled:
+                    ee_pairs.append((LocationName.TheGiant_Quest_FlyTrap, Maps.The_Giant_Map_String + ItemName.EE_Victory))
+                else:
+                    self.options.goal_condition.value = 2
+                    print(f"Black Ops 3 - Zombies: (Player {self.player}) No easter egg map enabled, swapping to goal round")
 
             # Get bounds for number of victory items to add
             ee_allow_any = not self.options.goal_ee_random
@@ -931,7 +994,6 @@ class BO3ZombiesWorld(World):
         if self.options.goal_condition == 2:
             base_locations_left -= len(map_list)
         locations_left = base_locations_left + self.calc_round_locations(len(map_list), is_goal_cond)
-        print(base_locations_left)
 
         if len(enabled_items) > locations_left:
             print(f"Black Ops 3 - Zombies: (Player {self.player}) Too few locations, increasing round frequency and maximum")
@@ -1019,7 +1081,6 @@ class BO3ZombiesWorld(World):
             if goal_round > round_max or goal_round % round_freq != 0:
                 count += 1
         
-        print(count * num_maps)
         return count * num_maps
 
     def generate_basic(self) -> None:
@@ -1111,6 +1172,49 @@ class BO3ZombiesWorld(World):
         self.multiworld.regions.append(region)
         rule = lambda state: rules.check_round_logic(state, self.player, self.options, round_num, map_name, self.mystery_box_regular_items_third, self.mystery_box_regular_items_two_third)
         create_entrance(main_region, region, rule)
+
+        
+    def preselect_weapons(self, unfiltered_set: list[str], distribution: WeaponDistribution):
+        # Sets for strength 1 to 5
+        precollected_weapons = []
+        filtered_sets: list[list[WeaponData]] = [[], [], [], [], []]
+        for weapon_data in weapon_data_set:
+            if ("Mystery Box - " + weapon_data.name) in unfiltered_set:
+                filtered_sets[weapon_data.strength - 1].append(weapon_data)
+
+        for i in range(len(distribution.percent_of_group)):
+            if i >= 0 and i < 5:
+                chance = distribution.fuzz_strength / 100
+                set_size = len(filtered_sets[i])
+                pull_count = math.ceil(set_size * (distribution.percent_of_group[i] / 100))
+
+                # Pull for each count
+                for j in range(pull_count):
+                    target_strength = i + 1
+                    # X% chance to fuzz the result
+                    if (target_strength <= distribution.fuzz_max) and distribution.fuzz_max > 1 and (self.random.random() < chance):
+                        direction = 1
+                        # 50% chance to either go up or down a tier, if in fuzz range
+                        if target_strength + 1 > distribution.fuzz_max or self.random.random() > 0.5 or target_strength >= 5:
+                            direction = -1
+                        target_strength += direction
+
+                        # None left in adjusted set, go back to regular set
+                        if len(filtered_sets[target_strength - 1]) == 0:
+                            target_strength -= direction
+
+                    # We're out of weapons to pull somehow, move on
+                    if len(filtered_sets[target_strength - 1]) == 0:
+                        continue
+
+                    # Randomly pull weapon from set
+                    selected_weapon = self.random.choice(filtered_sets[target_strength - 1])
+                    precollected_weapons.append("Mystery Box - " + selected_weapon.name)
+                    filtered_sets[target_strength - 1].remove(selected_weapon)
+
+        return (precollected_weapons)
+
+        
 
 def add_universal_items(enabled_items, seen, items):
     for item in items:

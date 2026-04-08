@@ -243,6 +243,15 @@ TheGiant_Quest_Music_BeautyOfAnnihilation = Maps.The_Giant_Map_String + " Music 
 
 TheGiant_Quest_AllSpareChangeCollected = Maps.The_Giant_Map_String + " All Spare Change Collected"
 
+Kino_Quest_AllSpareChangeCollected = Maps.Kino_Map_String + " All Spare Change Collected"
+
+Kino_Quest_Power = Maps.Kino_Map_String + " Turn on the Power"
+Kino_Quest_Movie = Maps.Kino_Map_String + " Watch a Movie"
+Kino_Quest_ToyRocket = Maps.Kino_Map_String + " Launch the Toy Rocket"
+Kino_Quest_Sorrow = Maps.Kino_Map_String + " Samantha's Sorrow"
+
+Kino_Quest_Music_115 = Maps.Kino_Map_String + " Music EE - 115"
+
 Wanted_Quest_MainQuest_CollectSkulls = Maps.Wanted_Map_String + " Collect the Skulls"
 Wanted_Quest_MainQuest_WeaponSafe = Maps.Wanted_Map_String + " Open the Barn"
 

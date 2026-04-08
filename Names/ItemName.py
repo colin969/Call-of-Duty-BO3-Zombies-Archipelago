@@ -2,11 +2,13 @@ from . import Maps
 
 # Maps
 Map_Shadows = "Map Unlock - Shadows of Evil"
-Map_Castle = "Map Unlock - Castle"
+Map_Castle = "Map Unlock - Der Eisendrache"
 Map_Zetsubou = "Map Unlock - Zetsubou No Shima"
 Map_GorodKrovi = "Map Unlock - Gorod Krovi"
 Map_Revelations = "Map Unlock - Revelations"
 Map_The_Giant = "Map Unlock - The Giant"
+
+Map_Kino = "Map Unlock - Kino der Toten"
 
 Map_Wanted = "Map Unlock - Wanted"
 
