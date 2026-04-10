@@ -55,10 +55,54 @@ class BO3ZombiesWorld(World):
     # Enable to log the location lua data
     write_lua_locations = True
 
-    def generate_early(self) -> None:
-        # Force unused option of
-        self.options.map_workshop_wanted_enabled.value = 0
+    def generate_gsc_code(self):
+        """Generate GSC code for weapon mappings with table separation and fallback."""
+        lines = [
+            'function init_weapon_item_names()',
+            '{',
+            '    level.archi.weapon_item_names = [];',
+            '    level.archi.weapon_item_names["vanilla"] = [];',
+            '    level.archi.weapon_item_names["zm_westernz"] = [];',
+            ''
+        ]
+        
+        for key in weapon_data_set.keys():
+            data_set = weapon_data_set[key]
+            for console_name, weapon_data in data_set.items():
+                item_name = weapon_data.item_name.replace("ItemName.", "")
+                lines.append(f'    level.archi.weapon_item_names["{key}"]["{console_name}"] = "{item_name}";')
+            lines.append('')
 
+        lines.append('}')
+        lines.append('')
+        
+        # Add lookup function with fallback
+        lines.extend([
+            'function get_weapon_item_name(console_name, table)',
+            '{',
+            '    // Try specified table first',
+            '    if(isdefined(level.archi.weapon_item_names[table]) && isdefined(level.archi.weapon_item_names[table][console_name]))',
+            '    {',
+            '        return level.archi.weapon_item_names[table][console_name];',
+            '    }',
+            '    ',
+            '    // Fallback to vanilla',
+            '    if(isdefined(level.archi.weapon_item_names["vanilla"][console_name]))',
+            '    {',
+            '        return level.archi.weapon_item_names["vanilla"][console_name];',
+            '    }',
+            '    ',
+            '    return undefined;',
+            '}'
+        ])
+        
+        # Usage
+        gsc_code = '\n'.join(lines)
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        with open(os.path.join(script_dir, 'archi_mappings.gsc'), 'w') as f:
+            f.write(gsc_code)
+
+    def generate_early(self) -> None:
         if self.write_lua_locations:
             script_dir = os.path.dirname(os.path.abspath(__file__))
             with open(os.path.join(script_dir, 'Locations.lua'), 'w', encoding='utf-8') as f:
@@ -69,6 +113,8 @@ class BO3ZombiesWorld(World):
                     f.write("IDToLocation[{}] = \"{}\"\n".format(location.code, location.name))
                 f.write("local locations = { LocationToID = LocationToID, IDToLocation = IDToLocation }\n")
                 f.write("return locations\n")
+
+            self.generate_gsc_code()
 
         # At least one map has to be enabled
         if (not self.options.map_shadows_enabled and not self.options.map_castle_enabled
@@ -94,9 +140,8 @@ class BO3ZombiesWorld(World):
         if self.options.map_kino_enabled:
             map_list.append(Maps.Kino_Map_String)
 
-        modded_map_list = []
         if self.options.map_workshop_wanted_enabled:
-            modded_map_list.append(Maps.Wanted_Map_String)
+            map_list.append(Maps.Wanted_Map_String)
 
         # Add weapons to pool
         self.weapon_unlocks = []
@@ -114,12 +159,8 @@ class BO3ZombiesWorld(World):
         if self.options.mystery_box_special_items:
             for map in map_list:
                 if map in Weapons.map_weapon_data_sets:
-                    is_modded = Weapons.map_weapon_data_sets[map].table.startswith("zm_")
                     for weapon_key, weapon_data in Weapons.map_weapon_data_sets[map].special.items():
-                        if is_modded:
-                            self.mystery_box_special_items.append(weapon_data.item_name)
-                        else:
-                            self.mystery_box_special_items.append(Weapons.special_weapon_name(map, weapon_data.item_name))
+                        self.mystery_box_special_items.append(Weapons.special_weapon_name(map, weapon_data.item_name))
 
         self.rolled_bows = []
         self.rolled_masks = []
@@ -1083,6 +1124,7 @@ class BO3ZombiesWorld(World):
             "perk_limit_default_modifier": int(options.perk_limit_default_modifier),
             "mystery_box_special_items": bool(options.mystery_box_special_items),
             "mystery_box_regular_items": bool(options.mystery_box_regular_items),
+            "mystery_box_expanded": bool(options.mystery_box_expanded),
             "difficulty_gorod_egg_cooldown": bool(options.difficulty_gorod_egg_cooldown),
             "difficulty_gorod_dragon_wings": bool(options.difficulty_gorod_dragon_wings),
             "difficulty_ee_checkpoints": options.difficulty_ee_checkpoints.value,

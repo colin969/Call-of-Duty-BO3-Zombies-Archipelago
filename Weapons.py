@@ -122,6 +122,39 @@ weapon_data_set: dict[str, dict[str, WeaponData]] = {
         "m1831": WeaponData("shotgun", 4, ItemName.Weapon_Modded_M1831Blundergat),
         "bo3_boneglass": WeaponData("shotgun", 3, ItemName.Weapon_Modded_Nightbreaker),
         "t8_m1897": WeaponData("shotgun", 2, ItemName.Weapon_Modded_Model1897),
+        "ww2_ribeyrolles": WeaponData("smg", 4, ItemName.Weapon_Modded_Ribeyrolles),
+        "m1889": WeaponData("shotgun", 2, ItemName.Weapon_Modded_RemingtonM1889),
+        "m1903_epic": WeaponData("sniper", 1, ItemName.Weapon_Modded_M1903),
+        "bo4_escargot": WeaponData("pistol", 3, ItemName.Weapon_Modded_Escargot),
+        "mwr_ranger": WeaponData("shotgun", 1, ItemName.Weapon_Modded_Ranger),
+        "ww2_winchester94": WeaponData("ar", 2, ItemName.Weapon_Modded_WinchesterModel94),
+        "ww2_crossbow": WeaponData("sniper", 1, ItemName.Weapon_Modded_Crossbow),
+        "aw_winchester": WeaponData("ar", 3, ItemName.Weapon_Modded_WinchesterModel94_Auto),
+        "doc_w1866": WeaponData("sniper", 1, ItemName.Weapon_Modded_GreatScott),
+        "m1896_essex": WeaponData("sniper", 1, ItemName.Weapon_Modded_M1896Essex),
+        "ww2_mosin": WeaponData("ar", 2, ItemName.Weapon_Modded_Mosin),
+        "ww2_m712": WeaponData("pistol", 1, ItemName.Weapon_Modded_MachinePistol),
+        "ww2_enfield2": WeaponData("pistol", 1, ItemName.Weapon_Modded_EnfieldNo2),
+        "ww2_enfield2_gold": WeaponData("pistol", 2, ItemName.Weapon_Modded_EnfieldNo2Gold),
+        "ww2_colt45saa": WeaponData("pistol", 1, ItemName.Weapon_Modded_Colt45),
+        "ww2_reichsrevolver": WeaponData("pistol", 1, ItemName.Weapon_Modded_M1883),
+        "t8_welling": WeaponData("pistol", 1, ItemName.Weapon_Modded_WebleyMark4),
+        "ww2_iceaxe": WeaponData("melee", 2, ItemName.Weapon_Modded_Icepick),
+        "ww2_raven": WeaponData("melee", 2, ItemName.Weapon_Modded_RedTalon),
+        "frag_ww2_dynamite": WeaponData("wonder", 4, ItemName.Weapon_Modded_Dynamite),
+        "m1827_exp": WeaponData("ar", 4, ItemName.Weapon_Modded_M1892),
+        "wes_jag42": WeaponData("launcher", 1, ItemName.Weapon_Modded_Jag42),
+        "ww2_fliegerfaust": WeaponData("launcher", 1, ItemName.Weapon_Modded_Fliegerfaust),
+        "lebel_m1811": WeaponData("ar", 2, ItemName.Weapon_Modded_M1811),
+        "fc4_m1887_long": WeaponData("ar", 1, ItemName.Weapon_Modded_M1887),
+        "w1892": WeaponData("ar", 2, ItemName.Weapon_Modded_M1892),
+        "ww2_model21": WeaponData("shotgun", 1, ItemName.Weapon_Modded_SawedOff),
+        "w1887": WeaponData("ar", 1, ItemName.Weapon_Modded_M1887_2),
+        "henry_m1840": WeaponData("shotgun", 2, ItemName.Weapon_Modded_M1840),
+        "bo3_olympia": WeaponData("shotgun", 1, ItemName.Weapon_Modded_Olympia),
+        "t8_allistair_annihalator": WeaponData("wonder", 5, ItemName.Weapon_Modded_Bo4Annihilator),
+        "t8_crossbow": WeaponData("ar", 4, ItemName.Weapon_Modded_Impaler),
+
     }
 }
 
@@ -221,7 +254,6 @@ map_weapon_lists: dict[str, WeaponLists] = {
         ],
         expanded = [
             "pistol_standard",
-            "pistol_revolver38",
             "bowie_knife",
             "ar_longburst",
             "ar_standard",
@@ -576,8 +608,7 @@ map_weapon_lists: dict[str, WeaponLists] = {
             "m1827_exp",
         ],
         expanded = [
-            "frag_ww2_dynamite",
-            "frag_ww2_molotov",
+            # "frag_ww2_molotov",
             "ww2_raven",
             "ww2_iceaxe",
             "bowie_knife",
@@ -607,6 +638,7 @@ map_weapon_lists: dict[str, WeaponLists] = {
             "mwr_ranger",
         ],
         special = [
+            "frag_ww2_dynamite",
             "grenade_homunculus",
             "thundergun",
             "t8_shotgun_blundergat",
@@ -616,15 +648,24 @@ map_weapon_lists: dict[str, WeaponLists] = {
     ),
 }
 
-def get_weapon_with_vanilla_fallback(weapon_name: str, table: str) -> WeaponData | None:
+def special_weapon_name(map: str, itemname: str):
+    if itemname.startswith("("):
+        return itemname
+    return map + " " + itemname
+
+def get_weapon_with_vanilla_fallback(weapon_name: str, table: str, map_name = "", special = 0) -> WeaponData | None:
     # Try the specified table first
     weapon = weapon_data_set[table].get(weapon_name)
     if weapon:
+        if special:
+            return weapon._replace(item_name = special_weapon_name(map_name, weapon.item_name))
         return weapon
     
     # Try vanilla table as fallback
     weapon = weapon_data_set['vanilla'].get(weapon_name)
     if weapon:
+        if special:
+            return weapon._replace(item_name = special_weapon_name(map_name, weapon.item_name))
         return weapon
     
     # Not found anywhere
@@ -652,7 +693,7 @@ map_weapon_data_sets: dict[str, WeaponDataLists] = {
         special = {
             weapon_name: weapon_data
             for weapon_name in weapon_list.special
-            if (weapon_data := get_weapon_with_vanilla_fallback(weapon_name, weapon_list.table)) is not None
+            if (weapon_data := get_weapon_with_vanilla_fallback(weapon_name, weapon_list.table, map_name, 1)) is not None
         },
     )
     for map_name, weapon_list in map_weapon_lists.items()
@@ -660,11 +701,8 @@ map_weapon_data_sets: dict[str, WeaponDataLists] = {
 
 def get_map_special_weapons_itemnames(map):
     if map in map_weapon_data_sets:
-        return [special_weapon_name(map, map_weapon_data_sets[map].special[weapon_key].item_name) for weapon_key in map_weapon_data_sets[map].special]
+        return [map_weapon_data_sets[map].special[weapon_key].item_name for weapon_key in map_weapon_data_sets[map].special]
     return []
-
-def special_weapon_name(map, itemname):
-    return map + " " + itemname
 
 def add_wallbuy_weapon_items(enabled_items: list[str], seen: set, map: str):
     if map in map_weapon_data_sets:

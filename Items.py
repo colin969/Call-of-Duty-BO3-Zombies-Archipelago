@@ -338,10 +338,7 @@ def gen_weapon_box_items():
                     items.append(ItemData(weapon_data.item_name, BO3ZombiesItemCategory.REGULAR_WEAPON))
                     seen_items.add(weapon_data.item_name)
             for weapon_key, weapon_data in map_set.special.items():
-                if map_set.table.startswith("zm_"):
-                    items.append(ItemData(weapon_data.item_name, BO3ZombiesItemCategory.SPECIAL_WEAPON))
-                else:
-                    items.append(ItemData(map + " " + weapon_data.item_name, BO3ZombiesItemCategory.SPECIAL_WEAPON))
+                items.append(ItemData(weapon_data.item_name, BO3ZombiesItemCategory.SPECIAL_WEAPON))
     return items
 
 WeaponBox_Items = gen_weapon_box_items() 
