@@ -115,6 +115,11 @@ class MysteryBoxRegularItems(Toggle):
     display_name = "Mystery Box - Regular Items"
     default = True
 
+class MysteryBoxExpanded(Toggle):
+    """Shuffles most non-Mystery Box weapons into the Mystery Box as well"""
+    display_name = "Mystery Box - Expanded Selection"
+    default = False
+
 class CastleBowCount(Range):
     """Number of random Elemental Bow quests to include in checks or Weapon Quest goal conditions"""
     display_name = "(Der Eisendrache) Number of Elemental Bow Quests with Checks"
@@ -166,11 +171,6 @@ class ProgressiveStartingPoints(Range):
     default = 3000
     range_start = 0
     range_end = 10000
-
-class MapSpecificWallbuysEnabled(Toggle):
-    """Enables map specific wallbuy items"""
-    display_name = "Map specific wallbuys"
-    default = False
 
 class MapSpecificMachinesEnabled(Toggle):
     """Enables map specific perk machine items"""
@@ -441,7 +441,7 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     randomized_gorod_dragonride_parts: RandomizeGorodDragonrideParts
     mystery_box_special_items: MysteryBoxSpecialItems
     mystery_box_regular_items: MysteryBoxRegularItems
-    map_specific_wallbuys: MapSpecificWallbuysEnabled
+    mystery_box_expanded: MysteryBoxExpanded
     map_specific_machines: MapSpecificMachinesEnabled
     castle_bow_count: CastleBowCount
     castle_bow_storm: CastleBowEnabledStorm
@@ -488,9 +488,6 @@ bo3_option_groups = [
     OptionGroup("General Options", [
         StartingMapsUnlocked,
         RandomizeShieldParts,
-        MysteryBoxSpecialItems,
-        MysteryBoxRegularItems,
-        MapSpecificWallbuysEnabled,
         MapSpecificMachinesEnabled,
         RoundMaxLocation,
         RoundLocationFrequency,
@@ -499,6 +496,9 @@ bo3_option_groups = [
         StartingQuickRevive
     ]),
     OptionGroup("Weapons", [
+        MysteryBoxSpecialItems,
+        MysteryBoxRegularItems,
+        MysteryBoxExpanded,
         AttachmentsEnabled,
         AttachmentsSightWeight,
         CamoEnabled,

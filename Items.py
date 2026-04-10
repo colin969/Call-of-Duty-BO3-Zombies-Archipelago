@@ -1,5 +1,6 @@
 import typing
 from BaseClasses import Item
+from . import Weapons
 from .Names import ItemName, Maps
 
 from typing import Dict, Set
@@ -24,8 +25,6 @@ class BO3ZombiesItemCategory():
     REGULAR_WEAPON = "Regular Weapons"
     MAP_UNLOCK = "Map Unlocks"
     SHOP_ITEMS = "Shop Items"
-
-
 
 class ItemData(typing.NamedTuple):
     name: str
@@ -54,49 +53,7 @@ The_Giant_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
     ItemName.Machine_MuleKick,
 ]]
 
-The_Giant_Wallbuys = [ItemData(ItemName.Wallbuy + row, BO3ZombiesItemCategory.WALLBUY) for row in[
-    # Teleporter A
-    ItemName.Weapon_M8A7,
-    # Teleporter B
-    ItemName.Weapon_HVK,
-    # Teleporter C
-    ItemName.Weapon_KN44,
-    ItemName.Weapon_BowieKnife,
-    # Starting Area
-    ItemName.Weapon_RK5,
-    # Garage
-    ItemName.Weapon_VMP,
-    ItemName.Weapon_KRM,
-    # Animal Testing
-    ItemName.Weapon_Kuda,
-    ItemName.Weapon_LCAR,
-]]
-
-The_Giant_Wallbuys_Specific = gen_map_specific_list(Maps.The_Giant_Map_String, The_Giant_Wallbuys)
 The_Giant_Machines_Specific = gen_map_specific_list(Maps.The_Giant_Map_String, The_Giant_Machines)
-
-The_Giant_MysteryBox = [ItemData(Maps.The_Giant_Map_String + " " + ItemName.MysteryBox + row, BO3ZombiesItemCategory.SPECIAL_WEAPON) for row in[
-    ItemName.Weapon_Raygun,
-    ItemName.Weapon_Wunderwaffe,
-    ItemName.Weapon_MonkeyBombs,
-]]
-
-The_Giant_MysteryBox_Regular = [ItemData(ItemName.MysteryBox + row, BO3ZombiesItemCategory.REGULAR_WEAPON) for row in[
-    ItemName.Weapon_Drakon,
-    ItemName.Weapon_Locus,
-    ItemName.Weapon_ManoWar,
-    ItemName.Weapon_HVK,
-    ItemName.Weapon_ICR,
-    ItemName.Weapon_Haymaker,
-    ItemName.Weapon_Brecci,
-    ItemName.Weapon_Argus,
-    ItemName.Weapon_BRM,
-    ItemName.Weapon_Gorgon,
-    ItemName.Weapon_Dingo,
-    ItemName.Weapon_Dredge,
-    ItemName.Weapon_RPK,
-    ItemName.Weapon_VMP,
-]]
 
 # Castle Items
 
@@ -112,32 +69,6 @@ Castle_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
     ItemName.Machine_WidowsWine,
 ]]
 
-Castle_Wallbuys = [ItemData(ItemName.Wallbuy + row, BO3ZombiesItemCategory.WALLBUY) for row in [
-    # Gondola
-    ItemName.Weapon_RK5,
-    # Gate House (Upper)
-    ItemName.Weapon_LCAR,
-    # Lower Courtyard and Trophy Room
-    ItemName.Weapon_KRM,
-    # Mission Control
-    ItemName.Weapon_M8A7,
-    # Inside Castle?
-    ItemName.Weapon_HVK,
-    # Upper Courtyard?
-    ItemName.Weapon_Kuda,
-    # Rocket Platform
-    ItemName.Weapon_VMP,
-    # Supply Room
-    ItemName.Weapon_Vesper,
-    # Living Quarters and Juggernog Room
-    ItemName.Weapon_KN44,
-    # Undercroft
-    ItemName.Weapon_BRM,
-    # Armory
-    ItemName.Weapon_BowieKnife
-]]
-
-Castle_Wallbuys_Specific = gen_map_specific_list(Maps.Castle_Map_String, Castle_Wallbuys)
 Castle_Machines_Specific = gen_map_specific_list(Maps.Castle_Map_String, Castle_Machines)
 
 Castle_Shield = gen_map_specific_list(Maps.Castle_Map_String, ShieldParts)
@@ -148,27 +79,6 @@ Castle_Craftables = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for row in[
     ItemName.Castle_Craftable_GravitySpikes_Handle
 ]]
 
-Castle_MysteryBox = [ItemData(Maps.Castle_Map_String + " " + ItemName.MysteryBox + row, BO3ZombiesItemCategory.SPECIAL_WEAPON) for row in[
-    ItemName.Weapon_Raygun,
-    ItemName.Weapon_MonkeyBombs,
-]]
-
-Castle_MysteryBox_Regular = [ItemData(ItemName.MysteryBox + row, BO3ZombiesItemCategory.REGULAR_WEAPON) for row in[
-    ItemName.Weapon_Drakon,
-    ItemName.Weapon_Locus,
-    ItemName.Weapon_ManoWar,
-    ItemName.Weapon_HVK,
-    ItemName.Weapon_ICR,
-    ItemName.Weapon_Haymaker,
-    ItemName.Weapon_Brecci,
-    ItemName.Weapon_Argus,
-    ItemName.Weapon_BRM,
-    ItemName.Weapon_Gorgon,
-    ItemName.Weapon_Dingo,
-    ItemName.Weapon_Dredge,
-    ItemName.Weapon_RPK,
-    ItemName.Weapon_VMP,
-]]
 
 # Shadows of Evil
 
@@ -184,22 +94,6 @@ Shadows_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
 
 Shadows_Machines_Specific = gen_map_specific_list(Maps.Shadows_Map_String, Shadows_Machines)
 
-Shadows_Wallbuys = [ItemData(ItemName.Wallbuy + row, BO3ZombiesItemCategory.WALLBUY) for row in[
-    ItemName.Weapon_RK5,
-    ItemName.Weapon_LCAR,
-    ItemName.Weapon_KRM,
-    ItemName.Weapon_HVK,
-    ItemName.Weapon_M8A7,
-    ItemName.Weapon_Kuda,
-    ItemName.Weapon_VMP,
-    ItemName.Weapon_Vesper,
-    ItemName.Weapon_KN44,
-    ItemName.Weapon_Bootlegger,
-    ItemName.Weapon_BowieKnife,
-]]
-
-Shadows_Wallbuys_Specific = gen_map_specific_list(Maps.Shadows_Map_String, Shadows_Wallbuys)
-
 Shadows_Shield = gen_map_specific_list(Maps.Shadows_Map_String, ShieldParts)
 
 Shadows_Craftables = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for row in[
@@ -209,24 +103,6 @@ Shadows_Craftables = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for row in
     ItemName.Shadows_Craftable_CivilProtector_Fuse01,
     ItemName.Shadows_Craftable_CivilProtector_Fuse02,
     ItemName.Shadows_Craftable_CivilProtector_Fuse03,
-]]
-
-Shadows_MysteryBox = [ItemData(Maps.Shadows_Map_String + " " + ItemName.MysteryBox + row, BO3ZombiesItemCategory.SPECIAL_WEAPON) for row in[
-    ItemName.Weapon_Raygun,
-    ItemName.Weapon_LilArnies,
-    ItemName.Weapon_ApothiconServant,
-]]
-
-Shadows_MysteryBox_Regular = [ItemData(ItemName.MysteryBox + row, BO3ZombiesItemCategory.REGULAR_WEAPON) for row in[
-    ItemName.Weapon_Drakon,
-    ItemName.Weapon_Locus,
-    ItemName.Weapon_ManoWar,
-    ItemName.Weapon_HVK,
-    ItemName.Weapon_ICR,
-    ItemName.Weapon_Haymaker,
-    ItemName.Weapon_Brecci,
-    ItemName.Weapon_Dingo,
-    ItemName.Weapon_Dredge,
 ]]
 
 # Zetsubou No Shima
@@ -245,51 +121,12 @@ Zetsubou_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
     ItemName.Machine_WidowsWine,
 ]]
 
-Zetsubou_Wallbuys = [ItemData(ItemName.Wallbuy + row, BO3ZombiesItemCategory.WALLBUY) for row in[
-    ItemName.Weapon_RK5,
-    ItemName.Weapon_Pharo,
-    ItemName.Weapon_LCAR,
-    ItemName.Weapon_KRM,
-    ItemName.Weapon_Kuda,
-    ItemName.Weapon_VMP,
-    ItemName.Weapon_Vesper,
-    ItemName.Weapon_Argus,
-    ItemName.Weapon_KN44,
-    ItemName.Weapon_ICR,
-    ItemName.Weapon_M8A7,
-    ItemName.Weapon_HVK,
-    ItemName.Weapon_BowieKnife,
-]]
-
 Zetsubou_Machines_Specific = gen_map_specific_list(Maps.Zetsubou_Map_String, Zetsubou_Machines)
-Zetsubou_Wallbuys_Specific = gen_map_specific_list(Maps.Zetsubou_Map_String, Zetsubou_Wallbuys)
 
 Zetsubou_Craftables_Gasmask = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for row in[
     ItemName.Zetsubou_Craftable_Gasmask_Visor,
     ItemName.Zetsubou_Craftable_Gasmask_Filter,
     ItemName.Zetsubou_Craftable_Gasmask_Strap,
-]]
-
-Zetsubou_MysteryBox = [ItemData(Maps.Zetsubou_Map_String + " " + ItemName.MysteryBox + row, BO3ZombiesItemCategory.SPECIAL_WEAPON) for row in[
-    ItemName.Weapon_Raygun,
-    ItemName.Weapon_MonkeyBombs,
-    ItemName.Weapon_KT4,
-]]
-
-Zetsubou_MysteryBox_Regular = [ItemData(ItemName.MysteryBox + row, BO3ZombiesItemCategory.REGULAR_WEAPON) for row in[
-    ItemName.Weapon_Drakon,
-    ItemName.Weapon_Locus,
-    ItemName.Weapon_ManoWar,
-    ItemName.Weapon_HVK,
-    ItemName.Weapon_ICR,
-    ItemName.Weapon_Haymaker,
-    ItemName.Weapon_Brecci,
-    ItemName.Weapon_Argus,
-    ItemName.Weapon_BRM,
-    ItemName.Weapon_Gorgon,
-    ItemName.Weapon_Dingo,
-    ItemName.Weapon_Dredge,
-    ItemName.Weapon_VMP,
 ]]
 
 # Gorod Krovi
@@ -306,24 +143,7 @@ GorodKrovi_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in 
     ItemName.Machine_WidowsWine,
 ]]
 
-GorodKrovi_Wallbuys = [ItemData(ItemName.Wallbuy + row, BO3ZombiesItemCategory.WALLBUY) for row in[
-    ItemName.Weapon_RK5,
-    ItemName.Weapon_Pharo,
-    ItemName.Weapon_LCAR,
-    ItemName.Weapon_KRM,
-    ItemName.Weapon_Kuda,
-    ItemName.Weapon_VMP,
-    ItemName.Weapon_Vesper,
-    ItemName.Weapon_Argus,
-    ItemName.Weapon_KN44,
-    ItemName.Weapon_ICR,
-    ItemName.Weapon_M8A7,
-    ItemName.Weapon_HVK,
-    ItemName.Weapon_BowieKnife,
-]]
-
 GorodKrovi_Machines_Specific = gen_map_specific_list(Maps.GorodKrovi_Map_String, GorodKrovi_Machines)
-GorodKrovi_Wallbuys_Specific = gen_map_specific_list(Maps.GorodKrovi_Map_String, GorodKrovi_Wallbuys)
 
 GorodKrovi_Shield = gen_map_specific_list(Maps.GorodKrovi_Map_String, ShieldParts)
 
@@ -331,31 +151,6 @@ GorodKrovi_Craftables_Dragonride = [ItemData(row, BO3ZombiesItemCategory.CRAFTAB
     ItemName.GorodKrovi_Craftable_Dragonride_Transmitter,
     ItemName.GorodKrovi_Craftable_Dragonride_Codes,
     ItemName.GorodKrovi_Craftable_Dragonride_Map,
-]]
-
-GorodKrovi_MysteryBox = [ItemData(Maps.GorodKrovi_Map_String + " " + ItemName.MysteryBox + row, BO3ZombiesItemCategory.SPECIAL_WEAPON) for row in[
-    ItemName.Weapon_Raygun,
-    ItemName.Weapon_MonkeyBombs,
-    ItemName.Weapon_RaygunMk3,
-]]
-
-GorodKrovi_MysteryBox_Regular = [ItemData(ItemName.MysteryBox + row, BO3ZombiesItemCategory.REGULAR_WEAPON) for row in[
-    ItemName.Weapon_FFAR,
-    ItemName.Weapon_Drakon,
-    ItemName.Weapon_Locus,
-    ItemName.Weapon_ManoWar,
-    ItemName.Weapon_HVK,
-    ItemName.Weapon_ICR,
-    ItemName.Weapon_Haymaker,
-    ItemName.Weapon_Brecci,
-    ItemName.Weapon_Argus,
-    ItemName.Weapon_BRM,
-    ItemName.Weapon_Gorgon,
-    ItemName.Weapon_Dingo,
-    ItemName.Weapon_Dredge,
-    ItemName.Weapon_RPK,
-    ItemName.Weapon_VMP,
-    ItemName.Weapon_Vesper
 ]]
 
 # Revelations
@@ -372,50 +167,9 @@ Revelations_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in
     ItemName.Machine_ElectricCherry,
 ]]
 
-Revelations_Wallbuys = [ItemData(ItemName.Wallbuy + row, BO3ZombiesItemCategory.WALLBUY) for row in[
-    ItemName.Weapon_RK5,
-    ItemName.Weapon_Pharo,
-    ItemName.Weapon_LCAR,
-    ItemName.Weapon_KRM,
-    ItemName.Weapon_Kuda,
-    ItemName.Weapon_VMP,
-    ItemName.Weapon_Vesper,
-    ItemName.Weapon_Argus,
-    ItemName.Weapon_KN44,
-    ItemName.Weapon_ICR,
-    ItemName.Weapon_M8A7,
-    ItemName.Weapon_HVK,
-    ItemName.Weapon_BowieKnife,
-]]
-
 Revelations_Machines_Specific = gen_map_specific_list(Maps.Revelations_Map_String, Revelations_Machines)
-Revelations_Wallbuys_Specific = gen_map_specific_list(Maps.Revelations_Map_String, Revelations_Wallbuys)
 
 Revelations_Shield = gen_map_specific_list(Maps.Revelations_Map_String, ShieldParts)
-
-Revelations_MysteryBox = [ItemData(Maps.Revelations_Map_String + " " + ItemName.MysteryBox + row, BO3ZombiesItemCategory.SPECIAL_WEAPON) for row in[
-    ItemName.Weapon_Raygun,
-    ItemName.Weapon_LilArnies,
-    ItemName.Weapon_ApothiconServant,
-    ItemName.Weapon_Thundergun,
-    ItemName.Weapon_Ragnaroks,
-]]
-
-Revelations_MysteryBox_Regular = [ItemData(ItemName.MysteryBox + row, BO3ZombiesItemCategory.REGULAR_WEAPON) for row in[
-    ItemName.Weapon_Drakon,
-    ItemName.Weapon_Locus,
-    ItemName.Weapon_ManoWar,
-    ItemName.Weapon_HVK,
-    ItemName.Weapon_ICR,
-    ItemName.Weapon_Haymaker,
-    ItemName.Weapon_Brecci,
-    ItemName.Weapon_Argus,
-    ItemName.Weapon_BRM,
-    ItemName.Weapon_Gorgon,
-    ItemName.Weapon_Dingo,
-    ItemName.Weapon_Dredge,
-    ItemName.Weapon_VMP,
-]]
 
 # === Zombie Chronicles ===
 
@@ -430,49 +184,7 @@ Kino_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
     ItemName.Machine_DeadShot,
 ]]
 
-Kino_Wallbuys = [ItemData(ItemName.Wallbuy + row, BO3ZombiesItemCategory.WALLBUY) for row in[
-    ItemName.Weapon_RK5,
-    ItemName.Weapon_Pharo,
-    ItemName.Weapon_KN44,
-    ItemName.Weapon_MP40,
-    ItemName.Weapon_LCAR,
-    ItemName.Weapon_Vesper,
-    ItemName.Weapon_ICR,
-    ItemName.Weapon_VMP,
-    ItemName.Weapon_Argus,
-    ItemName.Weapon_M8A7,
-    ItemName.Weapon_BowieKnife,
-]]
-
 Kino_Machines_Specific = gen_map_specific_list(Maps.Kino_Map_String, Kino_Machines)
-Kino_Wallbuys_Specific = gen_map_specific_list(Maps.Kino_Map_String, Kino_Wallbuys)
-
-Kino_MysteryBox = [ItemData(Maps.Revelations_Map_String + " " + ItemName.MysteryBox + row, BO3ZombiesItemCategory.SPECIAL_WEAPON) for row in[
-    ItemName.Weapon_Raygun,
-    ItemName.Weapon_LilArnies,
-    ItemName.Weapon_ApothiconServant,
-    ItemName.Weapon_Thundergun,
-    ItemName.Weapon_Ragnaroks,
-]]
-
-Kino_MysteryBox_Regular = [ItemData(ItemName.MysteryBox + row, BO3ZombiesItemCategory.REGULAR_WEAPON) for row in[
-    ItemName.Weapon_Drakon,
-    ItemName.Weapon_Locus,
-    ItemName.Weapon_ManoWar,
-    ItemName.Weapon_HVK,
-    ItemName.Weapon_ICR,
-    ItemName.Weapon_Haymaker,
-    ItemName.Weapon_Brecci,
-    ItemName.Weapon_BRM,
-    ItemName.Weapon_Gorgon,
-    ItemName.Weapon_Dingo,
-    ItemName.Weapon_Dredge,
-    ItemName.Weapon_VMP,
-    ItemName.Weapon_FFAR,
-    ItemName.Weapon_Galil,
-    ItemName.Weapon_AK47u,
-    ItemName.Weapon_KN44,
-]]
 
 # === Modded Maps ===
 
@@ -498,31 +210,7 @@ Wanted_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
     ItemName.Machine_PhdFlopper,
 ]]
 
-Wanted_Wallbuys = [ItemData(Maps.Wanted_Map_String + " " + ItemName.Wallbuy + row, BO3ZombiesItemCategory.WALLBUY) for row in[
-    ItemName.Weapon_Modded_WinchesterModel94,
-    ItemName.Weapon_Modded_Escargot,
-    ItemName.Weapon_Modded_Ribeyrolles,
-    ItemName.Weapon_Modded_M1903,
-    ItemName.Weapon_Modded_RemingtonM1889,
-    ItemName.Weapon_Modded_RedTalon
-]]
-
 Wanted_Machines_Specific = gen_map_specific_list(Maps.Wanted_Map_String, Wanted_Machines)
-
-Wanted_MysteryBox = [ItemData(Maps.Wanted_Map_String + " " + ItemName.MysteryBox + row, BO3ZombiesItemCategory.SPECIAL_WEAPON) for row in[
-    ItemName.Weapon_Modded_HomunculusBomb,
-    ItemName.Weapon_Thundergun,
-    ItemName.Weapon_Modded_Blundergat,
-    ItemName.Weapon_Raygun,
-    ItemName.Weapon_Wunderwaffe,
-]]
-
-Wanted_MysteryBox_Regular = [ItemData(Maps.Wanted_Map_String + " " + ItemName.MysteryBox + row, BO3ZombiesItemCategory.REGULAR_WEAPON) for row in[
-    ItemName.Weapon_Modded_Ww2Lewis,
-    ItemName.Weapon_Modded_M1831Blundergat,
-    ItemName.Weapon_Modded_Nightbreaker,
-    ItemName.Weapon_Modded_Model1897,
-]]
 
 # Progressives
 
@@ -631,47 +319,57 @@ Shop_Items = [ItemData(row, BO3ZombiesItemCategory.SHOP_ITEMS) for row in [
     ItemName.Shop_CheckpointToken,
 ]]
 
+def gen_weapon_box_items():
+    items = []
+    seen_items = set()
+    for map in Maps.all_maps:
+        if map in Weapons.map_weapon_data_sets:
+            map_set = Weapons.map_weapon_data_sets[map]
+            for weapon_key, weapon_data in map_set.vanilla.items():
+                if weapon_data.item_name not in seen_items:
+                    items.append(ItemData(weapon_data.item_name, BO3ZombiesItemCategory.REGULAR_WEAPON))
+                    seen_items.add(weapon_data.item_name)
+            for weapon_key, weapon_data in map_set.expanded.items():
+                if weapon_data.item_name not in seen_items:
+                    items.append(ItemData(weapon_data.item_name, BO3ZombiesItemCategory.REGULAR_WEAPON))
+                    seen_items.add(weapon_data.item_name)
+            for weapon_key, weapon_data in map_set.wallbuys.items():
+                if weapon_data.item_name not in seen_items:
+                    items.append(ItemData(weapon_data.item_name, BO3ZombiesItemCategory.REGULAR_WEAPON))
+                    seen_items.add(weapon_data.item_name)
+            for weapon_key, weapon_data in map_set.special.items():
+                items.append(ItemData(map + " " + weapon_data.item_name, BO3ZombiesItemCategory.SPECIAL_WEAPON))
+    return items
+
+WeaponBox_Items = gen_weapon_box_items() 
+
 all_items = (
     Shop_Items + Progressive_Items + [Points_1500] + Weapon_Victory_Items + Victory_Items + Gift_Items + Trap_Items + Misc_Items + Map_Unlocks
+    + WeaponBox_Items
     # The Giant
     + The_Giant_Machines + The_Giant_Machines_Specific
-    + The_Giant_Wallbuys + The_Giant_Wallbuys_Specific
-    + The_Giant_MysteryBox + The_Giant_MysteryBox_Regular
     # Castle
     + Castle_Machines + Castle_Machines_Specific
-    + Castle_Wallbuys + Castle_Wallbuys_Specific
     + Castle_Craftables + Castle_Shield
-    + Castle_MysteryBox + Castle_MysteryBox_Regular
     # Shadows of Evil
     + Shadows_Machines + Shadows_Machines_Specific
-    + Shadows_Wallbuys + Shadows_Wallbuys_Specific
     + Shadows_Craftables + Shadows_Shield
-    + Shadows_MysteryBox + Shadows_MysteryBox_Regular
     # Zetsubou No Shima
     + Zetsubou_Machines + Zetsubou_Machines_Specific
-    + Zetsubou_Wallbuys + Zetsubou_Wallbuys_Specific
     + Zetsubou_Craftables_Gasmask + Zetsubou_Shield
-    + Zetsubou_MysteryBox + Zetsubou_MysteryBox_Regular
     # Gorod Krovi
     + GorodKrovi_Machines + GorodKrovi_Machines_Specific
-    + GorodKrovi_Wallbuys + GorodKrovi_Wallbuys_Specific
     + GorodKrovi_Craftables_Dragonride + GorodKrovi_Shield
-    + GorodKrovi_MysteryBox + GorodKrovi_MysteryBox_Regular
     # Revelations
     + Revelations_Machines + Revelations_Machines_Specific
-    + Revelations_Wallbuys + Revelations_Wallbuys_Specific
     + Revelations_Shield
-    + Revelations_MysteryBox + Revelations_MysteryBox_Regular
     # == Zombie Chronicles ==
+    # Kino
     + Kino_Machines + Kino_Machines_Specific
-    + Kino_Wallbuys + Kino_Wallbuys_Specific
-    + Kino_MysteryBox + Kino_MysteryBox_Regular
     # == Modded Maps ==
     # Wanted
-    + Wanted_Wallbuys
     + Wanted_Machines + Wanted_Machines_Specific
     + Wanted_Shield + Wanted_Craftable_Acidgat
-    + Wanted_MysteryBox + Wanted_MysteryBox_Regular
 )
 
 all_items_dict = {item_data.name: item_data for item_data in all_items}

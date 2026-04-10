@@ -11,11 +11,12 @@ from worlds.AutoWorld import World, WebWorld
 
 # from rule_builder.rules import Has, HasAll, HasGroupUnique
 
-from . import Locations, Items, Options
+from . import Locations, Items, Options, Weapons
 from .Options import BO3ZombiesOptions, bo3_option_groups
 from .Names import ItemName, LocationName, RegionName, Maps
 from .Locations import LocationData
 from .Weapons import weapon_data_set, WeaponData, WeaponDistribution
+from .Items import ItemData, BO3ZombiesItemCategory
 
 class BO3ZombiesWeb(WebWorld):
     theme = "ocean"
@@ -73,46 +74,44 @@ class BO3ZombiesWorld(World):
             and not self.options.map_kino_enabled):
             self.options.map_shadows_enabled.value = True
 
-        self.mystery_box_regular_items = []
-        if self.options.mystery_box_regular_items:
-            seen = set()
-            if self.options.map_the_giant_enabled:
-                add_universal_items(self.mystery_box_regular_items, seen, Items.The_Giant_MysteryBox_Regular)
-            if self.options.map_shadows_enabled:
-                add_universal_items(self.mystery_box_regular_items, seen, Items.Shadows_MysteryBox_Regular)
-            if self.options.map_castle_enabled:
-                add_universal_items(self.mystery_box_regular_items, seen, Items.Castle_MysteryBox_Regular)
-            if self.options.map_zetsubou_enabled:
-                add_universal_items(self.mystery_box_regular_items, seen, Items.Zetsubou_MysteryBox_Regular)
-            if self.options.map_gorod_enabled:
-                add_universal_items(self.mystery_box_regular_items, seen, Items.GorodKrovi_MysteryBox_Regular)
-            if self.options.map_revelations_enabled:
-                add_universal_items(self.mystery_box_regular_items, seen, Items.Revelations_MysteryBox_Regular)
-            if self.options.map_kino_enabled:
-                add_universal_items(self.mystery_box_regular_items, seen, Items.Kino_MysteryBox_Regular)
-            if self.options.map_workshop_wanted_enabled:
-                self.mystery_box_regular_items += Items.Wanted_MysteryBox_Regular
-        self.mystery_box_regular_items_two_third = math.ceil(len(self.mystery_box_regular_items) * 0.67)
-        self.mystery_box_regular_items_third = math.ceil(len(self.mystery_box_regular_items) * 0.33)
+        map_list = []
+        if self.options.map_shadows_enabled:
+            map_list.append(Maps.Shadows_Map_String)
+        if self.options.map_castle_enabled:
+            map_list.append(Maps.Castle_Map_String)
+        if self.options.map_zetsubou_enabled:
+            map_list.append(Maps.Zetsubou_Map_String)
+        if self.options.map_gorod_enabled:
+            map_list.append(Maps.GorodKrovi_Map_String)
+        if self.options.map_revelations_enabled:
+            map_list.append(Maps.Revelations_Map_String)
+        if self.options.map_the_giant_enabled:
+            map_list.append(Maps.The_Giant_Map_String)
 
-        self.mystery_box_special_items = []
+        if self.options.map_kino_enabled:
+            map_list.append(Maps.Kino_Map_String)
+
+        if self.options.map_workshop_wanted_enabled:
+            map_list.append(Maps.Wanted_Map_String)
+
+        # Add weapons to pool
+        self.weapon_unlocks = []
+        seen_weaps = set()
+        # Wallbuys
+        for map in map_list:
+            Weapons.add_wallbuy_weapon_items(self.weapon_unlocks, seen_weaps, map)
+        # Mystery Box
+        if self.options.mystery_box_regular_items:
+            for map in map_list:
+                Weapons.add_mystery_box_weapon_items(self.weapon_unlocks, seen_weaps, map, self.options.mystery_box_expanded.value)
+
+        # Add mystery box special weapons to pool
+        self.mystery_box_special_items: list[str] = []
         if self.options.mystery_box_special_items:
-            if self.options.map_the_giant_enabled:
-                self.mystery_box_special_items += Items.The_Giant_MysteryBox
-            if self.options.map_shadows_enabled:
-                self.mystery_box_special_items += Items.Shadows_MysteryBox
-            if self.options.map_castle_enabled:
-                self.mystery_box_special_items += Items.Castle_MysteryBox
-            if self.options.map_zetsubou_enabled:
-                self.mystery_box_special_items += Items.Zetsubou_MysteryBox
-            if self.options.map_gorod_enabled:
-                self.mystery_box_special_items += Items.GorodKrovi_MysteryBox
-            if self.options.map_revelations_enabled:
-                self.mystery_box_special_items += Items.Revelations_MysteryBox
-            if self.options.map_kino_enabled:
-                self.mystery_box_special_items += Items.Kino_MysteryBox
-            if self.options.map_workshop_wanted_enabled:
-                self.mystery_box_special_items += Items.Wanted_MysteryBox
+            for map in map_list:
+                if map in Weapons.map_weapon_data_sets:
+                    for weapon_key, weapon_data in Weapons.map_weapon_data_sets[map].special.items():
+                        self.mystery_box_special_items.append(Weapons.special_weapon_name(map, weapon_data.item_name))
 
         self.rolled_bows = []
         self.rolled_masks = []
@@ -202,13 +201,13 @@ class BO3ZombiesWorld(World):
                 open_locations.extend([loc.name for loc in Locations.Shadows_Quest_Music_Locations])
             map_open_region = self.create_region(self.multiworld, self.player, RegionName.Shadows_Open, open_locations)
             self.multiworld.regions.append(map_open_region)
-            create_entrance(main_region, map_open_region, lambda state: rules.can_open_map(state, self.player, self.options, Maps.Shadows_Map_String, self.mystery_box_regular_items_third, self.mystery_box_regular_items_two_third))
+            create_entrance(main_region, map_open_region, lambda state: rules.can_open_map(state, self.player, self.options, Maps.Shadows_Map_String))
 
             servant_locations = []
             servant_locations.extend([loc.name for loc in Locations.Shadows_ApothiconServant_Locations])
             servant_region = self.create_region(self.multiworld, self.player, RegionName.Shadows_Servant, servant_locations)
             self.multiworld.regions.append(servant_region)
-            rule = lambda state: rules.check_round_logic(state, self.player, self.options, 12, Maps.Shadows_Map_String, self.mystery_box_regular_items_third, self.mystery_box_regular_items_two_third)
+            rule = lambda state: rules.check_round_logic(state, self.player, self.options, 12, Maps.Shadows_Map_String)
             create_entrance(map_open_region, servant_region, rule)
 
             ee_locs = []
@@ -221,23 +220,23 @@ class BO3ZombiesWorld(World):
                 main_ee_region, 
                 lambda state: (
                         state.has(ItemName.Progressive_PackAPunch, self.player) and
-                        (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_two_third) if self.options.mystery_box_regular_items else True) and
+                        rules.has_weapon_percentage(state, self.player, self.options, Maps.Shadows_Map_String, 2/3) and
                         state.has_all({item.name for item in Items.Shadows_Shield}, self.player) and
-                        (state.has_all({item.name for item in Items.Shadows_MysteryBox}, self.player) if self.options.mystery_box_special_items else True)
+                        (state.has_all(Weapons.get_map_special_weapons_itemnames(Maps.Shadows_Map_String), self.player) if self.options.mystery_box_special_items else True)
                 )
             )
 
             upgraded_locs = [loc.name for loc in Locations.Shadows_Quest_ApothiconSword_Upgrade_Locations]
             upgraded_weapon_region = self.create_region(self.multiworld, self.player, RegionName.Shadows_Upgraded, upgraded_locs)
-            # create_entrance(main_region, upgraded_weapon_region, HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.mystery_box_regular_items_two_third))
-            create_entrance(map_open_region, upgraded_weapon_region, lambda state: (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_two_third) if self.options.mystery_box_regular_items else True))
+            # create_entrance(main_region, upgraded_weapon_region, HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.weapon_unlocks_two_third))
+            create_entrance(map_open_region, upgraded_weapon_region, lambda state: rules.has_weapon_percentage(state, self.player, self.options, Maps.Shadows_Map_String, 2/3))
 
             upgraded_arnies_locs = [loc.name for loc in Locations.Shadows_LilArnies_Locations]
             upgraded_arnies_region = self.create_region(self.multiworld, self.player, RegionName.Shadows_Arnies, upgraded_arnies_locs)
             self.multiworld.regions.append(upgraded_arnies_region)
             create_entrance(map_open_region, upgraded_arnies_region, lambda state:
-                ((not self.options.mystery_box_special_items) or state.has(Items.Shadows_MysteryBox[1].name, self.player))
-                and (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_two_third) if self.options.mystery_box_regular_items else True)
+                ((not self.options.mystery_box_special_items) or state.has(Weapons.special_weapon_name(Maps.Shadows_Map_String, ItemName.Weapon_LilArnies), self.player))
+                and rules.has_weapon_percentage(state, self.player, self.options, Maps.Shadows_Map_String, 2/3)
             )
 
         if self.options.map_the_giant_enabled:
@@ -253,10 +252,7 @@ class BO3ZombiesWorld(World):
                 open_locations.extend([loc.name for loc in Locations.TheGiant_Quest_Music_Locations])
             map_open_region = self.create_region(self.multiworld, self.player, RegionName.TheGiant_Open, open_locations)
             self.multiworld.regions.append(map_open_region)
-            create_entrance(main_region, map_open_region,
-                            lambda state: rules.can_open_map(state, self.player, self.options, Maps.The_Giant_Map_String,
-                                                             self.mystery_box_regular_items_third,
-                                                             self.mystery_box_regular_items_two_third))
+            create_entrance(main_region, map_open_region, lambda state: rules.can_open_map(state, self.player, self.options, Maps.The_Giant_Map_String))
 
             pap_region = self.create_region(self.multiworld, self.player, RegionName.TheGiant_Pap, [loc.name for loc in Locations.TheGiant_Pap])
             self.multiworld.regions.append(pap_region)
@@ -265,7 +261,7 @@ class BO3ZombiesWorld(World):
             monkeybomb_region = self.create_region(self.multiworld, self.player, RegionName.TheGiant_MonkeyBombs, [loc.name for loc in Locations.TheGiant_MonkeyBomb])
             self.multiworld.regions.append(monkeybomb_region)
             if self.options.mystery_box_special_items:
-                create_entrance(map_open_region, monkeybomb_region, lambda state: state.has(Items.The_Giant_MysteryBox[2].name, self.player))
+                create_entrance(map_open_region, monkeybomb_region, lambda state: state.has(Weapons.special_weapon_name(Maps.The_Giant_Map_String, ItemName.Weapon_MonkeyBombs), self.player))
             else:
                 create_entrance(map_open_region, monkeybomb_region)
 
@@ -309,17 +305,13 @@ class BO3ZombiesWorld(World):
                 open_locations.extend([loc.name for loc in Locations.Castle_Quest_Music_Locations])
             map_open_region = self.create_region(self.multiworld, self.player, RegionName.Castle_Open, open_locations)
             self.multiworld.regions.append(map_open_region)
-            create_entrance(main_region, map_open_region,
-                            lambda state: rules.can_open_map(state, self.player, self.options,
-                                                             Maps.Castle_Map_String,
-                                                             self.mystery_box_regular_items_third,
-                                                             self.mystery_box_regular_items_two_third))
+            create_entrance(main_region, map_open_region, lambda state: rules.can_open_map(state, self.player, self.options, Maps.Castle_Map_String))
 
             dg4_locations = []
             dg4_locations.extend([loc.name for loc in Locations.Castle_DG4_Locations])
             dg4_region = self.create_region(self.multiworld, self.player, RegionName.Castle_DG4, dg4_locations)
             self.multiworld.regions.append(dg4_region)
-            rule = lambda state: rules.check_round_logic(state, self.player, self.options, 12, Maps.Castle_Map_String, self.mystery_box_regular_items_third, self.mystery_box_regular_items_two_third)
+            rule = lambda state: rules.check_round_logic(state, self.player, self.options, 12, Maps.Castle_Map_String)
             create_entrance(map_open_region, dg4_region, rule)
 
             ee_locs = []
@@ -332,9 +324,9 @@ class BO3ZombiesWorld(World):
                 main_ee_region, 
                 lambda state: (
                     state.has(ItemName.Progressive_PackAPunch, self.player) and
-                    (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_two_third) if self.options.mystery_box_regular_items else True) and
+                    rules.has_weapon_percentage(state, self.player, self.options, Maps.Castle_Map_String, 2/3) and
                     state.has_all({item.name for item in Items.Castle_Shield}, self.player) and
-                    (state.has_all({item.name for item in Items.Castle_MysteryBox}, self.player) if self.options.mystery_box_special_items else True)
+                    (state.has_all(Weapons.get_map_special_weapons_itemnames(Maps.Castle_Map_String), self.player) if self.options.mystery_box_special_items else True)
                 )
             )
 
@@ -367,18 +359,14 @@ class BO3ZombiesWorld(World):
                 open_locations.extend([loc.name for loc in Locations.Zetsubou_Quest_Music_Locations])
             map_open_region = self.create_region(self.multiworld, self.player, RegionName.Zetsubou_Open, open_locations)
             self.multiworld.regions.append(map_open_region)
-            create_entrance(main_region, map_open_region,
-                            lambda state: rules.can_open_map(state, self.player, self.options,
-                                                             Maps.Zetsubou_Map_String,
-                                                             self.mystery_box_regular_items_third,
-                                                             self.mystery_box_regular_items_two_third))
+            create_entrance(main_region, map_open_region, lambda state: rules.can_open_map(state, self.player, self.options, Maps.Zetsubou_Map_String,))
 
             ee_locs = []
             if add_ee_checks:
                 ee_locs = [loc.name for loc in Locations.Zetsubou_Quest_MainEE_Locations]
 
             main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Zetsubou_MainEE, ee_locs)
-            # rule = Has(ItemName.Progressive_PackAPunch) & HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.mystery_box_regular_items_two_third)
+            # rule = Has(ItemName.Progressive_PackAPunch) & HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.weapon_unlocks_two_third)
             # if self.options.randomized_shield_parts:
             #     rule = rule & HasAll(*[item.name for item in Items.Zetsubou_Shield])
             # if self.options.mystery_box_special_items:
@@ -390,17 +378,17 @@ class BO3ZombiesWorld(World):
                 main_ee_region, 
                 lambda state: (
                     state.has(ItemName.Progressive_PackAPunch, self.player) and
-                    (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_two_third) if self.options.mystery_box_regular_items else True) and
+                    rules.has_weapon_percentage(state, self.player, self.options, Maps.Zetsubou_Map_String, 2/3) and
                     state.has_all({item.name for item in Items.Zetsubou_Shield}, self.player) and
-                    (state.has_all({item.name for item in Items.Zetsubou_MysteryBox}, self.player) if self.options.mystery_box_special_items else True)
+                    (state.has_all(Weapons.get_map_special_weapons_itemnames(Maps.Zetsubou_Map_String), self.player) if self.options.mystery_box_special_items else True)
                 )
             )
 
             upgraded_locs = [loc.name for loc in Locations.Zetsubou_Quest_Masamune_Locations]
             upgraded_weapon_region = self.create_region(self.multiworld, self.player, RegionName.Zetsubou_Upgraded, upgraded_locs)
-            # create_entrance(main_region, upgraded_weapon_region, HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.mystery_box_regular_items_two_third))
+            # create_entrance(main_region, upgraded_weapon_region, HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.weapon_unlocks_two_third))
             create_entrance(map_open_region, upgraded_weapon_region, lambda state: (
-                state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_two_third) if self.options.mystery_box_regular_items else True
+                rules.has_weapon_percentage(state, self.player, self.options, Maps.Zetsubou_Map_String, 2/3)
                 and state.has_all({item.name for item in Items.Zetsubou_Shield}, self.player)
             ))
 
@@ -423,10 +411,7 @@ class BO3ZombiesWorld(World):
             map_open_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_Open, open_locations)
             self.multiworld.regions.append(map_open_region)
             create_entrance(main_region, map_open_region,
-                            lambda state: rules.can_open_map(state, self.player, self.options,
-                                                             Maps.GorodKrovi_Map_String,
-                                                             self.mystery_box_regular_items_third,
-                                                             self.mystery_box_regular_items_two_third))
+                            lambda state: rules.can_open_map(state, self.player, self.options, Maps.GorodKrovi_Map_String))
 
             bunker_locs = [loc.name for loc in Locations.GorodKrovi_Quest_DragonStrikes]
             bunker_locs.extend([loc.name for loc in Locations.GorodKrovi_Quest_DragonGauntlets_Early])
@@ -448,9 +433,9 @@ class BO3ZombiesWorld(World):
                 main_ee_region, 
                 lambda state: (
                     state.has(ItemName.Progressive_PackAPunch, self.player) and
-                    (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_two_third) if self.options.mystery_box_regular_items else True) and
+                    rules.has_weapon_percentage(state, self.player, self.options, Maps.GorodKrovi_Map_String, 2/3) and
                     state.has_all({item.name for item in Items.GorodKrovi_Shield}, self.player) and
-                    (state.has_all({item.name for item in Items.GorodKrovi_MysteryBox}, self.player) if self.options.mystery_box_special_items else True)
+                    (state.has_all(Weapons.get_map_special_weapons_itemnames(Maps.GorodKrovi_Map_String), self.player) if self.options.mystery_box_special_items else True)
                 )
             )
 
@@ -467,7 +452,7 @@ class BO3ZombiesWorld(World):
             monkeybomb_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_MonkeyBombs, [Locations.GorodKrovi_Quest_Challenges[3].name])
             self.multiworld.regions.append(monkeybomb_region)
             if self.options.mystery_box_special_items:
-                create_entrance(shield_region, monkeybomb_region, lambda state: state.has(Items.GorodKrovi_MysteryBox[1].name, self.player))
+                create_entrance(shield_region, monkeybomb_region, lambda state: state.has(Weapons.special_weapon_name(Maps.GorodKrovi_Map_String, ItemName.Weapon_MonkeyBombs), self.player))
             else:
                 create_entrance(shield_region, monkeybomb_region)
 
@@ -475,8 +460,8 @@ class BO3ZombiesWorld(World):
             upgraded_locs = [loc.name for loc in Locations.GorodKrovi_Quest_DragonStrikes_Upgraded]
             upgraded_locs += [loc.name for loc in Locations.GorodKrovi_Quest_DragonGauntlets_Late]
             upgraded_weapon_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_Upgraded, upgraded_locs)
-            # create_entrance(main_region, upgraded_weapon_region, HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.mystery_box_regular_items_two_third))
-            create_entrance(bunker_region, upgraded_weapon_region, lambda state: (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_two_third) if self.options.mystery_box_regular_items else True))
+            # create_entrance(main_region, upgraded_weapon_region, HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.weapon_unlocks_two_third))
+            create_entrance(bunker_region, upgraded_weapon_region, lambda state: rules.has_weapon_percentage(state, self.player, self.options, Maps.GorodKrovi_Map_String, 2/3))
 
         if self.options.map_revelations_enabled:
             all_locations = [Locations.Revelations_Quest_MainQuest_Locations[0].name]
@@ -518,10 +503,7 @@ class BO3ZombiesWorld(World):
             map_open_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_Open, open_locations)
             self.multiworld.regions.append(map_open_region)
             create_entrance(main_region, map_open_region,
-                            lambda state: rules.can_open_map(state, self.player, self.options,
-                                                             Maps.Revelations_Map_String,
-                                                             self.mystery_box_regular_items_third,
-                                                             self.mystery_box_regular_items_two_third))
+                            lambda state: rules.can_open_map(state, self.player, self.options, Maps.Revelations_Map_String))
 
             # Round 18 logic for the panzer/margwa challenges and shield for the possible shield challenge
             challenge_locations = []
@@ -529,7 +511,7 @@ class BO3ZombiesWorld(World):
             challenge_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_Challenges, challenge_locations)
             self.multiworld.regions.append(challenge_region)
             rule = lambda state: (
-                rules.check_round_logic(state, self.player, self.options, 18, Maps.Revelations_Map_String, self.mystery_box_regular_items_third, self.mystery_box_regular_items_two_third) and
+                rules.check_round_logic(state, self.player, self.options, 18, Maps.Revelations_Map_String) and
                 state.has_all({item.name for item in Items.Revelations_Shield}, self.player)
             )
             create_entrance(map_open_region, challenge_region, rule)
@@ -545,21 +527,21 @@ class BO3ZombiesWorld(World):
                 main_ee_region, 
                 lambda state: (
                     state.has(ItemName.Progressive_PackAPunch, self.player) and
-                    (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_two_third) if self.options.mystery_box_regular_items else True) and
+                    rules.has_weapon_percentage(state, self.player, self.options, Maps.Revelations_Map_String, 2/3)and
                     state.has_all({item.name for item in Items.Revelations_Shield}, self.player) and
-                    (state.has_all({item.name for item in Items.Revelations_MysteryBox}, self.player) if self.options.mystery_box_special_items else True)
+                    (state.has_all(Weapons.get_map_special_weapons_itemnames(Maps.Revelations_Map_String), self.player) if self.options.mystery_box_special_items else True)
                 )
             )
 
             apothicon_ugprade_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_Apothicon_Upgrade, [Locations.Revelations_Quest_Weapons[0].name])
             if self.options.mystery_box_special_items:
-                create_entrance(map_open_region, apothicon_ugprade_region, lambda state: state.has(Items.Revelations_MysteryBox[2].name, self.player))
+                create_entrance(map_open_region, apothicon_ugprade_region, lambda state: state.has(Weapons.special_weapon_name(Maps.Revelations_Map_String, ItemName.Weapon_ApothiconServant), self.player))
             else:
                 create_entrance(map_open_region, apothicon_ugprade_region)
 
             arnies_ugprade_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_Arnies_Upgrade, [Locations.Revelations_Quest_Weapons[1].name])
             if self.options.mystery_box_special_items:
-                create_entrance(map_open_region, arnies_ugprade_region, lambda state: state.has(Items.Revelations_MysteryBox[1].name, self.player))
+                create_entrance(map_open_region, arnies_ugprade_region, lambda state: state.has(Weapons.special_weapon_name(Maps.Revelations_Map_String, ItemName.Weapon_LilArnies), self.player))
             else:
                 create_entrance(map_open_region, arnies_ugprade_region)
 
@@ -577,10 +559,7 @@ class BO3ZombiesWorld(World):
             map_open_region = self.create_region(self.multiworld, self.player, RegionName.Kino_Open, open_locations)
             self.multiworld.regions.append(map_open_region)
             create_entrance(main_region, map_open_region,
-                            lambda state: rules.can_open_map(state, self.player, self.options,
-                                                             Maps.Kino_Map_String,
-                                                             self.mystery_box_regular_items_third,
-                                                             self.mystery_box_regular_items_two_third))
+                            lambda state: rules.can_open_map(state, self.player, self.options, Maps.Kino_Map_String))
                 
         # == Modded Maps ==
 
@@ -597,10 +576,7 @@ class BO3ZombiesWorld(World):
             map_open_region = self.create_region(self.multiworld, self.player, RegionName.Wanted_Open, open_locations)
             self.multiworld.regions.append(map_open_region)
             create_entrance(main_region, map_open_region,
-                            lambda state: rules.can_open_map(state, self.player, self.options,
-                                                             Maps.Wanted_Map_String,
-                                                             self.mystery_box_regular_items_third,
-                                                             self.mystery_box_regular_items_two_third))
+                            lambda state: rules.can_open_map(state, self.player, self.options, Maps.Wanted_Map_String))
 
             ee_locs = []
             if add_ee_checks:
@@ -613,9 +589,9 @@ class BO3ZombiesWorld(World):
                 main_ee_region, 
                 lambda state: (
                     state.has(ItemName.Progressive_PackAPunch, self.player) and
-                    (state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.player, self.mystery_box_regular_items_two_third) if self.options.mystery_box_regular_items else True) and
+                    rules.has_weapon_percentage(state, self.player, self.options, Maps.Wanted_Map_String, 2/3)and
                     state.has_all({item.name for item in Items.Wanted_Shield}, self.player)
-                    # (state.has_all({item.name for item in Items.Revelations_MysteryBox}, self.player) if self.options.mystery_box_special_items else True)
+                    (state.has_all(Weapons.get_map_special_weapons_itemnames(Maps.Wanted_Map_String), self.player) if self.options.mystery_box_special_items else True)
                 )
             )
 
@@ -632,7 +608,6 @@ class BO3ZombiesWorld(World):
         data = self.item_name_to_id[name]
 
         useful_categories = {
-            Items.BO3ZombiesItemCategory.WALLBUY,
             Items.BO3ZombiesItemCategory.MACHINE,
             Items.BO3ZombiesItemCategory.SPECIAL_WEAPON,
             Items.BO3ZombiesItemCategory.CRAFTABLE,
@@ -686,13 +661,13 @@ class BO3ZombiesWorld(World):
         return self.create_item(ItemName.Points200)
 
     def create_items(self) -> None:
-        enabled_items = [
+        enabled_items: list[ItemData] = [
             Items.Points_1500,
             Items.Points_1500,
         ]
 
         # Add locked map items
-        enabled_items += list(map(self.create_item, self.cod_locked_maps))
+        enabled_items += [ItemData(map, BO3ZombiesItemCategory.MAP_UNLOCK) for map in self.cod_locked_maps]
 
         # Add progressive starting items
         if self.options.progressive_starting_points > 0:
@@ -780,45 +755,6 @@ class BO3ZombiesWorld(World):
                     enabled_items.remove(item)
             self.push_precollected(self.create_item(ItemName.Machine_QuickRevive))
 
-        # Add wallbuys to pool
-        if self.options.map_specific_wallbuys:
-            # Add map specific wallbuys for each
-            if self.options.map_shadows_enabled:
-                enabled_items += Items.Shadows_Wallbuys_Specific
-            if self.options.map_the_giant_enabled:
-                enabled_items += Items.The_Giant_Wallbuys_Specific
-            if self.options.map_castle_enabled:
-                enabled_items += Items.Castle_Wallbuys_Specific
-            if self.options.map_zetsubou_enabled:
-                enabled_items += Items.Zetsubou_Wallbuys_Specific
-            if self.options.map_gorod_enabled:
-                enabled_items += Items.GorodKrovi_Wallbuys_Specific
-            if self.options.map_revelations_enabled:
-                enabled_items += Items.Revelations_Wallbuys_Specific
-            if self.options.map_kino_enabled:
-                enabled_items += Items.Kino_Wallbuys_Specific
-        else:
-            # Only add one instance per wallbuy
-            seen = set()
-            if self.options.map_shadows_enabled:
-                add_universal_items(enabled_items, seen, Items.Shadows_Wallbuys)
-            if self.options.map_the_giant_enabled:
-                add_universal_items(enabled_items, seen, Items.The_Giant_Wallbuys)
-            if self.options.map_castle_enabled:
-                add_universal_items(enabled_items, seen, Items.Castle_Wallbuys)
-            if self.options.map_zetsubou_enabled:
-                add_universal_items(enabled_items, seen, Items.Zetsubou_Wallbuys)
-            if self.options.map_gorod_enabled:
-                add_universal_items(enabled_items, seen, Items.GorodKrovi_Wallbuys)
-            if self.options.map_revelations_enabled:
-                add_universal_items(enabled_items, seen, Items.Revelations_Wallbuys)
-            if self.options.map_kino_enabled:
-                add_universal_items(enabled_items, seen, Items.Kino_Wallbuys)
-
-        # Modded maps without universal wallbuys
-        if self.options.map_workshop_wanted_enabled:
-            enabled_items += Items.Wanted_Wallbuys
-
         map_list = []
         if self.options.map_shadows_enabled:
             map_list.append((Maps.Shadows_Map_String, RegionName.Shadows_Alleyway, RegionName.Shadows_Round_Regions, Locations.Shadows_Round_Locations))
@@ -885,20 +821,20 @@ class BO3ZombiesWorld(World):
                 self.multiworld.get_location(LocationName.Wanted_Craftable_ShieldPartClamp, self.player).place_locked_item(self.create_item(Items.Wanted_Shield[2].name))
             enabled_items += Items.Wanted_Craftable_Acidgat
 
-        enabled_items += self.mystery_box_special_items
+        enabled_items += [ItemData(item, BO3ZombiesItemCategory.SPECIAL_WEAPON) for item in self.mystery_box_special_items]
 
         distribution = WeaponDistribution()
-        distribution.percent_of_group = [50, 25, 15, 1, 0]
-        weapon_names = [item.name for item in self.mystery_box_regular_items]
-        precollected_weapons = self.preselect_weapons(weapon_names, distribution)
-        for weapon in precollected_weapons:
-            self.multiworld.push_precollected(self.create_item(weapon))
-        self.mystery_box_regular_items = [
-            item for item in self.mystery_box_regular_items 
-            if item.name not in precollected_weapons
+        distribution.num_of_group = [3, 2, 1, 0, 0]
+        precollected_weapons = self.preselect_weapons([map[0] for map in map_list], distribution)
+        precollected_names = [data.item_name for data in precollected_weapons.values()]
+        for weapon_key, weapon_data in precollected_weapons.items():
+            self.multiworld.push_precollected(self.create_item(weapon_data.item_name))
+        self.weapon_unlocks: list[str] = [
+            item for item in self.weapon_unlocks 
+            if item not in precollected_names
         ]
 
-        enabled_items += self.mystery_box_regular_items
+        enabled_items += [ItemData(item, BO3ZombiesItemCategory.REGULAR_WEAPON) for item in self.weapon_unlocks]
 
         # Easter Egg Hunt
         if self.options.goal_condition == 0:
@@ -1129,7 +1065,6 @@ class BO3ZombiesWorld(World):
             'base_id': str(self.base_id),
             "slot": self.multiworld.player_name[self.player],
             "map_specific_machines": bool(options.map_specific_machines),
-            "map_specific_wallbuys": bool(options.map_specific_wallbuys),
             "special_rounds_enabled": bool(options.special_rounds_enabled),
             "perk_limit_default_modifier": int(options.perk_limit_default_modifier),
             "mystery_box_special_items": bool(options.mystery_box_special_items),
@@ -1170,50 +1105,53 @@ class BO3ZombiesWorld(World):
         map_name = new_region_name.split(")")[0] + ")"
         region = self.create_region(self.multiworld, self.player, new_region_name, round_locs)
         self.multiworld.regions.append(region)
-        rule = lambda state: rules.check_round_logic(state, self.player, self.options, round_num, map_name, self.mystery_box_regular_items_third, self.mystery_box_regular_items_two_third)
+        rule = lambda state: rules.check_round_logic(state, self.player, self.options, round_num, map_name)
         create_entrance(main_region, region, rule)
 
-        
-    def preselect_weapons(self, unfiltered_set: list[str], distribution: WeaponDistribution):
+    def preselect_weapons(self, map_list: list[str], distribution: WeaponDistribution):
         # Sets for strength 1 to 5
-        precollected_weapons = []
-        filtered_sets: list[list[WeaponData]] = [[], [], [], [], []]
-        for weapon_data in weapon_data_set:
-            if ("Mystery Box - " + weapon_data.name) in unfiltered_set:
-                filtered_sets[weapon_data.strength - 1].append(weapon_data)
+        precollected_weapons: dict[str, WeaponData] = {}
 
-        for i in range(len(distribution.percent_of_group)):
-            if i >= 0 and i < 5:
-                chance = distribution.fuzz_strength / 100
-                set_size = len(filtered_sets[i])
-                pull_count = math.ceil(set_size * (distribution.percent_of_group[i] / 100))
+        shuffled_maps = map_list.copy()
+        self.random.shuffle(shuffled_maps)
 
-                # Pull for each count
-                for j in range(pull_count):
-                    target_strength = i + 1
-                    # X% chance to fuzz the result
-                    if (target_strength <= distribution.fuzz_max) and distribution.fuzz_max > 1 and (self.random.random() < chance):
-                        direction = 1
-                        # 50% chance to either go up or down a tier, if in fuzz range
-                        if target_strength + 1 > distribution.fuzz_max or self.random.random() > 0.5 or target_strength >= 5:
-                            direction = -1
-                        target_strength += direction
+        for map in shuffled_maps:
+            # Get list of available weapons
+            weapon_data_set = Weapons.map_weapon_data_sets[map]
+            weapon_list = weapon_data_set.vanilla
+            if self.options.mystery_box_expanded.value:
+                weapon_list = {**weapon_data_set.vanilla, **weapon_data_set.expanded}
 
-                        # None left in adjusted set, go back to regular set
-                        if len(filtered_sets[target_strength - 1]) == 0:
-                            target_strength -= direction
+            # Filter weapon set by strength
+            filtered_sets: list[list[tuple[str, WeaponData]]] = [[], [], [], [], []]
 
-                    # We're out of weapons to pull somehow, move on
-                    if len(filtered_sets[target_strength - 1]) == 0:
-                        continue
+            for weapon_key, weapon_data in weapon_list.items():
+                if weapon_data.strength >= 1 and weapon_data.strength <= 5:
+                    filtered_sets[weapon_data.strength - 1].append((weapon_key, weapon_data))
 
-                    # Randomly pull weapon from set
-                    selected_weapon = self.random.choice(filtered_sets[target_strength - 1])
-                    precollected_weapons.append("Mystery Box - " + selected_weapon.name)
-                    filtered_sets[target_strength - 1].remove(selected_weapon)
+            # Check which weapons have already been added to the pool
+            map_weapons: list[list[tuple[str, WeaponData]]] = [[], [], [], [], []]
+            for weapon_key, weapon_data in precollected_weapons.items():
+                if weapon_key in weapon_list:
+                    map_weapons[weapon_data.strength - 1].append((weapon_key, weapon_data))
 
-        return (precollected_weapons)
+            # Add based on distribution asked for
+            for i in range(len(distribution.num_of_group)):
+                if i >= 0 and i < 5:
+                    cur_set = map_weapons[i]
+                    # Add weapons for this map until we reach the required amount
+                    while len(filtered_sets[i]) > 0 and len(cur_set) < distribution.num_of_group[i]:
+                        weap_tuple = self.random.choice(filtered_sets[i])
+                        map_weapons[i].append(weap_tuple)
+                        filtered_sets[i].remove(weap_tuple)
 
+            # Add any new weapons into precollected
+            for i in range(len(map_weapons)):
+                for weapon_key, weapon_data in map_weapons[i]:
+                    if weapon_key not in precollected_weapons:
+                        precollected_weapons[weapon_key] = weapon_data
+
+        return precollected_weapons
         
 
 def add_universal_items(enabled_items, seen, items):
@@ -1221,6 +1159,7 @@ def add_universal_items(enabled_items, seen, items):
         if item[0] not in seen:
             enabled_items.append(item)
             seen.add(item[0])
+
 
 def add_round_locations(round_locations, round_max, round_freq, is_goal_cond, goal_round):
     round_locs_early = []

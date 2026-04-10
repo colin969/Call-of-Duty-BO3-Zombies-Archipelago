@@ -2,8 +2,10 @@ from BaseClasses import CollectionState
 from . import Locations, Items, Options
 from .Options import BO3ZombiesOptions, bo3_option_groups
 from .Names import ItemName, LocationName, RegionName, Maps
+from .Weapons import WeaponData, map_weapon_data_sets
+import math
 
-def can_open_map(state: CollectionState, player: int, options, map_name, third, two_third) -> bool:
+def can_open_map(state: CollectionState, player: int, options: BO3ZombiesOptions, map_name) -> bool:
     # This is a rule meant to basically say "yeah we can open the map now" based on round logic and current starting points
     starting_points = 500
     starting_points += (500 * state.count(Items.Progressive_StartingPoints500.name, player))
@@ -11,11 +13,42 @@ def can_open_map(state: CollectionState, player: int, options, map_name, third, 
     # points only - we have enough starting points we don't care about what round we can reach
     points_only = (starting_points >= 5000)
     # round only - we have enough round access logically to reliably open the map
-    round_only = check_round_logic(state, player, options, 10, map_name, third, two_third)
+    round_only = check_round_logic(state, player, options, 10, map_name)
 
     return points_only or round_only
 
-def check_round_logic(state: CollectionState, player: int, options, round_num, map_name, third, two_third) -> bool:
+def get_map_weapon_data(map_name: str, options: BO3ZombiesOptions) -> tuple[dict[str, WeaponData], dict[str, WeaponData]]:
+    weapon_list: dict[str, WeaponData] = {}
+    full_weapon_list: dict[str, WeaponData] = {}
+    if map_name in map_weapon_data_sets:
+        weapon_data_set = map_weapon_data_sets[map_name]
+
+        full_weapon_list = {**weapon_data_set.vanilla, **weapon_data_set.special}
+        if options.mystery_box_regular_items and options.mystery_box_expanded:
+            full_weapon_list.update(weapon_data_set.expanded)
+
+        weapon_list = weapon_data_set.wallbuys.copy()
+        if options.mystery_box_special_items:
+            weapon_list.update(weapon_data_set.special)
+        if options.mystery_box_regular_items:
+            weapon_list.update(weapon_data_set.vanilla)
+            if options.mystery_box_expanded:
+                weapon_list.update(weapon_data_set.expanded)
+
+    return (weapon_list, full_weapon_list)
+
+# Check whether player has more than (decimal) percentage of their weapon unlocks for a map
+def has_weapon_percentage(state: CollectionState, player: int, options: BO3ZombiesOptions, map_name: str, percent: float) -> bool:
+    weapon_data, full_weapon_data = get_map_weapon_data(map_name, options)
+    # Names of all pooled weapons
+    weapon_keys = [item.item_name for item in weapon_data.values()]
+    full_count = len(full_weapon_data.keys())
+    # How many weapons that aren't shuffled
+    initial_num = full_count - len(weapon_keys)
+
+    return state.count_from_list_unique(weapon_keys, player) + initial_num >= math.floor(full_count * percent)
+
+def check_round_logic(state: CollectionState, player: int, options: BO3ZombiesOptions, round_num, map_name: str) -> bool:
     # Let's just say we can reach round 6 without any progression items
     round_can_reach = 6
     # Value where we stop caring about round logic because we have enough items based on our settings
@@ -31,6 +64,13 @@ def check_round_logic(state: CollectionState, player: int, options, round_num, m
 
     if options.start_quick_revive:
         round_max_threshold -= rounds_from_perks
+
+    weapon_data, full_weapon_data = get_map_weapon_data(map_name, options)
+    # Names of all pooled weapons
+    weapon_keys = [item.item_name for item in weapon_data.values()]
+    full_count = len(full_weapon_data.keys())
+    # How many weapons that aren't shuffled
+    initial_num = full_count - len(weapon_keys)
 
     map_perks = {
         Maps.Shadows_Map_String: Items.Shadows_Machines,
@@ -143,15 +183,13 @@ def check_round_logic(state: CollectionState, player: int, options, round_num, m
 
     round_can_reach += (perks * rounds_from_perks)
 
-    if options.mystery_box_regular_items:
-        # We have a lot of weapons, add 5 rounds
-        if state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, player, third):
-            round_can_reach += rounds_from_important
-        # Now we really have a lot of weapons, add 5 more
-        if state.has_group_unique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, player, two_third):
-            round_can_reach += rounds_from_important
-    else:
-        round_can_reach += (rounds_from_important * 2)
+    weap_item_count = state.count_from_list_unique(weapon_keys, player)
+    # We have a lot of weapons, add 5 rounds
+    if weap_item_count + initial_num >= math.floor(full_count * (1/3)):
+        round_can_reach += rounds_from_important
+    # Now we really have a lot of weapons, add 5 more
+    if weap_item_count + initial_num >= math.floor(full_count * (2/3)):
+        round_can_reach += rounds_from_important
 
     # Give 5 rounds logically for each pap upgrade
     current_pap_upgrades = state.count(Items.Progressive_PackAPunch.name, player)
