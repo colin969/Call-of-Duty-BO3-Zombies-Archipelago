@@ -56,6 +56,9 @@ class BO3ZombiesWorld(World):
     write_lua_locations = True
 
     def generate_early(self) -> None:
+        # Force unused option of
+        self.options.map_workshop_wanted_enabled.value = 0
+
         if self.write_lua_locations:
             script_dir = os.path.dirname(os.path.abspath(__file__))
             with open(os.path.join(script_dir, 'Locations.lua'), 'w', encoding='utf-8') as f:
@@ -91,8 +94,9 @@ class BO3ZombiesWorld(World):
         if self.options.map_kino_enabled:
             map_list.append(Maps.Kino_Map_String)
 
+        modded_map_list = []
         if self.options.map_workshop_wanted_enabled:
-            map_list.append(Maps.Wanted_Map_String)
+            modded_map_list.append(Maps.Wanted_Map_String)
 
         # Add weapons to pool
         self.weapon_unlocks = []
@@ -110,8 +114,12 @@ class BO3ZombiesWorld(World):
         if self.options.mystery_box_special_items:
             for map in map_list:
                 if map in Weapons.map_weapon_data_sets:
+                    is_modded = Weapons.map_weapon_data_sets[map].table.startswith("zm_")
                     for weapon_key, weapon_data in Weapons.map_weapon_data_sets[map].special.items():
-                        self.mystery_box_special_items.append(Weapons.special_weapon_name(map, weapon_data.item_name))
+                        if is_modded:
+                            self.mystery_box_special_items.append(weapon_data.item_name)
+                        else:
+                            self.mystery_box_special_items.append(Weapons.special_weapon_name(map, weapon_data.item_name))
 
         self.rolled_bows = []
         self.rolled_masks = []
@@ -527,7 +535,7 @@ class BO3ZombiesWorld(World):
                 main_ee_region, 
                 lambda state: (
                     state.has(ItemName.Progressive_PackAPunch, self.player) and
-                    rules.has_weapon_percentage(state, self.player, self.options, Maps.Revelations_Map_String, 2/3)and
+                    rules.has_weapon_percentage(state, self.player, self.options, Maps.Revelations_Map_String, 2/3) and
                     state.has_all({item.name for item in Items.Revelations_Shield}, self.player) and
                     (state.has_all(Weapons.get_map_special_weapons_itemnames(Maps.Revelations_Map_String), self.player) if self.options.mystery_box_special_items else True)
                 )
@@ -589,8 +597,8 @@ class BO3ZombiesWorld(World):
                 main_ee_region, 
                 lambda state: (
                     state.has(ItemName.Progressive_PackAPunch, self.player) and
-                    rules.has_weapon_percentage(state, self.player, self.options, Maps.Wanted_Map_String, 2/3)and
-                    state.has_all({item.name for item in Items.Wanted_Shield}, self.player)
+                    rules.has_weapon_percentage(state, self.player, self.options, Maps.Wanted_Map_String, 2/3) and
+                    state.has_all({item.name for item in Items.Wanted_Shield}, self.player) and
                     (state.has_all(Weapons.get_map_special_weapons_itemnames(Maps.Wanted_Map_String), self.player) if self.options.mystery_box_special_items else True)
                 )
             )

@@ -146,7 +146,7 @@ Weapon_Ragnaroks = "Weapon - Ragnarok DG-4s"
 
 # Modded
 Weapon_Modded_HomunculusBomb = Maps.Wanted_Map_String + " Weapon - Homunculus Bomb"
-Weapon_Modded_Blundergat = Maps.Wanted_Map_String + " Weapon - Blundergate"
+Weapon_Modded_Blundergat = Maps.Wanted_Map_String + " Weapon - Blundergat"
 Weapon_Modded_WinchesterModel94 = Maps.Wanted_Map_String + " Weapon - Winchester Model 94"
 Weapon_Modded_Ww2Lewis = Maps.Wanted_Map_String + " Weapon - Lewis"
 Weapon_Modded_M1831Blundergat = Maps.Wanted_Map_String + " Weapon - M1831 Blundergat"

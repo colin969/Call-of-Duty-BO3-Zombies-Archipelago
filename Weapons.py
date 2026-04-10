@@ -133,6 +133,7 @@ class WeaponLists(NamedTuple):
     wallbuys: list[str]
 
 class WeaponDataLists(NamedTuple):
+    table: str
     special: dict[str, WeaponData]
     vanilla: dict[str, WeaponData]
     expanded: dict[str, WeaponData]
@@ -221,7 +222,7 @@ map_weapon_lists: dict[str, WeaponLists] = {
         expanded = [
             "pistol_standard",
             "pistol_revolver38",
-            #"bowie_knife",
+            "bowie_knife",
             "ar_longburst",
             "ar_standard",
             "pistol_burst",
@@ -632,6 +633,7 @@ def get_weapon_with_vanilla_fallback(weapon_name: str, table: str) -> WeaponData
 
 map_weapon_data_sets: dict[str, WeaponDataLists] = {
     map_name: WeaponDataLists(
+        table = weapon_list.table,
         vanilla = {
             weapon_name: weapon_data
             for weapon_name in weapon_list.vanilla
