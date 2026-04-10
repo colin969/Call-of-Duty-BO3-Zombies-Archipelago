@@ -832,7 +832,13 @@ class BO3ZombiesWorld(World):
         enabled_items += [ItemData(item, BO3ZombiesItemCategory.SPECIAL_WEAPON) for item in self.mystery_box_special_items]
 
         distribution = WeaponDistribution()
-        distribution.num_of_group = [3, 2, 1, 0, 0]
+        distribution.num_of_group = [
+            self.options.starting_weapons_1.value,
+            self.options.starting_weapons_2.value,
+            self.options.starting_weapons_3.value,
+            self.options.starting_weapons_4.value,
+            self.options.starting_weapons_5.value,
+        ]
         precollected_weapons = self.preselect_weapons([map[0] for map in map_list], distribution)
         precollected_names = [data.item_name for data in precollected_weapons.values()]
         for weapon_key, weapon_data in precollected_weapons.items():

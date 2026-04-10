@@ -120,6 +120,41 @@ class MysteryBoxExpanded(Toggle):
     display_name = "Mystery Box - Expanded Selection"
     default = False
 
+class WeaponsStartingS1(Range):
+    """Number of strength 1 weapons to start with on each map (wallbuys + box)"""
+    display_name = "Starting Weapon Unlocks - Weak"
+    default = 3
+    range_start = 0
+    range_end = 5
+
+class WeaponsStartingS2(Range):
+    """Number of strength 2 weapons to start with on each map (wallbuys + box)"""
+    display_name = "Starting Weapon Unlocks - Decent"
+    default = 2
+    range_start = 0
+    range_end = 5
+
+class WeaponsStartingS3(Range):
+    """Number of strength 3 weapons to start with on each map (wallbuys + box)"""
+    display_name = "Starting Weapon Unlocks - Strong"
+    default = 1
+    range_start = 0
+    range_end = 5
+
+class WeaponsStartingS4(Range):
+    """Number of strength 4 weapons to start with on each map (wallbuys + box)"""
+    display_name = "Starting Weapon Unlocks - Very Strong"
+    default = 0
+    range_start = 0
+    range_end = 5
+
+class WeaponsStartingS5(Range):
+    """Number of strength 5 weapons to start with on each map (wallbuys + box)"""
+    display_name = "Starting Weapon Unlocks - Wonder Weapons / Special Equipment"
+    default = 0
+    range_start = 0
+    range_end = 5
+
 class CastleBowCount(Range):
     """Number of random Elemental Bow quests to include in checks or Weapon Quest goal conditions"""
     display_name = "(Der Eisendrache) Number of Elemental Bow Quests with Checks"
@@ -442,6 +477,11 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     mystery_box_special_items: MysteryBoxSpecialItems
     mystery_box_regular_items: MysteryBoxRegularItems
     mystery_box_expanded: MysteryBoxExpanded
+    starting_weapons_1: WeaponsStartingS1
+    starting_weapons_2: WeaponsStartingS2
+    starting_weapons_3: WeaponsStartingS3
+    starting_weapons_4: WeaponsStartingS4
+    starting_weapons_5: WeaponsStartingS5
     map_specific_machines: MapSpecificMachinesEnabled
     castle_bow_count: CastleBowCount
     castle_bow_storm: CastleBowEnabledStorm
@@ -499,6 +539,11 @@ bo3_option_groups = [
         MysteryBoxSpecialItems,
         MysteryBoxRegularItems,
         MysteryBoxExpanded,
+        WeaponsStartingS1,
+        WeaponsStartingS2,
+        WeaponsStartingS3,
+        WeaponsStartingS4,
+        WeaponsStartingS5,
         AttachmentsEnabled,
         AttachmentsSightWeight,
         CamoEnabled,
