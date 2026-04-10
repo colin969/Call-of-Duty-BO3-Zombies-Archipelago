@@ -100,7 +100,7 @@ Weapon_RK5 = "Weapon - RK5"
 Weapon_LCAR = "Weapon - L-CAR"
 Weapon_RiftE9 = "Weapon - Rift E9"
 Weapon_M1911 = "Weapon - M1911"
-Weapon_Marshal16 = "Weapon - Marhsal 16"
+Weapon_Marshal16 = "Weapon - Marshal 16"
 Weapon_MauserC96 = "Weapon - Mauser C96"
 
 # Launchers
