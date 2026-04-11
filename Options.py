@@ -40,7 +40,7 @@ class MapKinoEnabled(Toggle):
 
 class MapWorkshopWantedEnabled(Toggle):
     """Enabled Map: \"Wanted\""""
-    display_name = "\"Wanted\" map enabled"
+    display_name = "(Unstable) \"Wanted\" map enabled"
     default = False
 
 class StartMapHints(Toggle):
