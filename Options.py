@@ -88,7 +88,7 @@ class RevelationsMaskEnabledKing(Toggle):
 class RevelationsMaskEnabledFury(Toggle):
     """Enable Fury's Head mask check for Revelations Mask checks"""
     display_name = "(Revelations) Mask - Fury Head"
-    default = True
+    default = False
 
 class RevelationsMaskEnabledMargwa(Toggle):
     """Enable Margwa's mask check for Revelations Mask checks"""
@@ -103,7 +103,7 @@ class RevelationsMaskEnabledKeeperSkull(Toggle):
 class RevelationsMaskEnabledApothicon(Toggle):
     """Enable Apothicon God Mask check for Revelations Mask checks"""
     display_name = "(Revelations) Mask - Apothicon God"
-    default = True
+    default = False
 
 class MysteryBoxSpecialItems(Toggle):
     """Shuffles special Mystery Box item unlocks (Wonder weapons, special equipment, specialist weapons) into the item pool"""

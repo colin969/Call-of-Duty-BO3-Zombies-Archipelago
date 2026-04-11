@@ -603,6 +603,7 @@ class BO3ZombiesWorld(World):
                 lambda state: (
                     rules.check_round_logic(state, self.player, self.options, 18, Maps.GorodKrovi_Map_String) and
                     rules.has_shield(state, self.player, Maps.GorodKrovi_Map_String) and
+                    rules.has_sniper(state, self.player, self.options, Maps.GorodKrovi_Map_String) and
                     rules.has_weapon_of_strength(state, self.player, self.options, Maps.GorodKrovi_Map_String, 3, 4) and
                     rules.has_special_weapon(state, self.player, self.options, Maps.GorodKrovi_Map_String, ItemName.Weapon_RaygunMk3)
                 )
