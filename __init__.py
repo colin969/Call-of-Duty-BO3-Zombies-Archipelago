@@ -800,10 +800,10 @@ class BO3ZombiesWorld(World):
                 map_open_region,
                 main_ee_region, 
                 lambda state: (
-                    state.has(ItemName.Progressive_PackAPunch, self.player) and
-                    rules.has_weapon_percentage(state, self.player, self.options, Maps.Wanted_Map_String, 2/3) and
-                    state.has_all({item.name for item in Items.Wanted_Shield}, self.player) and
-                    (state.has_all(Weapons.get_map_special_weapons_itemnames(Maps.Wanted_Map_String), self.player) if self.options.mystery_box_special_items else True)
+                    rules.check_round_logic(state, self.player, self.options, 18, Maps.Wanted_Map_String) and
+                    rules.has_shield(state, self.player, Maps.Wanted_Map_String) and
+                    rules.has_special_weapon(state, self.player, self.options, Maps.Wanted_Map_String, ItemName.Weapon_Modded_Blundergat) and
+                    rules.has_weapon_of_strength(state, self.player, self.options, Maps.Wanted_Map_String, 3, 3)
                 )
             )
 
