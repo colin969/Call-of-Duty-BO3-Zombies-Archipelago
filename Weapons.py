@@ -225,7 +225,6 @@ map_weapon_lists: dict[str, WeaponLists] = {
         special = [
             "octobomb",
             "ray_gun",
-            "idgun_0",
         ]
     ),
     Maps.Castle_Map_String: WeaponLists(

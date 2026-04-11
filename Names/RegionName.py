@@ -1,15 +1,14 @@
+from . import Maps
+
+def gen_round_regions(map):
+  # Rounds 10 to 40 in groups of 5
+  return [f"{map} Round {i+5}" for i in range(5, 40, 5)]
+
 TheGiant_Courtyard  = "(The Giant) Courtyard"
 TheGiant_Open  = "(The Giant) Open the Map"
 TheGiant_Pap = "(The Giant) Pack a Punch"
 TheGiant_MonkeyBombs = "(The Giant) Monkey Bombs"
-TheGiant_Round_10 = "(The Giant) Round 10"
-TheGiant_Round_15 = "(The Giant) Round 15"
-TheGiant_Round_20 = "(The Giant) Round 20"
-TheGiant_Round_25 = "(The Giant) Round 25"
-TheGiant_Round_30 = "(The Giant) Round 30"
-TheGiant_Round_35 = "(The Giant) Round 35"
-TheGiant_Round_40 = "(The Giant) Round 40"
-TheGiant_Round_Regions = (TheGiant_Round_10, TheGiant_Round_15, TheGiant_Round_20, TheGiant_Round_25, TheGiant_Round_30, TheGiant_Round_35, TheGiant_Round_40)
+TheGiant_Round_Regions = gen_round_regions(Maps.The_Giant_Map_String)
 
 Castle_Gondola = "(Der Eisendrache) Gondola"
 Castle_Open  = "(Der Eisendrache) Open the Map"
@@ -17,44 +16,29 @@ Castle_MainEE = "(Der Eisendrache) Main Easter Egg"
 Castle_DG4 = "(Der Eisendrache) DG4 Parts"
 Castle_Upgraded = "(Der Eisendrache) Upgraded Weapons"
 Castle_BossFight = "(Der Eisendrache) Boss Fight"
-Castle_Round_10 = "(Der Eisendrache) Round 10"
-Castle_Round_15 = "(Der Eisendrache) Round 15"
-Castle_Round_20 = "(Der Eisendrache) Round 20"
-Castle_Round_25 = "(Der Eisendrache) Round 25"
-Castle_Round_30 = "(Der Eisendrache) Round 30"
-Castle_Round_35 = "(Der Eisendrache) Round 35"
-Castle_Round_40 = "(Der Eisendrache) Round 40"
-Castle_Round_Regions = (Castle_Round_10, Castle_Round_15, Castle_Round_20, Castle_Round_25, Castle_Round_30, Castle_Round_35, Castle_Round_40)
+Castle_Bow_Easy = "(Der Eisendrache) Bow Easy"
+Castle_Bow_Hard = "(Der Eisendrache) Bow Hard"
+Castle_Round_Regions = gen_round_regions(Maps.Castle_Map_String)
 
 Shadows_Alleyway = "(Shadows of Evil) Alleyway"
 Shadows_Open  = "(Shadows of Evil) Open the Map"
-Shadows_Servant = "(Shadows of Evil) Craft Apothican Servant"
+Shadows_Servant = "(Shadows of Evil) Apothican Servant - Late Drops"
 Shadows_Widows = "(Shadows of Evil) Widows Wine Required"
 Shadows_RayGun = "(Shadows of Evil) Ray Gun Required"
 Shadows_Arnies = "(Shadows of Evil) Li'l Arnies Required"
 Shadows_Upgraded = "(Shadows of Evil) Upgraded Weapons"
 Shadows_MainEE = "(Shadows of Evil) Main Easter Egg"
-Shadows_Round_10 = "(Shadows of Evil) Round 10"
-Shadows_Round_15 = "(Shadows of Evil) Round 15"
-Shadows_Round_20 = "(Shadows of Evil) Round 20"
-Shadows_Round_25 = "(Shadows of Evil) Round 25"
-Shadows_Round_30 = "(Shadows of Evil) Round 30"
-Shadows_Round_35 = "(Shadows of Evil) Round 35"
-Shadows_Round_40 = "(Shadows of Evil) Round 40"
-Shadows_Round_Regions = (Shadows_Round_10, Shadows_Round_15, Shadows_Round_20, Shadows_Round_25, Shadows_Round_30, Shadows_Round_35, Shadows_Round_40)
+Shadows_Sword_Early = "(Shadows of Evil) Early Sword"
+Shadows_Sword_Late = "(Shadows of Evil) Late Sword"
+Shadows_Round_Regions = gen_round_regions(Maps.Shadows_Map_String)
 
 Zetsubou_Beach = "(Zetsubou No Shima) Beach"
 Zetsubou_Open  = "(Zetsubou No Shima) Open the Map"
-Zetsubou_Upgraded = "(Zetsubou No Shima) Upgraded Weapons"
+Zetsubou_Masamune = "(Zetsubou No Shima) Masamune"
 Zetsubou_MainEE = "(Zetsubou No Shima) Main Easter Egg"
-Zetsubou_Round_10 = "(Zetsubou No Shima) Round 10"
-Zetsubou_Round_15 = "(Zetsubou No Shima) Round 15"
-Zetsubou_Round_20 = "(Zetsubou No Shima) Round 20"
-Zetsubou_Round_25 = "(Zetsubou No Shima) Round 25"
-Zetsubou_Round_30 = "(Zetsubou No Shima) Round 30"
-Zetsubou_Round_35 = "(Zetsubou No Shima) Round 35"
-Zetsubou_Round_40 = "(Zetsubou No Shima) Round 40"
-Zetsubou_Round_Regions = (Zetsubou_Round_10, Zetsubou_Round_15, Zetsubou_Round_20, Zetsubou_Round_25, Zetsubou_Round_30, Zetsubou_Round_35, Zetsubou_Round_40)
+Zetsubou_Challenges_Early = "(Zetsubou No Shima) Challenges Early"
+Zetsubou_Challenges_Late = "(Zetsubou No Shima) Challenges Late"
+Zetsubou_Round_Regions = gen_round_regions(Maps.Zetsubou_Map_String)
 
 Gorod_Trenches = "(Gorod Krovi) Trenches"
 Gorod_Bunker = "(Gorod Krovi) Bunker"
@@ -63,14 +47,9 @@ Gorod_Shield = "(Gorod Krovi) Shield Required"
 Gorod_Upgraded = "(Gorod Krovi) Upgraded Weapons"
 Gorod_MonkeyBombs = "(Gorod Krovi) Monkey Bombs Required"
 Gorod_MainEE = "(Gorod Krovi) Main Easter Egg"
-Gorod_Round_10 = "(Gorod Krovi) Round 10"
-Gorod_Round_15 = "(Gorod Krovi) Round 15"
-Gorod_Round_20 = "(Gorod Krovi) Round 20"
-Gorod_Round_25 = "(Gorod Krovi) Round 25"
-Gorod_Round_30 = "(Gorod Krovi) Round 30"
-Gorod_Round_35 = "(Gorod Krovi) Round 35"
-Gorod_Round_40 = "(Gorod Krovi) Round 40"
-Gorod_Round_Regions = (Gorod_Round_10, Gorod_Round_15, Gorod_Round_20, Gorod_Round_25, Gorod_Round_30, Gorod_Round_35, Gorod_Round_40)
+Gorod_Challenges_Early = "(Gorod Krovi) Challenges Early"
+Gorod_Challenges_Late = "(Gorod Krovi) Challenges Late"
+Gorod_Round_Regions = gen_round_regions(Maps.GorodKrovi_Map_String)
 
 Revelations_House = "(Revelations) House"
 Revelations_Open  = "(Revelations) Open the Map"
@@ -79,38 +58,22 @@ Revelations_Upgraded = "(Revelations) Upgraded Weapons"
 Revelations_Challenges = "(Revelations) Complete Challenges"
 Revelations_Apothicon_Upgrade = "(Revelations) Apothicon Upgrade"
 Revelations_Arnies_Upgrade = "(Revelations) Arnies Upgrade"
-Revelations_Round_10 = "(Revelations) Round 10"
-Revelations_Round_15 = "(Revelations) Round 15"
-Revelations_Round_20 = "(Revelations) Round 20"
-Revelations_Round_25 = "(Revelations) Round 25"
-Revelations_Round_30 = "(Revelations) Round 30"
-Revelations_Round_35 = "(Revelations) Round 35"
-Revelations_Round_40 = "(Revelations) Round 40"
-Revelations_Round_Regions = (Revelations_Round_10, Revelations_Round_15, Revelations_Round_20, Revelations_Round_25, Revelations_Round_30, Revelations_Round_35, Revelations_Round_40)
+Revelations_Masks_Easy = "(Revelations) Masks Easy"
+Revelations_Masks_Medium = "(Revelations) Masks Medium"
+Revelations_Masks_Hard = "(Revelations) Masks Hard"
+Revelations_Challenges_Early = "(Revelations) Challenges Early"
+Revelations_Challenges_Late = "(Revelations) Challenges Late"
+Revelations_Round_Regions = gen_round_regions(Maps.Revelations_Map_String)
 
 # == Zombie Chronicles ==
 
 Kino_Entrance = "(Kino der Toten) Entrance"
 Kino_Open = "(Kino der Toten) Open the Map"
-Kino_Round_10 = "(Kino der Toten) Round 10"
-Kino_Round_15 = "(Kino der Toten) Round 15"
-Kino_Round_20 = "(Kino der Toten) Round 20"
-Kino_Round_25 = "(Kino der Toten) Round 25"
-Kino_Round_30 = "(Kino der Toten) Round 30"
-Kino_Round_35 = "(Kino der Toten) Round 35"
-Kino_Round_40 = "(Kino der Toten) Round 40"
-Kino_Round_Regions = (Kino_Round_10, Kino_Round_15, Kino_Round_20, Kino_Round_25, Kino_Round_30, Kino_Round_35, Kino_Round_40)
+Kino_Round_Regions = gen_round_regions(Maps.Kino_Map_String)
 
 # == Modded Maps ==
 
 Wanted_Town = "(Wanted) Town"
 Wanted_Open  = "(Wanted) Open the Map"
 Wanted_MainEE = "(Wanted) Main Easter Egg"
-Wanted_Round_10 = "(Wanted) Round 10"
-Wanted_Round_15 = "(Wanted) Round 15"
-Wanted_Round_20 = "(Wanted) Round 20"
-Wanted_Round_25 = "(Wanted) Round 25"
-Wanted_Round_30 = "(Wanted) Round 30"
-Wanted_Round_35 = "(Wanted) Round 35"
-Wanted_Round_40 = "(Wanted) Round 40"
-Wanted_Round_Regions = (Wanted_Round_10, Wanted_Round_15, Wanted_Round_20, Wanted_Round_25, Wanted_Round_30, Wanted_Round_35, Wanted_Round_40)
+Wanted_Round_Regions = gen_round_regions(Maps.Wanted_Map_String)

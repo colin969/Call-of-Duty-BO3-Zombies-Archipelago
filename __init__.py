@@ -9,7 +9,7 @@ from . import rules
 
 from worlds.AutoWorld import World, WebWorld
 
-# from rule_builder.rules import Has, HasAll, HasGroupUnique
+from rule_builder.rules import Has, HasAll, HasGroupUnique
 
 from . import Locations, Items, Options, Weapons
 from .Options import BO3ZombiesOptions, bo3_option_groups
@@ -228,8 +228,6 @@ class BO3ZombiesWorld(World):
         ]
         menu_region = self.create_region(self.multiworld, self.player, 'Menu', universal_locations)
         add_ee_checks = self.options.goal_condition == 0 or self.options.easter_egg_checks_enabled
-
-        self.multiworld.regions.append(menu_region)
         
         # Default Balancing, Make sure you get to every region
         # TODO: Randomize this a bit/weight it
@@ -238,90 +236,118 @@ class BO3ZombiesWorld(World):
             all_locations = [Locations.Shadows_Quest_MainQuest_Locations[0].name]
 
             main_region = self.create_region(self.multiworld, self.player, RegionName.Shadows_Alleyway, all_locations)
-            self.multiworld.regions.append(main_region)
-            create_entrance(menu_region, main_region, lambda state: state.has(ItemName.Map_Shadows, self.player))
+            self.create_entrance(menu_region, main_region, Has(ItemName.Map_Shadows))
 
             open_locations = []
             open_locations.extend([loc.name for loc in Locations.Shadows_Craftable_Locations])
             open_locations.extend([loc.name for loc in Locations.Shadows_Quest_Locations])
             open_locations.extend([loc.name for loc in Locations.Shadows_Quest_MainQuest_Locations][1:])
-            open_locations.extend([loc.name for loc in Locations.Shadows_Quest_ApothiconSword_Locations])
+            open_locations.append(LocationName.Shadows_Quest_ApothiconSword_EnterCode)
+            open_locations.append(LocationName.Shadows_Craftable_ApothiconServant_MargwaHeart)
             if self.options.music_ee_enabled:
                 open_locations.extend([loc.name for loc in Locations.Shadows_Quest_Music_Locations])
             map_open_region = self.create_region(self.multiworld, self.player, RegionName.Shadows_Open, open_locations)
-            self.multiworld.regions.append(map_open_region)
-            create_entrance(main_region, map_open_region, lambda state: rules.can_open_map(state, self.player, self.options, Maps.Shadows_Map_String))
+            self.create_entrance(main_region, map_open_region, lambda state: rules.can_open_map(state, self.player, self.options, Maps.Shadows_Map_String))
 
-            servant_locations = []
-            servant_locations.extend([loc.name for loc in Locations.Shadows_ApothiconServant_Locations])
-            servant_region = self.create_region(self.multiworld, self.player, RegionName.Shadows_Servant, servant_locations)
-            self.multiworld.regions.append(servant_region)
+            # Sword regions
+            early_sword_region = self.create_region(self.multiworld, self.player, RegionName.Shadows_Sword_Early, [
+                LocationName.Shadows_Quest_ApothiconSword_CollectSword
+            ])
+            self.create_entrance(map_open_region, early_sword_region, lambda state: 
+                (
+                    rules.check_round_logic(state, self.player, self.options, 10, Maps.Shadows_Map_String) and
+                    rules.has_weapon_of_strength(state, self.player, self.options, Maps.Shadows_Map_String, 3, 2)
+                )
+            )
+
+            late_sword_region = self.create_region(self.multiworld, self.player, RegionName.Shadows_Sword_Late, [
+                LocationName.Shadows_Quest_ApothiconSword_CollectUpgradedSword
+            ])
+            self.create_entrance(early_sword_region, late_sword_region, lambda state: 
+                (
+                    rules.check_round_logic(state, self.player, self.options, 16, Maps.Shadows_Map_String) and
+                    rules.has_weapon_of_strength(state, self.player, self.options, Maps.Shadows_Map_String, 3, 3)
+                )
+            )
+
+
+            # Late found apothicon servant parts
+            servant_region = self.create_region(self.multiworld, self.player, RegionName.Shadows_Servant, [
+                LocationName.Shadows_Craftable_ApothiconServant_MargwaTentacle,
+                LocationName.Shadows_Craftable_ApothiconServant_Xenomatter
+            ])
             rule = lambda state: rules.check_round_logic(state, self.player, self.options, 12, Maps.Shadows_Map_String)
-            create_entrance(map_open_region, servant_region, rule)
+            self.create_entrance(map_open_region, servant_region, rule)
 
+            # All of SoE true 'Main EE' locs are really late
             ee_locs = []
             if add_ee_checks:
                 ee_locs = [loc.name for loc in Locations.Shadows_Quest_MainEE_Locations]
 
             main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Shadows_MainEE, ee_locs)
-            create_entrance(
-                map_open_region,
-                main_ee_region, 
+            self.create_entrance(
+                late_sword_region,
+                main_ee_region,
                 lambda state: (
-                        state.has(ItemName.Progressive_PackAPunch, self.player) and
-                        rules.has_weapon_percentage(state, self.player, self.options, Maps.Shadows_Map_String, 2/3) and
-                        state.has_all({item.name for item in Items.Shadows_Shield}, self.player) and
-                        (state.has_all(Weapons.get_map_special_weapons_itemnames(Maps.Shadows_Map_String), self.player) if self.options.mystery_box_special_items else True)
+                        rules.check_round_logic(state, self.player, self.options, 18, Maps.Shadows_Map_String) and
+                        rules.has_weapon_of_strength(state, self.player, self.options, Maps.Shadows_Map_String, 3, 4) and
+                        state.has_all([
+                            ItemName.Shadows_Craftable_ApothiconServant_Heart,
+                            ItemName.Shadows_Craftable_ApothiconServant_Skeleton,
+                            ItemName.Shadows_Craftable_ApothiconServant_Xenomatter
+                        ], self.player)
                 )
             )
 
-            upgraded_locs = [loc.name for loc in Locations.Shadows_Quest_ApothiconSword_Upgrade_Locations]
-            upgraded_weapon_region = self.create_region(self.multiworld, self.player, RegionName.Shadows_Upgraded, upgraded_locs)
-            # create_entrance(main_region, upgraded_weapon_region, HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.weapon_unlocks_two_third))
-            create_entrance(map_open_region, upgraded_weapon_region, lambda state: rules.has_weapon_percentage(state, self.player, self.options, Maps.Shadows_Map_String, 2/3))
-
             upgraded_arnies_locs = [loc.name for loc in Locations.Shadows_LilArnies_Locations]
             upgraded_arnies_region = self.create_region(self.multiworld, self.player, RegionName.Shadows_Arnies, upgraded_arnies_locs)
-            self.multiworld.regions.append(upgraded_arnies_region)
-            create_entrance(map_open_region, upgraded_arnies_region, lambda state:
-                ((not self.options.mystery_box_special_items) or state.has(Weapons.special_weapon_name(Maps.Shadows_Map_String, ItemName.Weapon_LilArnies), self.player))
-                and rules.has_weapon_percentage(state, self.player, self.options, Maps.Shadows_Map_String, 2/3)
+            self.create_entrance(
+                map_open_region, 
+                upgraded_arnies_region, 
+                lambda state:
+                (
+                    rules.has_special_weapon(state, self.player, self.options, Maps.Shadows_Map_String, ItemName.Weapon_LilArnies) and
+                    rules.has_weapon_percentage(state, self.player, self.options, Maps.Shadows_Map_String, 2/3)
+                )
             )
 
         if self.options.map_the_giant_enabled:
             all_locations = [Locations.TheGiant_Quest_Locations[0].name]
 
             main_region = self.create_region(self.multiworld, self.player, RegionName.TheGiant_Courtyard, all_locations)
-            self.multiworld.regions.append(main_region)
-            create_entrance(menu_region, main_region, lambda state: state.has(ItemName.Map_The_Giant, self.player))
+            self.create_entrance(menu_region, main_region, Has(ItemName.Map_The_Giant))
 
             open_locations = []
             open_locations.extend([loc.name for loc in Locations.TheGiant_Quest_Locations[1:]])
             if self.options.music_ee_enabled:
                 open_locations.extend([loc.name for loc in Locations.TheGiant_Quest_Music_Locations])
             map_open_region = self.create_region(self.multiworld, self.player, RegionName.TheGiant_Open, open_locations)
-            self.multiworld.regions.append(map_open_region)
-            create_entrance(main_region, map_open_region, lambda state: rules.can_open_map(state, self.player, self.options, Maps.The_Giant_Map_String))
+            self.create_entrance(main_region, map_open_region, lambda state: rules.can_open_map(state, self.player, self.options, Maps.The_Giant_Map_String))
 
             pap_region = self.create_region(self.multiworld, self.player, RegionName.TheGiant_Pap, [loc.name for loc in Locations.TheGiant_Pap])
-            self.multiworld.regions.append(pap_region)
-            create_entrance(map_open_region, pap_region, lambda state: state.has(ItemName.Progressive_PackAPunch, self.player))
+            self.create_entrance(map_open_region, pap_region, lambda state: state.has(ItemName.Progressive_PackAPunch, self.player))
 
             monkeybomb_region = self.create_region(self.multiworld, self.player, RegionName.TheGiant_MonkeyBombs, [loc.name for loc in Locations.TheGiant_MonkeyBomb])
-            self.multiworld.regions.append(monkeybomb_region)
-            if self.options.mystery_box_special_items:
-                create_entrance(map_open_region, monkeybomb_region, lambda state: state.has(Weapons.special_weapon_name(Maps.The_Giant_Map_String, ItemName.Weapon_MonkeyBombs), self.player))
-            else:
-                create_entrance(map_open_region, monkeybomb_region)
+            self.create_entrance(
+                map_open_region,
+                monkeybomb_region, 
+                lambda state: rules.has_special_weapon(state, self.player, self.options, Maps.The_Giant_Map_String, ItemName.Weapon_MonkeyBombs))
 
         if self.options.map_castle_enabled:
             all_locations = []
             main_region = self.create_region(self.multiworld, self.player, RegionName.Castle_Gondola, all_locations)
-            self.multiworld.regions.append(main_region)
-            # create_entrance(menu_region, main_region, Has(ItemName.Map_Castle))
-            create_entrance(menu_region, main_region, lambda state: state.has(ItemName.Map_Castle, self.player))
+            # self.create_entrance(menu_region, main_region, Has(ItemName.Map_Castle))
+            self.create_entrance(menu_region, main_region, lambda state: state.has(ItemName.Map_Castle, self.player))
 
-            bow_pairs = []
+            open_locations = []
+            open_locations.extend([loc.name for loc in Locations.Castle_Craftable_Locations])
+            open_locations.extend([loc.name for loc in Locations.Castle_Quest_Locations])
+            if self.options.music_ee_enabled:
+                open_locations.extend([loc.name for loc in Locations.Castle_Quest_Music_Locations])
+            map_open_region = self.create_region(self.multiworld, self.player, RegionName.Castle_Open, open_locations)
+            self.create_entrance(main_region, map_open_region, lambda state: rules.can_open_map(state, self.player, self.options, Maps.Castle_Map_String))
+
+            bow_pairs: list[tuple[list[LocationData], str]] = []
             if self.options.castle_bow_storm:
                 bow_pairs.append((Locations.Castle_Quest_ElementalBow_Storm_Locations, ItemName.Castle_Victory_ElementalBow_Storm))
             if self.options.castle_bow_wolf:
@@ -331,51 +357,80 @@ class BO3ZombiesWorld(World):
             if self.options.castle_bow_void:
                 bow_pairs.append((Locations.Castle_Quest_ElementalBow_Void_Locations, ItemName.Castle_Victory_ElementalBow_Void))
 
-            open_locations = []
+            easy_bow_locations = []
+            hard_bow_locations = []
             bow_count = min(self.options.castle_bow_count.value, len(bow_pairs))
             # Make sure universal tracker sees all 4 location groups
             if not is_ut:
                 bow_pairs = self.random.sample(bow_pairs, bow_count)
             for bow in bow_pairs:
-                open_locations.extend([loc.name for loc in bow[0]])
                 self.weapon_quest_items.append(bow[1])
                 if bow[1] == ItemName.Castle_Victory_ElementalBow_Storm:
+                    easy_bow_locations.extend([loc.name for loc in bow[0][:-1]])
+                    hard_bow_locations.extend([loc.name for loc in bow[0][-1:]])
                     self.rolled_bows.append("storm")
                 if bow[1] == ItemName.Castle_Victory_ElementalBow_Wolf:
+                    easy_bow_locations.extend([loc.name for loc in bow[0][:-1]])
+                    hard_bow_locations.extend([loc.name for loc in bow[0][-1:]])
                     self.rolled_bows.append("wolf")
                 if bow[1] == ItemName.Castle_Victory_ElementalBow_Fire:
+                    easy_bow_locations.extend([loc.name for loc in bow[0][:2]])
+                    hard_bow_locations.extend([loc.name for loc in bow[0][2:]])
                     self.rolled_bows.append("fire")
                 if bow[1] == ItemName.Castle_Victory_ElementalBow_Void:
+                    easy_bow_locations.extend([loc.name for loc in bow[0][:3]])
+                    hard_bow_locations.extend([loc.name for loc in bow[0][3:]])
                     self.rolled_bows.append("void")
 
-            open_locations.extend([loc.name for loc in Locations.Castle_Craftable_Locations])
-            open_locations.extend([loc.name for loc in Locations.Castle_Quest_Locations])
-            if self.options.music_ee_enabled:
-                open_locations.extend([loc.name for loc in Locations.Castle_Quest_Music_Locations])
-            map_open_region = self.create_region(self.multiworld, self.player, RegionName.Castle_Open, open_locations)
-            self.multiworld.regions.append(map_open_region)
-            create_entrance(main_region, map_open_region, lambda state: rules.can_open_map(state, self.player, self.options, Maps.Castle_Map_String))
+            easy_bow_region = self.create_region(self.multiworld, self.player, RegionName.Castle_Bow_Easy, easy_bow_locations)
+            self.create_entrance(
+                map_open_region,
+                easy_bow_region,
+                lambda state: (
+                    rules.check_round_logic(state, self.player, self.options, 8, Maps.Castle_Map_String)
+                )
+            )
+            
+            hard_bow_region = self.create_region(self.multiworld, self.player, RegionName.Castle_Bow_Hard, hard_bow_locations)
+            self.create_entrance(
+                easy_bow_region,
+                hard_bow_region,
+                lambda state: (
+                    rules.check_round_logic(state, self.player, self.options, 12, Maps.Castle_Map_String) and
+                    rules.has_weapon_of_strength(state, self.player, self.options, Maps.Castle_Map_String, 3, 2)
+                )
+            )
 
             dg4_locations = []
             dg4_locations.extend([loc.name for loc in Locations.Castle_DG4_Locations])
             dg4_region = self.create_region(self.multiworld, self.player, RegionName.Castle_DG4, dg4_locations)
-            self.multiworld.regions.append(dg4_region)
             rule = lambda state: rules.check_round_logic(state, self.player, self.options, 12, Maps.Castle_Map_String)
-            create_entrance(map_open_region, dg4_region, rule)
+            self.create_entrance(map_open_region, dg4_region, rule)
 
             ee_locs = []
+            mid_ee_locs = []
             if add_ee_checks:
-                ee_locs = [loc.name for loc in Locations.Castle_Quest_MainEE_Locations[:4]]
+                ee_locs = [loc.name for loc in Locations.Castle_Quest_MainEE_Locations[:2]]
+                mid_ee_locs = [loc.name for loc in Locations.Castle_Quest_MainEE_Locations[2:4]]
 
             main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Castle_MainEE, ee_locs)
-            create_entrance(
+            self.create_entrance(
                 map_open_region,
                 main_ee_region, 
                 lambda state: (
+                    rules.check_round_logic(state, self.player, self.options, 12, Maps.Castle_Map_String)
+                )
+            )
+
+            main_ee_midgame_region = self.create_region(self.multiworld, self.player, RegionName.Castle_MainEE + " Midgame", mid_ee_locs)
+            self.create_entrance(
+                main_ee_region,
+                main_ee_midgame_region,
+                lambda state: (
+                    rules.check_round_logic(state, self.player, self.options, 14, Maps.Castle_Map_String) and
+                    rules.has_shield(state, self.player, Maps.Castle_Map_String) and
                     state.has(ItemName.Progressive_PackAPunch, self.player) and
-                    rules.has_weapon_percentage(state, self.player, self.options, Maps.Castle_Map_String, 2/3) and
-                    state.has_all({item.name for item in Items.Castle_Shield}, self.player) and
-                    (state.has_all(Weapons.get_map_special_weapons_itemnames(Maps.Castle_Map_String), self.player) if self.options.mystery_box_special_items else True)
+                    rules.has_weapon_of_strength(state, self.player, self.options, Maps.Castle_Map_String, 3, 4)
                 )
             )
 
@@ -388,64 +443,92 @@ class BO3ZombiesWorld(World):
             if add_ee_checks:
                 boss_fight_locations = [loc.name for loc in Locations.Castle_Quest_MainEE_Locations[4:]]
             boss_region = self.create_region(self.multiworld, self.player, RegionName.Castle_BossFight, boss_fight_locations)
-            self.multiworld.regions.append(boss_region)
-            main_ee_region.connect(boss_region, rule = lambda state: state.has_all([item.name for item in Items.Castle_Craftables], self.player))
+            self.create_entrance(
+                main_ee_midgame_region,
+                boss_region,
+                lambda state:
+                (
+                    rules.check_round_logic(state, self.player, self.options, 16, Maps.Castle_Map_String) and
+                    rules.has_special_weapon(state, self.player, self.options, Maps.Castle_Map_String, ItemName.Weapon_MonkeyBombs) and
+                    state.has_all([
+                        ItemName.Castle_Craftable_GravitySpikes_Body,
+                        ItemName.Castle_Craftable_GravitySpikes_Guards,
+                        ItemName.Castle_Craftable_GravitySpikes_Handle
+                    ], self.player) and
+                    rules.has_weapon_of_strength(state, self.player, self.options, Maps.Castle_Map_String, 3, 5)
+                )
+            )
 
         if self.options.map_zetsubou_enabled:
             all_locations = [Locations.Zetsubou_Quest_MainQuest_Locations[0].name]
 
             main_region = self.create_region(self.multiworld, self.player, RegionName.Zetsubou_Beach, all_locations)
-            self.multiworld.regions.append(main_region)
-            create_entrance(menu_region, main_region, lambda state: state.has(ItemName.Map_Zetsubou, self.player))
+            self.create_entrance(menu_region, main_region, Has(ItemName.Map_Zetsubou))
 
             open_locations = []
             open_locations.extend([loc.name for loc in Locations.Zetsubou_Quest_MainQuest_Locations[1:]])
             open_locations.extend([loc.name for loc in Locations.Zetsubou_Craftable_Locations])
-            open_locations.extend([loc.name for loc in Locations.Zetsubou_Quest_Challenges_Locations])
             open_locations.extend([loc.name for loc in Locations.Zetsubou_Quest_KT4_Locations])
             open_locations.extend([loc.name for loc in Locations.Zetsubou_Quest_Skull_Locations])
             if self.options.music_ee_enabled:
                 open_locations.extend([loc.name for loc in Locations.Zetsubou_Quest_Music_Locations])
             map_open_region = self.create_region(self.multiworld, self.player, RegionName.Zetsubou_Open, open_locations)
-            self.multiworld.regions.append(map_open_region)
-            create_entrance(main_region, map_open_region, lambda state: rules.can_open_map(state, self.player, self.options, Maps.Zetsubou_Map_String,))
+            self.create_entrance(main_region, map_open_region, lambda state: rules.can_open_map(state, self.player, self.options, Maps.Zetsubou_Map_String,))
+
+            early_challenge_region = self.create_region(self.multiworld, self.player, RegionName.Zetsubou_Challenges_Early, [LocationName.Zetsubou_Quest_Challenge_1, LocationName.Zetsubou_Quest_Challenge_2])
+            self.create_entrance(
+                map_open_region,
+                early_challenge_region,
+                lambda state:
+                (
+                    rules.check_round_logic(state, self.player, self.options, 10, Maps.Zetsubou_Map_String)
+                )
+            )
+
+            late_challenge_region = self.create_region(self.multiworld, self.player, RegionName.Zetsubou_Challenges_Late, [LocationName.Zetsubou_Quest_Challenge_3, LocationName.Zetsubou_Quest_Challenge_All])
+            self.create_entrance(
+                early_challenge_region,
+                late_challenge_region,
+                lambda state:
+                (
+                    rules.check_round_logic(state, self.player, self.options, 14, Maps.Zetsubou_Map_String) and
+                    rules.has_weapon_of_strength(state, self.player, self.options, Maps.Zetsubou_Map_String, 3, 2)
+                )
+            )
+
+            masamune_locs = [loc.name for loc in Locations.Zetsubou_Quest_Masamune_Locations]
+            masamune_region = self.create_region(self.multiworld, self.player, RegionName.Zetsubou_Masamune, masamune_locs)
+            self.create_entrance(
+                late_challenge_region,
+                masamune_region,
+                lambda state: (
+                    rules.check_round_logic(state, self.player, self.options, 16, Maps.Zetsubou_Map_String) and
+                    rules.has_shield(state, self.player, Maps.Zetsubou_Map_String) and
+                    rules.has_weapon_of_strength(state, self.player, self.options, Maps.Zetsubou_Map_String, 3, 3)
+                )
+            )
 
             ee_locs = []
             if add_ee_checks:
                 ee_locs = [loc.name for loc in Locations.Zetsubou_Quest_MainEE_Locations]
 
             main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Zetsubou_MainEE, ee_locs)
-            # rule = Has(ItemName.Progressive_PackAPunch) & HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.weapon_unlocks_two_third)
-            # if self.options.randomized_shield_parts:
-            #     rule = rule & HasAll(*[item.name for item in Items.Zetsubou_Shield])
-            # if self.options.mystery_box_special_items:
-            #     rule = rule & HasAll(*[item.name for item in Items.Zetsubou_MysteryBox])
-            # rule = rule & HasAll(*[item.name for item in Items.Zetsubou_Craftables_Gasmask])
-            # create_entrance(main_region, main_ee_region, rule)
-            create_entrance(
-                map_open_region,
+            self.create_entrance(
+                masamune_region,
                 main_ee_region, 
                 lambda state: (
-                    state.has(ItemName.Progressive_PackAPunch, self.player) and
-                    rules.has_weapon_percentage(state, self.player, self.options, Maps.Zetsubou_Map_String, 2/3) and
-                    state.has_all({item.name for item in Items.Zetsubou_Shield}, self.player) and
-                    (state.has_all(Weapons.get_map_special_weapons_itemnames(Maps.Zetsubou_Map_String), self.player) if self.options.mystery_box_special_items else True)
+                    rules.check_round_logic(state, self.player, self.options, 18, Maps.Zetsubou_Map_String) and
+                    rules.has_special_weapon(state, self.player, self.options, Maps.Zetsubou_Map_String, ItemName.Weapon_MonkeyBombs) and
+                    rules.has_weapon_of_strength(state, self.player, self.options, Maps.Zetsubou_Map_String, 3, 4)
                 )
             )
 
-            upgraded_locs = [loc.name for loc in Locations.Zetsubou_Quest_Masamune_Locations]
-            upgraded_weapon_region = self.create_region(self.multiworld, self.player, RegionName.Zetsubou_Upgraded, upgraded_locs)
-            # create_entrance(main_region, upgraded_weapon_region, HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.weapon_unlocks_two_third))
-            create_entrance(map_open_region, upgraded_weapon_region, lambda state: (
-                rules.has_weapon_percentage(state, self.player, self.options, Maps.Zetsubou_Map_String, 2/3)
-                and state.has_all({item.name for item in Items.Zetsubou_Shield}, self.player)
-            ))
+
 
         if self.options.map_gorod_enabled:
             all_locations = []
             main_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_Trenches, all_locations)
-            self.multiworld.regions.append(main_region)
-            create_entrance(menu_region, main_region, lambda state: state.has(ItemName.Map_GorodKrovi, self.player))
+            self.create_entrance(menu_region, main_region, Has(ItemName.Map_GorodKrovi))
 
             open_locations = []
             open_locations.extend([loc.name for loc in Locations.GorodKrovi_Quest_MainQuest_Locations])
@@ -458,66 +541,78 @@ class BO3ZombiesWorld(World):
             if self.options.music_ee_enabled:
                 open_locations.extend([loc.name for loc in Locations.GorodKrovi_Quest_Music_Locations])
             map_open_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_Open, open_locations)
-            self.multiworld.regions.append(map_open_region)
-            create_entrance(main_region, map_open_region,
+            self.create_entrance(main_region, map_open_region,
                             lambda state: rules.can_open_map(state, self.player, self.options, Maps.GorodKrovi_Map_String))
+            
+            early_challenge_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_Challenges_Early, [LocationName.GorodKrovi_Quest_Challenges_1, LocationName.GorodKrovi_Quest_Challenges_2])
+            self.create_entrance(
+                map_open_region,
+                early_challenge_region,
+                lambda state:
+                (
+                    # Various shield challenges
+                    rules.has_shield(state, self.player, Maps.GorodKrovi_Map_String) and
+                    rules.check_round_logic(state, self.player, self.options, 12, Maps.GorodKrovi_Map_String) and
+                    rules.has_weapon_of_strength(state, self.player, self.options, Maps.GorodKrovi_Map_String, 3, 2)
+                )
+            )
+
+            late_challenge_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_Challenges_Late, [LocationName.GorodKrovi_Quest_Challenges_3, LocationName.GorodKrovi_Quest_UpgradeMonkeyBombs])
+            self.create_entrance(
+                early_challenge_region,
+                late_challenge_region,
+                lambda state:
+                (
+                    rules.check_round_logic(state, self.player, self.options, 16, Maps.GorodKrovi_Map_String) and
+                    # Upgrade monkey bombs
+                    rules.has_special_weapon(state, self.player, self.options, Maps.GorodKrovi_Map_String, ItemName.Weapon_MonkeyBombs) and
+                    rules.has_weapon_of_strength(state, self.player, self.options, Maps.GorodKrovi_Map_String, 3, 3)
+                )
+            )
 
             bunker_locs = [loc.name for loc in Locations.GorodKrovi_Quest_DragonStrikes]
             bunker_locs.extend([loc.name for loc in Locations.GorodKrovi_Quest_DragonGauntlets_Early])
-            bunker_locs.append(Locations.GorodKrovi_Quest_Challenges[0].name)
-            bunker_locs.append(Locations.GorodKrovi_Quest_Challenges[2].name)
             bunker_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_Bunker, bunker_locs)
-            create_entrance(
+            self.create_entrance(
                 map_open_region,
                 bunker_region,
+                lambda state:
+                (
+                    rules.has_special_weapon(state, self.player, self.options, Maps.GorodKrovi_Map_String, ItemName.Weapon_MonkeyBombs) or
+                    rules.has_special_weapon(state, self.player, self.options, Maps.GorodKrovi_Map_String, ItemName.Weapon_RaygunMk3) or
+                    rules.has_weapon_of_strength(state, self.player, self.options, Maps.GorodKrovi_Map_String, 4, 1)
+                )
             )
 
             ee_locs = []
             if add_ee_checks:
                 ee_locs = [loc.name for loc in Locations.GorodKrovi_Quest_MainEE_Locations]
+            # Toss in most late requirements because they fit the same rules anyway
+            ee_locs.extend([loc.name for loc in Locations.GorodKrovi_Quest_DragonGauntlets_Late])
+            ee_locs.extend([loc.name for loc in Locations.GorodKrovi_Quest_DragonStrikes_Upgraded])
 
             main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_MainEE, ee_locs)
-            create_entrance(
+            self.create_entrance(
                 bunker_region, 
                 main_ee_region, 
                 lambda state: (
-                    state.has(ItemName.Progressive_PackAPunch, self.player) and
-                    rules.has_weapon_percentage(state, self.player, self.options, Maps.GorodKrovi_Map_String, 2/3) and
-                    state.has_all({item.name for item in Items.GorodKrovi_Shield}, self.player) and
-                    (state.has_all(Weapons.get_map_special_weapons_itemnames(Maps.GorodKrovi_Map_String), self.player) if self.options.mystery_box_special_items else True)
+                    rules.check_round_logic(state, self.player, self.options, 18, Maps.GorodKrovi_Map_String) and
+                    rules.has_shield(state, self.player, Maps.GorodKrovi_Map_String) and
+                    rules.has_weapon_of_strength(state, self.player, self.options, Maps.GorodKrovi_Map_String, 3, 4) and
+                    rules.has_special_weapon(state, self.player, self.options, Maps.GorodKrovi_Map_String, ItemName.Weapon_RaygunMk3)
                 )
             )
 
-            # Checks which require the shield items
-            shield_locations = (
-                [Locations.GorodKrovi_Quest_Challenges[1].name] +
-                [loc.name for loc in Locations.GorodKrovi_Quest_TiamatsMaw]
-            )
+            # Shield upgrade
+            shield_locations = [loc.name for loc in Locations.GorodKrovi_Quest_TiamatsMaw]
             shield_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_Shield, shield_locations)
-            self.multiworld.regions.append(shield_region)
-            create_entrance(map_open_region, shield_region, lambda state: state.has_all([item.name for item in Items.GorodKrovi_Shield], self.player))
-
-            # Monkey Bomb upgrade location - Requires shield as well as monkey bombs in box
-            monkeybomb_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_MonkeyBombs, [Locations.GorodKrovi_Quest_Challenges[3].name])
-            self.multiworld.regions.append(monkeybomb_region)
-            if self.options.mystery_box_special_items:
-                create_entrance(shield_region, monkeybomb_region, lambda state: state.has(Weapons.special_weapon_name(Maps.GorodKrovi_Map_String, ItemName.Weapon_MonkeyBombs), self.player))
-            else:
-                create_entrance(shield_region, monkeybomb_region)
-
-
-            upgraded_locs = [loc.name for loc in Locations.GorodKrovi_Quest_DragonStrikes_Upgraded]
-            upgraded_locs += [loc.name for loc in Locations.GorodKrovi_Quest_DragonGauntlets_Late]
-            upgraded_weapon_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_Upgraded, upgraded_locs)
-            # create_entrance(main_region, upgraded_weapon_region, HasGroupUnique(Items.BO3ZombiesItemCategory.REGULAR_WEAPON, self.weapon_unlocks_two_third))
-            create_entrance(bunker_region, upgraded_weapon_region, lambda state: rules.has_weapon_percentage(state, self.player, self.options, Maps.GorodKrovi_Map_String, 2/3))
+            self.create_entrance(bunker_region, shield_region, HasAll(*(item.name for item in Items.GorodKrovi_Shield)))
 
         if self.options.map_revelations_enabled:
             all_locations = [Locations.Revelations_Quest_MainQuest_Locations[0].name]
  
             main_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_House, all_locations)
-            self.multiworld.regions.append(main_region)
-            create_entrance(menu_region, main_region, lambda state: state.has(ItemName.Map_Revelations, self.player))
+            self.create_entrance(menu_region, main_region, Has(ItemName.Map_Revelations))
 
             open_locations = []
             open_locations.extend([loc.name for loc in Locations.Revelations_Quest_MainQuest_Locations[1:]])
@@ -525,80 +620,146 @@ class BO3ZombiesWorld(World):
             open_locations.extend([loc.name for loc in Locations.Revelations_Quest_SideEE_Locations])
             if self.options.music_ee_enabled:
                 open_locations.extend([loc.name for loc in Locations.Revelations_Quest_Music_Locations])
-                
-            mask_locs: list[tuple[list[LocationData], str]] = []
-            if self.options.revelations_mask_enabled_dire_wolf:
-                mask_locs.append((Locations.Revelations_Quest_Mask_Wolf_Locations, "wolf"))
-            if self.options.revelations_mask_enabled_siegfried:
-                mask_locs.append((Locations.Revelations_Quest_Mask_Siegfried_Locations, "siegfried"))
-            if self.options.revelations_mask_enabled_king:
-                mask_locs.append((Locations.Revelations_Quest_Mask_King_Locations, "king"))
-            if self.options.revelations_mask_enabled_fury:
-                mask_locs.append((Locations.Revelations_Quest_Mask_Fury_Locations, "fury"))
-            if self.options.revelations_mask_enabled_keeper_skull:
-                mask_locs.append((Locations.Revelations_Quest_Mask_Keeper_Locations, "keeper"))
-            if self.options.revelations_mask_enabled_margwa:
-                mask_locs.append((Locations.Revelations_Quest_Mask_Margwa_Locations, "margwa"))
-            if self.options.revelations_mask_enabled_apothicon:
-                mask_locs.append((Locations.Revelations_Quest_Mask_Apothigod_Locations, "apothigod"))
 
+            map_open_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_Open, open_locations)
+            self.create_entrance(main_region, map_open_region,
+                            lambda state: rules.can_open_map(state, self.player, self.options, Maps.Revelations_Map_String))
+                
+            # Add mask location groups to rando
+            mask_locs: list[tuple[list[LocationData], str, int]] = []
+            if self.options.revelations_mask_enabled_dire_wolf:
+                mask_locs.append((Locations.Revelations_Quest_Mask_Wolf_Locations, "wolf", 0))
+            if self.options.revelations_mask_enabled_siegfried:
+                mask_locs.append((Locations.Revelations_Quest_Mask_Siegfried_Locations, "siegfried", 0))
+            if self.options.revelations_mask_enabled_king:
+                mask_locs.append((Locations.Revelations_Quest_Mask_King_Locations, "king", 1))
+            if self.options.revelations_mask_enabled_fury:
+                mask_locs.append((Locations.Revelations_Quest_Mask_Fury_Locations, "fury", 2))
+            if self.options.revelations_mask_enabled_keeper_skull:
+                mask_locs.append((Locations.Revelations_Quest_Mask_Keeper_Locations, "keeper", 1))
+            if self.options.revelations_mask_enabled_margwa:
+                mask_locs.append((Locations.Revelations_Quest_Mask_Margwa_Locations, "margwa", 1))
+            if self.options.revelations_mask_enabled_apothicon:
+                mask_locs.append((Locations.Revelations_Quest_Mask_Apothigod_Locations, "apothigod", 2))
+
+            # Sort masks by difficulty
             self.random.shuffle(mask_locs)
             max_mask_locs = min(self.options.revelations_mask_count.value, len(mask_locs))
+            mask_loc_groups: list[list[str]] = [[], [], []]
             if max_mask_locs > 0:
-                for locations, mask_name in mask_locs[:max_mask_locs]:
-                    open_locations.extend([loc.name for loc in locations])
+                for locations, mask_name, difficulty in mask_locs[:max_mask_locs]:
+                    mask_loc_groups[difficulty].extend([loc.name for loc in locations])
                     self.rolled_masks.append(mask_name)
-                
-            map_open_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_Open, open_locations)
-            self.multiworld.regions.append(map_open_region)
-            create_entrance(main_region, map_open_region,
-                            lambda state: rules.can_open_map(state, self.player, self.options, Maps.Revelations_Map_String))
 
-            # Round 18 logic for the panzer/margwa challenges and shield for the possible shield challenge
-            challenge_locations = []
-            challenge_locations.extend([loc.name for loc in Locations.Revelations_Quest_Challenges])
-            challenge_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_Challenges, challenge_locations)
-            self.multiworld.regions.append(challenge_region)
-            rule = lambda state: (
-                rules.check_round_logic(state, self.player, self.options, 18, Maps.Revelations_Map_String) and
-                state.has_all({item.name for item in Items.Revelations_Shield}, self.player)
+            easy_mask_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_Masks_Easy, mask_loc_groups[0])
+            self.create_entrance(
+                map_open_region,
+                easy_mask_region,
+                lambda state: rules.check_round_logic(state, self.player, self.options, 10, Maps.Revelations_Map_String)
             )
-            create_entrance(map_open_region, challenge_region, rule)
+            medium_mask_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_Masks_Medium, mask_loc_groups[1])
+            self.create_entrance(
+                map_open_region,
+                medium_mask_region,
+                lambda state: (
+                    rules.check_round_logic(state, self.player, self.options, 20, Maps.Revelations_Map_String) and
+                    # Margwa mask requires a sniper
+                    rules.has_sniper(state, self.player, self.options, Maps.Revelations_Map_String) and
+                    rules.has_weapon_of_strength(state, self.player, self.options, Maps.Revelations_Map_String, 3, 2)
+                )
+            )
+            hard_mask_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_Masks_Hard, mask_loc_groups[2])
+            self.create_entrance(
+                map_open_region,
+                hard_mask_region,
+                lambda state: 
+                (
+                    rules.check_round_logic(state, self.player, self.options, 28, Maps.Revelations_Map_String) and
+                    rules.has_shield(state, self.player, Maps.Revelations_Map_String) and
+                    rules.has_weapon_of_strength(state, self.player, self.options, Maps.Revelations_Map_String, 3, 5) and
+                    rules.has_weapon_of_strength(state, self.player, self.options, Maps.Revelations_Map_String, 5, 2)
+                )
+            )
+
+            early_challenge_locations = [LocationName.Revelations_Quest_Challenges_1]
+            early_challenge_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_Challenges_Early, early_challenge_locations)
+            rule = lambda state: (
+                rules.check_round_logic(state, self.player, self.options, 10, Maps.Revelations_Map_String) and
+                rules.has_shield(state, self.player, Maps.Revelations_Map_String) and
+                rules.has_weapon_of_strength(state, self.player, self.options, Maps.Revelations_Map_String, 3, 2)
+            )
+            self.create_entrance(map_open_region, early_challenge_region, rule)
+
+            # Round 20 logic for the panzer/margwa challenges and shield for the possible shield challenge
+            late_challenge_locations = [LocationName.Revelations_Quest_Challenges_2, LocationName.Revelations_Quest_Challenges_3, LocationName.Revelations_Quest_Challenges_All]
+            late_challenge_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_Challenges_Late, late_challenge_locations)
+            rule = lambda state: (
+                rules.check_round_logic(state, self.player, self.options, 20, Maps.Revelations_Map_String) and
+                rules.has_shield(state, self.player, Maps.Revelations_Map_String) and
+                rules.has_weapon_of_strength(state, self.player, self.options, Maps.Revelations_Map_String, 3, 4)
+            )
+            self.create_entrance(early_challenge_region, late_challenge_region, rule)
 
             ee_locs = []
+            mid_ee_locs = []
+            late_ee_locs = []
             if add_ee_checks:
-                ee_locs = [loc.name for loc in Locations.Revelations_Quest_MainEE_Locations]
+                ee_locs = [loc.name for loc in Locations.Revelations_Quest_MainEE_Locations[:2]]
+                mid_ee_locs = [loc.name for loc in Locations.Revelations_Quest_MainEE_Locations[2:5]]
+                late_ee_locs = [loc.name for loc in Locations.Revelations_Quest_MainEE_Locations[5:]]
 
             main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_MainEE, ee_locs)
-            self.multiworld.regions.append(main_ee_region)
-            create_entrance(
+            self.create_entrance(
                 map_open_region,
                 main_ee_region, 
                 lambda state: (
+                    rules.check_round_logic(state, self.player, self.options, 10, Maps.Revelations_Map_String)
+                )
+            )
+
+            main_ee_midgame_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_MainEE + " Midgame", mid_ee_locs)
+            self.create_entrance(
+                main_ee_region,
+                main_ee_midgame_region,
+                lambda state: (
+                    rules.has_special_weapon(state, self.player, self.options, Maps.Revelations_Map_String, ItemName.Weapon_ApothiconServant) and
+                    rules.has_special_weapon(state, self.player, self.options, Maps.Revelations_Map_String, ItemName.Weapon_LilArnies) and
                     state.has(ItemName.Progressive_PackAPunch, self.player) and
-                    rules.has_weapon_percentage(state, self.player, self.options, Maps.Revelations_Map_String, 2/3) and
-                    state.has_all({item.name for item in Items.Revelations_Shield}, self.player) and
-                    (state.has_all(Weapons.get_map_special_weapons_itemnames(Maps.Revelations_Map_String), self.player) if self.options.mystery_box_special_items else True)
+                    rules.has_shield(state, self.player, Maps.Revelations_Map_String) and
+                    rules.check_round_logic(state, self.player, self.options, 15, Maps.Revelations_Map_String) and
+                    rules.has_weapon_of_strength(state, self.player, self.options, Maps.Revelations_Map_String, 3, 3)
+                )
+            )
+
+            main_ee_lategame_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_MainEE + " Lategame", late_ee_locs)
+            self.create_entrance(
+                main_ee_midgame_region,
+                main_ee_lategame_region,
+                lambda state: (
+                    rules.has_special_weapon(state, self.player, self.options, Maps.Revelations_Map_String, ItemName.Weapon_Ragnaroks) and
+                    rules.has_special_weapon(state, self.player, self.options, Maps.Revelations_Map_String, ItemName.Weapon_Ragnaroks) and
+                    rules.check_round_logic(state, self.player, self.options, 20, Maps.Revelations_Map_String) and
+                    rules.has_weapon_of_strength(state, self.player, self.options, Maps.Revelations_Map_String, 3, 6)
                 )
             )
 
             apothicon_ugprade_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_Apothicon_Upgrade, [Locations.Revelations_Quest_Weapons[0].name])
-            if self.options.mystery_box_special_items:
-                create_entrance(map_open_region, apothicon_ugprade_region, lambda state: state.has(Weapons.special_weapon_name(Maps.Revelations_Map_String, ItemName.Weapon_ApothiconServant), self.player))
-            else:
-                create_entrance(map_open_region, apothicon_ugprade_region)
+            self.create_entrance(
+                map_open_region, 
+                apothicon_ugprade_region,
+                lambda state: rules.has_special_weapon(state, self.player, self.options, Maps.Revelations_Map_String, ItemName.Weapon_ApothiconServant)
+)
 
             arnies_ugprade_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_Arnies_Upgrade, [Locations.Revelations_Quest_Weapons[1].name])
-            if self.options.mystery_box_special_items:
-                create_entrance(map_open_region, arnies_ugprade_region, lambda state: state.has(Weapons.special_weapon_name(Maps.Revelations_Map_String, ItemName.Weapon_LilArnies), self.player))
-            else:
-                create_entrance(map_open_region, arnies_ugprade_region)
+            self.create_entrance(
+                map_open_region, 
+                arnies_ugprade_region, 
+                lambda state: rules.has_special_weapon(state, self.player, self.options, Maps.Revelations_Map_String, ItemName.Weapon_LilArnies))
 
         if self.options.map_kino_enabled:
             all_locations = []
             main_region = self.create_region(self.multiworld, self.player, RegionName.Kino_Entrance, all_locations)
-            self.multiworld.regions.append(main_region)
-            create_entrance(menu_region, main_region, lambda state: state.has(ItemName.Map_Kino, self.player))
+            self.create_entrance(menu_region, main_region, Has(ItemName.Map_Kino))
 
             open_locations = []
             open_locations.extend([loc.name for loc in Locations.Kino_Quest_Locations])
@@ -606,8 +767,7 @@ class BO3ZombiesWorld(World):
                 open_locations.extend([loc.name for loc in Locations.Kino_Quest_Music_Locations])
 
             map_open_region = self.create_region(self.multiworld, self.player, RegionName.Kino_Open, open_locations)
-            self.multiworld.regions.append(map_open_region)
-            create_entrance(main_region, map_open_region,
+            self.create_entrance(main_region, map_open_region,
                             lambda state: rules.can_open_map(state, self.player, self.options, Maps.Kino_Map_String))
                 
         # == Modded Maps ==
@@ -615,16 +775,14 @@ class BO3ZombiesWorld(World):
         if self.options.map_workshop_wanted_enabled:
             all_locations = []
             main_region = self.create_region(self.multiworld, self.player, RegionName.Wanted_Town, all_locations)
-            self.multiworld.regions.append(main_region)
-            create_entrance(menu_region, main_region, lambda state: state.has(ItemName.Map_Wanted, self.player))
+            self.create_entrance(menu_region, main_region, Has(ItemName.Map_Wanted))
 
             open_locations = []
             open_locations.extend([loc.name for loc in Locations.Wanted_Quest_MainQuest_Locations])
             open_locations.extend([loc.name for loc in Locations.Wanted_Quest_Weapons])
             open_locations.extend([loc.name for loc in Locations.Wanted_Craftable_Locations])
             map_open_region = self.create_region(self.multiworld, self.player, RegionName.Wanted_Open, open_locations)
-            self.multiworld.regions.append(map_open_region)
-            create_entrance(main_region, map_open_region,
+            self.create_entrance(main_region, map_open_region,
                             lambda state: rules.can_open_map(state, self.player, self.options, Maps.Wanted_Map_String))
 
             ee_locs = []
@@ -632,8 +790,7 @@ class BO3ZombiesWorld(World):
                 ee_locs = [loc.name for loc in Locations.Wanted_Quest_MainEE_Locations]
 
             main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Wanted_MainEE, ee_locs)
-            self.multiworld.regions.append(main_ee_region)
-            create_entrance(
+            self.create_entrance(
                 map_open_region,
                 main_ee_region, 
                 lambda state: (
@@ -651,6 +808,7 @@ class BO3ZombiesWorld(World):
                 location = BO3ZombiesLocation(player, location, self.location_name_to_id[location], ret)
                 ret.locations.append(location)
 
+        self.multiworld.regions.append(ret)
         return ret
 
     def create_item(self, name: str) -> Item:
@@ -1160,9 +1318,8 @@ class BO3ZombiesWorld(World):
         # This gets the map name from our location name
         map_name = new_region_name.split(")")[0] + ")"
         region = self.create_region(self.multiworld, self.player, new_region_name, round_locs)
-        self.multiworld.regions.append(region)
         rule = lambda state: rules.check_round_logic(state, self.player, self.options, round_num, map_name)
-        create_entrance(main_region, region, rule)
+        self.create_entrance(main_region, region, rule)
 
     def preselect_weapons(self, map_list: list[str], distribution: WeaponDistribution):
         # Sets for strength 1 to 5
@@ -1272,7 +1429,3 @@ def add_round_locations(round_locations, round_max, round_freq, is_goal_cond, go
                 else:
                     round_locs_40.append(round_locations[goal_round - 2].name)
     return [round_locs_early, round_locs_10, round_locs_15, round_locs_20, round_locs_25, round_locs_30, round_locs_35, round_locs_40]
-
-# REMOVE IN 0.6.7
-def create_entrance(from_region: Region, to_region: Region, rule = None):
-    from_region.connect(to_region, None, rule)

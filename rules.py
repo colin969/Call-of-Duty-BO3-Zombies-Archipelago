@@ -2,8 +2,38 @@ from BaseClasses import CollectionState
 from . import Locations, Items, Options
 from .Options import BO3ZombiesOptions, bo3_option_groups
 from .Names import ItemName, LocationName, RegionName, Maps
-from .Weapons import WeaponData, map_weapon_data_sets
+from .Weapons import WeaponData, map_weapon_data_sets, special_weapon_name
+
 import math
+
+map_perks = {
+    Maps.Shadows_Map_String: Items.Shadows_Machines,
+    Maps.The_Giant_Map_String: Items.The_Giant_Machines,
+    Maps.Castle_Map_String: Items.Castle_Machines,
+    Maps.Zetsubou_Map_String: Items.Zetsubou_Machines,
+    Maps.GorodKrovi_Map_String: Items.GorodKrovi_Machines,
+    Maps.Revelations_Map_String: Items.Revelations_Machines,
+    Maps.Kino_Map_String: Items.Kino_Machines,
+    Maps.Wanted_Map_String: Items.Wanted_Machines,
+}
+map_perks_specific = {
+    Maps.Shadows_Map_String: Items.Shadows_Machines_Specific,
+    Maps.The_Giant_Map_String: Items.The_Giant_Machines_Specific,
+    Maps.Castle_Map_String: Items.Castle_Machines_Specific,
+    Maps.Zetsubou_Map_String: Items.Zetsubou_Machines_Specific,
+    Maps.GorodKrovi_Map_String: Items.GorodKrovi_Machines_Specific,
+    Maps.Revelations_Map_String: Items.Revelations_Machines_Specific,
+    Maps.Kino_Map_String: Items.Kino_Machines_Specific,
+    Maps.Wanted_Map_String: Items.Wanted_Machines_Specific,
+}
+map_shield = {
+    Maps.Shadows_Map_String: Items.Shadows_Shield,
+    Maps.Castle_Map_String: Items.Castle_Shield,
+    Maps.Zetsubou_Map_String: Items.Zetsubou_Shield,
+    Maps.GorodKrovi_Map_String: Items.GorodKrovi_Shield,
+    Maps.Revelations_Map_String: Items.Revelations_Shield,
+    Maps.Wanted_Map_String: Items.Wanted_Shield
+}
 
 def can_open_map(state: CollectionState, player: int, options: BO3ZombiesOptions, map_name) -> bool:
     # This is a rule meant to basically say "yeah we can open the map now" based on round logic and current starting points
@@ -23,7 +53,7 @@ def get_map_weapon_data(map_name: str, options: BO3ZombiesOptions) -> tuple[dict
     if map_name in map_weapon_data_sets:
         weapon_data_set = map_weapon_data_sets[map_name]
 
-        full_weapon_list = {**weapon_data_set.vanilla, **weapon_data_set.special}
+        full_weapon_list = {**weapon_data_set.vanilla, **weapon_data_set.special, **weapon_data_set.wallbuys}
         if options.mystery_box_regular_items and options.mystery_box_expanded:
             full_weapon_list.update(weapon_data_set.expanded)
 
@@ -48,6 +78,52 @@ def has_weapon_percentage(state: CollectionState, player: int, options: BO3Zombi
 
     return state.count_from_list_unique(weapon_keys, player) + initial_num >= math.floor(full_count * percent)
 
+def has_shield(state: CollectionState, player: int, map_name: str) -> bool:
+    if map_name in map_shield:
+        return state.has_all([item.name for item in map_shield[map_name]], player)
+    else:
+        return True
+
+def has_sniper(state: CollectionState, player: int, options: BO3ZombiesOptions, map_name: str) -> bool:
+    weapon_data, full_weapon_data = get_map_weapon_data(map_name, options)
+    for weapon_key, weapon in full_weapon_data.items():
+        if weapon.category == "sniper":
+            # Unrando'd sniper
+            if weapon_key not in weapon_data:
+                return True
+            # Found sniper
+            if state.has(weapon.item_name, player):
+                return True
+    return False
+
+def has_weapon_of_strength(state: CollectionState, player: int, options: BO3ZombiesOptions, map_name: str, strength: int, count = 1) -> bool:
+    counted, total = count_weapons_of_strength(state, player, options, map_name, strength)
+    if total < count:
+        return True
+    if counted >= count:
+        return True
+    return False
+
+def has_special_weapon(state: CollectionState, player: int, options: BO3ZombiesOptions, map_name: str, weapon_name: str) -> bool:
+    if options.mystery_box_special_items.value == 0:
+        return True
+    return state.has(special_weapon_name(map_name, weapon_name), player)
+
+
+def count_weapons_of_strength(state: CollectionState, player: int, options: BO3ZombiesOptions, map_name: str, strength: int) -> tuple[int, int]:
+    weapon_data, full_weapon_data = get_map_weapon_data(map_name, options)
+    total = 0
+    counted = 0
+    for weapon_key, weapon in full_weapon_data.items():
+        if weapon.strength >= strength:
+            total += 1
+            if weapon_key not in weapon_data:
+                counted += 1
+            elif state.has(weapon.item_name, player):
+                counted += 1
+    return counted, total
+
+
 def check_round_logic(state: CollectionState, player: int, options: BO3ZombiesOptions, round_num, map_name: str) -> bool:
     # Let's just say we can reach round 6 without any progression items
     round_can_reach = 6
@@ -71,35 +147,6 @@ def check_round_logic(state: CollectionState, player: int, options: BO3ZombiesOp
     full_count = len(full_weapon_data.keys())
     # How many weapons that aren't shuffled
     initial_num = full_count - len(weapon_keys)
-
-    map_perks = {
-        Maps.Shadows_Map_String: Items.Shadows_Machines,
-        Maps.The_Giant_Map_String: Items.The_Giant_Machines,
-        Maps.Castle_Map_String: Items.Castle_Machines,
-        Maps.Zetsubou_Map_String: Items.Zetsubou_Machines,
-        Maps.GorodKrovi_Map_String: Items.GorodKrovi_Machines,
-        Maps.Revelations_Map_String: Items.Revelations_Machines,
-        Maps.Kino_Map_String: Items.Kino_Machines,
-        Maps.Wanted_Map_String: Items.Wanted_Machines,
-    }
-    map_perks_specific = {
-        Maps.Shadows_Map_String: Items.Shadows_Machines_Specific,
-        Maps.The_Giant_Map_String: Items.The_Giant_Machines_Specific,
-        Maps.Castle_Map_String: Items.Castle_Machines_Specific,
-        Maps.Zetsubou_Map_String: Items.Zetsubou_Machines_Specific,
-        Maps.GorodKrovi_Map_String: Items.GorodKrovi_Machines_Specific,
-        Maps.Revelations_Map_String: Items.Revelations_Machines_Specific,
-        Maps.Kino_Map_String: Items.Kino_Machines_Specific,
-        Maps.Wanted_Map_String: Items.Wanted_Machines_Specific,
-    }
-    map_shield = {
-        Maps.Shadows_Map_String: Items.Shadows_Shield,
-        Maps.Castle_Map_String: Items.Castle_Shield,
-        Maps.Zetsubou_Map_String: Items.Zetsubou_Shield,
-        Maps.GorodKrovi_Map_String: Items.GorodKrovi_Shield,
-        Maps.Revelations_Map_String: Items.Revelations_Shield,
-        Maps.Wanted_Map_String: Items.Wanted_Shield
-    }
 
     # Lets look at the length of our map's perks, and adjust the round threshold accordingly
     perks_copy = map_perks[map_name]
@@ -152,21 +199,20 @@ def check_round_logic(state: CollectionState, player: int, options: BO3ZombiesOp
 
     # Get our perks based on the map and our perk item setting
     perks = 0
+    if options.map_specific_machines:
+        perk_list = map_perks_specific[map_name]
+    else:
+        perk_list = map_perks[map_name]
+    perks_owned = []
+    for perk in perk_list:
+        if state.has(perk.name, player):
+            perks_owned.append(perk.name)
+            # Let's not consider deadshot or quick revive for perk logic
+            if ("Dead Shot" in perk.name) or (options.start_quick_revive and ("Quick Revive" in perk.name)):
+                continue
+            perks += 1
     # Let's only do these calculations if we can even have perks
     if current_perk_limit > 0:
-        perks_owned = []
-        if options.map_specific_machines:
-            perk_list = map_perks_specific[map_name]
-        else:
-            perk_list = map_perks[map_name]
-        perks = 0
-        for perk in perk_list:
-            if state.has(perk.name, player):
-                perks_owned.append(perk.name)
-                # Let's not consider deadshot or quick revive for perk logic
-                if ("Dead Shot" in perk.name) or (options.start_quick_revive and ("Quick Revive" in perk.name)):
-                    continue
-                perks += 1
         # If we have too many perks for our current limit (1 over whatever), limit logical perk count
         if len(perks_owned) > (current_perk_limit):
             # Don't set the perk count based on limit unless our logical perks are actually higher in count
@@ -183,19 +229,23 @@ def check_round_logic(state: CollectionState, player: int, options: BO3ZombiesOp
 
     round_can_reach += (perks * rounds_from_perks)
 
-    weap_item_count = state.count_from_list_unique(weapon_keys, player)
-    # We have a lot of weapons, add 5 rounds
-    if weap_item_count + initial_num >= math.floor(full_count * (1/3)):
-        round_can_reach += rounds_from_important
-    # Now we really have a lot of weapons, add 5 more
-    if weap_item_count + initial_num >= math.floor(full_count * (2/3)):
-        round_can_reach += rounds_from_important
+    weap_item_count = state.count_from_list_unique(weapon_keys, player) + initial_num
+    total_weap_rounds = rounds_from_important * 3
+    earned_weap_rounds = math.floor(total_weap_rounds * (weap_item_count / full_count))
+    round_can_reach += earned_weap_rounds
 
     # Give 5 rounds logically for each pap upgrade
     current_pap_upgrades = state.count(Items.Progressive_PackAPunch.name, player)
     round_can_reach += (current_pap_upgrades * rounds_from_important)
     
+    # Certain hard requirements for better balancing
+    if len(perk_list) >= 4 and len(perks_owned) < 2:
+        round_can_reach = min(10, round_can_reach)
+    if weap_item_count < math.floor(full_count * 0.3):
+        round_can_reach = min(12, round_can_reach)
     if not has_jugg:
         round_can_reach = min(12, round_can_reach)
+    if current_pap_upgrades == 0:
+        round_can_reach = min(16, round_can_reach)
 
     return (round_can_reach >= round_num) or (round_can_reach >= round_max_threshold)
