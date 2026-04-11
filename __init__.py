@@ -520,6 +520,11 @@ class BO3ZombiesWorld(World):
                     rules.check_round_logic(state, self.player, self.options, 18, Maps.Zetsubou_Map_String) and
                     rules.has_special_weapon(state, self.player, self.options, Maps.Zetsubou_Map_String, ItemName.Weapon_MonkeyBombs) and
                     rules.has_weapon_of_strength(state, self.player, self.options, Maps.Zetsubou_Map_String, 3, 4)
+                    and state.has_all([
+                        ItemName.Zetsubou_Craftable_Gasmask_Filter,
+                        ItemName.Zetsubou_Craftable_Gasmask_Strap,
+                        ItemName.Zetsubou_Craftable_Gasmask_Visor
+                    ], self.player)
                 )
             )
 
