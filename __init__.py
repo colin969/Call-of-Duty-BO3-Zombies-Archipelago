@@ -653,6 +653,8 @@ class BO3ZombiesWorld(World):
             max_mask_locs = min(self.options.revelations_mask_count.value, len(mask_locs))
             mask_loc_groups: list[list[str]] = [[], [], []]
             if max_mask_locs > 0:
+                if is_ut:
+                    max_mask_locs = len(mask_locs)
                 for locations, mask_name, difficulty in mask_locs[:max_mask_locs]:
                     mask_loc_groups[difficulty].extend([loc.name for loc in locations])
                     self.rolled_masks.append(mask_name)
