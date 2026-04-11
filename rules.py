@@ -138,9 +138,6 @@ def check_round_logic(state: CollectionState, player: int, options: BO3ZombiesOp
 
     has_jugg = False
 
-    if options.start_quick_revive:
-        round_max_threshold -= rounds_from_perks
-
     weapon_data, full_weapon_data = get_map_weapon_data(map_name, options)
     # Names of all pooled weapons
     weapon_keys = [item.item_name for item in weapon_data.values()]
@@ -211,6 +208,7 @@ def check_round_logic(state: CollectionState, player: int, options: BO3ZombiesOp
             if ("Dead Shot" in perk.name) or (options.start_quick_revive and ("Quick Revive" in perk.name)):
                 continue
             perks += 1
+    rule_perks = perks
     # Let's only do these calculations if we can even have perks
     if current_perk_limit > 0:
         # If we have too many perks for our current limit (1 over whatever), limit logical perk count
@@ -222,10 +220,6 @@ def check_round_logic(state: CollectionState, player: int, options: BO3ZombiesOp
             if "Juggernog" in perk:
                 has_jugg = True
                 break
-        # From here perks past our first will only count as 3/8 of one for round logic
-        if not has_jugg:
-            extra_perks = (perks - 1)
-            perks = 1 + (extra_perks * (3/8))
 
     round_can_reach += (perks * rounds_from_perks)
 
@@ -234,12 +228,12 @@ def check_round_logic(state: CollectionState, player: int, options: BO3ZombiesOp
     earned_weap_rounds = math.floor(total_weap_rounds * (weap_item_count / full_count))
     round_can_reach += earned_weap_rounds
 
-    # Give 5 rounds logically for each pap upgrade
+    # Give 4 rounds logically for each pap upgrade
     current_pap_upgrades = state.count(Items.Progressive_PackAPunch.name, player)
     round_can_reach += (current_pap_upgrades * rounds_from_important)
     
     # Certain hard requirements for better balancing
-    if len(perk_list) >= 4 and len(perks_owned) < 2:
+    if len(perk_list) >= 4 and rule_perks < 2:
         round_can_reach = min(10, round_can_reach)
     if weap_item_count < math.floor(full_count * 0.3):
         round_can_reach = min(12, round_can_reach)
