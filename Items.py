@@ -173,6 +173,8 @@ Revelations_Shield = gen_map_specific_list(Maps.Revelations_Map_String, ShieldPa
 
 # === Zombie Chronicles ===
 
+# Kino der Toten
+
 Kino_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
     ItemName.Machine_Juggernog,
     ItemName.Machine_QuickRevive,
@@ -185,6 +187,22 @@ Kino_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
 ]]
 
 Kino_Machines_Specific = gen_map_specific_list(Maps.Kino_Map_String, Kino_Machines)
+
+# Moon
+
+Moon_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
+    ItemName.Machine_Juggernog,
+    ItemName.Machine_QuickRevive,
+    ItemName.Machine_DoubleTap,
+    ItemName.Machine_SpeedCola,
+    ItemName.Machine_StaminUp,
+    ItemName.Machine_MuleKick,
+    ItemName.Machine_WidowsWine,
+    ItemName.Machine_DeadShot,
+]]
+
+Moon_Machines_Specific = gen_map_specific_list(Maps.Moon_Map_String, Moon_Machines)
+
 
 # === Modded Maps ===
 
@@ -266,6 +284,8 @@ Victory_Items = [ItemData(row, BO3ZombiesItemCategory.VICTORY) for row in [
     Maps.Revelations_Map_String + ItemName.Victory,
     Maps.Revelations_Map_String + ItemName.EE_Victory,
     Maps.Kino_Map_String + ItemName.Victory,
+    Maps.Moon_Map_String + ItemName.Victory,
+    Maps.Moon_Map_String + ItemName.EE_Victory,
     # == Modded Maps ==
     Maps.Wanted_Map_String + ItemName.Victory,
     Maps.Wanted_Map_String + ItemName.EE_Victory,
@@ -307,6 +327,7 @@ Map_Unlocks = [ItemData(row, BO3ZombiesItemCategory.MAP_UNLOCK) for row in [
     ItemName.Map_Revelations,
     ItemName.Map_The_Giant,
     ItemName.Map_Kino,
+    ItemName.Map_Moon,
     ItemName.Map_Wanted,
 ]]
 
@@ -366,6 +387,8 @@ all_items = (
     # == Zombie Chronicles ==
     # Kino
     + Kino_Machines + Kino_Machines_Specific
+    # Moon
+    + Moon_Machines + Moon_Machines_Specific
     # == Modded Maps ==
     # Wanted
     + Wanted_Machines + Wanted_Machines_Specific

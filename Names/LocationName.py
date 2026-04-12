@@ -252,6 +252,28 @@ Kino_Quest_Sorrow = Maps.Kino_Map_String + " Samantha's Sorrow"
 
 Kino_Quest_Music_115 = Maps.Kino_Map_String + " Music EE - 115"
 
+Moon_Quest_Power = Maps.Moon_Map_String + " Turn on the Power"
+
+Moon_Quest_MainEE_SamanthaSays = Maps.Moon_Map_String +  " Main Easter Egg - Samantha Says"
+Moon_Quest_MainEE_Buttons = Maps.Moon_Map_String +  " Main Easter Egg - Buttons in the Lab"
+Moon_Quest_MainEE_VrilSphere = Maps.Moon_Map_String +  " Main Easter Egg - Transport the Vril Sphere to the MPD"
+Moon_Quest_MainEE_OpenMPD = Maps.Moon_Map_String +  " Main Easter Egg - Open the MPD"
+
+Moon_Quest_MainEE_PlatesComputer = Maps.Moon_Map_String +  " Main Easter Egg - Transport the Hexagonal Plates"
+Moon_Quest_MainEE_PlugComputer = Maps.Moon_Map_String +  " Main Easter Egg - Plug in the Computer"
+Moon_Quest_MainEE_RichtofenComputer = Maps.Moon_Map_String +  " Main Easter Egg - Listen to Richtofen on the Computer"
+Moon_Quest_MainEE_FillMPD = Maps.Moon_Map_String +  " Main Easter Egg - Fill all the MPD Soul Canisters"
+Moon_Quest_MainEE_SwapSouls = Maps.Moon_Map_String +  " Main Easter Egg - Swap Souls"
+Moon_Quest_MainEE_NukeTheEarth = Maps.Moon_Map_String +  " Main Easter Egg - Nuke the Earth"
+Moon_Quest_MainEE_Victory = Maps.Moon_Map_String + EE_Victory
+
+Moon_Hacker_Excavator = Maps.Moon_Map_String + " Hack an Excavator"
+Moon_Hacker_Window = Maps.Moon_Map_String + " Hack a Broken Window"
+Moon_Hacker_MysteryBox = Maps.Moon_Map_String + " Hack the Mystery Box"
+Moon_Hacker_PackAPunch = Maps.Moon_Map_String + " Hack the Pack-A-Punch Machine"
+
+Moon_SafeLanding = Maps.Moon_Map_String + " Land safely on a cushion"
+
 Wanted_Quest_MainQuest_CollectSkulls = Maps.Wanted_Map_String + " Collect the Skulls"
 Wanted_Quest_MainQuest_WeaponSafe = Maps.Wanted_Map_String + " Open the Barn"
 

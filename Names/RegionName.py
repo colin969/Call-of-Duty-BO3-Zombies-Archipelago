@@ -71,6 +71,11 @@ Kino_Entrance = "(Kino der Toten) Entrance"
 Kino_Open = "(Kino der Toten) Open the Map"
 Kino_Round_Regions = gen_round_regions(Maps.Kino_Map_String)
 
+Moon_Entrance = "(Moon) Groom Lake"
+Moon_Open = "(Moon) Open the Map"
+Moon_MainEE = "(Moon) Main Easter Egg"
+Moon_Round_Regions = gen_round_regions(Maps.Moon_Map_String)
+
 # == Modded Maps ==
 
 Wanted_Town = "(Wanted) Town"

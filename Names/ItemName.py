@@ -9,6 +9,7 @@ Map_Revelations = "Map Unlock - Revelations"
 Map_The_Giant = "Map Unlock - The Giant"
 
 Map_Kino = "Map Unlock - Kino der Toten"
+Map_Moon = "Map Unlock - Moon"
 
 Map_Wanted = "Map Unlock - Wanted"
 
@@ -143,6 +144,9 @@ Weapon_MonkeyBombs = "Weapon - Monkey Bombs"
 Weapon_LilArnies = "Weapon - Li'l Arnies"
 Weapon_Thundergun = "Weapon - Thundergun"
 Weapon_Ragnaroks = "Weapon - Ragnarok DG-4s"
+Weapon_QEDs = "Weapon - Quantum Entanglement Device"
+Weapon_GershDevice = "Weapon - Gersh Device"
+Weapon_WaveGun = "Weapon - Wave Gun"
 
 # Modded
 Weapon_Modded_HomunculusBomb = Maps.Wanted_Map_String + " Weapon - Homunculus Bomb"

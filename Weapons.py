@@ -83,6 +83,7 @@ weapon_data_set: dict[str, dict[str, WeaponData]] = {
 
         # Other?
         "special_crossbow_dw": WeaponData("other", 1, ItemName.Weapon_Shadowclaw),
+        "special_crossbow": WeaponData("other", 1, ItemName.Weapon_Shadowclaw),
 
         # Regular Equipment
         "bouncingbetty": WeaponData("equipment", 1, ItemName.Weapon_TripMines),
@@ -112,6 +113,9 @@ weapon_data_set: dict[str, dict[str, WeaponData]] = {
         "hero_gravityspikes_melee": WeaponData("wonder", 5, ItemName.Weapon_Ragnaroks),
         "cymbal_monkey": WeaponData("wonder", 4, ItemName.Weapon_MonkeyBombs),
         "octobomb": WeaponData("wonder", 5, ItemName.Weapon_LilArnies),
+        "quantum_bomb": WeaponData("wonder", 4, ItemName.Weapon_QEDs),
+        "black_hole_bomb": WeaponData("wonder", 5, ItemName.Weapon_GershDevice),
+        "microwavegundw": WeaponData("wonder", 5, ItemName.Weapon_WaveGun),
     },
     "zm_westernz":
     {
@@ -583,6 +587,67 @@ map_weapon_lists: dict[str, WeaponLists] = {
             "raygun_mark2",
             "tesla_gun",
             "hero_annihilator",
+        ]
+    ),
+    Maps.Moon_Map_String: WeaponLists(
+        table = "vanilla",
+        vanilla = [
+            "ar_accurate",
+            "ar_cqb",
+            "ar_damage",
+            "ar_famas",
+            "ar_galil",
+            "ar_longburst",
+            "ar_m16",
+            "ar_marksman",
+            "ar_standard",
+            "lmg_cqb",
+            "lmg_heavy",
+            "lmg_light",
+            "lmg_slowfire",
+            "pistol_fullauto",
+            "shotgun_fullauto",
+            "shotgun_precision",
+            "shotgun_pump",
+            "shotgun_semiauto",
+            "launcher_multi",
+            "launcher_standard",
+            "smg_burst",
+            "smg_capacity",
+            "smg_fastfire",
+            "smg_standard",
+            "smg_versatile",
+            "smg_ak74u",
+            "sniper_fastbolt",
+            "sniper_fastsemi",
+            "special_crossbow",
+            "lmg_rpk",
+            "ar_m14",
+        ],
+        expanded = [
+            "pistol_standard",
+            "pistol_m1911",
+            "bouncingbetty",
+            "bowie_knife",
+            "pistol_burst",
+        ],
+        wallbuys = [
+            "pistol_burst",
+            "ar_marksman",
+            "smg_burst",
+            "pistol_fullauto",
+            "smg_standard",
+            "smg_versatile",
+            "shotgun_precision",
+            "ar_standard",
+        ],
+        special = [
+            "hero_annihilator",
+            "raygun_mark2",
+            "quantum_bomb",
+            "black_hole_bomb",
+            "ray_gun",
+            "microwavegundw",
         ]
     ),
     Maps.Wanted_Map_String: WeaponLists(

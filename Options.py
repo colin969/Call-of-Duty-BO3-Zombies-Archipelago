@@ -38,6 +38,11 @@ class MapKinoEnabled(Toggle):
     display_name = "(Chronicles) \"Kino der Toten\" map enabled"
     default = False
 
+class MapMoonEnabled(Toggle):
+    """Enabled Map: \"Moon\""""
+    display_name = "(Chronicles) \"Moon\" map enabled"
+    default = False
+
 class MapWorkshopWantedEnabled(Toggle):
     """Enabled Map: \"Wanted\""""
     display_name = "(Unstable) \"Wanted\" map enabled"
@@ -458,6 +463,7 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     map_gorod_enabled: MapGorodKroviEnabled
     map_revelations_enabled: MapRevelationsEnabled
     map_kino_enabled: MapKinoEnabled
+    map_moon_enabled: MapMoonEnabled
     map_workshop_wanted_enabled: MapWorkshopWantedEnabled
     start_map_hints: StartMapHints
     special_rounds_enabled: SpecialRoundsEnabled

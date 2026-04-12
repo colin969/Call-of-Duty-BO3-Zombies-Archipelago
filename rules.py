@@ -14,6 +14,7 @@ map_perks = {
     Maps.GorodKrovi_Map_String: Items.GorodKrovi_Machines,
     Maps.Revelations_Map_String: Items.Revelations_Machines,
     Maps.Kino_Map_String: Items.Kino_Machines,
+    Maps.Moon_Map_String: Items.Moon_Machines,
     Maps.Wanted_Map_String: Items.Wanted_Machines,
 }
 map_perks_specific = {
@@ -24,6 +25,7 @@ map_perks_specific = {
     Maps.GorodKrovi_Map_String: Items.GorodKrovi_Machines_Specific,
     Maps.Revelations_Map_String: Items.Revelations_Machines_Specific,
     Maps.Kino_Map_String: Items.Kino_Machines_Specific,
+    Maps.Moon_Map_String: Items.Moon_Machines_Specific,
     Maps.Wanted_Map_String: Items.Wanted_Machines_Specific,
 }
 map_shield = {

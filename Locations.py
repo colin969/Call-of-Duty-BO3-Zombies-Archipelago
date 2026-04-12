@@ -10,6 +10,7 @@ BaseMapIds = {
     Maps.Zetsubou_Map_String: 5000,
     Maps.Revelations_Map_String: 6000,
     Maps.Kino_Map_String: 11000,
+    Maps.Moon_Map_String: 12000,
     # === Modded Maps ===
     Maps.Wanted_Map_String: 20000,
 }
@@ -460,6 +461,44 @@ Kino_Quest_Music_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QU
     (LocationName.Kino_Quest_Music_115, 11200),
 ]]
 
+# Moon
+Moon_Round_Locations = gen_map_round_locations(Maps.Moon_Map_String, 99)
+
+Moon_Universal_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Moon_Quest_Power, 12100),
+    (LocationName.Moon_SafeLanding, 12101),
+]]
+
+Moon_Hacker_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Moon_Hacker_Excavator, 12200),
+    (LocationName.Moon_Hacker_Window, 12201),
+    (LocationName.Moon_Hacker_MysteryBox, 12202),
+    (LocationName.Moon_Hacker_PackAPunch, 12203),
+]]
+
+Moon_Quest_MainEE_Part1_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Moon_Quest_MainEE_SamanthaSays, 12300),
+    (LocationName.Moon_Quest_MainEE_Buttons, 12301),
+]]
+
+Moon_Quest_MainEE_Part2_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Moon_Quest_MainEE_VrilSphere, 12310),
+    (LocationName.Moon_Quest_MainEE_OpenMPD, 12311),
+]]
+
+Moon_Quest_MainEE_Part3_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Moon_Quest_MainEE_PlatesComputer, 12320),
+    (LocationName.Moon_Quest_MainEE_PlugComputer, 12321),
+    (LocationName.Moon_Quest_MainEE_RichtofenComputer, 12322),
+    (LocationName.Moon_Quest_MainEE_FillMPD, 12323),
+    (LocationName.Moon_Quest_MainEE_SwapSouls, 12324),
+    (LocationName.Moon_Quest_MainEE_NukeTheEarth, 12325),
+    (LocationName.Moon_Quest_MainEE_Victory, 12326),
+]]
+
+Moon_Quest_Music_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+]]
+
 # == Workshop ==
 # Wanted
 
@@ -520,6 +559,10 @@ all_locations = (
     # Kino der Toten
     + Kino_Round_Locations
     + Kino_Quest_Locations + Kino_Quest_Music_Locations
+    # Moon
+    + Moon_Round_Locations
+    + Moon_Universal_Locations + Moon_Hacker_Locations + Moon_Quest_Music_Locations
+    + Moon_Quest_MainEE_Part1_Locations + Moon_Quest_MainEE_Part2_Locations + Moon_Quest_MainEE_Part3_Locations
     # === Modded Maps ===
     # Wanted
     + Wanted_Round_Locations + Wanted_Craftable_Locations

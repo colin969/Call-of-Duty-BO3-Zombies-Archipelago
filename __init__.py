@@ -55,6 +55,7 @@ class BO3ZombiesWorld(World):
     # Enable to log the location lua data
     write_lua_locations = True
 
+    # Generate GSC scripts to apply AP item names to ingame console names
     def generate_gsc_code(self):
         """Generate GSC code for weapon mappings with table separation and fallback."""
         lines = [
@@ -120,7 +121,7 @@ class BO3ZombiesWorld(World):
         if (not self.options.map_shadows_enabled and not self.options.map_castle_enabled
             and not self.options.map_zetsubou_enabled and not self.options.map_gorod_enabled
             and not self.options.map_revelations_enabled and not self.options.map_the_giant_enabled
-            and not self.options.map_kino_enabled):
+            and not self.options.map_kino_enabled and not self.options.map_kino_enabled):
             self.options.map_shadows_enabled.value = True
 
         map_list = []
@@ -139,6 +140,8 @@ class BO3ZombiesWorld(World):
 
         if self.options.map_kino_enabled:
             map_list.append(Maps.Kino_Map_String)
+        if self.options.map_moon_enabled:
+            map_list.append(Maps.Moon_Map_String)
 
         if self.options.map_workshop_wanted_enabled:
             map_list.append(Maps.Wanted_Map_String)
@@ -187,6 +190,8 @@ class BO3ZombiesWorld(World):
 
         if self.options.map_kino_enabled:
             locked_maps.append(ItemName.Map_Kino)
+        if self.options.map_moon_enabled:
+            locked_maps.append(ItemName.Map_Moon)
 
         if self.options.map_workshop_wanted_enabled:
             locked_maps.append(ItemName.Map_Wanted)
@@ -778,6 +783,64 @@ class BO3ZombiesWorld(World):
             self.create_entrance(main_region, map_open_region,
                             lambda state: rules.can_open_map(state, self.player, self.options, Maps.Kino_Map_String))
                 
+        if self.options.map_moon_enabled:
+            all_locations = []
+            main_region = self.create_region(self.multiworld, self.player, RegionName.Moon_Entrance, all_locations)
+            self.create_entrance(menu_region, main_region, Has(ItemName.Map_Moon))
+
+            open_locations = []
+            open_locations.extend([loc.name for loc in Locations.Moon_Universal_Locations])
+            open_locations.extend([loc.name for loc in Locations.Moon_Hacker_Locations])
+            if self.options.music_ee_enabled:
+                open_locations.extend([loc.name for loc in Locations.Moon_Quest_Music_Locations])
+            
+            map_open_region = self.create_region(self.multiworld, self.player, RegionName.Moon_Open, open_locations)
+            self.create_entrance(main_region, map_open_region,
+                            lambda state: rules.can_open_map(state, self.player, self.options, Maps.Moon_Map_String))
+
+            ee_locs = []
+            mid_ee_locs = []
+            late_ee_locs = []
+            if add_ee_checks:
+                ee_locs = [loc.name for loc in Locations.Moon_Quest_MainEE_Part1_Locations]
+                mid_ee_locs = [loc.name for loc in Locations.Moon_Quest_MainEE_Part2_Locations]
+                late_ee_locs = [loc.name for loc in Locations.Moon_Quest_MainEE_Part3_Locations]
+
+            main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Moon_MainEE, ee_locs)
+            self.create_entrance(
+                map_open_region,
+                main_ee_region, 
+                lambda state: (
+                    rules.check_round_logic(state, self.player, self.options, 10, Maps.Moon_Map_String)
+                )
+            )
+
+            main_ee_midgame_region = self.create_region(self.multiworld, self.player, RegionName.Moon_MainEE + " Midgame", mid_ee_locs)
+            self.create_entrance(
+                main_ee_region,
+                main_ee_midgame_region,
+                lambda state: (
+                    rules.has_special_weapon(state, self.player, self.options, Maps.Moon_Map_String, ItemName.Weapon_WaveGun) and
+                    state.has(ItemName.Progressive_PackAPunch, self.player) and
+                    rules.check_round_logic(state, self.player, self.options, 14, Maps.Moon_Map_String) and
+                    rules.has_weapon_of_strength(state, self.player, self.options, Maps.Moon_Map_String, 3, 3)
+                )
+            )
+
+            main_ee_lategame_region = self.create_region(self.multiworld, self.player, RegionName.Moon_MainEE + " Lategame", late_ee_locs)
+            self.create_entrance(
+                main_ee_midgame_region,
+                main_ee_lategame_region,
+                lambda state: (
+                    rules.has_special_weapon(state, self.player, self.options, Maps.Moon_Map_String, ItemName.Weapon_GershDevice) and
+                    rules.has_special_weapon(state, self.player, self.options, Maps.Moon_Map_String, ItemName.Weapon_QEDs) and
+                    rules.check_round_logic(state, self.player, self.options, 20, Maps.Moon_Map_String) and
+                    rules.has_weapon_of_strength(state, self.player, self.options, Maps.Moon_Map_String, 3, 5)
+                )
+            )
+
+
+
         # == Modded Maps ==
 
         if self.options.map_workshop_wanted_enabled:
@@ -937,6 +1000,8 @@ class BO3ZombiesWorld(World):
             
             if self.options.map_kino_enabled:
                 enabled_items += Items.Kino_Machines_Specific
+            if self.options.map_moon_enabled:
+                enabled_items += Items.Moon_Machines_Specific
 
             if self.options.map_workshop_wanted_enabled:
                 enabled_items += Items.Wanted_Machines_Specific
@@ -959,6 +1024,8 @@ class BO3ZombiesWorld(World):
 
             if self.options.map_kino_enabled:
                 add_universal_items(enabled_items, seen, Items.Kino_Machines)
+            if self.options.map_moon_enabled:
+                add_universal_items(enabled_items, seen, Items.Moon_Machines)
 
             if self.options.map_workshop_wanted_enabled:
                 add_universal_items(enabled_items, seen, Items.Wanted_Machines)
@@ -1026,6 +1093,9 @@ class BO3ZombiesWorld(World):
         if self.options.map_kino_enabled:
             map_list.append((Maps.Kino_Map_String, RegionName.Kino_Entrance, RegionName.Kino_Round_Regions, Locations.Kino_Round_Locations))
         
+        if self.options.map_moon_enabled:
+            map_list.append((Maps.Moon_Map_String, RegionName.Moon_Entrance, RegionName.Moon_Round_Regions, Locations.Moon_Round_Locations))
+
         if self.options.map_workshop_wanted_enabled:
             map_list.append((Maps.Wanted_Map_String, RegionName.Wanted_Town, RegionName.Wanted_Round_Regions, Locations.Wanted_Round_Locations))
             if self.options.randomized_shield_parts:
@@ -1071,6 +1141,8 @@ class BO3ZombiesWorld(World):
                 ee_pairs.append((LocationName.GorodKrovi_Quest_MainEE_Victory, Maps.GorodKrovi_Map_String + ItemName.EE_Victory))
             if self.options.map_revelations_enabled:
                 ee_pairs.append((LocationName.Revelations_Quest_MainEE_Victory, Maps.Revelations_Map_String + ItemName.EE_Victory))
+            if self.options.map_moon_enabled:
+                ee_pairs.append((LocationName.Moon_Quest_MainEE_Victory, Maps.Moon_Map_String + ItemName.EE_Victory))
             if self.options.map_workshop_wanted_enabled:
                 ee_pairs.append((LocationName.Wanted_Quest_MainEE_Victory, Maps.Wanted_Map_String + ItemName.EE_Victory))
 
