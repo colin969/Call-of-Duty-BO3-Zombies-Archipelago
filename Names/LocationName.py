@@ -261,11 +261,16 @@ Moon_Quest_MainEE_OpenMPD = Maps.Moon_Map_String +  " Main Easter Egg - Open the
 
 Moon_Quest_MainEE_PlatesComputer = Maps.Moon_Map_String +  " Main Easter Egg - Transport the Hexagonal Plates"
 Moon_Quest_MainEE_PlugComputer = Maps.Moon_Map_String +  " Main Easter Egg - Plug in the Computer"
-Moon_Quest_MainEE_RichtofenComputer = Maps.Moon_Map_String +  " Main Easter Egg - Listen to Richtofen on the Computer"
+Moon_Quest_MainEE_RichtofenComputer = Maps.Moon_Map_String +  " Main Easter Egg - Delete Maxis from the Computer"
 Moon_Quest_MainEE_FillMPD = Maps.Moon_Map_String +  " Main Easter Egg - Fill all the MPD Soul Canisters"
 Moon_Quest_MainEE_SwapSouls = Maps.Moon_Map_String +  " Main Easter Egg - Swap Souls"
 Moon_Quest_MainEE_NukeTheEarth = Maps.Moon_Map_String +  " Main Easter Egg - Nuke the Earth"
 Moon_Quest_MainEE_Victory = Maps.Moon_Map_String + EE_Victory
+
+Moon_Quest_SpaceDog_WaveGun = Maps.Moon_Map_String + " Space Dog - Wave Gun the Teddy Bear in the Biodome"
+Moon_Quest_SpaceDog_WaveGun2 = Maps.Moon_Map_String + " Space Dog - Wave Gun the Toy Hellhound in Area 51 and Bone near the Moon Teleporter"
+Moon_Quest_SpaceDog_Zombies = Maps.Moon_Map_String + " Space Dog - Fill the Dog Bowl with 30 Zombie Souls"
+Moon_Quest_SpaceDog_Hellhounds = Maps.Moon_Map_String + " Space Dog - Fill the Dog Bowl with 15 Gas Cra Souls"
 
 Moon_Hacker_Excavator = Maps.Moon_Map_String + " Hack an Excavator"
 Moon_Hacker_Window = Maps.Moon_Map_String + " Hack a Broken Window"
@@ -273,6 +278,11 @@ Moon_Hacker_MysteryBox = Maps.Moon_Map_String + " Hack the Mystery Box"
 Moon_Hacker_PackAPunch = Maps.Moon_Map_String + " Hack the Pack-A-Punch Machine"
 
 Moon_SafeLanding = Maps.Moon_Map_String + " Land safely on a cushion"
+
+Moon_Quest_Music_ComingHome = Maps.Moon_Map_String + " Music EE - Coming Home"
+Moon_Quest_Music_ComingHome8Bit = Maps.Moon_Map_String + " Music EE - Coming Home 8-Bit"
+Moon_Quest_Music_ReDamned = Maps.Moon_Map_String + " Music EE - Re-Damned"
+Moon_Quest_Music_Pareidolia8Bit = Maps.Moon_Map_String + " Music EE - Pareidolia 8-Bit"
 
 Wanted_Quest_MainQuest_CollectSkulls = Maps.Wanted_Map_String + " Collect the Skulls"
 Wanted_Quest_MainQuest_WeaponSafe = Maps.Wanted_Map_String + " Open the Barn"

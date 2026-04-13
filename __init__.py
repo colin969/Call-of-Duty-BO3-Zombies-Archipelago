@@ -797,6 +797,18 @@ class BO3ZombiesWorld(World):
             map_open_region = self.create_region(self.multiworld, self.player, RegionName.Moon_Open, open_locations)
             self.create_entrance(main_region, map_open_region,
                             lambda state: rules.can_open_map(state, self.player, self.options, Maps.Moon_Map_String))
+            
+            space_dog_locs = [loc.name for loc in Locations.Moon_Quest_SpaceDog_Locations]
+            space_dog_region = self.create_region(self.multiworld, self.player, RegionName.Moon_SpaceDog, space_dog_locs)
+            self.create_entrance(
+                map_open_region,
+                space_dog_region,
+                lambda state: (
+                    rules.check_round_logic(state, self.player, self.options, 12, Maps.Moon_Map_String) and
+                    rules.has_special_weapon(state, self.player, self.options, Maps.Moon_Map_String, ItemName.Weapon_WaveGun) and
+                    rules.has_weapon_of_strength(state, self.player, self.options, Maps.Moon_Map_String, 3, 3)
+                )
+            )
 
             ee_locs = []
             mid_ee_locs = []

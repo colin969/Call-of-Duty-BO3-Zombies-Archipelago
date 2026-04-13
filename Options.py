@@ -581,6 +581,7 @@ bo3_option_groups = [
         MapGorodKroviEnabled,
         MapRevelationsEnabled,
         MapKinoEnabled,
+        MapMoonEnabled,
         StartMapHints,
         CastleBowCount,
         CastleBowEnabledStorm,

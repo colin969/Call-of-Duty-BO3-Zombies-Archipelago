@@ -496,7 +496,17 @@ Moon_Quest_MainEE_Part3_Locations = [LocationData(row[0], BO3ZombiesLocationCate
     (LocationName.Moon_Quest_MainEE_Victory, 12326),
 ]]
 
+Moon_Quest_SpaceDog_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Moon_Quest_SpaceDog_WaveGun, 12400),
+    (LocationName.Moon_Quest_SpaceDog_Zombies, 12401),
+    (LocationName.Moon_Quest_SpaceDog_Hellhounds, 12402),
+]]
+
 Moon_Quest_Music_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Moon_Quest_Music_ComingHome, 12500),
+    (LocationName.Moon_Quest_Music_ComingHome8Bit, 12501),
+    (LocationName.Moon_Quest_Music_ReDamned, 12502),
+    (LocationName.Moon_Quest_Music_Pareidolia8Bit, 12503),
 ]]
 
 # == Workshop ==
@@ -563,6 +573,7 @@ all_locations = (
     + Moon_Round_Locations
     + Moon_Universal_Locations + Moon_Hacker_Locations + Moon_Quest_Music_Locations
     + Moon_Quest_MainEE_Part1_Locations + Moon_Quest_MainEE_Part2_Locations + Moon_Quest_MainEE_Part3_Locations
+    + Moon_Quest_SpaceDog_Locations
     # === Modded Maps ===
     # Wanted
     + Wanted_Round_Locations + Wanted_Craftable_Locations
