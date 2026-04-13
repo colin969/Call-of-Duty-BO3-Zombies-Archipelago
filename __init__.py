@@ -486,8 +486,6 @@ class BO3ZombiesWorld(World):
             create_entrance(menu_region, main_region, lambda state: state.has(ItemName.Map_Revelations, self.player))
 
             open_locations = []
-            mid_mask_locs = []
-            late_mask_locs = []
             open_locations.extend([loc.name for loc in Locations.Revelations_Quest_MainQuest_Locations[1:]])
             open_locations.extend([loc.name for loc in Locations.Revelations_Craftable_Locations])
             open_locations.extend([loc.name for loc in Locations.Revelations_Quest_SideEE_Locations])
@@ -512,17 +510,9 @@ class BO3ZombiesWorld(World):
 
             self.random.shuffle(mask_locs)
             max_mask_locs = min(self.options.revelations_mask_count.value, len(mask_locs))
-            # Make sure UT sees all mask locations
-            if is_ut:
-                max_mask_locs = len(mask_locs)
             if max_mask_locs > 0:
                 for locations, mask_name in mask_locs[:max_mask_locs]:
-                    if mask_name == "margwa":
-                        mid_mask_locs.extend([loc.name for loc in locations])
-                    elif mask_name in ("king", "fury", "apothigod"):
-                        late_mask_locs.extend([loc.name for loc in locations])
-                    else:
-                        open_locations.extend([loc.name for loc in locations])
+                    open_locations.extend([loc.name for loc in locations])
                     self.rolled_masks.append(mask_name)
                 
             map_open_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_Open, open_locations)
@@ -532,24 +522,6 @@ class BO3ZombiesWorld(World):
                                                              Maps.Revelations_Map_String,
                                                              self.mystery_box_regular_items_third,
                                                              self.mystery_box_regular_items_two_third))
-
-            # Masks that could be slightly later on for better logic
-            mid_mask_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_Midgame_Masks, mid_mask_locs)
-            self.multiworld.regions.append(mid_mask_region)
-            create_entrance(map_open_region, mid_mask_region,
-                            lambda state: rules.check_round_logic(state, self.player, self.options, 15,
-                                                                  Maps.Revelations_Map_String,
-                                                                  self.mystery_box_regular_items_third,
-                                                                  self.mystery_box_regular_items_two_third))
-
-            # Masks that could be later on for better logic
-            late_mask_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_Lategame_Masks, late_mask_locs)
-            self.multiworld.regions.append(late_mask_region)
-            create_entrance(map_open_region, late_mask_region,
-                            lambda state: rules.check_round_logic(state, self.player, self.options, 20,
-                                                                  Maps.Revelations_Map_String,
-                                                                  self.mystery_box_regular_items_third,
-                                                                  self.mystery_box_regular_items_two_third))
 
             # Round 18 logic for the panzer/margwa challenges and shield for the possible shield challenge
             challenge_locations = []
