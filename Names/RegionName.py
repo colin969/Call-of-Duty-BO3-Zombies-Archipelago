@@ -42,6 +42,8 @@ Zetsubou_Round_Regions = gen_round_regions(Maps.Zetsubou_Map_String)
 
 Gorod_Trenches = "(Gorod Krovi) Trenches"
 Gorod_Bunker = "(Gorod Krovi) Bunker"
+Gorod_Wings = "(Gorod Krovi) Dragon Wings"
+Gorod_Valkyrie = "(Gorod Krovi) Valkyrie Helm"
 Gorod_Open  = "(Gorod Krovi) Open the Map"
 Gorod_Shield = "(Gorod Krovi) Shield Required"
 Gorod_Upgraded = "(Gorod Krovi) Upgraded Weapons"

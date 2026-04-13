@@ -51,6 +51,7 @@ The_Giant_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
     ItemName.Machine_DoubleTap,
     ItemName.Machine_SpeedCola,
     ItemName.Machine_MuleKick,
+    ItemName.Machine_PhdFlopper,
 ]]
 
 The_Giant_Machines_Specific = gen_map_specific_list(Maps.The_Giant_Map_String, The_Giant_Machines)
@@ -67,6 +68,7 @@ Castle_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
     ItemName.Machine_DeadShot,
     ItemName.Machine_ElectricCherry,
     ItemName.Machine_WidowsWine,
+    ItemName.Machine_PhdFlopper,
 ]]
 
 Castle_Machines_Specific = gen_map_specific_list(Maps.Castle_Map_String, Castle_Machines)
@@ -119,6 +121,7 @@ Zetsubou_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
     ItemName.Machine_DeadShot,
     ItemName.Machine_ElectricCherry,
     ItemName.Machine_WidowsWine,
+    ItemName.Machine_PhdFlopper,
 ]]
 
 Zetsubou_Machines_Specific = gen_map_specific_list(Maps.Zetsubou_Map_String, Zetsubou_Machines)
@@ -141,6 +144,7 @@ GorodKrovi_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in 
     ItemName.Machine_DeadShot,
     ItemName.Machine_ElectricCherry,
     ItemName.Machine_WidowsWine,
+    ItemName.Machine_PhdFlopper,
 ]]
 
 GorodKrovi_Machines_Specific = gen_map_specific_list(Maps.GorodKrovi_Map_String, GorodKrovi_Machines)
@@ -165,6 +169,7 @@ Revelations_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in
     ItemName.Machine_WidowsWine,
     ItemName.Machine_DeadShot,
     ItemName.Machine_ElectricCherry,
+    ItemName.Machine_PhdFlopper,
 ]]
 
 Revelations_Machines_Specific = gen_map_specific_list(Maps.Revelations_Map_String, Revelations_Machines)
@@ -184,6 +189,7 @@ Kino_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
     ItemName.Machine_MuleKick,
     ItemName.Machine_WidowsWine,
     ItemName.Machine_DeadShot,
+    ItemName.Machine_PhdFlopper,
 ]]
 
 Kino_Machines_Specific = gen_map_specific_list(Maps.Kino_Map_String, Kino_Machines)
@@ -199,6 +205,7 @@ Moon_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
     ItemName.Machine_MuleKick,
     ItemName.Machine_WidowsWine,
     ItemName.Machine_DeadShot,
+    ItemName.Machine_PhdFlopper,
 ]]
 
 Moon_Machines_Specific = gen_map_specific_list(Maps.Moon_Map_String, Moon_Machines)

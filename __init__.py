@@ -543,11 +543,6 @@ class BO3ZombiesWorld(World):
             open_locations = []
             open_locations.extend([loc.name for loc in Locations.GorodKrovi_Quest_MainQuest_Locations])
             open_locations.extend([loc.name for loc in Locations.GorodKrovi_Craftable_Locations])
-            # Remove dragon wings location if we start with them
-            if self.options.difficulty_gorod_dragon_wings:
-                open_locations.extend([loc.name for loc in Locations.GorodKrovi_Quest_SideEE[1:]])
-            else:
-                open_locations.extend([loc.name for loc in Locations.GorodKrovi_Quest_SideEE])
             if self.options.music_ee_enabled:
                 open_locations.extend([loc.name for loc in Locations.GorodKrovi_Quest_Music_Locations])
             map_open_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_Open, open_locations)
@@ -580,8 +575,21 @@ class BO3ZombiesWorld(World):
                 )
             )
 
+            valkyrie_locs = [LocationName.GorodKrovi_Quest_SideEE_ValkyrieHelm]
+            valkyrie_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_Valkyrie, valkyrie_locs)
+            self.create_entrance(
+                map_open_region,
+                valkyrie_region,
+                lambda state:
+                (
+                    rules.check_round_logic(state, self.player, self.options, 14, Maps.GorodKrovi_Map_String) and
+                    rules.has_weapon_of_strength(state, self.player, self.options, Maps.GorodKrovi_Map_String, 3, 2)
+                )
+            )
+
             bunker_locs = [loc.name for loc in Locations.GorodKrovi_Quest_DragonStrikes]
             bunker_locs.extend([loc.name for loc in Locations.GorodKrovi_Quest_DragonGauntlets_Early])
+            bunker_locs.append(LocationName.GorodKrovi_Quest_SideEE_ManglerHelm)
             bunker_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_Bunker, bunker_locs)
             self.create_entrance(
                 map_open_region,
@@ -591,6 +599,21 @@ class BO3ZombiesWorld(World):
                     rules.has_special_weapon(state, self.player, self.options, Maps.GorodKrovi_Map_String, ItemName.Weapon_MonkeyBombs) or
                     rules.has_special_weapon(state, self.player, self.options, Maps.GorodKrovi_Map_String, ItemName.Weapon_RaygunMk3) or
                     rules.has_weapon_of_strength(state, self.player, self.options, Maps.GorodKrovi_Map_String, 4, 1)
+                )
+            )
+            
+            wing_locs = []
+            # Exclude wing loc if already given wings
+            if self.options.difficulty_gorod_dragon_wings:
+                wing_locs.append(LocationName.GorodKrovi_Quest_SideEE_DragonWings)
+            wing_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_Wings, wing_locs)
+            self.create_entrance(
+                bunker_region,
+                wing_region,
+                lambda state:
+                (
+                    rules.check_round_logic(state, self.player, self.options, 14, Maps.GorodKrovi_Map_String) and
+                    rules.has_shield(state, self.player, Maps.GorodKrovi_Map_String)
                 )
             )
 
