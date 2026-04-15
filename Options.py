@@ -305,6 +305,16 @@ class DifficultyGorodDragonWings(Toggle):
     display_name = "Gorod Krovi - Starting Dragon Wings"
     default = False
 
+class DifficultyMoonDiggerRNG(Toggle):
+    """Make sure the Tunnel 6 digger turns up by roughly round 16 if it hasn't happened earlier"""
+    display_name = "Moon - Better Digger RNG"
+    default = True
+
+class DifficultyMoonBoxRNG(Toggle):
+    """Add Revelations style Mystery Box weighting to Wave Gun, Gersh Devices and QEDs on Moon"""
+    display_name = "Moon - Better Mystery Box RNG"
+    default = True
+
 class DifficultyEasterEggCheckpoints(Range):
     """Number of checkpoints along the easter egg quest, for completing various steps."""
     display_name = "Easter Egg Checkpoints"
@@ -440,7 +450,7 @@ class ShopLegendaryGumTokens(Range):
 class ShopStartingCheckpointTokens(Range):
     """Added to starting inventory. One time use per map (unless save data is cleared), these can be spent to immediately make a checkpoint."""
     display_name = "Shop - Starting Checkpoint Tokens"
-    default = 1
+    default = 0
 
     range_start = 0
     range_end = 3
@@ -504,6 +514,8 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     revelations_mask_enabled_apothicon: RevelationsMaskEnabledApothicon
     gift_weight: GiftWeight
     trap_weight: TrapWeight
+    difficulty_rng_moon_digger: DifficultyMoonDiggerRNG
+    difficulty_rng_moon_box: DifficultyMoonBoxRNG
     difficulty_gorod_egg_cooldown: DifficultyGorodEggCooldown
     difficulty_gorod_dragon_wings: DifficultyGorodDragonWings
     difficulty_ee_checkpoints: DifficultyEasterEggCheckpoints
@@ -608,6 +620,10 @@ bo3_option_groups = [
         ShopLegendaryGumTokens,
         ShopStartingCheckpointTokens,
         ShopAdditionalCheckpointTokens,
+    ]),
+    OptionGroup("RNG Adjustments", [
+        DifficultyMoonDiggerRNG,
+        DifficultyMoonBoxRNG,
     ]),
     OptionGroup("Difficulty Adjustments", [
         DifficultyGorodEggCooldown,

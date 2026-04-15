@@ -111,13 +111,25 @@ def has_special_weapon(state: CollectionState, player: int, options: BO3ZombiesO
         return True
     return state.has(special_weapon_name(map_name, weapon_name), player)
 
+def has_perk(state: CollectionState, player: int, options: BO3ZombiesOptions, map_name: str, perk_name: str) -> bool:
+    if options.map_specific_machines:
+        return state.has(map_name + " " + perk_name, player)
+    return state.has(perk_name, player)
 
 def count_weapons_of_strength(state: CollectionState, player: int, options: BO3ZombiesOptions, map_name: str, strength: int) -> tuple[int, int]:
+    has_phd = has_perk(state, player, options, map_name, ItemName.Machine_PhdFlopper)
     weapon_data, full_weapon_data = get_map_weapon_data(map_name, options)
     total = 0
     counted = 0
     for weapon_key, weapon in full_weapon_data.items():
-        if weapon.strength >= strength:
+        if has_phd and weapon.phd_modifier > 0:
+            if (weapon.strength + weapon.phd_modifier) >= strength:
+                total += 1
+                if weapon_key not in weapon_data:
+                    counted += 1
+                elif state.has(weapon.item_name, player):
+                    counted += 1
+        elif weapon.strength >= strength:
             total += 1
             if weapon_key not in weapon_data:
                 counted += 1

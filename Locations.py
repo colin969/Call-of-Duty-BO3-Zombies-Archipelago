@@ -59,6 +59,7 @@ TheGiant_Round_Locations = gen_map_round_locations(Maps.The_Giant_Map_String, 99
 TheGiant_Quest_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.TheGiant_Quest_LinkAnyTeleporter, 1101),
     (LocationName.TheGiant_Quest_LinkAllTeleporters, 1102),
+    (LocationName.TheGiant_Quest_Power, 1108),
     (LocationName.TheGiant_Quest_AllSpareChangeCollected, 1109),
 ]]
 
@@ -246,6 +247,7 @@ Zetsubou_Quest_Masamune_Locations = [LocationData(row[0], BO3ZombiesLocationCate
     (LocationName.Zetsubou_Quest_Masamune_Vial, 5123),
     (LocationName.Zetsubou_Quest_Masamune_Flower, 5124),
     (LocationName.Zetsubou_Quest_Masamune_Spider, 5125),
+    (LocationName.Zetsubou_Quest_Masamune_Acquired, 5126),
 ]]
 
 Zetsubou_Quest_Skull_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
@@ -283,6 +285,7 @@ GorodKrovi_Quest_MainQuest_Locations = [LocationData(row[0], BO3ZombiesLocationC
     (LocationName.GorodKrovi_Quest_MainQuest_Dragonride_Codes, 4101),
     (LocationName.GorodKrovi_Quest_MainQuest_Dragonride_Map, 4102),
     (LocationName.GorodKrovi_Quest_MainQuest_Dragonride_Repaired, 4103),
+    (LocationName.GorodKrovi_Quest_MainQuest_Power, 4104),
     (LocationName.GorodKrovi_Quest_AllSpareChangeCollected, 4109),
 ]]
 
@@ -467,6 +470,7 @@ Moon_Round_Locations = gen_map_round_locations(Maps.Moon_Map_String, 99)
 Moon_Universal_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.Moon_Quest_Power, 12100),
     (LocationName.Moon_SafeLanding, 12101),
+    (LocationName.Moon_Quest_AllSpareChangeCollected, 12102),
 ]]
 
 Moon_Hacker_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
@@ -486,9 +490,12 @@ Moon_Quest_MainEE_Part2_Locations = [LocationData(row[0], BO3ZombiesLocationCate
     (LocationName.Moon_Quest_MainEE_OpenMPD, 12311),
 ]]
 
-Moon_Quest_MainEE_Part3_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+Moon_Quest_MainEE_Computer_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.Moon_Quest_MainEE_PlatesComputer, 12320),
     (LocationName.Moon_Quest_MainEE_PlugComputer, 12321),
+]]
+
+Moon_Quest_MainEE_Part3_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.Moon_Quest_MainEE_RichtofenComputer, 12322),
     (LocationName.Moon_Quest_MainEE_FillMPD, 12323),
     (LocationName.Moon_Quest_MainEE_SwapSouls, 12324),
@@ -498,8 +505,10 @@ Moon_Quest_MainEE_Part3_Locations = [LocationData(row[0], BO3ZombiesLocationCate
 
 Moon_Quest_SpaceDog_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.Moon_Quest_SpaceDog_WaveGun, 12400),
-    (LocationName.Moon_Quest_SpaceDog_Zombies, 12401),
-    (LocationName.Moon_Quest_SpaceDog_Hellhounds, 12402),
+    (LocationName.Moon_Quest_SpaceDog_WaveGun2, 12401),
+    (LocationName.Moon_Quest_SpaceDog_WaveGun3, 12402),
+    (LocationName.Moon_Quest_SpaceDog_Zombies, 12403),
+    (LocationName.Moon_Quest_SpaceDog_Hellhounds, 12404),
 ]]
 
 Moon_Quest_Music_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
@@ -572,7 +581,7 @@ all_locations = (
     # Moon
     + Moon_Round_Locations
     + Moon_Universal_Locations + Moon_Hacker_Locations + Moon_Quest_Music_Locations
-    + Moon_Quest_MainEE_Part1_Locations + Moon_Quest_MainEE_Part2_Locations + Moon_Quest_MainEE_Part3_Locations
+    + Moon_Quest_MainEE_Part1_Locations + Moon_Quest_MainEE_Part2_Locations + Moon_Quest_MainEE_Computer_Locations + Moon_Quest_MainEE_Part3_Locations
     + Moon_Quest_SpaceDog_Locations
     # === Modded Maps ===
     # Wanted

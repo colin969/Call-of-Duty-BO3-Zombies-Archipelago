@@ -114,6 +114,7 @@ Zetsubou_Quest_KT4_Spider = Maps.Zetsubou_Map_String + " KT-4 - Extract the Spid
 Zetsubou_Quest_Masamune_Vial = Maps.Zetsubou_Map_String + " Masamune - Collect the Vial of Element 115"
 Zetsubou_Quest_Masamune_Spider = Maps.Zetsubou_Map_String + " Masamune - Take the Spider Queen's Tooth"
 Zetsubou_Quest_Masamune_Flower = Maps.Zetsubou_Map_String + " Masamune - Grow the Rainbow Plant"
+Zetsubou_Quest_Masamune_Acquired = Maps.Zetsubou_Map_String + " Masamune - Build the Wonder Weapon"
 
 Zetsubou_Quest_Skull_Cleanse = Maps.Zetsubou_Map_String + " Skull of Nan'Sapwe - Cleanse a Ritual Skull"
 Zetsubou_Quest_Skull_CleanseAll = Maps.Zetsubou_Map_String + " Skull of Nan'Sapwe - Cleanse all 4 Ritual Skulls"
@@ -132,6 +133,7 @@ Zetsubou_Craftable_ShieldPartDolly = Maps.Zetsubou_Map_String + " Shield Part Pi
 Zetsubou_Craftable_ShieldPartDoor = Maps.Zetsubou_Map_String + " Shield Part Pickup - Door"
 Zetsubou_Craftable_ShieldPartClamp = Maps.Zetsubou_Map_String + " Shield Part Pickup - Clamp"
 
+GorodKrovi_Quest_MainQuest_Power = Maps.GorodKrovi_Map_String + " Turn on the Power"
 GorodKrovi_Quest_MainQuest_Dragonride_Transmitter = Maps.GorodKrovi_Map_String + " Main Quest - Dragonride Part Pickup - Transmitter"
 GorodKrovi_Quest_MainQuest_Dragonride_Codes = Maps.GorodKrovi_Map_String + " Main Quest - Dragonride Part Pickup - Codes"
 GorodKrovi_Quest_MainQuest_Dragonride_Map = Maps.GorodKrovi_Map_String + " Main Quest - Dragonride Part Pickup - Map"
@@ -233,6 +235,7 @@ Revelations_Quest_Music_TheGift = Maps.Revelations_Map_String + " Music EE - The
 
 Revelations_Quest_AllSpareChangeCollected = Maps.Revelations_Map_String + " All Spare Change Collected"
 
+TheGiant_Quest_Power = Maps.The_Giant_Map_String + " Turn on the Power"
 TheGiant_Quest_LinkAnyTeleporter = Maps.The_Giant_Map_String + " Link a Teleporter"
 TheGiant_Quest_LinkAllTeleporters = Maps.The_Giant_Map_String + " Link All 3 Teleporters"
 
@@ -268,9 +271,10 @@ Moon_Quest_MainEE_NukeTheEarth = Maps.Moon_Map_String +  " Main Easter Egg - Nuk
 Moon_Quest_MainEE_Victory = Maps.Moon_Map_String + EE_Victory
 
 Moon_Quest_SpaceDog_WaveGun = Maps.Moon_Map_String + " Space Dog - Wave Gun the Teddy Bear in the Biodome"
-Moon_Quest_SpaceDog_WaveGun2 = Maps.Moon_Map_String + " Space Dog - Wave Gun the Toy Hellhound in Area 51 and Bone near the Moon Teleporter"
+Moon_Quest_SpaceDog_WaveGun2 = Maps.Moon_Map_String + " Space Dog - Wave Gun the Toy Hellhound in Area 51"
+Moon_Quest_SpaceDog_WaveGun3 = Maps.Moon_Map_String + " Space Dog - Wave Gun the Bone near the Moon Teleporter"
 Moon_Quest_SpaceDog_Zombies = Maps.Moon_Map_String + " Space Dog - Fill the Dog Bowl with 30 Zombie Souls"
-Moon_Quest_SpaceDog_Hellhounds = Maps.Moon_Map_String + " Space Dog - Fill the Dog Bowl with 15 Gas Cra Souls"
+Moon_Quest_SpaceDog_Hellhounds = Maps.Moon_Map_String + " Space Dog - Fill the Dog Bowl with 15 Gas Crawler Souls"
 
 Moon_Hacker_Excavator = Maps.Moon_Map_String + " Hack an Excavator"
 Moon_Hacker_Window = Maps.Moon_Map_String + " Hack a Broken Window"
@@ -281,8 +285,10 @@ Moon_SafeLanding = Maps.Moon_Map_String + " Land safely on a cushion"
 
 Moon_Quest_Music_ComingHome = Maps.Moon_Map_String + " Music EE - Coming Home"
 Moon_Quest_Music_ComingHome8Bit = Maps.Moon_Map_String + " Music EE - Coming Home 8-Bit"
-Moon_Quest_Music_ReDamned = Maps.Moon_Map_String + " Music EE - Re-Damned"
+Moon_Quest_Music_ReDamned = Maps.Moon_Map_String + " Music EE - Redamned 8-Bit"
 Moon_Quest_Music_Pareidolia8Bit = Maps.Moon_Map_String + " Music EE - Pareidolia 8-Bit"
+
+Moon_Quest_AllSpareChangeCollected = Maps.Moon_Map_String + " All Spare Change Collected"
 
 Wanted_Quest_MainQuest_CollectSkulls = Maps.Wanted_Map_String + " Collect the Skulls"
 Wanted_Quest_MainQuest_WeaponSafe = Maps.Wanted_Map_String + " Open the Barn"

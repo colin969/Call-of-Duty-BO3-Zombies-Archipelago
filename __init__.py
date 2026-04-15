@@ -596,8 +596,11 @@ class BO3ZombiesWorld(World):
                 bunker_region,
                 lambda state:
                 (
-                    rules.has_special_weapon(state, self.player, self.options, Maps.GorodKrovi_Map_String, ItemName.Weapon_MonkeyBombs) or
                     rules.has_special_weapon(state, self.player, self.options, Maps.GorodKrovi_Map_String, ItemName.Weapon_RaygunMk3) or
+                    (
+                        rules.has_special_weapon(state, self.player, self.options, Maps.GorodKrovi_Map_String, ItemName.Weapon_Raygun) and
+                        rules.has_perk(state, self.player, self.options, Maps.GorodKrovi_Map_String, ItemName.Machine_PhdFlopper)
+                    ) or
                     rules.has_weapon_of_strength(state, self.player, self.options, Maps.GorodKrovi_Map_String, 4, 1)
                 )
             )
@@ -835,10 +838,12 @@ class BO3ZombiesWorld(World):
 
             ee_locs = []
             mid_ee_locs = []
+            ee_computer_locs = []
             late_ee_locs = []
             if add_ee_checks:
                 ee_locs = [loc.name for loc in Locations.Moon_Quest_MainEE_Part1_Locations]
                 mid_ee_locs = [loc.name for loc in Locations.Moon_Quest_MainEE_Part2_Locations]
+                mid_ee_locs = [loc.name for loc in Locations.Moon_Quest_MainEE_Computer_Locations]
                 late_ee_locs = [loc.name for loc in Locations.Moon_Quest_MainEE_Part3_Locations]
 
             main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Moon_MainEE, ee_locs)
@@ -859,6 +864,16 @@ class BO3ZombiesWorld(World):
                     state.has(ItemName.Progressive_PackAPunch, self.player) and
                     rules.check_round_logic(state, self.player, self.options, 14, Maps.Moon_Map_String) and
                     rules.has_weapon_of_strength(state, self.player, self.options, Maps.Moon_Map_String, 3, 3)
+                )
+            )
+
+            main_ee_computer_region = self.create_region(self.multiworld, self.player, RegionName.Moon_MainEE + " Computer", ee_computer_locs)
+            self.create_entrance(
+                map_open_region,
+                main_ee_computer_region,
+                lambda state: (
+                    rules.has_special_weapon(state, self.player, self.options, Maps.Moon_Map_String, ItemName.Weapon_GershDevice) and
+                    rules.has_special_weapon(state, self.player, self.options, Maps.Moon_Map_String, ItemName.Weapon_QEDs)
                 )
             )
 
@@ -1226,8 +1241,8 @@ class BO3ZombiesWorld(World):
                     ItemName.Zetsubou_Victory_Skull,
                 ]))
                 self.weapon_quest_items.extend([item.name for item in goal_items])
-                self.multiworld.get_location(Locations.Zetsubou_Quest_Masamune_Locations[-1].name, self.player).place_locked_item(goal_items[0])
-                self.multiworld.get_location(Locations.Zetsubou_Quest_Skull_Locations[-1].name, self.player).place_locked_item(goal_items[1])
+                self.multiworld.get_location(LocationName.Zetsubou_Quest_Masamune_Acquired, self.player).place_locked_item(goal_items[0])
+                self.multiworld.get_location(LocationName.Zetsubou_Quest_Skull_Survive, self.player).place_locked_item(goal_items[1])
             
             if self.options.map_gorod_enabled:
                 goal_items = list(map(self.create_item, [
@@ -1270,10 +1285,10 @@ class BO3ZombiesWorld(World):
         # Still not enough locations, adjust max round
         while self.options.round_location_max.value < 99 and len(enabled_items) > locations_left :
             self.options.round_location_max.value += 1
-            if self.options.goal_round.value <= self.options.round_location_max.value:
-                self.options.goal_round.value = self.options.round_location_max.value + 1
-            if self.options.round_location_max.value > self.options.goal_round.value:
-                self.options.goal_round.value = self.options.round_location_max.value
+            # if self.options.goal_round.value <= self.options.round_location_max.value:
+            #     self.options.goal_round.value = self.options.round_location_max.value + 1
+            # if self.options.round_location_max.value > self.options.goal_round.value:
+            #     self.options.goal_round.value = self.options.round_location_max.value
             locations_left = base_locations_left + self.calc_round_locations(len(map_list), is_goal_cond)
 
         # Add round locations
@@ -1398,6 +1413,8 @@ class BO3ZombiesWorld(World):
             "mystery_box_special_items": bool(options.mystery_box_special_items),
             "mystery_box_regular_items": bool(options.mystery_box_regular_items),
             "mystery_box_expanded": bool(options.mystery_box_expanded),
+            "difficulty_rng_moon_digger": bool(options.difficulty_rng_moon_digger),
+            "difficulty_rng_moon_box": bool(options.difficulty_rng_moon_box),
             "difficulty_gorod_egg_cooldown": bool(options.difficulty_gorod_egg_cooldown),
             "difficulty_gorod_dragon_wings": bool(options.difficulty_gorod_dragon_wings),
             "difficulty_ee_checkpoints": options.difficulty_ee_checkpoints.value,

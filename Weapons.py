@@ -5,6 +5,7 @@ class WeaponData(NamedTuple):
     category: str
     strength: int
     item_name: str
+    phd_modifier: int = 0
 
 weapon_data_set: dict[str, dict[str, WeaponData]] = {
     "vanilla": {
@@ -77,9 +78,9 @@ weapon_data_set: dict[str, dict[str, WeaponData]] = {
         "pistol_c96": WeaponData("pistol", 1, ItemName.Weapon_MauserC96),
 
         # Launchers
-        "launcher_standard": WeaponData("launcher", 1, ItemName.Weapon_XM53),
-        "launcher_multi": WeaponData("launcher", 1, ItemName.Weapon_Siege),
-        "launcher_ex41": WeaponData("launcher", 1, ItemName.Weapon_ChinaLake),
+        "launcher_standard": WeaponData("launcher", 1, ItemName.Weapon_XM53, 2),
+        "launcher_multi": WeaponData("launcher", 1, ItemName.Weapon_Siege, 2),
+        "launcher_ex41": WeaponData("launcher", 1, ItemName.Weapon_ChinaLake, 1),
 
         # Other?
         "special_crossbow_dw": WeaponData("other", 1, ItemName.Weapon_Shadowclaw),
@@ -102,7 +103,7 @@ weapon_data_set: dict[str, dict[str, WeaponData]] = {
         "melee_katana": WeaponData("melee", 2, ItemName.Weapon_Katana),
         
         # Wonder Weapons
-        "ray_gun": WeaponData("wonder", 2, ItemName.Weapon_Raygun),
+        "ray_gun": WeaponData("wonder", 2, ItemName.Weapon_Raygun, 2),
         "raygun_mark2": WeaponData("wonder", 4, ItemName.Weapon_RaygunMk2),
         "raygun_mark3": WeaponData("wonder", 5, ItemName.Weapon_RaygunMk3),
         "tesla_gun": WeaponData("wonder", 4, ItemName.Weapon_Wunderwaffe),
@@ -147,8 +148,8 @@ weapon_data_set: dict[str, dict[str, WeaponData]] = {
         "ww2_raven": WeaponData("melee", 2, ItemName.Weapon_Modded_RedTalon),
         "frag_ww2_dynamite": WeaponData("wonder", 4, ItemName.Weapon_Modded_Dynamite),
         "m1827_exp": WeaponData("ar", 4, ItemName.Weapon_Modded_M1892),
-        "wes_jag42": WeaponData("launcher", 1, ItemName.Weapon_Modded_Jag42),
-        "ww2_fliegerfaust": WeaponData("launcher", 1, ItemName.Weapon_Modded_Fliegerfaust),
+        "wes_jag42": WeaponData("launcher", 1, ItemName.Weapon_Modded_Jag42, 2),
+        "ww2_fliegerfaust": WeaponData("launcher", 1, ItemName.Weapon_Modded_Fliegerfaust, 2),
         "lebel_m1811": WeaponData("ar", 2, ItemName.Weapon_Modded_M1811),
         "fc4_m1887_long": WeaponData("ar", 1, ItemName.Weapon_Modded_M1887),
         "w1892": WeaponData("ar", 2, ItemName.Weapon_Modded_M1892),
