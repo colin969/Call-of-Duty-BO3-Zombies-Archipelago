@@ -8,6 +8,7 @@ Revelations_Map_String = "(Revelations)"
 # Chronicles
 Kino_Map_String = "(Kino der Toten)"
 Moon_Map_String = "(Moon)"
+Origins_Map_String = "(Origins)"
 
 # Modded Maps
 Wanted_Map_String = "(Wanted)"
@@ -21,5 +22,6 @@ all_maps = [
   The_Giant_Map_String,
   Kino_Map_String,
   Moon_Map_String,
-  Wanted_Map_String
+  Origins_Map_String,
+  Wanted_Map_String,
 ]

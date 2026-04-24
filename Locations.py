@@ -2,6 +2,10 @@ import typing
 from enum import IntEnum
 from .Names import LocationName, Maps
 
+MAP_STAT_ROUNDS = [8, 12, 16, 22, 30]
+MAP_STAT_KILLS = [75, 150, 300, 500, 1000]
+MAP_STAT_HEADSHOTS = [25, 75, 125, 250, 400]
+
 BaseMapIds = {
     Maps.The_Giant_Map_String: 1000,
     Maps.Castle_Map_String: 2000,
@@ -11,6 +15,7 @@ BaseMapIds = {
     Maps.Revelations_Map_String: 6000,
     Maps.Kino_Map_String: 11000,
     Maps.Moon_Map_String: 12000,
+    Maps.Origins_Map_String: 13000,
     # === Modded Maps ===
     Maps.Wanted_Map_String: 20000,
 }
@@ -45,6 +50,18 @@ def get_map_victory_location(map_string, goal_round):
     location_name = f"{map_string} Round {converted:02d}"
     return location_name
 
+def gen_map_stat_locations(map_string):
+
+    base_map_id = BaseMapIds[map_string]
+    locations = []
+
+    for i in range(len(MAP_STAT_KILLS)):
+        locations.append(LocationData(f"{map_string} {MAP_STAT_KILLS[i]} Kills", BO3ZombiesLocationCategory.MISC, base_map_id + 900 + i))
+
+    for i in range(len(MAP_STAT_HEADSHOTS)):
+        locations.append(LocationData(f"{map_string} {MAP_STAT_HEADSHOTS[i]} Headshots", BO3ZombiesLocationCategory.MISC, base_map_id + 950 + i))
+    
+    return locations
 
 # Location IDs
 # The Giant - 1000 to 1100 rounds, 1100+ to map specific checks
@@ -518,6 +535,81 @@ Moon_Quest_Music_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QU
     (LocationName.Moon_Quest_Music_Pareidolia8Bit, 12503),
 ]]
 
+# Origins
+Origins_Round_Locations = gen_map_round_locations(Maps.Origins_Map_String, 99)
+
+Origins_Craftable_Locations_Early = [LocationData(row[0], BO3ZombiesLocationCategory.CRAFTABLE_PART, row[1]) for row in [
+    (LocationName.Origins_Craftable_MaxisDronePart_Brain, 13110),
+]]
+
+Origins_Craftable_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.CRAFTABLE_PART, row[1]) for row in [
+    (LocationName.Origins_Craftable_ShieldPartDolly, 13100),
+    (LocationName.Origins_Craftable_ShieldPartClamp, 13101),
+    (LocationName.Origins_Craftable_ShieldPartDoor, 13102),
+    (LocationName.Origins_Craftable_GramophonePart_Player, 13103),
+    (LocationName.Origins_Craftable_GramophonePart_BlankDisc, 13104),
+    (LocationName.Origins_Craftable_GramophonePart_FireDisc, 13105),
+    (LocationName.Origins_Craftable_GramophonePart_WindDisc, 13106),
+    (LocationName.Origins_Craftable_GramophonePart_IceDisc, 13107),
+    (LocationName.Origins_Craftable_GramophonePart_LightningDisc, 13108),
+    (LocationName.Origins_Craftable_MaxisDronePart_Body, 13109),
+    (LocationName.Origins_Craftable_MaxisDronePart_Engine, 13111),
+]]
+
+Origins_Generators = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Origins_Generators_Any, 13200),
+    (LocationName.Origins_Generators_Three, 13201),
+    (LocationName.Origins_Generators_All, 13202),
+]]
+
+Origins_Staff_Wind = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Origins_Staff_Wind_Craft, 13300),
+    (LocationName.Origins_Staff_Wind_Puzzle1, 13301),
+    (LocationName.Origins_Staff_Wind_Puzzle2, 13302),
+    (LocationName.Origins_Staff_Wind_Upgrade, 13304),
+]]
+
+Origins_Staff_Fire = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Origins_Staff_Fire_Craft, 13310),
+    (LocationName.Origins_Staff_Fire_Puzzle1, 13311),
+    (LocationName.Origins_Staff_Fire_Puzzle2, 13312),
+    (LocationName.Origins_Staff_Fire_Upgrade, 13314),
+]]
+
+Origins_Staff_Lightning = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Origins_Staff_Lightning_Craft, 13320),
+    (LocationName.Origins_Staff_Lightning_Puzzle1, 13321),
+    (LocationName.Origins_Staff_Lightning_Puzzle2, 13322),
+    (LocationName.Origins_Staff_Lightning_Upgrade, 13324),
+]]
+
+Origins_Staff_Ice = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Origins_Staff_Ice_Craft, 13330),
+    (LocationName.Origins_Staff_Ice_Puzzle1, 13331),
+    (LocationName.Origins_Staff_Ice_Puzzle2, 13332),
+    (LocationName.Origins_Staff_Ice_Upgrade, 13334),
+]]
+
+Origins_MainEE_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Origins_Quest_MainEE_Upgraded, 13400),
+    (LocationName.Origins_Quest_MainEE_Placed, 13401),
+    (LocationName.Origins_Quest_MainEE_OpenHole, 13402),
+    (LocationName.Origins_Quest_MainEE_InvisZombie, 13403),
+    (LocationName.Origins_Quest_MainEE_Punch, 13404),
+    (LocationName.Origins_Quest_MainEE_Samantha, 13405),
+]]
+
+Origins_SoulBoxes = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Origins_SoulBox_One, 13500),
+    (LocationName.Origins_SoulBox_All, 13501),
+]]
+
+Origins_Music_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Origins_Quest_Music_Archangel, 13600),
+    (LocationName.Origins_Quest_Music_Aether, 13601),
+    (LocationName.Origins_Quest_Music_SheperdOfFire, 13602),
+]]
+
 # == Workshop ==
 # Wanted
 
@@ -552,6 +644,10 @@ early_locations =  [LocationData(row[0], row[1], row[2]) for row in [
     (LocationName.RepairWindows_5, BO3ZombiesLocationCategory.MISC, 9001),
 ]]
 
+Stat_Locations = []
+for map_name in Maps.all_maps:
+    Stat_Locations.extend(gen_map_stat_locations(map_name))
+
 all_locations = (
     # The Giant
     TheGiant_Round_Locations + TheGiant_Quest_Locations + TheGiant_Pap + TheGiant_MonkeyBomb + TheGiant_Quest_Music_Locations
@@ -583,8 +679,13 @@ all_locations = (
     + Moon_Universal_Locations + Moon_Hacker_Locations + Moon_Quest_Music_Locations
     + Moon_Quest_MainEE_Part1_Locations + Moon_Quest_MainEE_Part2_Locations + Moon_Quest_MainEE_Computer_Locations + Moon_Quest_MainEE_Part3_Locations
     + Moon_Quest_SpaceDog_Locations
+    # Origins
+    + Origins_Round_Locations + Origins_Craftable_Locations + Origins_Craftable_Locations_Early
+    + Origins_Generators + Origins_SoulBoxes + Origins_Music_Locations
+    + Origins_Staff_Fire + Origins_Staff_Ice + Origins_Staff_Lightning + Origins_Staff_Wind
+    + Origins_MainEE_Locations
     # === Modded Maps ===
     # Wanted
     + Wanted_Round_Locations + Wanted_Craftable_Locations
     + Wanted_Quest_MainQuest_Locations + Wanted_Quest_Weapons + Wanted_Quest_MainEE_Locations
-    + early_locations)
+    + early_locations + Stat_Locations)

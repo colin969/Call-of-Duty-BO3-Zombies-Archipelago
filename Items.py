@@ -51,7 +51,6 @@ The_Giant_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
     ItemName.Machine_DoubleTap,
     ItemName.Machine_SpeedCola,
     ItemName.Machine_MuleKick,
-    ItemName.Machine_PhdFlopper,
 ]]
 
 The_Giant_Machines_Specific = gen_map_specific_list(Maps.The_Giant_Map_String, The_Giant_Machines)
@@ -118,10 +117,6 @@ Zetsubou_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
     ItemName.Machine_DoubleTap,
     ItemName.Machine_MuleKick,
     ItemName.Machine_StaminUp,
-    ItemName.Machine_DeadShot,
-    ItemName.Machine_ElectricCherry,
-    ItemName.Machine_WidowsWine,
-    ItemName.Machine_PhdFlopper,
 ]]
 
 Zetsubou_Machines_Specific = gen_map_specific_list(Maps.Zetsubou_Map_String, Zetsubou_Machines)
@@ -210,6 +205,37 @@ Moon_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
 
 Moon_Machines_Specific = gen_map_specific_list(Maps.Moon_Map_String, Moon_Machines)
 
+# Origins
+
+Origins_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
+    ItemName.Machine_Juggernog,
+    ItemName.Machine_QuickRevive,
+    ItemName.Machine_DoubleTap,
+    ItemName.Machine_SpeedCola,
+    ItemName.Machine_StaminUp,
+    ItemName.Machine_MuleKick,
+    ItemName.Machine_WidowsWine,
+    ItemName.Machine_DeadShot,
+    ItemName.Machine_ElectricCherry,
+    ItemName.Machine_PhdFlopper,
+]]
+
+Origins_Machines_Specific = gen_map_specific_list(Maps.Origins_Map_String, Origins_Machines)
+
+Origins_MaxisDrone = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for row in [
+    ItemName.Origins_Craftable_MaxisDrone_Body,
+    ItemName.Origins_Craftable_MaxisDrone_Brain,
+    ItemName.Origins_Craftable_MaxisDrone_Engine
+]]
+
+Origins_Discs = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for row in [
+    ItemName.Origins_Craftable_Gramophone_FireDisc,
+    ItemName.Origins_Craftable_Gramophone_IceDisc,
+    ItemName.Origins_Craftable_Gramophone_WindDisc,
+    ItemName.Origins_Craftable_Gramophone_LightningDisc
+]]
+
+Origins_Shield = gen_map_specific_list(Maps.Origins_Map_String, ShieldParts)
 
 # === Modded Maps ===
 
@@ -293,6 +319,8 @@ Victory_Items = [ItemData(row, BO3ZombiesItemCategory.VICTORY) for row in [
     Maps.Kino_Map_String + ItemName.Victory,
     Maps.Moon_Map_String + ItemName.Victory,
     Maps.Moon_Map_String + ItemName.EE_Victory,
+    Maps.Origins_Map_String + ItemName.Victory,
+    Maps.Origins_Map_String + ItemName.EE_Victory,
     # == Modded Maps ==
     Maps.Wanted_Map_String + ItemName.Victory,
     Maps.Wanted_Map_String + ItemName.EE_Victory,
@@ -335,6 +363,7 @@ Map_Unlocks = [ItemData(row, BO3ZombiesItemCategory.MAP_UNLOCK) for row in [
     ItemName.Map_The_Giant,
     ItemName.Map_Kino,
     ItemName.Map_Moon,
+    ItemName.Map_Origins,
     ItemName.Map_Wanted,
 ]]
 
@@ -396,6 +425,9 @@ all_items = (
     + Kino_Machines + Kino_Machines_Specific
     # Moon
     + Moon_Machines + Moon_Machines_Specific
+    # Origins
+    + Origins_Machines + Origins_Machines_Specific
+    + Origins_Discs + Origins_MaxisDrone + Origins_Shield
     # == Modded Maps ==
     # Wanted
     + Wanted_Machines + Wanted_Machines_Specific

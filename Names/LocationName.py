@@ -290,6 +290,59 @@ Moon_Quest_Music_Pareidolia8Bit = Maps.Moon_Map_String + " Music EE - Pareidolia
 
 Moon_Quest_AllSpareChangeCollected = Maps.Moon_Map_String + " All Spare Change Collected"
 
+Origins_Craftable_ShieldPartDolly = Maps.Origins_Map_String + " Shield Part Pickup - Dolly"
+Origins_Craftable_ShieldPartDoor = Maps.Origins_Map_String + " Shield Part Pickup - Door"
+Origins_Craftable_ShieldPartClamp = Maps.Origins_Map_String + " Shield Part Pickup - Clamp"
+
+Origins_Craftable_MaxisDronePart_Body = Maps.Origins_Map_String + " Maxis Drone Part Pickup - Body"
+Origins_Craftable_MaxisDronePart_Brain = Maps.Origins_Map_String + " Maxis Drone Part Pickup - Brain"
+Origins_Craftable_MaxisDronePart_Engine = Maps.Origins_Map_String + " Maxis Drone Part Pickup - Valve"
+
+Origins_Craftable_GramophonePart_Player = Maps.Origins_Map_String + " Gramophone Part Pickup - Gramophone Player"
+Origins_Craftable_GramophonePart_BlankDisc = Maps.Origins_Map_String + " Gramophone Part Pickup - Blank Disc"
+Origins_Craftable_GramophonePart_FireDisc = Maps.Origins_Map_String + " Gramophone Part Pickup - Fire Disc"
+Origins_Craftable_GramophonePart_WindDisc = Maps.Origins_Map_String + " Gramophone Part Pickup - Wind Disc"
+Origins_Craftable_GramophonePart_LightningDisc = Maps.Origins_Map_String + " Gramophone Part Pickup - Lightning Disc"
+Origins_Craftable_GramophonePart_IceDisc = Maps.Origins_Map_String + " Gramophone Part Pickup - Ice Disc"
+
+Origins_Generators_Any = Maps.Origins_Map_String + " Power up any Generator"
+Origins_Generators_Three = Maps.Origins_Map_String + " Power up 3 Generators"
+Origins_Generators_All = Maps.Origins_Map_String + " Power up all 6 Generators"
+
+Origins_Staff_Wind_Craft = Maps.Origins_Map_String + " Wind Staff - Craft the Staff"
+Origins_Staff_Wind_Puzzle1 = Maps.Origins_Map_String + " Wind Staff - Solve the Crazy Place Puzzle"
+Origins_Staff_Wind_Puzzle2 = Maps.Origins_Map_String + " Wind Staff - Redirect all the Smoke Stacks"
+Origins_Staff_Wind_Upgrade = Maps.Origins_Map_String + " Wind Staff - Upgrade the Staff"
+
+Origins_Staff_Fire_Craft = Maps.Origins_Map_String + " Fire Staff - Craft the Staff"
+Origins_Staff_Fire_Puzzle1 = Maps.Origins_Map_String + " Fire Staff - Light the Crazy Place Braziers"
+Origins_Staff_Fire_Puzzle2 = Maps.Origins_Map_String + " Fire Staff - Solve the Church Torch Puzzle"
+Origins_Staff_Fire_Upgrade = Maps.Origins_Map_String + " Fire Staff - Upgrade the Staff"
+
+Origins_Staff_Lightning_Craft = Maps.Origins_Map_String + " Lightning Staff - Craft the Staff"
+Origins_Staff_Lightning_Puzzle1 = Maps.Origins_Map_String + " Lightning Staff - Solve the Crazy Place Piano Puzzle"
+Origins_Staff_Lightning_Puzzle2 = Maps.Origins_Map_String + " Lightning Staff - Correctly set the Electrical Boxes"
+Origins_Staff_Lightning_Upgrade = Maps.Origins_Map_String + " Lightning Staff - Upgrade the Staff"
+
+Origins_Staff_Ice_Craft = Maps.Origins_Map_String + " Ice Staff - Craft the Staff"
+Origins_Staff_Ice_Puzzle1 = Maps.Origins_Map_String + " Ice Staff - Solve the Crazy Place Puzzle"
+Origins_Staff_Ice_Puzzle2 = Maps.Origins_Map_String + " Ice Staff - Smash the Three Gravestones"
+Origins_Staff_Ice_Upgrade = Maps.Origins_Map_String + " Ice Staff - Upgrade the Staff"
+
+Origins_Quest_MainEE_Upgraded = Maps.Origins_Map_String + " Main Easter Egg - Upgrade all Elemental Staffs"
+Origins_Quest_MainEE_Placed = Maps.Origins_Map_String + " Main Easter Egg - Placed all 4 Upgraded Elemental Staffs"
+Origins_Quest_MainEE_OpenHole = Maps.Origins_Map_String + " Main Easter Egg - Blow open the Panzer Hole"
+Origins_Quest_MainEE_InvisZombie = Maps.Origins_Map_String + " Main Easter Egg - Retrieve Maxis Drone from Invisible Zombie"
+Origins_Quest_MainEE_Punch = Maps.Origins_Map_String + " Main Easter Egg - Upgrade everyone's One Inch Punch"
+Origins_Quest_MainEE_Samantha = Maps.Origins_Map_String + " Main Easter Egg - Open the portal to Samantha"
+
+Origins_SoulBox_One = Maps.Origins_Map_String + " Fill any Soul Box"
+Origins_SoulBox_All = Maps.Origins_Map_String + " Fill all 4 Soul Boxes"
+
+Origins_Quest_Music_Archangel = Maps.Origins_Map_String + " Music EE - Archangel"
+Origins_Quest_Music_Aether = Maps.Origins_Map_String + " Music EE - Aether"
+Origins_Quest_Music_SheperdOfFire = Maps.Origins_Map_String + " Music EE - Sheperd of Fire"
+
 Wanted_Quest_MainQuest_CollectSkulls = Maps.Wanted_Map_String + " Collect the Skulls"
 Wanted_Quest_MainQuest_WeaponSafe = Maps.Wanted_Map_String + " Open the Barn"
 

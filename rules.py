@@ -15,6 +15,7 @@ map_perks = {
     Maps.Revelations_Map_String: Items.Revelations_Machines,
     Maps.Kino_Map_String: Items.Kino_Machines,
     Maps.Moon_Map_String: Items.Moon_Machines,
+    Maps.Origins_Map_String: Items.Origins_Machines,
     Maps.Wanted_Map_String: Items.Wanted_Machines,
 }
 map_perks_specific = {
@@ -26,6 +27,7 @@ map_perks_specific = {
     Maps.Revelations_Map_String: Items.Revelations_Machines_Specific,
     Maps.Kino_Map_String: Items.Kino_Machines_Specific,
     Maps.Moon_Map_String: Items.Moon_Machines_Specific,
+    Maps.Origins_Map_String: Items.Origins_Machines_Specific,
     Maps.Wanted_Map_String: Items.Wanted_Machines_Specific,
 }
 map_shield = {
@@ -112,6 +114,10 @@ def has_special_weapon(state: CollectionState, player: int, options: BO3ZombiesO
     return state.has(special_weapon_name(map_name, weapon_name), player)
 
 def has_perk(state: CollectionState, player: int, options: BO3ZombiesOptions, map_name: str, perk_name: str) -> bool:
+    perks = map_perks[map_name]
+    if perk_name not in perks:
+        return True
+
     if options.map_specific_machines:
         return state.has(map_name + " " + perk_name, player)
     return state.has(perk_name, player)

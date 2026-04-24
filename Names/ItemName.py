@@ -10,6 +10,7 @@ Map_The_Giant = "Map Unlock - The Giant"
 
 Map_Kino = "Map Unlock - Kino der Toten"
 Map_Moon = "Map Unlock - Moon"
+Map_Origins = "Map Unlock - Origins"
 
 Map_Wanted = "Map Unlock - Wanted"
 
@@ -262,6 +263,15 @@ GorodKrovi_Victory_TiamatsMaw = Maps.GorodKrovi_Map_String + " Tiamat's Maw - Vi
 
 Revelations_Victory_Upgraded_LilArnies = Maps.Revelations_Map_String + " Upgraded Li'l Arnies - Victory"
 Revelations_Victory_Upgrade_ApothiconServant = Maps.Revelations_Map_String + " Upgraded Apothicon Servant - Victory"
+
+Origins_Craftable_Gramophone_FireDisc = Maps.Origins_Map_String + " Gramophone Part - Fire Disc"
+Origins_Craftable_Gramophone_WindDisc = Maps.Origins_Map_String + " Gramophone Part - Wind Disc"
+Origins_Craftable_Gramophone_LightningDisc = Maps.Origins_Map_String + " Gramophone Part - Lightning Disc"
+Origins_Craftable_Gramophone_IceDisc = Maps.Origins_Map_String + " Gramophone Part - Ice Disc"
+
+Origins_Craftable_MaxisDrone_Body = Maps.Origins_Map_String + " Maxis Drone Part - Body"
+Origins_Craftable_MaxisDrone_Brain = Maps.Origins_Map_String + " Maxis Drone Part - Brain"
+Origins_Craftable_MaxisDrone_Engine = Maps.Origins_Map_String + " Maxis Drone Part - Valve"
 
 # Wanted
 

@@ -79,6 +79,14 @@ Moon_MainEE = "(Moon) Main Easter Egg"
 Moon_SpaceDog = "(Moon) Space Dog"
 Moon_Round_Regions = gen_round_regions(Maps.Moon_Map_String)
 
+Origins_Entrance = "(Origins) Entrance"
+Origins_Open = "(Origins) Open the Map"
+Origins_Staff_Upgrades = "(Origins) Staff Upgrade"
+Origins_MainEE = "(Origins) Main Easter Egg"
+Origins_SoulBoxAny = "(Origins) Any Soul Box"
+Origins_SoulBoxAll = "(Origins) All 4 Soul Boxes"
+Origins_Round_Regions = gen_round_regions(Maps.Origins_Map_String)
+
 # == Modded Maps ==
 
 Wanted_Town = "(Wanted) Town"

@@ -53,7 +53,7 @@ class BO3ZombiesWorld(World):
     items_handling = 0b111
 
     # Enable to log the location lua data
-    write_lua_locations = True
+    write_lua_locations = False
 
     # Generate GSC scripts to apply AP item names to ingame console names
     def generate_gsc_code(self):
@@ -121,7 +121,8 @@ class BO3ZombiesWorld(World):
         if (not self.options.map_shadows_enabled and not self.options.map_castle_enabled
             and not self.options.map_zetsubou_enabled and not self.options.map_gorod_enabled
             and not self.options.map_revelations_enabled and not self.options.map_the_giant_enabled
-            and not self.options.map_kino_enabled and not self.options.map_kino_enabled):
+            and not self.options.map_kino_enabled and not self.options.map_moon_enabled
+            and not self.options.map_origins_enabled):
             self.options.map_shadows_enabled.value = True
 
         map_list = []
@@ -142,6 +143,8 @@ class BO3ZombiesWorld(World):
             map_list.append(Maps.Kino_Map_String)
         if self.options.map_moon_enabled:
             map_list.append(Maps.Moon_Map_String)
+        if self.options.map_origins_enabled:
+            map_list.append(Maps.Origins_Map_String)
 
         if self.options.map_workshop_wanted_enabled:
             map_list.append(Maps.Wanted_Map_String)
@@ -192,6 +195,8 @@ class BO3ZombiesWorld(World):
             locked_maps.append(ItemName.Map_Kino)
         if self.options.map_moon_enabled:
             locked_maps.append(ItemName.Map_Moon)
+        if self.options.map_origins_enabled:
+            locked_maps.append(ItemName.Map_Origins)
 
         if self.options.map_workshop_wanted_enabled:
             locked_maps.append(ItemName.Map_Wanted)
@@ -242,6 +247,8 @@ class BO3ZombiesWorld(World):
 
             main_region = self.create_region(self.multiworld, self.player, RegionName.Shadows_Alleyway, all_locations)
             self.create_entrance(menu_region, main_region, Has(ItemName.Map_Shadows))
+
+            self.add_stat_regions(main_region, Maps.Shadows_Map_String, self.options.round_location_max.value)
 
             open_locations = []
             open_locations.extend([loc.name for loc in Locations.Shadows_Craftable_Locations])
@@ -322,6 +329,8 @@ class BO3ZombiesWorld(World):
             main_region = self.create_region(self.multiworld, self.player, RegionName.TheGiant_Courtyard, all_locations)
             self.create_entrance(menu_region, main_region, Has(ItemName.Map_The_Giant))
 
+            self.add_stat_regions(main_region, Maps.The_Giant_Map_String, self.options.round_location_max.value)
+
             open_locations = []
             open_locations.extend([loc.name for loc in Locations.TheGiant_Quest_Locations[1:]])
             if self.options.music_ee_enabled:
@@ -343,6 +352,8 @@ class BO3ZombiesWorld(World):
             main_region = self.create_region(self.multiworld, self.player, RegionName.Castle_Gondola, all_locations)
             # self.create_entrance(menu_region, main_region, Has(ItemName.Map_Castle))
             self.create_entrance(menu_region, main_region, lambda state: state.has(ItemName.Map_Castle, self.player))
+
+            self.add_stat_regions(main_region, Maps.Castle_Map_String, self.options.round_location_max.value)
 
             open_locations = []
             open_locations.extend([loc.name for loc in Locations.Castle_Craftable_Locations])
@@ -470,6 +481,8 @@ class BO3ZombiesWorld(World):
             main_region = self.create_region(self.multiworld, self.player, RegionName.Zetsubou_Beach, all_locations)
             self.create_entrance(menu_region, main_region, Has(ItemName.Map_Zetsubou))
 
+            self.add_stat_regions(main_region, Maps.Zetsubou_Map_String, self.options.round_location_max.value)
+
             open_locations = []
             open_locations.extend([loc.name for loc in Locations.Zetsubou_Quest_MainQuest_Locations[1:]])
             open_locations.extend([loc.name for loc in Locations.Zetsubou_Craftable_Locations])
@@ -540,6 +553,8 @@ class BO3ZombiesWorld(World):
             main_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_Trenches, all_locations)
             self.create_entrance(menu_region, main_region, Has(ItemName.Map_GorodKrovi))
 
+            self.add_stat_regions(main_region, Maps.GorodKrovi_Map_String, self.options.round_location_max.value)
+
             open_locations = []
             open_locations.extend([loc.name for loc in Locations.GorodKrovi_Quest_MainQuest_Locations])
             open_locations.extend([loc.name for loc in Locations.GorodKrovi_Craftable_Locations])
@@ -607,7 +622,7 @@ class BO3ZombiesWorld(World):
             
             wing_locs = []
             # Exclude wing loc if already given wings
-            if self.options.difficulty_gorod_dragon_wings:
+            if not self.options.difficulty_gorod_dragon_wings:
                 wing_locs.append(LocationName.GorodKrovi_Quest_SideEE_DragonWings)
             wing_region = self.create_region(self.multiworld, self.player, RegionName.Gorod_Wings, wing_locs)
             self.create_entrance(
@@ -650,6 +665,8 @@ class BO3ZombiesWorld(World):
  
             main_region = self.create_region(self.multiworld, self.player, RegionName.Revelations_House, all_locations)
             self.create_entrance(menu_region, main_region, Has(ItemName.Map_Revelations))
+
+            self.add_stat_regions(main_region, Maps.Revelations_Map_String, self.options.round_location_max.value)
 
             open_locations = []
             open_locations.extend([loc.name for loc in Locations.Revelations_Quest_MainQuest_Locations[1:]])
@@ -800,6 +817,8 @@ class BO3ZombiesWorld(World):
             main_region = self.create_region(self.multiworld, self.player, RegionName.Kino_Entrance, all_locations)
             self.create_entrance(menu_region, main_region, Has(ItemName.Map_Kino))
 
+            self.add_stat_regions(main_region, Maps.Kino_Map_String, self.options.round_location_max.value)
+
             open_locations = []
             open_locations.extend([loc.name for loc in Locations.Kino_Quest_Locations])
             if self.options.music_ee_enabled:
@@ -813,6 +832,8 @@ class BO3ZombiesWorld(World):
             all_locations = []
             main_region = self.create_region(self.multiworld, self.player, RegionName.Moon_Entrance, all_locations)
             self.create_entrance(menu_region, main_region, Has(ItemName.Map_Moon))
+
+            self.add_stat_regions(main_region, Maps.Moon_Map_String, self.options.round_location_max.value)
 
             open_locations = []
             open_locations.extend([loc.name for loc in Locations.Moon_Universal_Locations])
@@ -889,7 +910,107 @@ class BO3ZombiesWorld(World):
                 )
             )
 
+        if self.options.map_origins_enabled:
+            all_locations = [LocationName.Origins_Generators_Any]
+            all_locations += [loc.name for loc in Locations.Origins_Craftable_Locations_Early]
+            main_region = self.create_region(self.multiworld, self.player, RegionName.Origins_Entrance, all_locations)
+            self.create_entrance(menu_region, main_region, Has(ItemName.Map_Origins))
 
+            self.add_stat_regions(main_region, Maps.Origins_Map_String, self.options.round_location_max.value)
+
+            open_locations = [LocationName.Origins_Generators_Three, LocationName.Origins_Generators_All]
+            open_locations += [loc.name for loc in Locations.Origins_Craftable_Locations]
+            if self.options.music_ee_enabled:
+                open_locations.extend([loc.name for loc in Locations.Origins_Music_Locations])
+            map_open_region = self.create_region(self.multiworld, self.player, RegionName.Origins_Open, open_locations)
+            self.create_entrance(main_region, map_open_region,
+                            lambda state: rules.can_open_map(state, self.player, self.options, Maps.Origins_Map_String))
+
+            if not (self.options.goal_condition == 2 and not self.options.origins_staff_upgrade_checks):
+                wind_staff_upgrade_region = self.create_region(self.multiworld, self.player, RegionName.Origins_Staff_Upgrades + " Wind", [loc.name for loc in Locations.Origins_Staff_Wind])
+                self.create_entrance(
+                    map_open_region,
+                    wind_staff_upgrade_region,
+                    lambda state: (
+                        state.has(ItemName.Origins_Craftable_Gramophone_WindDisc, self.player) and
+                        rules.check_round_logic(state, self.player, self.options, 12, Maps.Origins_Map_String) and
+                        rules.has_weapon_of_strength(state, self.player, self.options, Maps.Origins_Map_String, 3, 3)
+                    )
+                )
+
+            if not (self.options.goal_condition == 2 and not self.options.origins_staff_upgrade_checks):
+                fire_staff_upgrade_region = self.create_region(self.multiworld, self.player, RegionName.Origins_Staff_Upgrades + " Fire", [loc.name for loc in Locations.Origins_Staff_Fire])
+                self.create_entrance(
+                    map_open_region,
+                    fire_staff_upgrade_region,
+                    lambda state: (
+                        state.has(ItemName.Origins_Craftable_Gramophone_FireDisc, self.player) and
+                        rules.check_round_logic(state, self.player, self.options, 12, Maps.Origins_Map_String) and
+                        rules.has_weapon_of_strength(state, self.player, self.options, Maps.Origins_Map_String, 3, 3)
+                    )
+                )
+
+            if not (self.options.goal_condition == 2 and not self.options.origins_staff_upgrade_checks):
+                lightning_staff_upgrade_region = self.create_region(self.multiworld, self.player, RegionName.Origins_Staff_Upgrades + " Lightning", [loc.name for loc in Locations.Origins_Staff_Lightning])
+                self.create_entrance(
+                    map_open_region,
+                    lightning_staff_upgrade_region,
+                    lambda state: (
+                        state.has(ItemName.Origins_Craftable_Gramophone_LightningDisc, self.player) and
+                        rules.check_round_logic(state, self.player, self.options, 12, Maps.Origins_Map_String) and
+                        rules.has_weapon_of_strength(state, self.player, self.options, Maps.Origins_Map_String, 3, 3)
+                    )
+                )
+
+            if not (self.options.goal_condition == 2 and not self.options.origins_staff_upgrade_checks):
+                ice_staff_upgrade_region = self.create_region(self.multiworld, self.player, RegionName.Origins_Staff_Upgrades + " Ice", [loc.name for loc in Locations.Origins_Staff_Ice])
+                self.create_entrance(
+                    map_open_region,
+                    ice_staff_upgrade_region,
+                    lambda state: (
+                            state.has(ItemName.Origins_Craftable_Gramophone_IceDisc, self.player) and
+                        rules.check_round_logic(state, self.player, self.options, 12, Maps.Origins_Map_String) and
+                        rules.has_weapon_of_strength(state, self.player, self.options, Maps.Origins_Map_String, 3, 3)
+                    )
+                )
+            
+            ee_locs = []
+            if add_ee_checks:
+                ee_locs = [loc.name for loc in Locations.Origins_MainEE_Locations]
+
+            main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Origins_MainEE, ee_locs)
+            self.create_entrance(
+                map_open_region,
+                main_ee_region, 
+                lambda state: (
+                    state.has(ItemName.Origins_Craftable_Gramophone_WindDisc, self.player) and
+                    state.has(ItemName.Origins_Craftable_Gramophone_IceDisc, self.player) and
+                    state.has(ItemName.Origins_Craftable_Gramophone_FireDisc, self.player) and
+                    state.has(ItemName.Origins_Craftable_Gramophone_LightningDisc, self.player) and
+                    rules.check_round_logic(state, self.player, self.options, 18, Maps.Origins_Map_String) and
+                    rules.has_shield(state, self.player, Maps.Origins_Map_String) and
+                    rules.has_weapon_of_strength(state, self.player, self.options, Maps.Origins_Map_String, 3, 4)
+                )
+            )
+
+            soul_box_region = self.create_region(self.multiworld, self.player, RegionName.Origins_SoulBoxAny, [LocationName.Origins_SoulBox_One])
+            self.create_entrance(
+                map_open_region,
+                soul_box_region, 
+                lambda state: (
+                    rules.check_round_logic(state, self.player, self.options, 8, Maps.Origins_Map_String)
+                )
+            )
+
+            soul_box_all_region = self.create_region(self.multiworld, self.player, RegionName.Origins_SoulBoxAll, [LocationName.Origins_SoulBox_All])
+            self.create_entrance(
+                soul_box_region,
+                soul_box_all_region, 
+                lambda state: (
+                    rules.check_round_logic(state, self.player, self.options, 16, Maps.Origins_Map_String)
+                )
+            )
+        
 
         # == Modded Maps ==
 
@@ -897,6 +1018,8 @@ class BO3ZombiesWorld(World):
             all_locations = []
             main_region = self.create_region(self.multiworld, self.player, RegionName.Wanted_Town, all_locations)
             self.create_entrance(menu_region, main_region, Has(ItemName.Map_Wanted))
+
+            self.add_stat_regions(main_region, Maps.Wanted_Map_String, self.options.round_location_max.value)
 
             open_locations = []
             open_locations.extend([loc.name for loc in Locations.Wanted_Quest_MainQuest_Locations])
@@ -1052,6 +1175,8 @@ class BO3ZombiesWorld(World):
                 enabled_items += Items.Kino_Machines_Specific
             if self.options.map_moon_enabled:
                 enabled_items += Items.Moon_Machines_Specific
+            if self.options.map_origins_enabled:
+                enabled_items += Items.Origins_Machines_Specific
 
             if self.options.map_workshop_wanted_enabled:
                 enabled_items += Items.Wanted_Machines_Specific
@@ -1076,6 +1201,8 @@ class BO3ZombiesWorld(World):
                 add_universal_items(enabled_items, seen, Items.Kino_Machines)
             if self.options.map_moon_enabled:
                 add_universal_items(enabled_items, seen, Items.Moon_Machines)
+            if self.options.map_origins_enabled:
+                add_universal_items(enabled_items, seen, Items.Origins_Machines)
 
             if self.options.map_workshop_wanted_enabled:
                 add_universal_items(enabled_items, seen, Items.Wanted_Machines)
@@ -1146,6 +1273,17 @@ class BO3ZombiesWorld(World):
         if self.options.map_moon_enabled:
             map_list.append((Maps.Moon_Map_String, RegionName.Moon_Entrance, RegionName.Moon_Round_Regions, Locations.Moon_Round_Locations))
 
+        if self.options.map_origins_enabled:
+            map_list.append((Maps.Origins_Map_String, RegionName.Origins_Entrance, RegionName.Origins_Round_Regions, Locations.Origins_Round_Locations))
+            if self.options.randomized_shield_parts:
+                enabled_items += Items.Origins_Shield
+            else:
+                self.multiworld.get_location(LocationName.Origins_Craftable_ShieldPartDoor, self.player).place_locked_item(self.create_item(Items.Origins_Shield[0].name))
+                self.multiworld.get_location(LocationName.Origins_Craftable_ShieldPartDolly, self.player).place_locked_item(self.create_item(Items.Origins_Shield[1].name))
+                self.multiworld.get_location(LocationName.Origins_Craftable_ShieldPartClamp, self.player).place_locked_item(self.create_item(Items.Origins_Shield[2].name))
+            enabled_items += Items.Origins_Discs
+            enabled_items += Items.Origins_MaxisDrone
+
         if self.options.map_workshop_wanted_enabled:
             map_list.append((Maps.Wanted_Map_String, RegionName.Wanted_Town, RegionName.Wanted_Round_Regions, Locations.Wanted_Round_Locations))
             if self.options.randomized_shield_parts:
@@ -1193,6 +1331,9 @@ class BO3ZombiesWorld(World):
                 ee_pairs.append((LocationName.Revelations_Quest_MainEE_Victory, Maps.Revelations_Map_String + ItemName.EE_Victory))
             if self.options.map_moon_enabled:
                 ee_pairs.append((LocationName.Moon_Quest_MainEE_Victory, Maps.Moon_Map_String + ItemName.EE_Victory))
+            ## TODO: Add victory loc properly
+            if self.options.map_origins_enabled:
+                ee_pairs.append((LocationName.Origins_Quest_MainEE_Samantha, Maps.Origins_Map_String + ItemName.EE_Victory))
             if self.options.map_workshop_wanted_enabled:
                 ee_pairs.append((LocationName.Wanted_Quest_MainEE_Victory, Maps.Wanted_Map_String + ItemName.EE_Victory))
 
@@ -1398,6 +1539,28 @@ class BO3ZombiesWorld(World):
             self.slot_goal_items = self.goal_round_items
             self.slot_goal_items_required = min(len(self.slot_goal_items), self.options.goal_round_count.value)
             self.multiworld.completion_condition[self.player] = lambda state: state.has_all(self.goal_round_items, self.player)
+
+    def add_stat_regions(self, main_region: Region, map_name: str, max_round_in_logic: int):
+        last_region = main_region
+        for i in range(len(Locations.MAP_STAT_ROUNDS)):
+            round_num = Locations.MAP_STAT_ROUNDS[i]
+            if round_num > max_round_in_logic:
+                return
+            round_locs = []
+            if self.options.kill_checks_enabled:
+                round_locs.append(f"{map_name} {Locations.MAP_STAT_KILLS[i]} Kills")
+            if self.options.headshot_checks_enabled:
+                round_locs.append(f"{map_name} {Locations.MAP_STAT_HEADSHOTS[i]} Headshots")
+            round_region = self.create_region(self.multiworld, self.player, f"{map_name} Stat Round {round_num}", round_locs)
+            self.create_entrance(
+                last_region,
+                round_region,
+                (lambda round_num: lambda state: (
+                    rules.check_round_logic(state, self.player, self.options, round_num, map_name) and
+                    (rules.has_perk(state, self.player, self.options, map_name, ItemName.Machine_DoubleTap) if (round_num >= 20 and self.options.headshot_checks_enabled.value) else True)
+                ))(round_num)
+            )
+            last_region = round_region
 
     def fill_slot_data(self) -> dict:
         options = self.options

@@ -43,6 +43,12 @@ class MapMoonEnabled(Toggle):
     display_name = "(Chronicles) \"Moon\" map enabled"
     default = False
 
+class MapOriginsEnabled(Toggle):
+    """Enabled Map: \"Origins\""""
+    display_name = "(Unstable) (Chronicles) \"Origins\" map enabled"
+    default = False
+
+
 class MapWorkshopWantedEnabled(Toggle):
     """Enabled Map: \"Wanted\""""
     display_name = "(Unstable) \"Wanted\" map enabled"
@@ -109,6 +115,11 @@ class RevelationsMaskEnabledApothicon(Toggle):
     """Enable Apothicon God Mask check for Revelations Mask checks"""
     display_name = "(Revelations) Mask - Apothicon God"
     default = False
+
+class OriginsStaffUpgradeChecksEnabled(Toggle):
+    """Enables Staff Upgrade checks when using Goal Round victory condition"""
+    display_name = "(Origins) Staff Upgrade Checks"
+    default = True
 
 class MysteryBoxSpecialItems(Toggle):
     """Shuffles special Mystery Box item unlocks (Wonder weapons, special equipment, specialist weapons) into the item pool"""
@@ -245,6 +256,16 @@ class RoundLocationFrequency(Range):
     range_start = 1
     range_end = 10
     default = 2
+
+class KillChecksEnabled(Toggle):
+    """Add kill counts per map as checks"""
+    display_name = "Kill Checks"
+    default = True
+
+class HeadshotChecksEnabled(Toggle):
+    """Add headshot counts per map as checks"""
+    display_name = "Headshot Checks"
+    default = False
 
 class EasterEggsEnabled(Toggle):
     """Include Easter Egg steps as AP locations / checks when Easter Egg Hunt is not the goal condition"""
@@ -474,11 +495,14 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     map_revelations_enabled: MapRevelationsEnabled
     map_kino_enabled: MapKinoEnabled
     map_moon_enabled: MapMoonEnabled
+    map_origins_enabled: MapOriginsEnabled
     map_workshop_wanted_enabled: MapWorkshopWantedEnabled
     start_map_hints: StartMapHints
     special_rounds_enabled: SpecialRoundsEnabled
     round_location_max: RoundMaxLocation
     round_location_freq: RoundLocationFrequency
+    kill_checks_enabled: KillChecksEnabled
+    headshot_checks_enabled: HeadshotChecksEnabled
     goal_condition: GoalCondition
     goal_round: GoalRound
     goal_round_count: GoalRoundCount
@@ -512,6 +536,7 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     revelations_mask_enabled_margwa: RevelationsMaskEnabledMargwa
     revelations_mask_enabled_keeper_skull: RevelationsMaskEnabledKeeperSkull
     revelations_mask_enabled_apothicon: RevelationsMaskEnabledApothicon
+    origins_staff_upgrade_checks: OriginsStaffUpgradeChecksEnabled
     gift_weight: GiftWeight
     trap_weight: TrapWeight
     difficulty_rng_moon_digger: DifficultyMoonDiggerRNG
@@ -549,6 +574,8 @@ bo3_option_groups = [
         MapSpecificMachinesEnabled,
         RoundMaxLocation,
         RoundLocationFrequency,
+        KillChecksEnabled,
+        HeadshotChecksEnabled,
         EasterEggsEnabled,
         MusicEasterEggsEnabled,
         StartingQuickRevive
@@ -594,6 +621,7 @@ bo3_option_groups = [
         MapRevelationsEnabled,
         MapKinoEnabled,
         MapMoonEnabled,
+        MapOriginsEnabled,
         StartMapHints,
         CastleBowCount,
         CastleBowEnabledStorm,
@@ -609,6 +637,7 @@ bo3_option_groups = [
         RevelationsMaskEnabledFury,
         RevelationsMaskEnabledKeeperSkull,
         RevelationsMaskEnabledApothicon,
+        OriginsStaffUpgradeChecksEnabled,
     ]),
     OptionGroup("Workshop Map Settings", [
         MapWorkshopWantedEnabled,
