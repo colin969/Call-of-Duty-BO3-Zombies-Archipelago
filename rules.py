@@ -148,7 +148,7 @@ def check_round_logic(state: CollectionState, player: int, options: BO3ZombiesOp
     # Let's just say we can reach round 6 without any progression items
     round_can_reach = 6
     # Value where we stop caring about round logic because we have enough items based on our settings
-    round_max_threshold = 40
+    round_max_threshold = 36
     # Number of rounds we add with each perk
     rounds_from_perks = 4
     # Number of rounds from important aspects, like box weapons and pap
@@ -244,7 +244,7 @@ def check_round_logic(state: CollectionState, player: int, options: BO3ZombiesOp
     round_can_reach += (perks * rounds_from_perks)
 
     weap_item_count = state.count_from_list_unique(weapon_keys, player) + initial_num
-    total_weap_rounds = rounds_from_important * 3
+    total_weap_rounds = rounds_from_important * 2
     earned_weap_rounds = math.floor(total_weap_rounds * (weap_item_count / full_count))
     round_can_reach += earned_weap_rounds
 
@@ -255,6 +255,8 @@ def check_round_logic(state: CollectionState, player: int, options: BO3ZombiesOp
     # Certain hard requirements for better balancing
     if len(perk_list) >= 4 and rule_perks < 2:
         round_can_reach = min(10, round_can_reach)
+    if len(perk_list) >= 6 and rule_perks < 3:
+        round_can_reach = min(18, round_can_reach)
     if weap_item_count < math.floor(full_count * 0.3):
         round_can_reach = min(12, round_can_reach)
     if not has_jugg:

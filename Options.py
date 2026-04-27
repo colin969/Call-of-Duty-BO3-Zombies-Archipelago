@@ -164,6 +164,11 @@ class WeaponsStartingS4(Range):
     range_start = 0
     range_end = 5
 
+class SuperEERewardEnabled(Toggle):
+    """Enables the Super EE reward (Starting RK5)"""
+    display_name = "Super EE Reward"
+    default = False
+
 class WeaponsStartingS5(Range):
     """Number of strength 5 weapons to start with on each map (wallbuys + box)"""
     display_name = "Starting Weapon Unlocks - Wonder Weapons / Special Equipment"
@@ -517,6 +522,7 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     mystery_box_special_items: MysteryBoxSpecialItems
     mystery_box_regular_items: MysteryBoxRegularItems
     mystery_box_expanded: MysteryBoxExpanded
+    super_ee_reward: SuperEERewardEnabled
     starting_weapons_1: WeaponsStartingS1
     starting_weapons_2: WeaponsStartingS2
     starting_weapons_3: WeaponsStartingS3
@@ -581,6 +587,7 @@ bo3_option_groups = [
         StartingQuickRevive
     ]),
     OptionGroup("Weapons", [
+        SuperEERewardEnabled,
         MysteryBoxSpecialItems,
         MysteryBoxRegularItems,
         MysteryBoxExpanded,

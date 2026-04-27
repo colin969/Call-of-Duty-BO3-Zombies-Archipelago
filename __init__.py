@@ -1573,6 +1573,7 @@ class BO3ZombiesWorld(World):
             "map_specific_machines": bool(options.map_specific_machines),
             "special_rounds_enabled": bool(options.special_rounds_enabled),
             "perk_limit_default_modifier": int(options.perk_limit_default_modifier),
+            "super_ee_reward": bool(options.super_ee_reward),
             "mystery_box_special_items": bool(options.mystery_box_special_items),
             "mystery_box_regular_items": bool(options.mystery_box_regular_items),
             "mystery_box_expanded": bool(options.mystery_box_expanded),
