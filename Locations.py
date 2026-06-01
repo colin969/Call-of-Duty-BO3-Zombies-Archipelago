@@ -607,7 +607,7 @@ Origins_SoulBoxes = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[
 Origins_Music_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.Origins_Quest_Music_Archangel, 13600),
     (LocationName.Origins_Quest_Music_Aether, 13601),
-    (LocationName.Origins_Quest_Music_SheperdOfFire, 13602),
+    (LocationName.Origins_Quest_Music_ShepherdOfFire, 13602),
 ]]
 
 # == Workshop ==
