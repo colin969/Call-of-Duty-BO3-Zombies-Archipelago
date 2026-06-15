@@ -343,6 +343,8 @@ Origins_Quest_Music_Archangel = Maps.Origins_Map_String + " Music EE - Archangel
 Origins_Quest_Music_Aether = Maps.Origins_Map_String + " Music EE - Aether"
 Origins_Quest_Music_ShepherdOfFire = Maps.Origins_Map_String + " Music EE - Shepherd of Fire"
 
+Origins_Quest_AllSpareChangeCollected = Maps.Origins_Map_String + " All Spare Change Collected"
+
 Wanted_Quest_MainQuest_CollectSkulls = Maps.Wanted_Map_String + " Collect the Skulls"
 Wanted_Quest_MainQuest_WeaponSafe = Maps.Wanted_Map_String + " Open the Barn"
 

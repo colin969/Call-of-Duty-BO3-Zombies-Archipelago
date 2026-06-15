@@ -610,6 +610,10 @@ Origins_Music_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST
     (LocationName.Origins_Quest_Music_ShepherdOfFire, 13602),
 ]]
 
+Origins_Quest_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Origins_Quest_AllSpareChangeCollected, 13709),
+]
+
 # == Workshop ==
 # Wanted
 
