@@ -81,6 +81,7 @@ Moon_Round_Regions = gen_round_regions(Maps.Moon_Map_String)
 
 Origins_Entrance = "(Origins) Entrance"
 Origins_Open = "(Origins) Open the Map"
+Origins_Crazy_Place = "(Origins) Crazy Place"
 Origins_Staff_Upgrades = "(Origins) Staff Upgrade"
 Origins_MainEE = "(Origins) Main Easter Egg"
 Origins_SoulBoxAny = "(Origins) Any Soul Box"

@@ -920,9 +920,22 @@ class BO3ZombiesWorld(World):
 
             open_locations = [LocationName.Origins_Generators_Three, LocationName.Origins_Generators_All]
             open_locations += [loc.name for loc in Locations.Origins_Craftable_Locations]
-            open_locations.extend([loc.name for loc in Locations.Origins_Quest_Locations])
+            
             if self.options.music_ee_enabled:
-                open_locations.extend([loc.name for loc in Locations.Origins_Music_Locations])
+                open_locations.extend([LocationName.Origins_Quest_Music_Archangel, LocationName.Origins_Quest_Music_Aether])
+                crazy_place_locations = [LocationName.Origins_Quest_Music_ShepherdOfFire]
+                crazy_place_region = self.create_region(self.multiworld, self.player, RegionName.Origins_Crazy_Place, crazy_place_locations)
+                self.create_entrance(
+                    map_open_region,
+                    crazy_place_region,
+                    lambda state: (
+                        state.has(ItemName.Origins_Craftable_Gramophone_WindDisc, self.player) or
+                        state.has(ItemName.Origins_Craftable_Gramophone_FireDisc, self.player) or
+                        state.has(ItemName.Origins_Craftable_Gramophone_LightningDisc, self.player) or
+                        state.has(ItemName.Origins_Craftable_Gramophone_IceDisc, self.player)
+                    )
+                )
+            
             map_open_region = self.create_region(self.multiworld, self.player, RegionName.Origins_Open, open_locations)
             self.create_entrance(main_region, map_open_region,
                             lambda state: rules.can_open_map(state, self.player, self.options, Maps.Origins_Map_String))
