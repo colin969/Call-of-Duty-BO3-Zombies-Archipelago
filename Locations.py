@@ -685,7 +685,7 @@ all_locations = (
     + Moon_Quest_SpaceDog_Locations
     # Origins
     + Origins_Round_Locations + Origins_Craftable_Locations + Origins_Craftable_Locations_Early
-    + Origins_Generators + Origins_SoulBoxes + Origins_Music_Locations
+    + Origins_Quest_Locations + Origins_Generators + Origins_SoulBoxes + Origins_Music_Locations
     + Origins_Staff_Fire + Origins_Staff_Ice + Origins_Staff_Lightning + Origins_Staff_Wind
     + Origins_MainEE_Locations
     # === Modded Maps ===
