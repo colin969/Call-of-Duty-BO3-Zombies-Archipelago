@@ -920,6 +920,7 @@ class BO3ZombiesWorld(World):
 
             open_locations = [LocationName.Origins_Generators_Three, LocationName.Origins_Generators_All]
             open_locations += [loc.name for loc in Locations.Origins_Craftable_Locations]
+            open_locations += [loc.name for loc in Locations.Origins_Quest_Locations]
             
             map_open_region = self.create_region(self.multiworld, self.player, RegionName.Origins_Open, open_locations)
             self.create_entrance(main_region, map_open_region,
