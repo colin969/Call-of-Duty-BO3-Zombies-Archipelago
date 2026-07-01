@@ -864,7 +864,7 @@ class BO3ZombiesWorld(World):
             if add_ee_checks:
                 ee_locs = [loc.name for loc in Locations.Moon_Quest_MainEE_Part1_Locations]
                 mid_ee_locs = [loc.name for loc in Locations.Moon_Quest_MainEE_Part2_Locations]
-                mid_ee_locs = [loc.name for loc in Locations.Moon_Quest_MainEE_Computer_Locations]
+                ee_computer_locs = [loc.name for loc in Locations.Moon_Quest_MainEE_Computer_Locations]
                 late_ee_locs = [loc.name for loc in Locations.Moon_Quest_MainEE_Part3_Locations]
 
             main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Moon_MainEE, ee_locs)
