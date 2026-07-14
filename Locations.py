@@ -4,7 +4,7 @@ from .Names import LocationName, Maps
 
 MAP_STAT_ROUNDS = [8, 12, 16, 22, 30]
 MAP_STAT_KILLS = [75, 150, 300, 500, 1000]
-MAP_STAT_HEADSHOTS = [25, 75, 125, 250, 400]
+MAP_STAT_HEADSHOTS = [25, 50, 100, 175, 300]
 
 BaseMapIds = {
     Maps.The_Giant_Map_String: 1000,
@@ -181,10 +181,13 @@ Shadows_Quest_MainQuest_Locations = [LocationData(row[0], BO3ZombiesLocationCate
 Shadows_Quest_ApothiconSword_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.Shadows_Quest_ApothiconSword_EnterCode, 3110),
     (LocationName.Shadows_Quest_ApothiconSword_CollectSword, 3111),
+    (LocationName.Shadows_Quest_ApothiconSword_Egg1, 3120),
+
 ]]
 
 Shadows_Quest_ApothiconSword_Upgrade_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.Shadows_Quest_ApothiconSword_CollectUpgradedSword, 3112),
+    (LocationName.Shadows_Quest_ApothiconSword_Egg2, 3121),
 ]]
 
 
@@ -198,6 +201,9 @@ Shadows_Quest_MainEE_Locations = [LocationData(row[0], BO3ZombiesLocationCategor
 Shadows_Quest_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.Shadows_Quest_AllSpareChangeCollected, 3500),
     (LocationName.Shadows_Quest_LaundryTicket, 3501),
+]]
+
+Shadows_Doughnut_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.Shadows_Quest_DoughnutMines, 3513),
 ]]
 
@@ -205,9 +211,9 @@ Shadows_Quest_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST
 #     (LocationName.Shadows_Quest_GrowGum, 3510),
 # ]]
 
-# Shadows_RayGun_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
-#     (LocationName.Shadows_Quest_MargwaHead, 3511),
-# ]]
+Shadows_RayGun_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Shadows_Quest_MargwaHead, 3511),
+]]
 
 Shadows_LilArnies_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
     (LocationName.Shadows_Quest_LilArnies_Upgrade, 3512),
@@ -660,8 +666,8 @@ all_locations = (
     + Castle_Quest_ElementalBow_Fire_Locations + Castle_Quest_ElementalBow_Void_Locations + Castle_Quest_ElementalBow_Storm_Locations + Castle_Quest_ElementalBow_Wolf_Locations
     + Castle_Quest_MainEE_Locations
     # Shadows
-    + Shadows_Round_Locations + Shadows_Quest_Locations + Shadows_Craftable_Locations + Shadows_ApothiconServant_Locations + Shadows_Quest_Music_Locations + Shadows_LilArnies_Locations
-    + Shadows_Quest_MainQuest_Locations + Shadows_Quest_ApothiconSword_Locations + Shadows_Quest_ApothiconSword_Upgrade_Locations
+    + Shadows_Round_Locations + Shadows_Quest_Locations + Shadows_Doughnut_Locations + Shadows_Craftable_Locations + Shadows_ApothiconServant_Locations + Shadows_Quest_Music_Locations + Shadows_LilArnies_Locations
+    + Shadows_Quest_MainQuest_Locations + Shadows_Quest_ApothiconSword_Locations + Shadows_Quest_ApothiconSword_Upgrade_Locations + Shadows_RayGun_Locations
     + Shadows_Quest_MainEE_Locations
     # Zetsubou
     + Zetsubou_Round_Locations + Zetsubou_Craftable_Locations + Zetsubou_Quest_Music_Locations

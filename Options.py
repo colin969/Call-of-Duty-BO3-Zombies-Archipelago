@@ -14,24 +14,24 @@ class MapTheGiantEnabled(Toggle):
     default = True
 
 class MapCastleEnabled(Toggle):
-    """Enables Map: \"Castle\"."""
-    display_name = "\"Castle\" map enabled"
-    default = True
+    """Enables Map: \"Der Eisendrache\"."""
+    display_name = "\"Der Eisendrache\" map enabled"
+    default = False
 
 class MapZetsubouEnabled(Toggle):
     """Enables Map: \"Zetsubou No Shima\"."""
     display_name = "\"Zetsubou No Shima\" map enabled"
-    default = True
+    default = False
 
 class MapGorodKroviEnabled(Toggle):
     """Enabled Map: \"Gorod Krovi\""""
     display_name = "\"Gorod Krovi\" map enabled"
-    default = True
+    default = False
     
 class MapRevelationsEnabled(Toggle):
     """Enabled Map: \"Revelations\""""
     display_name = "\"Revelations\" map enabled"
-    default = True
+    default = False
 
 class MapKinoEnabled(Toggle):
     """Enabled Map: \"Kino der Toten\""""
@@ -69,10 +69,40 @@ class RandomizeShieldParts(Toggle):
     display_name = "Randomize Shield Parts"
     default = True
 
+class ShadowsMargwaHeadEnabled(Toggle):
+    """Adds check for margwa head unlock"""
+    display_name = "(Shadows of Evil) Enable Unlock the Margwa's Head Check"
+    default = True
+
+class ShadowsTripmineUpgradesEnabled(Toggle):
+    """Adds Doughnuts / Cream Cakes upgrade check for tripmines"""
+    display_name = "(Shadows of Evil) Enable Tripmine Upgrade Check"
+    default = True
+
 class RandomizeGorodDragonrideParts(Toggle):
     """Shuffles the parts to unlock the pack-a-punch into the item pool"""
     display_name = "(UNUSED) Randomized Gorod Dragonride Parts"
     default = False
+
+class GorodKroviEnableHelmets(Toggle):
+    """Add Valkyrie and Mangler helm as checks"""
+    display_name = "(Gorod Krovi) Enable Helmet Checks"
+    default = True
+
+class GorodKroviMonkeybombsUpgrade(Toggle):
+    """Adds monkey bomb upgrade check"""
+    display_name = "(Gorod Krovi) Add Upgrade Monkey Bombs Check"
+    default = True
+
+class GorodKroviChallengesEnabled(Toggle):
+    """Adds the 3 challenges as checks"""
+    display_name = "(Gorod Krovi) Enable Challenge Checks"
+    default = True
+
+class RevelationsChallengesEnabled(Toggle):
+    """Adds the 3 challenges as checks"""
+    display_name = "(Revelations) Enable Challenge Checks"
+    default = True
 
 class RevelationsMaskCount(Range):
     """Number of random Revelations Mask quests to include in checks"""
@@ -518,7 +548,9 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     progressive_perk_limit_increase: ProgressivePerkLimitIncrease
     progressive_starting_points: ProgressiveStartingPoints
     randomized_shield_parts: RandomizeShieldParts
-    randomized_gorod_dragonride_parts: RandomizeGorodDragonrideParts
+    gorod_helmets_enabled: GorodKroviEnableHelmets
+    gorod_monkeybombs_upgrade_enabled: GorodKroviMonkeybombsUpgrade
+    gorod_challenges_enabled: GorodKroviChallengesEnabled
     mystery_box_special_items: MysteryBoxSpecialItems
     mystery_box_regular_items: MysteryBoxRegularItems
     mystery_box_expanded: MysteryBoxExpanded
@@ -529,11 +561,14 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     starting_weapons_4: WeaponsStartingS4
     starting_weapons_5: WeaponsStartingS5
     map_specific_machines: MapSpecificMachinesEnabled
+    shadows_margwa_head_enabled: ShadowsMargwaHeadEnabled
+    shadows_tripmines_enabled: ShadowsTripmineUpgradesEnabled
     castle_bow_count: CastleBowCount
     castle_bow_storm: CastleBowEnabledStorm
     castle_bow_wolf: CastleBowEnabledWolf
     castle_bow_fire: CastleBowEnabledFire
     castle_bow_void: CastleBowEnabledVoid
+    revelations_challenges_enabled: RevelationsChallengesEnabled
     revelations_mask_count: RevelationsMaskCount
     revelations_mask_enabled_dire_wolf: RevelationsMaskEnabledDireWolf
     revelations_mask_enabled_siegfried: RevelationsMaskEnabledSiegfried
@@ -630,12 +665,17 @@ bo3_option_groups = [
         MapMoonEnabled,
         MapOriginsEnabled,
         StartMapHints,
+        ShadowsMargwaHeadEnabled,
+        ShadowsTripmineUpgradesEnabled,
         CastleBowCount,
         CastleBowEnabledStorm,
         CastleBowEnabledWolf,
         CastleBowEnabledFire,
         CastleBowEnabledVoid,
-        RandomizeGorodDragonrideParts,
+        GorodKroviChallengesEnabled,
+        GorodKroviMonkeybombsUpgrade,
+        GorodKroviEnableHelmets,
+        RevelationsChallengesEnabled,
         RevelationsMaskCount,
         RevelationsMaskEnabledDireWolf,
         RevelationsMaskEnabledSiegfried,

@@ -62,7 +62,9 @@ Shadows_Quest_MainQuest_FemmeFataleRitual = Maps.Shadows_Map_String + " Main Que
 Shadows_Quest_MainQuest_OpenPortal = Maps.Shadows_Map_String + " Main Quest - Open the Portal"
 
 Shadows_Quest_ApothiconSword_EnterCode = Maps.Shadows_Map_String + " Apothicon Sword - Enter the Code"
+Shadows_Quest_ApothiconSword_Egg1 = Maps.Shadows_Map_String + " Apothicon Sword - Fill the egg at any statue"
 Shadows_Quest_ApothiconSword_CollectSword = Maps.Shadows_Map_String + " Apothicon Sword - Collect your Sword"
+Shadows_Quest_ApothiconSword_Egg2 = Maps.Shadows_Map_String + " Apothicon Sword - Complete any ritual circle"
 Shadows_Quest_ApothiconSword_CollectUpgradedSword = Maps.Shadows_Map_String + " Apothicon Sword - Collect your upgraded Sword"
 
 Shadows_Quest_MainEE_FindNerosBook = Maps.Shadows_Map_String + " Main Easter Egg - Find Nero's Book"
