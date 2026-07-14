@@ -53,7 +53,7 @@ class BO3ZombiesWorld(World):
     items_handling = 0b111
 
     # Enable to log the location lua data
-    write_lua_locations = True
+    write_lua_locations = False
 
     # Generate GSC scripts to apply AP item names to ingame console names
     def generate_gsc_code(self):

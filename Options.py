@@ -45,7 +45,7 @@ class MapMoonEnabled(Toggle):
 
 class MapOriginsEnabled(Toggle):
     """Enabled Map: \"Origins\""""
-    display_name = "(Unstable) (Chronicles) \"Origins\" map enabled"
+    display_name = "(Chronicles) \"Origins\" map enabled"
     default = False
 
 
