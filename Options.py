@@ -11,7 +11,7 @@ class MapShadowsEnabled(Toggle):
 class MapTheGiantEnabled(Toggle):
     """Enables Map: \"The Giant\"."""
     display_name = "\"The Giant\" map enabled"
-    default = True
+    default = False
 
 class MapCastleEnabled(Toggle):
     """Enables Map: \"Der Eisendrache\"."""
@@ -31,6 +31,11 @@ class MapGorodKroviEnabled(Toggle):
 class MapRevelationsEnabled(Toggle):
     """Enabled Map: \"Revelations\""""
     display_name = "\"Revelations\" map enabled"
+    default = False
+
+class MapNachtEnabled(Toggle):
+    """Enabled Map: \"Nacht der Untoten\""""
+    display_name = "(Chronicles) \"Nacht der Untoten\" map enabled"
     default = False
 
 class MapKinoEnabled(Toggle):
@@ -398,34 +403,42 @@ class AttachmentsSightWeight(Range):
     range_end = 100
 
 class CamoEnabled(Toggle):
+    """Randomizes Camo on non-pap'd weapons"""
     display_name = "Camo - Base Weapon Randomized"
     default = True
 
 class CamoMixed(Toggle):
+    """Allows non-pap'd weapons to roll a pap camo"""
     display_name = "Camo - Base Weapon Can Have Upgraded Camo"
     default = False
 
 class CamoPapEnabled(Toggle):
+    """Randomizes Camo on pap'd weapons"""
     display_name = "Camo - Upgraded Weapon Randomized"
     default = True
 
 class CamoPapMixed(Toggle):
+    """Allows pap'd weapons to roll a non-pap camo"""
     display_name = "Camo - Upgraded Weapon Can Have Base Camo"
     default = False
 
 class CamoJoined(Toggle):
+    """Camo will stay the same after a weapon is pap'd"""
     display_name = "Camo - Base Weapon will match Upgraded Weapon"
     default = False
 
 class ReticleEnabled(Toggle):
+    """Randomizes Camo on non-pap'd weapons"""
     display_name = "Scope Reticle - Base Weapon Randomized"
     default = False
 
 class ReticlePapEnabled(Toggle):
+    """Randomizes Camo on pap'd weapons"""
     display_name = "Scope Reticle - Upgraded Weapon Randomized"
     default = True
 
 class ReticleJoined(Toggle):
+    """Reticle will stay the same after a weapon is pap'd"""
     display_name = "Scope Reticle - Base Weapon will match Upgraded Weapon"
     default = False
 
@@ -528,6 +541,7 @@ class BO3ZombiesOptions(PerGameCommonOptions):
     map_castle_enabled: MapCastleEnabled
     map_gorod_enabled: MapGorodKroviEnabled
     map_revelations_enabled: MapRevelationsEnabled
+    map_nacht_enabled: MapNachtEnabled
     map_kino_enabled: MapKinoEnabled
     map_moon_enabled: MapMoonEnabled
     map_origins_enabled: MapOriginsEnabled
@@ -661,6 +675,7 @@ bo3_option_groups = [
         MapZetsubouEnabled,
         MapGorodKroviEnabled,
         MapRevelationsEnabled,
+        MapNachtEnabled,
         MapKinoEnabled,
         MapMoonEnabled,
         MapOriginsEnabled,

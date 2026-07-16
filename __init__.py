@@ -122,7 +122,7 @@ class BO3ZombiesWorld(World):
             and not self.options.map_zetsubou_enabled and not self.options.map_gorod_enabled
             and not self.options.map_revelations_enabled and not self.options.map_the_giant_enabled
             and not self.options.map_kino_enabled and not self.options.map_moon_enabled
-            and not self.options.map_origins_enabled):
+            and not self.options.map_origins_enabled and not self.options.map_nacht_enabled):
             self.options.map_shadows_enabled.value = True
 
         map_list = []
@@ -139,6 +139,8 @@ class BO3ZombiesWorld(World):
         if self.options.map_the_giant_enabled:
             map_list.append(Maps.The_Giant_Map_String)
 
+        if self.options.map_nacht_enabled:
+            map_list.append(Maps.Nacht_Map_String)
         if self.options.map_kino_enabled:
             map_list.append(Maps.Kino_Map_String)
         if self.options.map_moon_enabled:
@@ -191,6 +193,8 @@ class BO3ZombiesWorld(World):
         if self.options.map_the_giant_enabled:
             locked_maps.append(ItemName.Map_The_Giant)
 
+        if self.options.map_nacht_enabled:
+            locked_maps.append(ItemName.Map_Nacht)
         if self.options.map_kino_enabled:
             locked_maps.append(ItemName.Map_Kino)
         if self.options.map_moon_enabled:
@@ -858,6 +862,22 @@ class BO3ZombiesWorld(World):
                 arnies_ugprade_region, 
                 lambda state: rules.has_special_weapon(state, self.player, self.options, Maps.Revelations_Map_String, ItemName.Weapon_LilArnies))
 
+        if self.options.map_nacht_enabled:
+            all_locations = []
+            main_region = self.create_region(self.multiworld, self.player, RegionName.Nacht_Entrance, all_locations)
+            self.create_entrance(menu_region, main_region, Has(ItemName.Map_Nacht))
+
+            self.add_stat_regions(main_region, Maps.Nacht_Map_String, self.options.round_location_max.value)
+
+            open_locations = []
+            open_locations.extend([loc.name for loc in Locations.Nacht_Quest_Locations])
+            if self.options.music_ee_enabled:
+                open_locations.extend([loc.name for loc in Locations.Nacht_Quest_Music_Locations])
+
+            map_open_region = self.create_region(self.multiworld, self.player, RegionName.Nacht_Open, open_locations)
+            self.create_entrance(main_region, map_open_region,
+                            lambda state: rules.can_open_map(state, self.player, self.options, Maps.Nacht_Map_String))
+
         if self.options.map_kino_enabled:
             all_locations = []
             main_region = self.create_region(self.multiworld, self.player, RegionName.Kino_Entrance, all_locations)
@@ -1232,6 +1252,8 @@ class BO3ZombiesWorld(World):
             if self.options.map_revelations_enabled:
                 enabled_items += Items.Revelations_Machines_Specific
             
+            if self.options.map_nacht_enabled:
+                enabled_items += Items.Nacht_Machines_Specific
             if self.options.map_kino_enabled:
                 enabled_items += Items.Kino_Machines_Specific
             if self.options.map_moon_enabled:
@@ -1258,6 +1280,8 @@ class BO3ZombiesWorld(World):
             if self.options.map_revelations_enabled:
                 add_universal_items(enabled_items, seen, Items.Revelations_Machines)
 
+            if self.options.map_nacht_enabled:
+                add_universal_items(enabled_items, seen, Items.Nacht_Machines)
             if self.options.map_kino_enabled:
                 add_universal_items(enabled_items, seen, Items.Kino_Machines)
             if self.options.map_moon_enabled:
@@ -1328,6 +1352,9 @@ class BO3ZombiesWorld(World):
                 self.multiworld.get_location(LocationName.Revelations_Craftable_ShieldPartDolly, self.player).place_locked_item(self.create_item(Items.Revelations_Shield[1].name))
                 self.multiworld.get_location(LocationName.Revelations_Craftable_ShieldPartClamp, self.player).place_locked_item(self.create_item(Items.Revelations_Shield[2].name))
         
+        if self.options.map_nacht_enabled:
+            map_list.append((Maps.Nacht_Map_String, RegionName.Nacht_Entrance, RegionName.Nacht_Round_Regions, Locations.Nacht_Round_Locations))
+
         if self.options.map_kino_enabled:
             map_list.append((Maps.Kino_Map_String, RegionName.Kino_Entrance, RegionName.Kino_Round_Regions, Locations.Kino_Round_Locations))
         

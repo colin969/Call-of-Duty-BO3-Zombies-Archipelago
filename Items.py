@@ -173,6 +173,22 @@ Revelations_Shield = gen_map_specific_list(Maps.Revelations_Map_String, ShieldPa
 
 # === Zombie Chronicles ===
 
+# Nacht der Untoten
+
+Nacht_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
+    ItemName.Machine_Juggernog,
+    ItemName.Machine_QuickRevive,
+    ItemName.Machine_DoubleTap,
+    ItemName.Machine_SpeedCola,
+    ItemName.Machine_StaminUp,
+    ItemName.Machine_MuleKick,
+    ItemName.Machine_WidowsWine,
+    ItemName.Machine_DeadShot,
+    ItemName.Machine_PhdFlopper,
+]]
+
+Nacht_Machines_Specific = gen_map_specific_list(Maps.Nacht_Map_String, Nacht_Machines)
+
 # Kino der Toten
 
 Kino_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
@@ -316,6 +332,7 @@ Victory_Items = [ItemData(row, BO3ZombiesItemCategory.VICTORY) for row in [
     Maps.GorodKrovi_Map_String + ItemName.EE_Victory,
     Maps.Revelations_Map_String + ItemName.Victory,
     Maps.Revelations_Map_String + ItemName.EE_Victory,
+    Maps.Nacht_Map_String + ItemName.Victory,
     Maps.Kino_Map_String + ItemName.Victory,
     Maps.Moon_Map_String + ItemName.Victory,
     Maps.Moon_Map_String + ItemName.EE_Victory,
@@ -361,6 +378,7 @@ Map_Unlocks = [ItemData(row, BO3ZombiesItemCategory.MAP_UNLOCK) for row in [
     ItemName.Map_GorodKrovi,
     ItemName.Map_Revelations,
     ItemName.Map_The_Giant,
+    ItemName.Map_Nacht,
     ItemName.Map_Kino,
     ItemName.Map_Moon,
     ItemName.Map_Origins,
@@ -421,7 +439,9 @@ all_items = (
     + Revelations_Machines + Revelations_Machines_Specific
     + Revelations_Shield
     # == Zombie Chronicles ==
-    # Kino
+    # Nacht der Untoten
+    + Nacht_Machines + Nacht_Machines_Specific
+    # Kino der Toten
     + Kino_Machines + Kino_Machines_Specific
     # Moon
     + Moon_Machines + Moon_Machines_Specific

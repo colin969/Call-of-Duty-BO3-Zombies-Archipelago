@@ -6,6 +6,7 @@ GorodKrovi_Map_String = "(Gorod Krovi)"
 Revelations_Map_String = "(Revelations)"
 
 # Chronicles
+Nacht_Map_String = "(Nacht der Untoten)"
 Kino_Map_String = "(Kino der Toten)"
 Moon_Map_String = "(Moon)"
 Origins_Map_String = "(Origins)"
@@ -20,6 +21,7 @@ all_maps = [
   GorodKrovi_Map_String,
   Revelations_Map_String,
   The_Giant_Map_String,
+  Nacht_Map_String,
   Kino_Map_String,
   Moon_Map_String,
   Origins_Map_String,

@@ -248,6 +248,10 @@ TheGiant_Quest_Music_BeautyOfAnnihilation = Maps.The_Giant_Map_String + " Music 
 
 TheGiant_Quest_AllSpareChangeCollected = Maps.The_Giant_Map_String + " All Spare Change Collected"
 
+Nacht_Achi_Closed = Maps.Nacht_Map_String + " Achievement - I said we're CLOSED!" 
+Nacht_Quest_Music_Undone = Maps.Nacht_Map_String + " Music EE - Undone"
+Nacht_Quest_Sam = Maps.Nacht_Map_String + " Samantha's Lullaby"
+
 Kino_Quest_AllSpareChangeCollected = Maps.Kino_Map_String + " All Spare Change Collected"
 
 Kino_Quest_Power = Maps.Kino_Map_String + " Turn on the Power"

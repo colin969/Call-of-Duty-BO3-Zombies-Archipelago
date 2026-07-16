@@ -16,6 +16,7 @@ BaseMapIds = {
     Maps.Kino_Map_String: 11000,
     Maps.Moon_Map_String: 12000,
     Maps.Origins_Map_String: 13000,
+    Maps.Nacht_Map_String: 14000,
     # === Modded Maps ===
     Maps.Wanted_Map_String: 20000,
 }
@@ -472,6 +473,18 @@ Revelations_Quest_Music_Locations = [LocationData(row[0], BO3ZombiesLocationCate
 
 # == Zombie Chronicles ==
 
+# Nacht der Untoten
+Nacht_Round_Locations = gen_map_round_locations(Maps.Nacht_Map_String, 99)
+
+Nacht_Quest_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Nacht_Quest_Sam, 14100),
+    (LocationName.Nacht_Achi_Closed, 14101),
+]]
+
+Nacht_Quest_Music_Locations = [LocationData(row[0], BO3ZombiesLocationCategory.QUEST, row[1]) for row in [
+    (LocationName.Nacht_Quest_Music_Undone, 14200),
+]]
+
 # Kino der Toten
 Kino_Round_Locations = gen_map_round_locations(Maps.Kino_Map_String, 99)
 
@@ -681,6 +694,9 @@ all_locations = (
     + Revelations_Round_Locations + Revelations_Craftable_Locations + Revelations_Quest_Music_Locations
     + Revelations_Quest_MainQuest_Locations + Revelations_Quest_MainEE_Locations + Revelations_Quest_Challenges
     + Revelations_Quest_SideEE_Locations + Revelations_Quest_Masks_Locations + Revelations_Quest_Weapons
+    # Nacht der Untoten
+    + Nacht_Round_Locations
+    + Nacht_Quest_Locations + Nacht_Quest_Music_Locations
     # Kino der Toten
     + Kino_Round_Locations
     + Kino_Quest_Locations + Kino_Quest_Music_Locations

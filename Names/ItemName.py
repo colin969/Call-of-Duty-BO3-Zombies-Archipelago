@@ -8,6 +8,7 @@ Map_GorodKrovi = "Map Unlock - Gorod Krovi"
 Map_Revelations = "Map Unlock - Revelations"
 Map_The_Giant = "Map Unlock - The Giant"
 
+Map_Nacht = "Map Unlock - Nacht der Untoten"
 Map_Kino = "Map Unlock - Kino der Toten"
 Map_Moon = "Map Unlock - Moon"
 Map_Origins = "Map Unlock - Origins"

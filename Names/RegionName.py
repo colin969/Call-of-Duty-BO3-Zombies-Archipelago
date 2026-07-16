@@ -71,6 +71,10 @@ Revelations_Round_Regions = gen_round_regions(Maps.Revelations_Map_String)
 
 # == Zombie Chronicles ==
 
+Nacht_Entrance = "(Nacht der Toten) Entrance"
+Nacht_Open = "(Nacht der Toten) Open the Map"
+Nacht_Round_Regions = gen_round_regions(Maps.Nacht_Map_String)
+
 Kino_Entrance = "(Kino der Toten) Entrance"
 Kino_Open = "(Kino der Toten) Open the Map"
 Kino_Round_Regions = gen_round_regions(Maps.Kino_Map_String)
