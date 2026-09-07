@@ -5,26 +5,33 @@ from .Names import ItemName, Maps
 
 from typing import Dict, Set
 
-def gen_map_specific_list(mapString, items):
+item_groups: Dict[str, Set[str]] = {}
+
+def gen_map_specific_list(mapString, items, category):
     map_specific_set = [ItemData(mapString + " " + item[0], item[1]) for item in items]
+    category_name = mapString + " " + category
+    if category_name not in item_groups.keys():
+        item_groups[category_name] = set()
+    for item in map_specific_set:
+        item_groups[category_name].add(item.name)
     return map_specific_set
 
 class BO3ZombiesItemCategory():
-    BLOCKER = "Blockers"
-    WALLBUY = "Wallbuys"
+    BLOCKER = "Blocker"
+    WALLBUY = "Wallbuy"
     POWER = "Power"
     EASTER_EGG = "Easter Egg"
-    MACHINE = "Machines"
+    MACHINE = "Perk"
     MISC = "Misc"
     VICTORY = "Victory"
-    GIFT = "Gifts"
-    TRAP = "Traps"
+    GIFT = "Gift"
+    TRAP = "Trap"
     PROGRESSIVE = "Progressive"
-    SPECIAL_WEAPON = "Special Weapons"
-    CRAFTABLE = "Craftables"
-    REGULAR_WEAPON = "Regular Weapons"
-    MAP_UNLOCK = "Map Unlocks"
-    SHOP_ITEMS = "Shop Items"
+    SPECIAL_WEAPON = "Special Weapon"
+    CRAFTABLE = "Craftable"
+    REGULAR_WEAPON = "Regular Weapon"
+    MAP_UNLOCK = "Map Unlock"
+    SHOP_ITEMS = "Shop Item"
 
 class ItemData(typing.NamedTuple):
     name: str
@@ -53,7 +60,7 @@ The_Giant_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
     ItemName.Machine_MuleKick,
 ]]
 
-The_Giant_Machines_Specific = gen_map_specific_list(Maps.The_Giant_Map_String, The_Giant_Machines)
+The_Giant_Machines_Specific = gen_map_specific_list(Maps.The_Giant_Map_String, The_Giant_Machines, "Perk")
 
 # Castle Items
 
@@ -70,9 +77,9 @@ Castle_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
     ItemName.Machine_PhdFlopper,
 ]]
 
-Castle_Machines_Specific = gen_map_specific_list(Maps.Castle_Map_String, Castle_Machines)
+Castle_Machines_Specific = gen_map_specific_list(Maps.Castle_Map_String, Castle_Machines, "Perk")
 
-Castle_Shield = gen_map_specific_list(Maps.Castle_Map_String, ShieldParts)
+Castle_Shield = gen_map_specific_list(Maps.Castle_Map_String, ShieldParts, "Shield")
 
 Castle_Craftables = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for row in[
     ItemName.Castle_Craftable_GravitySpikes_Body,
@@ -93,9 +100,9 @@ Shadows_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
     ItemName.Machine_WidowsWine,
 ]]
 
-Shadows_Machines_Specific = gen_map_specific_list(Maps.Shadows_Map_String, Shadows_Machines)
+Shadows_Machines_Specific = gen_map_specific_list(Maps.Shadows_Map_String, Shadows_Machines, "Perk")
 
-Shadows_Shield = gen_map_specific_list(Maps.Shadows_Map_String, ShieldParts)
+Shadows_Shield = gen_map_specific_list(Maps.Shadows_Map_String, ShieldParts, "Shield")
 
 Shadows_Craftables = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for row in[
     ItemName.Shadows_Craftable_ApothiconServant_Heart,
@@ -108,7 +115,7 @@ Shadows_Craftables = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for row in
 
 # Zetsubou No Shima
 
-Zetsubou_Shield = gen_map_specific_list(Maps.Zetsubou_Map_String, ShieldParts)
+Zetsubou_Shield = gen_map_specific_list(Maps.Zetsubou_Map_String, ShieldParts, "Shield")
 
 Zetsubou_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
     ItemName.Machine_Juggernog,
@@ -119,7 +126,7 @@ Zetsubou_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
     ItemName.Machine_StaminUp,
 ]]
 
-Zetsubou_Machines_Specific = gen_map_specific_list(Maps.Zetsubou_Map_String, Zetsubou_Machines)
+Zetsubou_Machines_Specific = gen_map_specific_list(Maps.Zetsubou_Map_String, Zetsubou_Machines, "Perk")
 
 Zetsubou_Craftables_Gasmask = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for row in[
     ItemName.Zetsubou_Craftable_Gasmask_Visor,
@@ -142,9 +149,9 @@ GorodKrovi_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in 
     ItemName.Machine_PhdFlopper,
 ]]
 
-GorodKrovi_Machines_Specific = gen_map_specific_list(Maps.GorodKrovi_Map_String, GorodKrovi_Machines)
+GorodKrovi_Machines_Specific = gen_map_specific_list(Maps.GorodKrovi_Map_String, GorodKrovi_Machines, "Perk")
 
-GorodKrovi_Shield = gen_map_specific_list(Maps.GorodKrovi_Map_String, ShieldParts)
+GorodKrovi_Shield = gen_map_specific_list(Maps.GorodKrovi_Map_String, ShieldParts, "Shield")
 
 GorodKrovi_Craftables_Dragonride = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for row in[
     ItemName.GorodKrovi_Craftable_Dragonride_Transmitter,
@@ -167,9 +174,9 @@ Revelations_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in
     ItemName.Machine_PhdFlopper,
 ]]
 
-Revelations_Machines_Specific = gen_map_specific_list(Maps.Revelations_Map_String, Revelations_Machines)
+Revelations_Machines_Specific = gen_map_specific_list(Maps.Revelations_Map_String, Revelations_Machines, "Perk")
 
-Revelations_Shield = gen_map_specific_list(Maps.Revelations_Map_String, ShieldParts)
+Revelations_Shield = gen_map_specific_list(Maps.Revelations_Map_String, ShieldParts, "Shield")
 
 # === Zombie Chronicles ===
 
@@ -187,7 +194,7 @@ Nacht_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
     ItemName.Machine_PhdFlopper,
 ]]
 
-Nacht_Machines_Specific = gen_map_specific_list(Maps.Nacht_Map_String, Nacht_Machines)
+Nacht_Machines_Specific = gen_map_specific_list(Maps.Nacht_Map_String, Nacht_Machines, "Perk")
 
 # Kino der Toten
 
@@ -203,7 +210,7 @@ Kino_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
     ItemName.Machine_PhdFlopper,
 ]]
 
-Kino_Machines_Specific = gen_map_specific_list(Maps.Kino_Map_String, Kino_Machines)
+Kino_Machines_Specific = gen_map_specific_list(Maps.Kino_Map_String, Kino_Machines, "Perk")
 
 # Moon
 
@@ -219,7 +226,7 @@ Moon_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
     ItemName.Machine_PhdFlopper,
 ]]
 
-Moon_Machines_Specific = gen_map_specific_list(Maps.Moon_Map_String, Moon_Machines)
+Moon_Machines_Specific = gen_map_specific_list(Maps.Moon_Map_String, Moon_Machines, "Perk")
 
 # Origins
 
@@ -236,7 +243,9 @@ Origins_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
     ItemName.Machine_PhdFlopper,
 ]]
 
-Origins_Machines_Specific = gen_map_specific_list(Maps.Origins_Map_String, Origins_Machines)
+Origins_Machines_Specific = gen_map_specific_list(Maps.Origins_Map_String, Origins_Machines, "Perk")
+
+Origins_Shield = gen_map_specific_list(Maps.Origins_Map_String, ShieldParts, "Shield")
 
 Origins_MaxisDrone = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for row in [
     ItemName.Origins_Craftable_MaxisDrone_Body,
@@ -251,13 +260,11 @@ Origins_Discs = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for row in [
     ItemName.Origins_Craftable_Gramophone_LightningDisc
 ]]
 
-Origins_Shield = gen_map_specific_list(Maps.Origins_Map_String, ShieldParts)
-
 # === Modded Maps ===
 
 # Wanted
 
-Wanted_Shield = gen_map_specific_list(Maps.Wanted_Map_String, ShieldParts)
+Wanted_Shield = gen_map_specific_list(Maps.Wanted_Map_String, ShieldParts, "Shield")
 
 Wanted_Craftable_Acidgat = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for row in[
     ItemName.Wanted_Craftable_Acidgat_Engine,
@@ -277,7 +284,7 @@ Wanted_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
     ItemName.Machine_PhdFlopper,
 ]]
 
-Wanted_Machines_Specific = gen_map_specific_list(Maps.Wanted_Map_String, Wanted_Machines)
+Wanted_Machines_Specific = gen_map_specific_list(Maps.Wanted_Map_String, Wanted_Machines, "Perk")
 
 # Progressives
 
@@ -456,10 +463,32 @@ all_items = (
 
 all_items_dict = {item_data.name: item_data for item_data in all_items}
 
-item_groups: Dict[str, Set[str]] = {}
 # Maps
 for item in all_items_dict.keys():
     category = all_items_dict[item].category
     if category not in item_groups.keys():
         item_groups[category] = set()
     item_groups[category].add(all_items_dict[item].name)
+
+WEAPON_TYPE_NAMES: dict[str, str] = {
+    "ar":        "Assault Rifle",
+    "smg":       "Submachine Gun",
+    "lmg":       "Light Machine Gun",
+    "sniper":    "Sniper Rifle",
+    "shotgun":   "Shotgun",
+    "pistol":    "Pistol",
+    "launcher":  "Launcher",
+    "melee":     "Melee",
+    "wonder":    "Wonder Weapon",
+    "equipment": "Equipment",
+    "other":     "Other",
+}
+
+for weapon_type_name in WEAPON_TYPE_NAMES.values():
+    item_groups[weapon_type_name] = set()
+
+for map_set in Weapons.weapon_data_set.values():
+    for weapon_data in map_set.values():
+        if weapon_data.category not in WEAPON_TYPE_NAMES:
+            raise KeyError(f"Unknown weapon category '{weapon_data.category}' for weapon '{weapon_data.item_name}'. Add it to WEAPON_TYPE_NAMES.")
+        item_groups[WEAPON_TYPE_NAMES[weapon_data.category]].add(weapon_data.item_name)

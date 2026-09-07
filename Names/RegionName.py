@@ -90,6 +90,7 @@ Origins_Open = "(Origins) Open the Map"
 Origins_Crazy_Place = "(Origins) Crazy Place"
 Origins_Staff_Upgrades = "(Origins) Staff Upgrade"
 Origins_MainEE = "(Origins) Main Easter Egg"
+Origins_Post_Maxis_MainEE = "(Origins) Main Easter Egg - Maxis Drone Required"
 Origins_SoulBoxAny = "(Origins) Any Soul Box"
 Origins_SoulBoxAll = "(Origins) All 4 Soul Boxes"
 Origins_Round_Regions = gen_round_regions(Maps.Origins_Map_String)

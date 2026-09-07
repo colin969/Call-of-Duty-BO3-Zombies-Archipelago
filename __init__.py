@@ -208,6 +208,7 @@ class BO3ZombiesWorld(World):
         self.num_maps = len(locked_maps)
 
         # Randomly picked selected starting maps
+        self.chosen_starting_maps = []
         starting_maps_unlocked = min(self.options.starting_maps_unlocked.value, len(locked_maps))
         if starting_maps_unlocked > 0:
             starting_maps = []
@@ -226,6 +227,7 @@ class BO3ZombiesWorld(World):
             # Precollect starting maps
             for item in map(self.create_item, starting_maps):
                 self.push_precollected(item)
+            self.chosen_starting_maps = starting_maps
         else:
             for item in map(self.create_item, locked_maps):
                 self.push_precollected(item)
@@ -366,7 +368,10 @@ class BO3ZombiesWorld(World):
             self.create_entrance(
                 map_open_region,
                 monkeybomb_region, 
-                lambda state: rules.has_special_weapon(state, self.player, self.options, Maps.The_Giant_Map_String, ItemName.Weapon_MonkeyBombs))
+                lambda state: (
+                    rules.has_special_weapon(state, self.player, self.options, Maps.The_Giant_Map_String, ItemName.Weapon_MonkeyBombs)
+                )
+            )
 
         if self.options.map_castle_enabled:
             all_locations = []
@@ -622,6 +627,7 @@ class BO3ZombiesWorld(World):
                         rules.check_round_logic(state, self.player, self.options, 16, Maps.GorodKrovi_Map_String) and
                         # Upgrade monkey bombs
                         rules.has_special_weapon(state, self.player, self.options, Maps.GorodKrovi_Map_String, ItemName.Weapon_MonkeyBombs) and
+                        rules.has_shield(state, self.player, Maps.GorodKrovi_Map_String) and
                         rules.has_weapon_of_strength(state, self.player, self.options, Maps.GorodKrovi_Map_String, 3, 3)
                     )
                 )
@@ -1049,15 +1055,17 @@ class BO3ZombiesWorld(World):
                     map_open_region,
                     ice_staff_upgrade_region,
                     lambda state: (
-                            state.has(ItemName.Origins_Craftable_Gramophone_IceDisc, self.player) and
+                        state.has(ItemName.Origins_Craftable_Gramophone_IceDisc, self.player) and
                         rules.check_round_logic(state, self.player, self.options, 12, Maps.Origins_Map_String) and
                         rules.has_weapon_of_strength(state, self.player, self.options, Maps.Origins_Map_String, 3, 3)
                     )
                 )
             
             ee_locs = []
+            post_maxis_ee_locs = []
             if add_ee_checks:
-                ee_locs = [loc.name for loc in Locations.Origins_MainEE_Locations]
+                ee_locs = [loc.name for loc in Locations.Origins_MainEE_Locations[:2]]
+                post_maxis_ee_locs = [loc.name for loc in Locations.Origins_MainEE_Locations[2:]]
 
             main_ee_region = self.create_region(self.multiworld, self.player, RegionName.Origins_MainEE, ee_locs)
             self.create_entrance(
@@ -1071,6 +1079,19 @@ class BO3ZombiesWorld(World):
                     rules.check_round_logic(state, self.player, self.options, 18, Maps.Origins_Map_String) and
                     rules.has_shield(state, self.player, Maps.Origins_Map_String) and
                     rules.has_weapon_of_strength(state, self.player, self.options, Maps.Origins_Map_String, 3, 4)
+                )
+            )
+
+            post_maxis_ee_region = self.create_region(self.multiworld, self.player, RegionName.Origins_Post_Maxis_MainEE, post_maxis_ee_locs)
+            self.create_entrance(
+                main_ee_region,
+                post_maxis_ee_region, 
+                lambda state: (
+                    state.has_all([
+                        ItemName.Origins_Craftable_MaxisDrone_Body,
+                        ItemName.Origins_Craftable_MaxisDrone_Brain,
+                        ItemName.Origins_Craftable_MaxisDrone_Engine,
+                    ], self.player)
                 )
             )
 
@@ -1658,6 +1679,7 @@ class BO3ZombiesWorld(World):
                 self.random.choice(string.ascii_letters) for _ in range(16)),
             'base_id': str(self.base_id),
             "slot": self.multiworld.player_name[self.player],
+            "starting_maps": [m.replace("Map Unlock - ", "") for m in self.chosen_starting_maps],
             "map_specific_machines": bool(options.map_specific_machines),
             "special_rounds_enabled": bool(options.special_rounds_enabled),
             "perk_limit_default_modifier": int(options.perk_limit_default_modifier),
