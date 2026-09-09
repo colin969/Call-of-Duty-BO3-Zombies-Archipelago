@@ -1329,7 +1329,8 @@ class BO3ZombiesWorld(World):
                 self.multiworld.get_location(LocationName.Shadows_Craftable_ShieldPartDoor, self.player).place_locked_item(self.create_item(Items.Shadows_Shield[0].name))
                 self.multiworld.get_location(LocationName.Shadows_Craftable_ShieldPartDolly, self.player).place_locked_item(self.create_item(Items.Shadows_Shield[1].name))
                 self.multiworld.get_location(LocationName.Shadows_Craftable_ShieldPartClamp, self.player).place_locked_item(self.create_item(Items.Shadows_Shield[2].name))
-            enabled_items += Items.Shadows_Craftables
+            enabled_items += Items.Shadows_Craftable_ApothiconServant
+            enabled_items += Items.Shadows_Craftable_CivilProtector
         if self.options.map_the_giant_enabled:
             map_list.append((Maps.The_Giant_Map_String, RegionName.TheGiant_Courtyard, RegionName.TheGiant_Round_Regions, Locations.TheGiant_Round_Locations))
         if self.options.map_castle_enabled:
@@ -1340,7 +1341,7 @@ class BO3ZombiesWorld(World):
                 self.multiworld.get_location(LocationName.Castle_Craftable_ShieldPartDoor, self.player).place_locked_item(self.create_item(Items.Castle_Shield[0].name))
                 self.multiworld.get_location(LocationName.Castle_Craftable_ShieldPartDolly, self.player).place_locked_item(self.create_item(Items.Castle_Shield[1].name))
                 self.multiworld.get_location(LocationName.Castle_Craftable_ShieldPartClamp, self.player).place_locked_item(self.create_item(Items.Castle_Shield[2].name))
-            enabled_items += Items.Castle_Craftables
+            enabled_items += Items.Castle_Craftable_GravitySpikes
         if self.options.map_zetsubou_enabled:
             map_list.append((Maps.Zetsubou_Map_String, RegionName.Zetsubou_Beach, RegionName.Zetsubou_Round_Regions, Locations.Zetsubou_Round_Locations))
             if self.options.randomized_shield_parts:

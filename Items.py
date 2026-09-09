@@ -81,12 +81,14 @@ Castle_Machines_Specific = gen_map_specific_list(Maps.Castle_Map_String, Castle_
 
 Castle_Shield = gen_map_specific_list(Maps.Castle_Map_String, ShieldParts, "Shield")
 
-Castle_Craftables = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for row in[
+Castle_Craftable_GravitySpikes = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for row in[
     ItemName.Castle_Craftable_GravitySpikes_Body,
     ItemName.Castle_Craftable_GravitySpikes_Guards,
     ItemName.Castle_Craftable_GravitySpikes_Handle
 ]]
-
+_castle_gravity_spikes_group = {x.name for x in Castle_Craftable_GravitySpikes}
+item_groups[Maps.Castle_Map_String + " Ragnarok DG-4"] = _castle_gravity_spikes_group
+item_groups[Maps.Castle_Map_String + " Gravity Spikes"] = _castle_gravity_spikes_group
 
 # Shadows of Evil
 
@@ -104,14 +106,21 @@ Shadows_Machines_Specific = gen_map_specific_list(Maps.Shadows_Map_String, Shado
 
 Shadows_Shield = gen_map_specific_list(Maps.Shadows_Map_String, ShieldParts, "Shield")
 
-Shadows_Craftables = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for row in[
+Shadows_Craftable_ApothiconServant = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for row in[
     ItemName.Shadows_Craftable_ApothiconServant_Heart,
     ItemName.Shadows_Craftable_ApothiconServant_Skeleton,
     ItemName.Shadows_Craftable_ApothiconServant_Xenomatter,
+]]
+item_groups[Maps.Shadows_Map_String + " Apothicon Servant"] = {x.name for x in Shadows_Craftable_ApothiconServant}
+
+Shadows_Craftable_CivilProtector = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for row in[
     ItemName.Shadows_Craftable_CivilProtector_Fuse01,
     ItemName.Shadows_Craftable_CivilProtector_Fuse02,
     ItemName.Shadows_Craftable_CivilProtector_Fuse03,
 ]]
+_soe_civil_protector_group = {x.name for x in Shadows_Craftable_CivilProtector}
+item_groups[Maps.Shadows_Map_String + " Civil Protector"] = _soe_civil_protector_group
+item_groups[Maps.Shadows_Map_String + " Fuse"] = _soe_civil_protector_group
 
 # Zetsubou No Shima
 
@@ -133,6 +142,7 @@ Zetsubou_Craftables_Gasmask = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) f
     ItemName.Zetsubou_Craftable_Gasmask_Filter,
     ItemName.Zetsubou_Craftable_Gasmask_Strap,
 ]]
+item_groups[Maps.Zetsubou_Map_String + " Gasmask"] = {x.name for x in Zetsubou_Craftables_Gasmask}
 
 # Gorod Krovi
 
@@ -158,6 +168,7 @@ GorodKrovi_Craftables_Dragonride = [ItemData(row, BO3ZombiesItemCategory.CRAFTAB
     ItemName.GorodKrovi_Craftable_Dragonride_Codes,
     ItemName.GorodKrovi_Craftable_Dragonride_Map,
 ]]
+item_groups[Maps.GorodKrovi_Map_String + " Dragonride"] = {x.name for x in GorodKrovi_Craftables_Dragonride}
 
 # Revelations
 
@@ -252,6 +263,7 @@ Origins_MaxisDrone = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for row in
     ItemName.Origins_Craftable_MaxisDrone_Brain,
     ItemName.Origins_Craftable_MaxisDrone_Engine
 ]]
+item_groups[Maps.Origins_Map_String + " Maxis Drone"] = {x.name for x in Origins_MaxisDrone}
 
 Origins_Discs = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for row in [
     ItemName.Origins_Craftable_Gramophone_FireDisc,
@@ -259,6 +271,10 @@ Origins_Discs = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for row in [
     ItemName.Origins_Craftable_Gramophone_WindDisc,
     ItemName.Origins_Craftable_Gramophone_LightningDisc
 ]]
+_origins_discs_group = {x.name for x in Origins_Discs}
+item_groups[Maps.Origins_Map_String + " Disc"] = _origins_discs_group
+item_groups[Maps.Origins_Map_String + " Gramophone Part"] = _origins_discs_group
+item_groups[Maps.Origins_Map_String + " Gramophone Disc"] = _origins_discs_group
 
 # === Modded Maps ===
 
@@ -270,6 +286,7 @@ Wanted_Craftable_Acidgat = [ItemData(row, BO3ZombiesItemCategory.CRAFTABLE) for 
     ItemName.Wanted_Craftable_Acidgat_Engine,
     ItemName.Wanted_Craftable_Acidgat_Acid,
 ]]
+item_groups[Maps.Wanted_Map_String + " Acidgat"] = {x.name for x in Wanted_Craftable_Acidgat}
 
 Wanted_Machines = [ItemData(row, BO3ZombiesItemCategory.MACHINE) for row in [
     ItemName.Machine_Juggernog,
@@ -452,10 +469,10 @@ all_items = (
     + The_Giant_Machines + The_Giant_Machines_Specific
     # Castle
     + Castle_Machines + Castle_Machines_Specific
-    + Castle_Craftables + Castle_Shield
+    + Castle_Craftable_GravitySpikes + Castle_Shield
     # Shadows of Evil
     + Shadows_Machines + Shadows_Machines_Specific
-    + Shadows_Craftables + Shadows_Shield
+    + Shadows_Craftable_ApothiconServant + Shadows_Craftable_CivilProtector + Shadows_Shield
     # Zetsubou No Shima
     + Zetsubou_Machines + Zetsubou_Machines_Specific
     + Zetsubou_Craftables_Gasmask + Zetsubou_Shield
