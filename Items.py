@@ -401,29 +401,49 @@ Shop_Items = [ItemData(row, BO3ZombiesItemCategory.SHOP_ITEMS) for row in [
     ItemName.Shop_CheckpointToken,
 ]]
 
-def gen_weapon_box_items():
-    items = []
-    seen_items = set()
-    for map in Maps.all_maps:
-        if map in Weapons.map_weapon_data_sets:
-            map_set = Weapons.map_weapon_data_sets[map]
-            for weapon_key, weapon_data in map_set.vanilla.items():
-                if weapon_data.item_name not in seen_items:
-                    items.append(ItemData(weapon_data.item_name, BO3ZombiesItemCategory.REGULAR_WEAPON))
-                    seen_items.add(weapon_data.item_name)
-            for weapon_key, weapon_data in map_set.expanded.items():
-                if weapon_data.item_name not in seen_items:
-                    items.append(ItemData(weapon_data.item_name, BO3ZombiesItemCategory.REGULAR_WEAPON))
-                    seen_items.add(weapon_data.item_name)
-            for weapon_key, weapon_data in map_set.wallbuys.items():
-                if weapon_data.item_name not in seen_items:
-                    items.append(ItemData(weapon_data.item_name, BO3ZombiesItemCategory.REGULAR_WEAPON))
-                    seen_items.add(weapon_data.item_name)
-            for weapon_key, weapon_data in map_set.special.items():
-                items.append(ItemData(weapon_data.item_name, BO3ZombiesItemCategory.SPECIAL_WEAPON))
-    return items
+WEAPON_TYPE_NAMES: dict[str, str] = {
+    "ar":        "Assault Rifle",
+    "smg":       "Submachine Gun",
+    "lmg":       "Light Machine Gun",
+    "sniper":    "Sniper Rifle",
+    "shotgun":   "Shotgun",
+    "pistol":    "Pistol",
+    "launcher":  "Launcher",
+    "melee":     "Melee",
+    "wonder":    "Wonder Weapon",
+    "equipment": "Equipment",
+    "other":     "Other",
+}
 
-WeaponBox_Items = gen_weapon_box_items() 
+# Feels silly to build and delete, but it's probably fine
+WeaponBox_Items = []
+_seen_weapon_items = set()
+
+for _weapon_type_name in WEAPON_TYPE_NAMES.values():
+    item_groups[_weapon_type_name] = set()
+
+for _map in Maps.all_maps:
+    if _map in Weapons.map_weapon_data_sets:
+        _map_set = Weapons.map_weapon_data_sets[_map]
+        for _weapon_key, _weapon_data in [
+            *_map_set.vanilla.items(),
+            *_map_set.expanded.items(),
+            *_map_set.wallbuys.items(),
+        ]:
+            if _weapon_data.item_name not in _seen_weapon_items:
+                WeaponBox_Items.append(ItemData(_weapon_data.item_name, BO3ZombiesItemCategory.REGULAR_WEAPON))
+                _seen_weapon_items.add(_weapon_data.item_name)
+            if _weapon_data.category not in WEAPON_TYPE_NAMES:
+                raise KeyError(f"Unknown weapon category '{_weapon_data.category}' for weapon '{_weapon_data.item_name}'. Add it to WEAPON_TYPE_NAMES.")
+            item_groups[WEAPON_TYPE_NAMES[_weapon_data.category]].add(_weapon_data.item_name)
+
+        for _weapon_key, _weapon_data in _map_set.special.items():
+            WeaponBox_Items.append(ItemData(_weapon_data.item_name, BO3ZombiesItemCategory.SPECIAL_WEAPON))
+            if _weapon_data.category not in WEAPON_TYPE_NAMES:
+                raise KeyError(f"Unknown weapon category '{_weapon_data.category}' for weapon '{_weapon_data.item_name}'. Add it to WEAPON_TYPE_NAMES.")
+            item_groups[WEAPON_TYPE_NAMES[_weapon_data.category]].add(_weapon_data.item_name)
+
+del _seen_weapon_items, _map, _map_set, _weapon_key, _weapon_data, _weapon_type_name
 
 all_items = (
     Shop_Items + Progressive_Items + [Points_1500] + Weapon_Victory_Items + Victory_Items + Gift_Items + Trap_Items + Misc_Items + Map_Unlocks
@@ -469,26 +489,3 @@ for item in all_items_dict.keys():
     if category not in item_groups.keys():
         item_groups[category] = set()
     item_groups[category].add(all_items_dict[item].name)
-
-WEAPON_TYPE_NAMES: dict[str, str] = {
-    "ar":        "Assault Rifle",
-    "smg":       "Submachine Gun",
-    "lmg":       "Light Machine Gun",
-    "sniper":    "Sniper Rifle",
-    "shotgun":   "Shotgun",
-    "pistol":    "Pistol",
-    "launcher":  "Launcher",
-    "melee":     "Melee",
-    "wonder":    "Wonder Weapon",
-    "equipment": "Equipment",
-    "other":     "Other",
-}
-
-for weapon_type_name in WEAPON_TYPE_NAMES.values():
-    item_groups[weapon_type_name] = set()
-
-for map_set in Weapons.weapon_data_set.values():
-    for weapon_data in map_set.values():
-        if weapon_data.category not in WEAPON_TYPE_NAMES:
-            raise KeyError(f"Unknown weapon category '{weapon_data.category}' for weapon '{weapon_data.item_name}'. Add it to WEAPON_TYPE_NAMES.")
-        item_groups[WEAPON_TYPE_NAMES[weapon_data.category]].add(weapon_data.item_name)
